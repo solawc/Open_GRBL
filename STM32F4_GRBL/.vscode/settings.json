@@ -1,0 +1,27 @@
+{
+    "files.associations": {
+        "hal_uart.h": "c",
+        "stdlib.h": "c",
+        "main.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "stm32f4xx_hal_conf.h": "c",
+        "hal_flash_eeprom.h": "c",
+        "grbl.h": "c",
+        "hal_tim.h": "c",
+        "limits": "cpp",
+        "memory": "cpp",
+        "bit": "cpp",
+        "compare": "cpp",
+        "cstddef": "cpp",
+        "type_traits": "cpp",
+        "xutility": "cpp",
+        "grbl_hal.h": "c",
+        "hal_spi.h": "c",
+        "grbl_main.h": "c",
+        "freertos.h": "c",
+        "task.h": "c",
+        "hal_w25qxx.h": "c",
+        "defaults.h": "c",
+        "cpu_map.h": "c"
+    }
+}
