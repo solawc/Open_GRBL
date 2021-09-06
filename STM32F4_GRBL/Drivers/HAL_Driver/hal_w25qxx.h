@@ -25,7 +25,11 @@
 #define W25X_WriteEnable		        0x06 
 #define W25X_WriteDisable		        0x04 
 #define W25X_ReadStatusReg		        0x05 
+#define W25X_ReadStatusReg2		        0x35 
+#define W25X_ReadStatusReg3		        0x15
 #define W25X_WriteStatusReg		        0x01 
+#define W25X_WriteStatusReg2		    0x31 
+#define W25X_WriteStatusReg3		    0x11
 #define W25X_ReadData			        0x03 
 #define W25X_FastReadData		        0x0B 
 #define W25X_FastReadDual		        0x3B 
