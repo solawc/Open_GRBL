@@ -229,24 +229,24 @@ void w15qxx_write_page(uint8_t *pBuffer, uint32_t WriteAddr, uint16_t NumByteToW
 void w25qxx_write_no_check(uint8_t *pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite)
 {
     uint16_t pageremain;
-    pageremain = 256 - WriteAddr % 256; //单页剩余的字节数
+    pageremain = 256 - WriteAddr % 256; 
     if (NumByteToWrite <= pageremain)
-        pageremain = NumByteToWrite; //不大于256个字节
+        pageremain = NumByteToWrite;
     while (1)
     {
         w15qxx_write_page(pBuffer, WriteAddr, pageremain);
         if (NumByteToWrite == pageremain)
-            break; //写入结束了
-        else       //NumByteToWrite>pageremain
+            break; 
+        else       
         {
             pBuffer += pageremain;
             WriteAddr += pageremain;
 
-            NumByteToWrite -= pageremain; //减去已经写入了的字节数
+            NumByteToWrite -= pageremain; 
             if (NumByteToWrite > 256)
-                pageremain = 256; //一次可以写入256个字节
+                pageremain = 256; 
             else
-                pageremain = NumByteToWrite; //不够256个字节了
+                pageremain = NumByteToWrite; 
         }
     };
 }
