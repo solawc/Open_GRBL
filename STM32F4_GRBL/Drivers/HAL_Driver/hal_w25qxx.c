@@ -261,16 +261,16 @@ void w25qxx_erase_chip(void)
 	w25qxx_wait_busy();   				  
 } 
 
-void W25QXX_Erase_Sector(uint32_t Dst_Addr)   
+void w25qxx_erase_sector(uint32_t Dst_Addr)   
 {  	  
  	Dst_Addr*=4096;
-    W25QXX_Write_Enable();                
-    W25QXX_Wait_Busy();   
+    w25qxx_write_enable();                
+    w25qxx_wait_busy();   
   	w25qxx_enable();                         
     w25qxx_read_write_byte(W25X_SectorErase); 
     w25qxx_read_write_byte((uint8_t)((Dst_Addr)>>16));  
     w25qxx_read_write_byte((uint8_t)((Dst_Addr)>>8));   
     w25qxx_read_write_byte((uint8_t)Dst_Addr);  
 	w25qxx_disable();                            
-    W25QXX_Wait_Busy();   				    
+    w25qxx_wait_busy();   				    
 } 

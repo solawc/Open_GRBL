@@ -54,4 +54,10 @@ void hal_w25qxx_spi_init(void);
 void w25qxx_init(void);
 uint32_t w25qxx_read_id(void);
 uint16_t w25qxx_read_write_byte(uint16_t wdata);
+void w25qxx_read_buff(uint8_t *pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead);
+void w15qxx_write_page(uint8_t *pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite);
+void w25qxx_write_no_check(uint8_t *pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite);
+void w25qxx_erase_chip(void);
+void w25qxx_erase_sector(uint32_t Dst_Addr);
+
 #endif
