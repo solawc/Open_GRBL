@@ -15,4 +15,5 @@ void hal_tim_step_irq_disable(void);
 void hal_tim_move_step_irq_enable(void);
 void hal_tim_move_step_irq_disable(void);
 void hal_set_tim_prescaler(uint32_t prescaler);
+
 #endif

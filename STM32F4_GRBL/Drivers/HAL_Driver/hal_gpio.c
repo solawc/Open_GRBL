@@ -145,9 +145,9 @@ void hal_motor_gpio_init(void) {
 uint8_t hal_return_axix_gpio_status(uint8_t axis) {
 	uint8_t mask = 0;
 	switch(axis) {
-		case X_AXIS: mask = ((MOTOR_Z_AXIS_PORT->ODR)>>MOTOR_Z_AXIS_PIN) && 0x01; break;
-		case Y_AXIS: mask = ((MOTOR_Y_AXIS_PORT->ODR)>>MOTOR_Y_AXIS_PIN) && 0x01; break;
-		case Z_AXIS: mask = ((MOTOR_Z_AXIS_PORT->ODR)>>MOTOR_X_AXIS_PIN) && 0x01; break;
+		case X_AXIS: mask = ((MOTOR_Z_AXIS_PORT->ODR)>>MOTOR_Z_AXIS_NUM) && 0x01; break;
+		case Y_AXIS: mask = ((MOTOR_Y_AXIS_PORT->ODR)>>MOTOR_Y_AXIS_NUM) && 0x01; break;
+		case Z_AXIS: mask = ((MOTOR_Z_AXIS_PORT->ODR)>>MOTOR_X_AXIS_NUM) && 0x01; break;
 	}
 	return mask;
 }
@@ -155,9 +155,9 @@ uint8_t hal_return_axix_gpio_status(uint8_t axis) {
 uint8_t hal_return_en_gpio_status(uint8_t axis) {
 	uint8_t mask = 0;
 	switch(axis) {
-		case X_AXIS: mask = ((MOTOR_X_EN_PORT->ODR)>>MOTOR_Z_EN_PIN) && 0x01; break;	
-		case Y_AXIS: mask = ((MOTOR_Y_EN_PORT->ODR)>>MOTOR_Y_EN_PIN) && 0x01; break;
-		case Z_AXIS: mask = ((MOTOR_Z_EN_PORT->ODR)>>MOTOR_X_EN_PIN) && 0x01; break;
+		case X_AXIS: mask = ((MOTOR_X_EN_PORT->ODR)>>MOTOR_Z_EN_NUM) && 0x01; break;	
+		case Y_AXIS: mask = ((MOTOR_Y_EN_PORT->ODR)>>MOTOR_Y_EN_NUM) && 0x01; break;
+		case Z_AXIS: mask = ((MOTOR_Z_EN_PORT->ODR)>>MOTOR_X_EN_NUM) && 0x01; break;
 	}
 	return mask;
 }
@@ -166,9 +166,9 @@ uint8_t hal_return_dir_gpio_status(uint8_t axis) {
 
 	uint8_t mask = 0;
 	switch(axis) {
-		case X_AXIS: mask = ((MOTOR_X_DIR_PORT->ODR)>>MOTOR_X_DIR_PIN) && 0x01; break;
-		case Y_AXIS: mask = ((MOTOR_Y_DIR_PORT->ODR)>>MOTOR_Y_DIR_PIN) && 0x01; break;
-		case Z_AXIS: mask = ((MOTOR_Z_DIR_PORT->ODR)>>MOTOR_Z_DIR_PIN) && 0x01; break;
+		case X_AXIS: mask = ((MOTOR_X_DIR_PORT->ODR)>>MOTOR_X_DIR_NUM) && 0x01; break;
+		case Y_AXIS: mask = ((MOTOR_Y_DIR_PORT->ODR)>>MOTOR_Y_DIR_NUM) && 0x01; break;
+		case Z_AXIS: mask = ((MOTOR_Z_DIR_PORT->ODR)>>MOTOR_Z_DIR_NUM) && 0x01; break;
 	}
 	return mask;
 }

@@ -11,32 +11,44 @@ void hal_led_toggle(void);
 // limits
 #define LIMIT_X_PORT        GPIOA
 #define LIMIT_X_PIN         GPIO_PIN_0
+#define LIMIT_X_NUM         0
 #define LIMIT_Y_PORT        GPIOC
 #define LIMIT_Y_PIN         GPIO_PIN_13
+#define LIMIT_Y_NUM         13
 #define LIMIT_Z_PORT        GPIOC
 #define LIMIT_Z_PIN         GPIO_PIN_14
+#define LIMIT_Z_NUM         14
 #define LIMIT_IRQnHANDLE    EXTI0_IRQHandler
 
 #define MOTOR_X_EN_PORT     GPIOA
 #define MOTOR_X_EN_PIN      GPIO_PIN_1
+#define MOTOR_X_EN_NUM      1
 #define MOTOR_Y_EN_PORT     GPIOA
 #define MOTOR_Y_EN_PIN      GPIO_PIN_2
+#define MOTOR_Y_EN_NUM      2
 #define MOTOR_Z_EN_PORT     GPIOA
 #define MOTOR_Z_EN_PIN      GPIO_PIN_3
+#define MOTOR_Z_EN_NUM      3
 
-#define MOTOR_X_DIR_PORT     GPIOA
-#define MOTOR_X_DIR_PIN      GPIO_PIN_4
-#define MOTOR_Y_DIR_PORT     GPIOA
-#define MOTOR_Y_DIR_PIN      GPIO_PIN_5
-#define MOTOR_Z_DIR_PORT     GPIOA
-#define MOTOR_Z_DIR_PIN      GPIO_PIN_6
+#define MOTOR_X_DIR_PORT    GPIOA
+#define MOTOR_X_DIR_PIN     GPIO_PIN_4
+#define MOTOR_X_DIR_NUM     4
+#define MOTOR_Y_DIR_PORT    GPIOA
+#define MOTOR_Y_DIR_PIN     GPIO_PIN_5
+#define MOTOR_Y_DIR_NUM     5
+#define MOTOR_Z_DIR_PORT    GPIOA
+#define MOTOR_Z_DIR_PIN     GPIO_PIN_6
+#define MOTOR_Z_DIR_NUM     6
 
-#define MOTOR_X_AXIS_PORT     GPIOB
-#define MOTOR_X_AXIS_PIN      GPIO_PIN_1
-#define MOTOR_Y_AXIS_PORT     GPIOB
-#define MOTOR_Y_AXIS_PIN      GPIO_PIN_2
-#define MOTOR_Z_AXIS_PORT     GPIOB
-#define MOTOR_Z_AXIS_PIN      GPIO_PIN_3
+#define MOTOR_X_AXIS_PORT   GPIOB
+#define MOTOR_X_AXIS_PIN    GPIO_PIN_1
+#define MOTOR_X_AXIS_NUM    1
+#define MOTOR_Y_AXIS_PORT   GPIOB
+#define MOTOR_Y_AXIS_PIN    GPIO_PIN_2
+#define MOTOR_Y_AXIS_NUM    2
+#define MOTOR_Z_AXIS_PORT   GPIOB
+#define MOTOR_Z_AXIS_PIN    GPIO_PIN_3
+#define MOTOR_Z_AXIS_NUM    3
 
 void hal_limit_gpio_init(void);
 void hal_limit_gpio_irq_enable(void);

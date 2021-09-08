@@ -241,7 +241,7 @@ void limits_go_home(uint8_t cycle_mask)
   float target[N_AXIS];
   float max_travel = 0.0;
   uint8_t idx;
-  for (idx=0; idx<N_AXIS; idx++) {
+  for (idx=0; idx < N_AXIS; idx++) {
     // Initialize step pin masks
     step_pin[idx] = get_step_pin_mask(idx);
     #ifdef COREXY

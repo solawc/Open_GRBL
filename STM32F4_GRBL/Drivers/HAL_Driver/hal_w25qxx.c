@@ -84,7 +84,12 @@ void w25qxx_disable(void)
     HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_SET);
 }
 
-uint8_t w25qxx_write_read(uint8_t byte)
+uint8_t w25qxx_write_read_8(uint8_t byte)
+{
+    return hal_spi_transfer_revice_byte(&dev_w25qxx_spi, byte);
+}
+
+uint16_t w25qxx_write_read_16(uint16_t byte)
 {
     return hal_spi_transfer_revice_byte(&dev_w25qxx_spi, byte);
 }
@@ -108,7 +113,7 @@ void w25qxx_init(void)
     dev_w25qxx_spi.__spi_intrans = false;
     dev_w25qxx_spi.is_use_dma = false;
     dev_w25qxx_spi.dev_spi_init_cb = hal_w25qxx_spi_init;
-    dev_w25qxx_spi.dev_spi_read_write_byte = w25qxx_write_read;
+    dev_w25qxx_spi.dev_spi_read_write_byte = w25qxx_write_read_16;
     hal_spi_register(&dev_w25qxx_spi);
 }
 
@@ -126,7 +131,6 @@ uint32_t w25qxx_read_id(void)
 
 uint8_t w25qxx_read_sr_reg(uint8_t reg)
 {
-
     uint8_t byte = 0, command = 0;
     switch (reg)
     {
