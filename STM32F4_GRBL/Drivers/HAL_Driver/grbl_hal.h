@@ -5,6 +5,7 @@
 #include "main.h"
 #include "stdbool.h"
 
+#include "grbl_config.h"
 
 // hal header
 #include "hal_gpio.h"
@@ -16,12 +17,6 @@
 //
 #include "led_task.h"
 #include "hal_w25qxx.h"
-
-#if USE_ESP32_MCU
-#define ISR_CODE ARR_IRM
-#else
-#define ISR_CODE
-#endif 
 
 
 
