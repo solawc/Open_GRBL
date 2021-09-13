@@ -16,4 +16,9 @@ void hal_tim_move_step_irq_enable(void);
 void hal_tim_move_step_irq_disable(void);
 void hal_set_tim_prescaler(uint32_t prescaler);
 
+
+void hal_tim_set_reload(TIM_HandleTypeDef *htim, uint32_t reload);
+void hal_tim_generateEvent_update(TIM_HandleTypeDef *htim);
+void hal_tim_clear_flag_update(TIM_HandleTypeDef *htim);
+
 #endif

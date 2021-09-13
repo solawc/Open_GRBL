@@ -1,6 +1,8 @@
 #include "hal_gpio.h"
 #include "grbl.h"
 
+
+
 void hal_led_gpio_init(void) {
 	
     GPIO_InitTypeDef GPIO_Init; 
@@ -84,14 +86,8 @@ static void hal_motor_en_gpio_init(void) {
 	GPIO_Init.Pull = GPIO_NOPULL;
 	GPIO_Init.Speed = GPIO_SPEED_FREQ_MEDIUM;
 
-	GPIO_Init.Pin = MOTOR_X_EN_PIN;
-    HAL_GPIO_Init(MOTOR_X_EN_PORT, &GPIO_Init);
-
-	GPIO_Init.Pin = MOTOR_Y_EN_PIN;
-    HAL_GPIO_Init(MOTOR_Y_EN_PORT, &GPIO_Init);
-
-	GPIO_Init.Pin = MOTOR_Z_EN_PIN;
-    HAL_GPIO_Init(MOTOR_Z_EN_PORT, &GPIO_Init);
+	GPIO_Init.Pin = STEP_EN_PIN;
+    HAL_GPIO_Init(STEP_EN_PORT, &GPIO_Init);
 }
 
 static void hal_motor_dir_gpio_init(void) {
@@ -142,6 +138,12 @@ void hal_motor_gpio_init(void) {
 	hal_motor_axis_gpio_init();
 }
 
+
+void hal_step_en_gpio_set(bool status) {
+	if(status) { HAL_GPIO_WritePin(STEP_EN_PORT, STEP_EN_PIN, GPIO_PIN_SET); }
+	else { HAL_GPIO_WritePin(STEP_EN_PORT, STEP_EN_PIN, GPIO_PIN_RESET); }
+}
+
 uint8_t hal_return_axix_gpio_status(uint8_t axis) {
 	uint8_t mask = 0;
 	switch(axis) {
@@ -152,15 +154,6 @@ uint8_t hal_return_axix_gpio_status(uint8_t axis) {
 	return mask;
 }
 
-uint8_t hal_return_en_gpio_status(uint8_t axis) {
-	uint8_t mask = 0;
-	switch(axis) {
-		case X_AXIS: mask = ((MOTOR_X_EN_PORT->ODR)>>MOTOR_Z_EN_NUM) && 0x01; break;	
-		case Y_AXIS: mask = ((MOTOR_Y_EN_PORT->ODR)>>MOTOR_Y_EN_NUM) && 0x01; break;
-		case Z_AXIS: mask = ((MOTOR_Z_EN_PORT->ODR)>>MOTOR_X_EN_NUM) && 0x01; break;
-	}
-	return mask;
-}
 
 uint8_t hal_return_dir_gpio_status(uint8_t axis) {
 
@@ -170,15 +163,6 @@ uint8_t hal_return_dir_gpio_status(uint8_t axis) {
 		case Y_AXIS: mask = ((MOTOR_Y_DIR_PORT->ODR)>>MOTOR_Y_DIR_NUM) && 0x01; break;
 		case Z_AXIS: mask = ((MOTOR_Z_DIR_PORT->ODR)>>MOTOR_Z_DIR_NUM) && 0x01; break;
 	}
-	return mask;
-}
-
-uint8_t hal_get_moter_en_gpio_mask(void) {
-
-	uint8_t mask = 0;
-	mask |= hal_return_en_gpio_status(Z_AXIS) << 2;
-	mask |= hal_return_en_gpio_status(Y_AXIS) << 1;
-	mask |= hal_return_en_gpio_status(X_AXIS) << 0;
 	return mask;
 }
 

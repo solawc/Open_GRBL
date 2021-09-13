@@ -51,6 +51,19 @@ void hal_tim_step_irq_disable(void) {
     HAL_NVIC_DisableIRQ(TIM3_IRQn);
 }
 
+void hal_tim_set_reload(TIM_HandleTypeDef *htim, uint32_t reload) {
+    htim->Init.AutoReloadPreload = reload;
+    HAL_TIM_Base_Init(&htim);
+}
+
+void hal_tim_generateEvent_update(TIM_HandleTypeDef *htim) {
+    SET_BIT(htim->Instance->EGR, TIM_EGR_UG);
+}
+
+void hal_tim_clear_flag_update(TIM_HandleTypeDef *htim) {
+    WRITE_REG(htim->Instance->SR, ~(TIM_SR_UIF));
+}
+
 
 void hal_tim_move_step_irq_enable(void) {
     HAL_NVIC_EnableIRQ(TIM4_IRQn);

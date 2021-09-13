@@ -22,6 +22,7 @@
         "task.h": "c",
         "hal_w25qxx.h": "c",
         "defaults.h": "c",
-        "cpu_map.h": "c"
+        "cpu_map.h": "c",
+        "hal_gpio.h": "c"
     }
 }

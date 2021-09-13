@@ -20,15 +20,8 @@ void hal_led_toggle(void);
 #define LIMIT_Z_NUM         14
 #define LIMIT_IRQnHANDLE    EXTI0_IRQHandler
 
-#define MOTOR_X_EN_PORT     GPIOA
-#define MOTOR_X_EN_PIN      GPIO_PIN_1
-#define MOTOR_X_EN_NUM      1
-#define MOTOR_Y_EN_PORT     GPIOA
-#define MOTOR_Y_EN_PIN      GPIO_PIN_2
-#define MOTOR_Y_EN_NUM      2
-#define MOTOR_Z_EN_PORT     GPIOA
-#define MOTOR_Z_EN_PIN      GPIO_PIN_3
-#define MOTOR_Z_EN_NUM      3
+#define STEP_EN_PORT        GPIOA
+#define STEP_EN_PIN        GPIO_PIN_1
 
 #define MOTOR_X_DIR_PORT    GPIOA
 #define MOTOR_X_DIR_PIN     GPIO_PIN_4
@@ -56,7 +49,7 @@ void hal_limit_gpio_irq_disable(void);
 uint8_t hal_limits_get_gpio_status(uint8_t axis);
 
 void hal_motor_gpio_init(void);
-uint8_t hal_get_moter_en_gpio_mask(void);
+void hal_step_en_gpio_set(bool status);
 uint8_t hal_get_moter_dir_gpio_mask(void);
 uint8_t hal_get_moter_axis_gpio_mask(void);
 

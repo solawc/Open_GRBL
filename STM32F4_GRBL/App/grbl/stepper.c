@@ -249,8 +249,8 @@ void st_wake_up()
   if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE)) { STEPPERS_DISABLE_PORT |= (1<<STEPPERS_DISABLE_BIT); }
   else { STEPPERS_DISABLE_PORT &= ~(1<<STEPPERS_DISABLE_BIT); }
 #elif defined(CPU_MAP_STM32H750XB)
-  if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE)) { }
-  else { }
+  if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE))  { hal_step_en_gpio_set(true); }
+  else { hal_step_en_gpio_set(false); }
 #endif
   // Initialize stepper output bits to ensure first ISR call does not step.
   st.step_outbits = step_port_invert_mask;
@@ -266,7 +266,8 @@ void st_wake_up()
 #if defined(CPU_MAP_ATMEGA328P)
     st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
 #elif defined(CPU_MAP_STM32H750XB)
-    st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
+    // st.step_pulse_time = ((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND);
+    st.step_pulse_time = (settings.fpulse_microseconds) * TICKS_PER_MICROSECOND;
 #endif
 #endif
 
@@ -274,6 +275,8 @@ void st_wake_up()
 #if defined(CPU_MAP_ATMEGA328P)
   TIMSK1 |= (1<<OCIE1A);
 #elif defined(CPU_MAP_STM32H750XB)
+
+
   hal_tim_move_step_irq_enable();
 #endif
 }
@@ -361,7 +364,7 @@ void st_go_idle()
 #if defined(CPU_MAP_ATMEGA328P)
 ISR(TIMER1_COMPA_vect)
 #elif defined(CPU_MAP_STM32H750XB)
-void TIM4_IRQHandler(void)
+void TIM4_IRQHandler(void)   // set timer
 #endif
 {
   if ((htim4.Instance->SR & 0x0001) != 0)                  // check interrupt source
@@ -584,7 +587,7 @@ ISR(TIMER0_OVF_vect)
 }
 #elif defined(CPU_MAP_STM32H750XB)
 
-void step_port_reset(void) {
+void step_port_reset(void) {   // reset timer
 
   // uint8_t step_mask = 0;
   // step_mask = hal_get_moter_axis_gpio_mask();
