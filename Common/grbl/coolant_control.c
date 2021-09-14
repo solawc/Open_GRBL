@@ -29,7 +29,7 @@ void coolant_init()
     COOLANT_MIST_DDR |= (1 << COOLANT_MIST_BIT);
   #endif
   coolant_stop();
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
     
 #endif
 }
@@ -57,7 +57,7 @@ uint8_t coolant_get_state()
       cl_state |= COOLANT_STATE_MIST;
     }
   #endif
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   return(cl_state);
 #endif
 }
@@ -80,7 +80,7 @@ void coolant_stop()
       COOLANT_MIST_PORT &= ~(1 << COOLANT_MIST_BIT);
     #endif
   #endif
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
  
 #endif
 }
@@ -123,7 +123,7 @@ void coolant_set_state(uint8_t mode)
 			#endif
 		}
 	#endif
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
  
 #endif
   sys.report_ovr_counter = 0; // Set to report change immediately

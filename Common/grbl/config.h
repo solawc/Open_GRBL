@@ -36,11 +36,21 @@
 // If doing so, simply comment out these two defines and see instructions below.
 #define DEFAULTS_GENERIC
 // #define CPU_MAP_ATMEGA328P 		// Arduino Uno CPU
-// #define CPU_MAP_STM32F4
-// #define CPU_MAP_STM32H7
+
+
 // #define CPU_MAP_STM32F1
+#define CPU_MAP_STM32F4
+// #define CPU_MAP_STM32H7
 // #define CPU_MAP_STM32G0
-#define CPU_MAP_STM32H750XB			// ST MCU
+
+
+#if defined(CPU_MAP_STM32F1) || defined(CPU_MAP_STM32F4)  || \
+    defined(CPU_MAP_STM32H7) || defined(CPU_MAP_STM32H7)  || \
+    defined(CPU_MAP_STM32G0)
+
+#define CPU_STM32
+
+#endif
 
 
 

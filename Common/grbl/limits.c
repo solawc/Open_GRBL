@@ -61,7 +61,7 @@ void limits_init()
     WDTCSR |= (1<<WDCE) | (1<<WDE);
     WDTCSR = (1<<WDP0); // Set time-out at ~32msec.
   #endif
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 
   hal_limit_gpio_init();
   if (bit_istrue(settings.flags,BITFLAG_HARD_LIMIT_ENABLE)) {
@@ -79,7 +79,7 @@ void limits_disable()
 #if defined(CPU_MAP_ATMEGA328P)
   LIMIT_PCMSK &= ~LIMIT_MASK;  // Disable specific pins of the Pin Change Interrupt
   PCICR &= ~(1 << LIMIT_INT);  // Disable Pin Change Interrupt
- #elif defined(CPU_MAP_STM32H750XB)
+ #elif defined(CPU_STM32)
   hal_limit_gpio_irq_disable();
 #endif
 }
@@ -106,7 +106,7 @@ uint8_t limits_get_state()
       if (pin & (1<<DUAL_LIMIT_BIT)) { limit_state |= (1 << N_AXIS); }
     #endif
   }
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   uint8_t idx;
   uint8_t pin = 0xff;
   for (idx=0; idx<N_AXIS; idx++) {
@@ -169,7 +169,7 @@ uint8_t limits_get_state()
       }
     }
 #endif
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   void LIMIT_IRQnHANDLE(void) {
  
     if(__HAL_GPIO_EXTI_GET_IT(LIMIT_X_PIN) != RESET) {
@@ -399,7 +399,7 @@ void limits_go_home(uint8_t cycle_mask)
       } while (
 #if defined(CPU_MAP_ATMEGA328P)
       STEP_MASK & axislock
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 	0
 #endif
 	);

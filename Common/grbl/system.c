@@ -32,7 +32,7 @@ void system_init()
   #endif
   CONTROL_PCMSK |= CONTROL_MASK;  // Enable specific pins of the Pin Change Interrupt
   PCICR |= (1 << CONTROL_INT);   // Enable Pin Change Interrupt
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 
 #endif
 }
@@ -58,7 +58,7 @@ uint8_t system_control_get_state()
     if (bit_istrue(pin,(1<<CONTROL_RESET_BIT))) { control_state |= CONTROL_PIN_INDEX_RESET; }
     if (bit_istrue(pin,(1<<CONTROL_CYCLE_START_BIT))) { control_state |= CONTROL_PIN_INDEX_CYCLE_START; }
   }
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 
 #endif
   return(control_state);
@@ -90,7 +90,7 @@ ISR(CONTROL_INT_vect)
     }
   }
 }
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 
 #endif
 
@@ -370,7 +370,7 @@ void system_set_exec_state_flag(uint8_t mask) {
   cli();
   sys_rt_exec_state |= (mask);
   SREG = sreg;
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_state |= (mask);
   __enable_irq();
@@ -383,7 +383,7 @@ void system_clear_exec_state_flag(uint8_t mask) {
   cli();
   sys_rt_exec_state &= ~(mask);
   SREG = sreg;
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_state &= ~(mask);
   __enable_irq();
@@ -396,7 +396,7 @@ void system_set_exec_alarm(uint8_t code) {
   cli();
   sys_rt_exec_alarm = code;
   SREG = sreg;
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_alarm |= (code);
   __enable_irq();
@@ -409,7 +409,7 @@ void system_clear_exec_alarm() {
   cli();
   sys_rt_exec_alarm = 0;
   SREG = sreg;
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
    __disable_irq();
   sys_rt_exec_alarm = 0;
   __enable_irq();
@@ -422,7 +422,7 @@ void system_set_exec_motion_override_flag(uint8_t mask) {
   cli();
   sys_rt_exec_motion_override |= (mask);
   SREG = sreg;
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_motion_override |= (mask);
   __enable_irq();
@@ -435,7 +435,7 @@ void system_set_exec_accessory_override_flag(uint8_t mask) {
   cli();
   sys_rt_exec_accessory_override |= (mask);
   SREG = sreg;
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_accessory_override |= (mask);
   __enable_irq();
@@ -448,7 +448,7 @@ void system_clear_exec_motion_overrides() {
   cli();
   sys_rt_exec_motion_override = 0;
   SREG = sreg;
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_motion_override = 0;
   __enable_irq();
@@ -461,7 +461,7 @@ void system_clear_exec_accessory_overrides() {
   cli();
   sys_rt_exec_accessory_override = 0;
   SREG = sreg;
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_accessory_override = 0;
   __enable_irq();

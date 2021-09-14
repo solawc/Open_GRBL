@@ -59,7 +59,7 @@ const __flash settings_t defaults = {\
     .max_travel[Y_AXIS] = (-DEFAULT_Y_MAX_TRAVEL),
     .max_travel[Z_AXIS] = (-DEFAULT_Z_MAX_TRAVEL)};
 
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 
 #endif
 // Method to store startup lines into EEPROM
@@ -107,7 +107,7 @@ void settings_restore(uint8_t restore_flag) {
   if (restore_flag & SETTINGS_RESTORE_DEFAULTS) {    
 #if defined(CPU_MAP_ATMEGA328P)
     settings = defaults;
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
     // settings.pulse_microseconds = DEFAULT_STEP_PULSE_MICROSECONDS;
     settings.fpulse_microseconds = DEFAULT_STEP_PULSE_MICROSECONDS;
     settings.stepper_idle_lock_time = DEFAULT_STEPPER_IDLE_LOCK_TIME;
@@ -366,7 +366,7 @@ uint8_t get_step_pin_mask(uint8_t axis_idx)
   if ( axis_idx == X_AXIS ) { return((1<<X_STEP_BIT)); }
   if ( axis_idx == Y_AXIS ) { return((1<<Y_STEP_BIT)); }
   return((1<<Z_STEP_BIT));
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   return hal_limits_get_gpio_status(axis_idx);
 #endif
 }
@@ -379,7 +379,7 @@ uint8_t get_direction_pin_mask(uint8_t axis_idx)
   if ( axis_idx == X_AXIS ) { return((1<<X_DIRECTION_BIT)); }
   if ( axis_idx == Y_AXIS ) { return((1<<Y_DIRECTION_BIT)); }
   return((1<<Z_DIRECTION_BIT));
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   return hal_limits_get_gpio_status(axis_idx);
 #endif
 }
@@ -392,7 +392,7 @@ uint8_t get_limit_pin_mask(uint8_t axis_idx)
   if ( axis_idx == X_AXIS ) { return((1<<X_LIMIT_BIT)); }
   if ( axis_idx == Y_AXIS ) { return((1<<Y_LIMIT_BIT)); }
   return((1<<Z_LIMIT_BIT));
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   return hal_limits_get_gpio_status(axis_idx);
 #endif
 }

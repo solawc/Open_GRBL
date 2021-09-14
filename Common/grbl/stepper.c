@@ -248,7 +248,7 @@ void st_wake_up()
 #if defined(CPU_MAP_ATMEGA328P)
   if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE)) { STEPPERS_DISABLE_PORT |= (1<<STEPPERS_DISABLE_BIT); }
   else { STEPPERS_DISABLE_PORT &= ~(1<<STEPPERS_DISABLE_BIT); }
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE))  { hal_step_en_gpio_set(true); }
   else { hal_step_en_gpio_set(false); }
 #endif
@@ -265,7 +265,7 @@ void st_wake_up()
     // Set step pulse time. Ad hoc computation from oscilloscope. Uses two's complement.
 #if defined(CPU_MAP_ATMEGA328P)
     st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
     // st.step_pulse_time = ((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND);
     st.step_pulse_time = (settings.fpulse_microseconds) * TICKS_PER_MICROSECOND;
 #endif
@@ -274,7 +274,7 @@ void st_wake_up()
   // Enable Stepper Driver Interrupt
 #if defined(CPU_MAP_ATMEGA328P)
   TIMSK1 |= (1<<OCIE1A);
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 
 
   hal_tim_move_step_irq_enable();
@@ -289,7 +289,7 @@ void st_go_idle()
 #if defined(CPU_MAP_ATMEGA328P)
   TIMSK1 &= ~(1<<OCIE1A); // Disable Timer1 interrupt
   TCCR1B = (TCCR1B & ~((1<<CS12) | (1<<CS11))) | (1<<CS10); // Reset clock to no prescaling.
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   hal_tim_move_step_irq_disable();
 #endif
   busy = false;
@@ -306,7 +306,7 @@ void st_go_idle()
 #if defined(CPU_MAP_ATMEGA328P)
     if (pin_state) { STEPPERS_DISABLE_PORT |= (1<<STEPPERS_DISABLE_BIT); }
     else { STEPPERS_DISABLE_PORT &= ~(1<<STEPPERS_DISABLE_BIT); }
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   if (pin_state) {  }
     else {  }
 #endif
@@ -363,7 +363,7 @@ void st_go_idle()
 // with probing and homing cycles that require true real-time positions.
 #if defined(CPU_MAP_ATMEGA328P)
 ISR(TIMER1_COMPA_vect)
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 void TIM4_IRQHandler(void)   // set timer
 #endif
 {
@@ -382,7 +382,7 @@ void TIM4_IRQHandler(void)   // set timer
   #ifdef ENABLE_DUAL_AXIS
     DIRECTION_PORT_DUAL = (DIRECTION_PORT_DUAL & ~DIRECTION_MASK_DUAL) | (st.dir_outbits_dual & DIRECTION_MASK_DUAL);
   #endif
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 
 #endif
 
@@ -399,7 +399,7 @@ void TIM4_IRQHandler(void)   // set timer
       STEP_PORT_DUAL = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | st.step_outbits_dual;
     #endif
   #endif
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   #ifdef STEP_PULSE_DELAY
     st.step_bits = (STEP_PORT & ~STEP_MASK) | st.step_outbits; // Store out_bits to prevent overwriting.
     #ifdef ENABLE_DUAL_AXIS
@@ -419,7 +419,7 @@ void TIM4_IRQHandler(void)   // set timer
 #if defined(CPU_MAP_ATMEGA328P)
   TCNT0 = st.step_pulse_time; // Reload Timer0 counter
   TCCR0B = (1<<CS01); // Begin Timer0. Full speed, 1/8 prescaler
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   hal_tim_step_irq_enable();
   hal_set_tim_prescaler(8);
 #endif
@@ -429,7 +429,7 @@ void TIM4_IRQHandler(void)   // set timer
 #if defined(CPU_MAP_ATMEGA328P)
   sei(); // Re-enable interrupts to allow Stepper Port Reset Interrupt to fire on-time.
          // NOTE: The remaining code in this ISR will finish before returning to main program.
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 
 #endif
 
@@ -448,7 +448,7 @@ void TIM4_IRQHandler(void)   // set timer
       // Initialize step segment timing per step and load number of steps to execute.
 #if defined(CPU_MAP_ATMEGA328P)
       OCR1A = st.exec_segment->cycles_per_tick;
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
       hal_tim_move_step_arr(st.exec_segment->cycles_per_tick - 1);
 #endif
       st.step_count = st.exec_segment->n_step; // NOTE: Can sometimes be zero when moving slow.
@@ -585,7 +585,7 @@ ISR(TIMER0_OVF_vect)
   #endif
   TCCR0B = 0; // Disable Timer0 to prevent re-entering this interrupt when it's not needed.
 }
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 
 void step_port_reset(void) {   // reset timer
 
@@ -655,7 +655,7 @@ void st_reset()
 #if defined(CPU_MAP_ATMEGA328P)
   STEP_PORT = (STEP_PORT & ~STEP_MASK) | step_port_invert_mask;
   DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | dir_port_invert_mask;
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 
 #endif
 
@@ -697,7 +697,7 @@ void stepper_init()
   #ifdef STEP_PULSE_DELAY
     TIMSK0 |= (1<<OCIE0A); // Enable Timer0 Compare Match A interrupt
   #endif
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   hal_motor_gpio_init();
   hal_tim_step_init();
   hal_tim_move_step_init();
@@ -1077,7 +1077,7 @@ void st_prep_buffer()
           sys.spindle_speed = 0.0;
 #if defined(CPU_MAP_ATMEGA328P)
           prep.current_spindle_pwm = SPINDLE_PWM_OFF_VALUE;
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 
 #endif
         }
@@ -1159,7 +1159,7 @@ void st_prep_buffer()
         }
       }
     #endif
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
   // Compute CPU cycles per step for the prepped segment.
     uint32_t cycles = ceil( (TICKS_PER_MICROSECOND * 1000000*60)*inv_rate ); // (cycles/step)  // ceil 向上取整
 

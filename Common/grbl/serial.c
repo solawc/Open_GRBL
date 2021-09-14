@@ -78,7 +78,7 @@ void serial_init()
 
   // enable rx, tx, and interrupt on complete reception of a byte
   UCSR0B |= (1<<RXEN0 | 1<<TXEN0 | 1<<RXCIE0);
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 
 #endif
   // defaults to 8-bit, no parity, 1 stop bit
@@ -108,7 +108,7 @@ void serial_write(uint8_t data) {
 #if defined(CPU_MAP_ATMEGA328P)
   // Enable Data Register Empty Interrupt to make sure tx-streaming is running
   UCSR0B |=  (1 << UDRIE0);
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
     // hal_uart_sendbyte(data);
 #endif
 }
@@ -132,7 +132,7 @@ ISR(SERIAL_UDRE)
   // Turn off Data Register Empty Interrupt to stop tx-streaming if this concludes the transfer
   if (tail == serial_tx_buffer_head) { UCSR0B &= ~(1 << UDRIE0); }
 }
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 
 #endif
 
@@ -211,7 +211,7 @@ ISR(SERIAL_RX)
       }
   }
 }
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 void USART1_IRQHandler (void) {
 
     volatile unsigned int IIR;

@@ -30,7 +30,7 @@ void grbl_main_task(void *parg) {
 	memset(sys_position,0,sizeof(sys_position)); // Clear machine position.
 #if defined(CPU_MAP_ATMEGA328P)
   	sei(); // Enable interrupts
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 	
 #endif
 

@@ -50,7 +50,7 @@ void spindle_init()
       SPINDLE_DIRECTION_DDR |= (1<<SPINDLE_DIRECTION_BIT); // Configure as output pin.
     #endif
   #endif
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
  
 #endif
   spindle_stop();
@@ -93,7 +93,7 @@ uint8_t spindle_get_state()
       #endif
     }
   #endif
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
    
 #endif
 
@@ -123,7 +123,7 @@ void spindle_stop()
       SPINDLE_ENABLE_PORT &= ~(1<<SPINDLE_ENABLE_BIT); // Set pin to low
     #endif
   #endif
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 	 
 #endif
 
@@ -155,7 +155,7 @@ void spindle_stop()
         SPINDLE_TCCRA_REGISTER |= (1<<SPINDLE_COMB_BIT); // Ensure PWM output is enabled.
       }
     #endif
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 		 
 #endif
 
@@ -233,7 +233,7 @@ void spindle_stop()
         sys.spindle_speed = rpm;
         pwm_value = floor((rpm-settings.rpm_min)*pwm_gradient) + SPINDLE_PWM_MIN_VALUE;
       }
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 			   
 #endif
 
@@ -292,7 +292,7 @@ void spindle_stop()
     #endif
 
   }
-#elif defined(CPU_MAP_STM32H750XB)
+#elif defined(CPU_STM32)
 			   
 #endif
   sys.report_ovr_counter = 0; // Set to report change immediately

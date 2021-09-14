@@ -38,7 +38,7 @@
 
 /* Define to reduce code size. */
 #define EEPROM_IGNORE_SELFPROG //!< Remove SPM flag polling.
-#elif defined(CPU_MAP_STM32H750XB) 
+#elif defined(CPU_STM32) 
 #include "grbl_hal.h"
 #endif
 
@@ -58,7 +58,7 @@ unsigned char eeprom_get_char( unsigned int addr )
 	EEAR = addr; // Set EEPROM address register.
 	EECR = (1<<EERE); // Start EEPROM read operation.
 	return EEDR; // Return the byte read from EEPROM.
-#elif defined(CPU_MAP_STM32H750XB) 
+#elif defined(CPU_STM32) 
     return hal_eeprom_get_char(addr);
 #endif
 }
@@ -132,7 +132,7 @@ void eeprom_put_char( unsigned int addr, unsigned char new_value )
 	}
 	
 	sei(); // Restore interrupt flag state.
-#elif defined(CPU_MAP_STM32H750XB) 
+#elif defined(CPU_STM32) 
     // hal_eeprom_put_char(addr, new_value);
 	eeprom_buf[addr] = new_value;
 #endif
