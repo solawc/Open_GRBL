@@ -339,7 +339,7 @@
               <MiscControls>--diag_suppress=1295,1035,111</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F429xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\App\freeRTOS\src\include;..\App\freeRTOS\app;..\App\freeRTOS\src\portable\RVDS\ARM_CM4F;..\App\grbl;..\App\grbl\grbl_task;..\Drivers\HAL_Driver;..\App\fatfs\src</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\App\grbl\grbl_task;..\Drivers\HAL_Driver;..\..\Common\grbl;..\..\Common\fatfs\src;..\..\Common\grbl\grbl_task;..\..\Common\freeRTOS\src\include;..\..\Common\freeRTOS\src\portable\MemMang;..\..\Common\freeRTOS\app;..\..\Common\freeRTOS\src\include;..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -586,32 +586,32 @@
             <File>
               <FileName>coolant_control.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\coolant_control.c</FilePath>
+              <FilePath>..\..\Common\grbl\coolant_control.c</FilePath>
             </File>
             <File>
               <FileName>eeprom.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\eeprom.c</FilePath>
+              <FilePath>..\..\Common\grbl\eeprom.c</FilePath>
             </File>
             <File>
               <FileName>gcode.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\gcode.c</FilePath>
+              <FilePath>..\..\Common\grbl\gcode.c</FilePath>
             </File>
             <File>
               <FileName>jog.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\jog.c</FilePath>
+              <FilePath>..\..\Common\grbl\jog.c</FilePath>
             </File>
             <File>
               <FileName>limits.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\limits.c</FilePath>
+              <FilePath>..\..\Common\grbl\limits.c</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\main.c</FilePath>
+              <FilePath>..\..\Common\grbl\main.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -667,62 +667,62 @@
             <File>
               <FileName>motion_control.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\motion_control.c</FilePath>
+              <FilePath>..\..\Common\grbl\motion_control.c</FilePath>
             </File>
             <File>
               <FileName>nuts_bolts.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\nuts_bolts.c</FilePath>
+              <FilePath>..\..\Common\grbl\nuts_bolts.c</FilePath>
             </File>
             <File>
               <FileName>planner.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\planner.c</FilePath>
+              <FilePath>..\..\Common\grbl\planner.c</FilePath>
             </File>
             <File>
               <FileName>print.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\print.c</FilePath>
+              <FilePath>..\..\Common\grbl\print.c</FilePath>
             </File>
             <File>
               <FileName>probe.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\probe.c</FilePath>
+              <FilePath>..\..\Common\grbl\probe.c</FilePath>
             </File>
             <File>
               <FileName>protocol.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\protocol.c</FilePath>
+              <FilePath>..\..\Common\grbl\protocol.c</FilePath>
             </File>
             <File>
               <FileName>report.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\report.c</FilePath>
+              <FilePath>..\..\Common\grbl\report.c</FilePath>
             </File>
             <File>
               <FileName>serial.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\serial.c</FilePath>
+              <FilePath>..\..\Common\grbl\serial.c</FilePath>
             </File>
             <File>
               <FileName>settings.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\settings.c</FilePath>
+              <FilePath>..\..\Common\grbl\settings.c</FilePath>
             </File>
             <File>
               <FileName>spindle_control.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\spindle_control.c</FilePath>
+              <FilePath>..\..\Common\grbl\spindle_control.c</FilePath>
             </File>
             <File>
               <FileName>stepper.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\stepper.c</FilePath>
+              <FilePath>..\..\Common\grbl\stepper.c</FilePath>
             </File>
             <File>
               <FileName>system.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\system.c</FilePath>
+              <FilePath>..\..\Common\grbl\system.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -732,7 +732,7 @@
             <File>
               <FileName>grbl_main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\grbl\grbl_task\grbl_main.c</FilePath>
+              <FilePath>..\..\Common\grbl\grbl_task\grbl_main.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -742,37 +742,37 @@
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\freeRTOS\src\croutine.c</FilePath>
+              <FilePath>..\..\Common\freeRTOS\src\croutine.c</FilePath>
             </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\freeRTOS\src\event_groups.c</FilePath>
+              <FilePath>..\..\Common\freeRTOS\src\event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\freeRTOS\src\list.c</FilePath>
+              <FilePath>..\..\Common\freeRTOS\src\list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\freeRTOS\src\queue.c</FilePath>
+              <FilePath>..\..\Common\freeRTOS\src\queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\freeRTOS\src\stream_buffer.c</FilePath>
+              <FilePath>..\..\Common\freeRTOS\src\stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\freeRTOS\src\tasks.c</FilePath>
+              <FilePath>..\..\Common\freeRTOS\src\tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\freeRTOS\src\timers.c</FilePath>
+              <FilePath>..\..\Common\freeRTOS\src\timers.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -780,14 +780,14 @@
           <GroupName>App/freeRTOS/port</GroupName>
           <Files>
             <File>
-              <FileName>port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\App\freeRTOS\src\portable\RVDS\ARM_CM4F\port.c</FilePath>
-            </File>
-            <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\freeRTOS\src\portable\MemMang\heap_4.c</FilePath>
+              <FilePath>..\..\Common\freeRTOS\src\portable\MemMang\heap_4.c</FilePath>
+            </File>
+            <File>
+              <FileName>port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F\port.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -797,7 +797,7 @@
             <File>
               <FileName>led_task.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\freeRTOS\app\led_task.c</FilePath>
+              <FilePath>..\..\Common\freeRTOS\app\led_task.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -807,22 +807,22 @@
             <File>
               <FileName>diskio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\fatfs\src\diskio.c</FilePath>
+              <FilePath>..\..\Common\fatfs\src\diskio.c</FilePath>
             </File>
             <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\fatfs\src\ff.c</FilePath>
+              <FilePath>..\..\Common\fatfs\src\ff.c</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\fatfs\src\ffsystem.c</FilePath>
+              <FilePath>..\..\Common\fatfs\src\ffsystem.c</FilePath>
             </File>
             <File>
               <FileName>ffunicode.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\fatfs\src\ffunicode.c</FilePath>
+              <FilePath>..\..\Common\fatfs\src\ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>

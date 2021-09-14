@@ -171,7 +171,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\App\grbl\stepper.c</Filename>
+          <Filename>C:\Users\Administrator\Desktop\ST_GRBL\STM32F4_GRBL\App\grbl\stepper.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\STM32F4_GRBL\../App/grbl/stepper.c\697</Expression>
         </Bp>
@@ -187,7 +187,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\App\grbl\settings.c</Filename>
+          <Filename>C:\Users\Administrator\Desktop\ST_GRBL\STM32F4_GRBL\App\grbl\settings.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\STM32F4_GRBL\../App/grbl/settings.c\151</Expression>
         </Bp>
@@ -203,7 +203,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\App\grbl\settings.c</Filename>
+          <Filename>C:\Users\Administrator\Desktop\ST_GRBL\STM32F4_GRBL\App\grbl\settings.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\STM32F4_GRBL\../App/grbl/settings.c\101</Expression>
         </Bp>
@@ -219,7 +219,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\App\grbl\eeprom.c</Filename>
+          <Filename>C:\Users\Administrator\Desktop\ST_GRBL\STM32F4_GRBL\App\grbl\eeprom.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\STM32F4_GRBL\../App/grbl/eeprom.c\151</Expression>
         </Bp>
@@ -235,7 +235,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\App\grbl\settings.c</Filename>
+          <Filename>C:\Users\Administrator\Desktop\ST_GRBL\STM32F4_GRBL\App\grbl\settings.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\STM32F4_GRBL\../App/grbl/settings.c\159</Expression>
         </Bp>
@@ -244,16 +244,16 @@
           <Type>0</Type>
           <LineNumber>75</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134227642</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
+          <BreakIfRCount>0</BreakIfRCount>
           <Filename>..\Drivers\HAL_Driver\hal_tim.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\STM32F4_GRBL\../Drivers/HAL_Driver/hal_tim.c\75</Expression>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -322,7 +322,7 @@
 
   <Group>
     <GroupName>Application/MDK-ARM</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -342,7 +342,7 @@
 
   <Group>
     <GroupName>Application/User/Core</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -793,7 +793,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\coolant_control.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\coolant_control.c</PathWithFileName>
       <FilenameWithoutPath>coolant_control.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -805,7 +805,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\eeprom.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\eeprom.c</PathWithFileName>
       <FilenameWithoutPath>eeprom.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -817,7 +817,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\gcode.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\gcode.c</PathWithFileName>
       <FilenameWithoutPath>gcode.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -829,7 +829,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\jog.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\jog.c</PathWithFileName>
       <FilenameWithoutPath>jog.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -841,7 +841,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\limits.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\limits.c</PathWithFileName>
       <FilenameWithoutPath>limits.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -853,7 +853,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\main.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -865,7 +865,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\motion_control.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\motion_control.c</PathWithFileName>
       <FilenameWithoutPath>motion_control.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -877,7 +877,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\nuts_bolts.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\nuts_bolts.c</PathWithFileName>
       <FilenameWithoutPath>nuts_bolts.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -889,7 +889,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\planner.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\planner.c</PathWithFileName>
       <FilenameWithoutPath>planner.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -901,7 +901,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\print.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\print.c</PathWithFileName>
       <FilenameWithoutPath>print.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -913,7 +913,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\probe.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\probe.c</PathWithFileName>
       <FilenameWithoutPath>probe.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -925,7 +925,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\protocol.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\protocol.c</PathWithFileName>
       <FilenameWithoutPath>protocol.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -937,7 +937,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\report.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\report.c</PathWithFileName>
       <FilenameWithoutPath>report.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -949,7 +949,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\serial.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\serial.c</PathWithFileName>
       <FilenameWithoutPath>serial.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -961,7 +961,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\settings.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\settings.c</PathWithFileName>
       <FilenameWithoutPath>settings.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -973,7 +973,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\spindle_control.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\spindle_control.c</PathWithFileName>
       <FilenameWithoutPath>spindle_control.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -985,7 +985,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\stepper.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\stepper.c</PathWithFileName>
       <FilenameWithoutPath>stepper.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -997,7 +997,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\system.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\system.c</PathWithFileName>
       <FilenameWithoutPath>system.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1006,7 +1006,7 @@
 
   <Group>
     <GroupName>App/grbl/task</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1017,7 +1017,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\grbl\grbl_task\grbl_main.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\grbl\grbl_task\grbl_main.c</PathWithFileName>
       <FilenameWithoutPath>grbl_main.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1026,7 +1026,7 @@
 
   <Group>
     <GroupName>App/freeRTOS/src</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1037,7 +1037,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\freeRTOS\src\croutine.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\freeRTOS\src\croutine.c</PathWithFileName>
       <FilenameWithoutPath>croutine.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1049,7 +1049,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\freeRTOS\src\event_groups.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\freeRTOS\src\event_groups.c</PathWithFileName>
       <FilenameWithoutPath>event_groups.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1061,7 +1061,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\freeRTOS\src\list.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\freeRTOS\src\list.c</PathWithFileName>
       <FilenameWithoutPath>list.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1073,7 +1073,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\freeRTOS\src\queue.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\freeRTOS\src\queue.c</PathWithFileName>
       <FilenameWithoutPath>queue.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1085,7 +1085,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\freeRTOS\src\stream_buffer.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\freeRTOS\src\stream_buffer.c</PathWithFileName>
       <FilenameWithoutPath>stream_buffer.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1097,7 +1097,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\freeRTOS\src\tasks.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\freeRTOS\src\tasks.c</PathWithFileName>
       <FilenameWithoutPath>tasks.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1109,7 +1109,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\freeRTOS\src\timers.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\freeRTOS\src\timers.c</PathWithFileName>
       <FilenameWithoutPath>timers.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1118,7 +1118,7 @@
 
   <Group>
     <GroupName>App/freeRTOS/port</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1129,8 +1129,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\freeRTOS\src\portable\RVDS\ARM_CM4F\port.c</PathWithFileName>
-      <FilenameWithoutPath>port.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\Common\freeRTOS\src\portable\MemMang\heap_4.c</PathWithFileName>
+      <FilenameWithoutPath>heap_4.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1141,8 +1141,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\freeRTOS\src\portable\MemMang\heap_4.c</PathWithFileName>
-      <FilenameWithoutPath>heap_4.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F\port.c</PathWithFileName>
+      <FilenameWithoutPath>port.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1161,7 +1161,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\freeRTOS\app\led_task.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\freeRTOS\app\led_task.c</PathWithFileName>
       <FilenameWithoutPath>led_task.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1170,7 +1170,7 @@
 
   <Group>
     <GroupName>App/fatfs</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1181,7 +1181,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\fatfs\src\diskio.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\fatfs\src\diskio.c</PathWithFileName>
       <FilenameWithoutPath>diskio.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1193,7 +1193,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\fatfs\src\ff.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\fatfs\src\ff.c</PathWithFileName>
       <FilenameWithoutPath>ff.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1205,7 +1205,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\fatfs\src\ffsystem.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\fatfs\src\ffsystem.c</PathWithFileName>
       <FilenameWithoutPath>ffsystem.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1217,7 +1217,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\App\fatfs\src\ffunicode.c</PathWithFileName>
+      <PathWithFileName>..\..\Common\fatfs\src\ffunicode.c</PathWithFileName>
       <FilenameWithoutPath>ffunicode.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
