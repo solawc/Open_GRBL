@@ -6,6 +6,8 @@
 extern TIM_HandleTypeDef htim3; 
 extern TIM_HandleTypeDef htim4; 
 
+#define STEP_RESET_TIMER    htim4
+#define STEP_SET_TIMER      htim3
 
 void hal_tim_step_init(void);
 void hal_tim_move_step_init(void);

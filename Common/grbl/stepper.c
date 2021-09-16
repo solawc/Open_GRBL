@@ -24,7 +24,8 @@
 
 // Some useful constants.
 #define DT_SEGMENT (1.0/(ACCELERATION_TICKS_PER_SECOND*60.0)) // min/segment
-#define REQ_MM_INCREMENT_SCALAR 1.25
+// #define REQ_MM_INCREMENT_SCALAR 1.25
+#define REQ_MM_INCREMENT_SCALAR 1.25f
 #define RAMP_ACCEL 0
 #define RAMP_CRUISE 1
 #define RAMP_DECEL 2
@@ -128,8 +129,10 @@ typedef struct {
 
   uint8_t execute_step;     // Flags step execution for each interrupt.
   uint8_t step_pulse_time;  // Step pulse reset time after step rise
-  uint8_t step_outbits;         // The next stepping-bits to be output
-  uint8_t dir_outbits;
+  // uint8_t step_outbits;         // The next stepping-bits to be output
+  // uint8_t dir_outbits;
+  PORTPINDEF step_outbits;         // The next stepping-bits to be output
+  PORTPINDEF dir_outbits;
   #ifdef ENABLE_DUAL_AXIS
     uint8_t step_outbits_dual;
     uint8_t dir_outbits_dual;
@@ -276,7 +279,13 @@ void st_wake_up()
   TIMSK1 |= (1<<OCIE1A);
 #elif defined(CPU_STM32)
 
+  hal_tim_set_reload(&htim4, st.step_pulse_time - 1);
+  hal_tim_generateEvent_update(&htim4);
+  hal_tim_clear_flag_update(&htim4);
 
+
+  hal_tim_set_reload(&htim3, st.exec_segment->cycles_per_tick - 1);
+  hal_tim_generateEvent_update(&htim3);
   hal_tim_move_step_irq_enable();
 #endif
 }
@@ -1098,8 +1107,12 @@ void st_prep_buffer()
        supported by Grbl (i.e. exceeding 10 meters axis travel at 200 step/mm).
     */
     float step_dist_remaining = prep.step_per_mm*mm_remaining; // Convert mm_remaining to steps
-    float n_steps_remaining = ceil(step_dist_remaining); // Round-up current steps remaining
-    float last_n_steps_remaining = ceil(prep.steps_remaining); // Round-up last steps remaining
+    // float n_steps_remaining = ceil(step_dist_remaining); // Round-up current steps remaining
+    // float last_n_steps_remaining = ceil(prep.steps_remaining); // Round-up last steps remaining
+    float n_steps_remaining = ceilf(step_dist_remaining); // Round-up current steps remaining
+    float last_n_steps_remaining = ceilf(prep.steps_remaining); // Round-up last steps remaining
+    
+    
     prep_segment->n_step = last_n_steps_remaining-n_steps_remaining; // Compute number of steps to execute.
 
     // Bail if we are at the end of a feed hold and don't have a step to execute.
@@ -1161,7 +1174,7 @@ void st_prep_buffer()
     #endif
 #elif defined(CPU_STM32)
   // Compute CPU cycles per step for the prepped segment.
-    uint32_t cycles = ceil( (TICKS_PER_MICROSECOND * 1000000*60)*inv_rate ); // (cycles/step)  // ceil 向上取整
+    uint32_t cycles = (uint32_t)ceilf( (TICKS_PER_MICROSECOND * 1000000*60)*inv_rate ); // (cycles/step)  // ceil 向上取整
 
     #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
       // Compute step timing and multi-axis smoothing level.

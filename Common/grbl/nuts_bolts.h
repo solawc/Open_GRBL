@@ -41,7 +41,7 @@
  #define B_MOTOR Y_AXIS // Must be Y_AXIS
 #endif
 
-#define F_CPU   180000000
+#define F_CPU   SystemCoreClock
 // Conversions
 #define MM_PER_INCH (25.40)
 #define INCH_PER_MM (0.0393701)
