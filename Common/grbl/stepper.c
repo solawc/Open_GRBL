@@ -24,8 +24,7 @@
 
 // Some useful constants.
 #define DT_SEGMENT (1.0/(ACCELERATION_TICKS_PER_SECOND*60.0)) // min/segment
-// #define REQ_MM_INCREMENT_SCALAR 1.25
-#define REQ_MM_INCREMENT_SCALAR 1.25f
+#define REQ_MM_INCREMENT_SCALAR 1.25
 #define RAMP_ACCEL 0
 #define RAMP_CRUISE 1
 #define RAMP_DECEL 2
@@ -129,10 +128,8 @@ typedef struct {
 
   uint8_t execute_step;     // Flags step execution for each interrupt.
   uint8_t step_pulse_time;  // Step pulse reset time after step rise
-  // uint8_t step_outbits;         // The next stepping-bits to be output
-  // uint8_t dir_outbits;
-  PORTPINDEF step_outbits;         // The next stepping-bits to be output
-  PORTPINDEF dir_outbits;
+  uint8_t step_outbits;         // The next stepping-bits to be output
+  uint8_t dir_outbits;
   #ifdef ENABLE_DUAL_AXIS
     uint8_t step_outbits_dual;
     uint8_t dir_outbits_dual;
@@ -269,8 +266,8 @@ void st_wake_up()
 #if defined(CPU_MAP_ATMEGA328P)
     st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
 #elif defined(CPU_STM32)
-    // st.step_pulse_time = ((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND);
-    st.step_pulse_time = (settings.fpulse_microseconds) * TICKS_PER_MICROSECOND;
+    st.step_pulse_time = ((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND);
+    // st.step_pulse_time = (settings.fpulse_microseconds) * TICKS_PER_MICROSECOND;
 #endif
 #endif
 
@@ -278,15 +275,12 @@ void st_wake_up()
 #if defined(CPU_MAP_ATMEGA328P)
   TIMSK1 |= (1<<OCIE1A);
 #elif defined(CPU_STM32)
-
-  hal_tim_set_reload(&htim4, st.step_pulse_time - 1);
-  hal_tim_generateEvent_update(&htim4);
-  hal_tim_clear_flag_update(&htim4);
-
-
-  hal_tim_set_reload(&htim3, st.exec_segment->cycles_per_tick - 1);
-  hal_tim_generateEvent_update(&htim3);
-  hal_tim_move_step_irq_enable();
+  hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time - 1);
+  hal_tim_generateEvent_update(&STEP_RESET_TIMER);
+  hal_tim_clear_flag_update(&STEP_RESET_TIMER);
+  hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
+  hal_tim_generateEvent_update(&STEP_SET_TIMER);
+  hal_set_timer_irq_enable();
 #endif
 }
 
@@ -299,10 +293,9 @@ void st_go_idle()
   TIMSK1 &= ~(1<<OCIE1A); // Disable Timer1 interrupt
   TCCR1B = (TCCR1B & ~((1<<CS12) | (1<<CS11))) | (1<<CS10); // Reset clock to no prescaling.
 #elif defined(CPU_STM32)
-  hal_tim_move_step_irq_disable();
+  hal_set_timer_irq_disable();
 #endif
   busy = false;
-
   // Set stepper driver idle state, disabled or enabled, depending on settings and circumstances.
   bool pin_state = false; // Keep enabled.
   if (((settings.stepper_idle_lock_time != 0xff) || sys_rt_exec_alarm || sys.state == STATE_SLEEP) && sys.state != STATE_HOMING) {
@@ -316,8 +309,8 @@ void st_go_idle()
     if (pin_state) { STEPPERS_DISABLE_PORT |= (1<<STEPPERS_DISABLE_BIT); }
     else { STEPPERS_DISABLE_PORT &= ~(1<<STEPPERS_DISABLE_BIT); }
 #elif defined(CPU_STM32)
-  if (pin_state) {  }
-    else {  }
+  if (pin_state) { hal_step_en_gpio_set(true); }
+    else { hal_step_en_gpio_set(false); }
 #endif
 }
 
@@ -373,16 +366,9 @@ void st_go_idle()
 #if defined(CPU_MAP_ATMEGA328P)
 ISR(TIMER1_COMPA_vect)
 #elif defined(CPU_STM32)
-void TIM4_IRQHandler(void)   // set timer
+void set_timer_irq_handler(void)   // set timer
 #endif
 {
-  if ((htim4.Instance->SR & 0x0001) != 0)                  // check interrupt source
-	{
-		htim4.Instance->SR &= ~(1 << 0);                          // clear UIF flag
-		htim4.Instance->CNT = 0;
-	}
-	else { return; }
-
   if (busy) { return; } // The busy-flag is used to avoid reentering this interrupt
 
 #if defined(CPU_MAP_ATMEGA328P)
@@ -429,8 +415,8 @@ void TIM4_IRQHandler(void)   // set timer
   TCNT0 = st.step_pulse_time; // Reload Timer0 counter
   TCCR0B = (1<<CS01); // Begin Timer0. Full speed, 1/8 prescaler
 #elif defined(CPU_STM32)
-  hal_tim_step_irq_enable();
-  hal_set_tim_prescaler(8);
+  hal_reset_timer_irq_enable();
+  // hal_set_tim_prescaler(8);
 #endif
 
   busy = true;
@@ -458,7 +444,7 @@ void TIM4_IRQHandler(void)   // set timer
 #if defined(CPU_MAP_ATMEGA328P)
       OCR1A = st.exec_segment->cycles_per_tick;
 #elif defined(CPU_STM32)
-      hal_tim_move_step_arr(st.exec_segment->cycles_per_tick - 1);
+      
 #endif
       st.step_count = st.exec_segment->n_step; // NOTE: Can sometimes be zero when moving slow.
       // If the new segment starts a new planner block, initialize stepper variables and counters.
@@ -517,7 +503,7 @@ void TIM4_IRQHandler(void)   // set timer
     st.counter_x += st.exec_block->steps[X_AXIS];
   #endif
   if (st.counter_x > st.exec_block->step_event_count) {
-    st.step_outbits |= (1<<X_STEP_BIT);
+    st.step_outbits |= (1<<X_STEP_BIT); 
     #if defined(ENABLE_DUAL_AXIS) && (DUAL_AXIS_SELECT == X_AXIS)
       st.step_outbits_dual = (1<<DUAL_STEP_BIT);
     #endif
@@ -596,7 +582,7 @@ ISR(TIMER0_OVF_vect)
 }
 #elif defined(CPU_STM32)
 
-void step_port_reset(void) {   // reset timer
+void reset_timer_irq_handler(void) {   // reset timer
 
   // uint8_t step_mask = 0;
   // step_mask = hal_get_moter_axis_gpio_mask();
@@ -708,8 +694,8 @@ void stepper_init()
   #endif
 #elif defined(CPU_STM32)
   hal_motor_gpio_init();
-  hal_tim_step_init();
-  hal_tim_move_step_init();
+  hal_set_timer_init();
+  hal_reset_timer_init();
 #endif
 }
 
@@ -1109,8 +1095,8 @@ void st_prep_buffer()
     float step_dist_remaining = prep.step_per_mm*mm_remaining; // Convert mm_remaining to steps
     // float n_steps_remaining = ceil(step_dist_remaining); // Round-up current steps remaining
     // float last_n_steps_remaining = ceil(prep.steps_remaining); // Round-up last steps remaining
-    float n_steps_remaining = ceilf(step_dist_remaining); // Round-up current steps remaining
-    float last_n_steps_remaining = ceilf(prep.steps_remaining); // Round-up last steps remaining
+    float n_steps_remaining = ceil(step_dist_remaining); // Round-up current steps remaining
+    float last_n_steps_remaining = ceil(prep.steps_remaining); // Round-up last steps remaining
     
     
     prep_segment->n_step = last_n_steps_remaining-n_steps_remaining; // Compute number of steps to execute.
@@ -1174,7 +1160,7 @@ void st_prep_buffer()
     #endif
 #elif defined(CPU_STM32)
   // Compute CPU cycles per step for the prepped segment.
-    uint32_t cycles = (uint32_t)ceilf( (TICKS_PER_MICROSECOND * 1000000*60)*inv_rate ); // (cycles/step)  // ceil 向上取整
+    uint32_t cycles = (uint32_t)ceil( (TICKS_PER_MICROSECOND * 1000000*60)*inv_rate ); // (cycles/step)  // ceil 向上取整
 
     #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
       // Compute step timing and multi-axis smoothing level.

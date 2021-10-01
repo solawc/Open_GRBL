@@ -38,7 +38,6 @@ void probe_init()
   probe_configure_invert_mask(false); // Initialize invert mask.
 #elif defined(CPU_STM32)
     
-    
 #endif
 }
 

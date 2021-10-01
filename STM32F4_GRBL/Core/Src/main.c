@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "gpio.h"
+#include "stepper.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -181,6 +182,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM6) {
     HAL_IncTick();
+  }
+  else if(htim == &STEP_RESET_TIMER) { 
+    reset_timer_irq_handler();
+  }
+  else if(htim == &STEP_SET_TIMER)  {
+    set_timer_irq_handler();
   }
   /* USER CODE BEGIN Callback 1 */
 

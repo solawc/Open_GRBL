@@ -147,7 +147,6 @@ void protocol_main_loop()
             line[char_counter++] = c;
           }
         }
-
       }
     }
 

@@ -62,7 +62,6 @@ void limits_init()
     WDTCSR = (1<<WDP0); // Set time-out at ~32msec.
   #endif
 #elif defined(CPU_STM32)
-
   hal_limit_gpio_init();
   if (bit_istrue(settings.flags,BITFLAG_HARD_LIMIT_ENABLE)) {
     hal_limit_gpio_irq_enable();

@@ -50,7 +50,7 @@ uint8_t hal_limits_get_gpio_status(uint8_t axis);
 
 void hal_motor_gpio_init(void);
 void hal_step_en_gpio_set(bool status);
-uint8_t hal_get_moter_dir_gpio_mask(void);
-uint8_t hal_get_moter_axis_gpio_mask(void);
+uint8_t hal_get_moter_dir_gpio_mask(uint8_t axis);
+uint8_t hal_get_moter_axis_gpio_mask(uint8_t axis);
 
 #endif

@@ -182,8 +182,8 @@ void report_grbl_help() {
 // NOTE: The numbering scheme here must correlate to storing in settings.c
 void report_grbl_settings() {
   // Print Grbl settings.
-  // report_util_uint8_setting(0,settings.pulse_microseconds);
-  report_util_uint8_setting(0,settings.fpulse_microseconds);
+  report_util_uint8_setting(0,settings.pulse_microseconds);
+  // report_util_uint8_setting(0,settings.fpulse_microseconds);
   report_util_uint8_setting(1,settings.stepper_idle_lock_time);
   report_util_uint8_setting(2,settings.step_invert_mask);
   report_util_uint8_setting(3,settings.dir_invert_mask);

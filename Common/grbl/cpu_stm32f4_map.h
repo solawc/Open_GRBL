@@ -14,9 +14,9 @@
 
   // Define step direction output pins. NOTE: All direction pins must be on the same port.
 #define DIRECTION_PORT    GPIOA
-#define X_DIRECTION_BIT   4 
-#define Y_DIRECTION_BIT   5  
-#define Z_DIRECTION_BIT   6
+#define X_DIRECTION_BIT   0 
+#define Y_DIRECTION_BIT   1  
+#define Z_DIRECTION_BIT   2
 #define DIRECTION_MASK    ((1<<X_DIRECTION_BIT)|(1<<Y_DIRECTION_BIT)|(1<<Z_DIRECTION_BIT)) // All direction bits
 
   // Define stepper driver enable/disable output pin.

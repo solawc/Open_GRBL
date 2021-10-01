@@ -68,6 +68,7 @@
 #define false 0
 #define true 1
 #define PORTPINDEF uint16_t         // to define port bit
+#define PIN_MASK PORTPINDEF
 #define printPgmString printString
 // ---------------------------------------------------------------------------------------
 // COMPILE-TIME ERROR CHECKING OF DEFINE VALUES:
