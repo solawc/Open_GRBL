@@ -378,7 +378,8 @@ void set_timer_irq_handler(void)   // set timer
     DIRECTION_PORT_DUAL = (DIRECTION_PORT_DUAL & ~DIRECTION_MASK_DUAL) | (st.dir_outbits_dual & DIRECTION_MASK_DUAL);
   #endif
 #elif defined(CPU_STM32)
-
+  uint8_t temp_dir = (st.dir_outbits & DIRECTION_MASK);
+  hal_set_dir_gpio_status(temp_dir);
 #endif
 
   // Then pulse the stepping pins // 设置脉冲引脚
@@ -402,6 +403,8 @@ void set_timer_irq_handler(void)   // set timer
     #endif
   #else  // Normal operation
     // STEP_PORT = (STEP_PORT & ~STEP_MASK) | st.step_outbits;
+    // uint8_t temp_step = 
+    hal_set_step_gpio_status(st.step_outbits);
     #ifdef ENABLE_DUAL_AXIS
       // STEP_PORT_DUAL = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | st.step_outbits_dual;
     #endif

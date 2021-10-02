@@ -58,7 +58,6 @@ const __flash settings_t defaults = {\
     .max_travel[X_AXIS] = (-DEFAULT_X_MAX_TRAVEL),
     .max_travel[Y_AXIS] = (-DEFAULT_Y_MAX_TRAVEL),
     .max_travel[Z_AXIS] = (-DEFAULT_Z_MAX_TRAVEL)};
-
 #elif defined(CPU_STM32)
 
 #endif

@@ -132,7 +132,6 @@ static void hal_motor_axis_gpio_init(void) {
 
 
 void hal_motor_gpio_init(void) {
-
 	hal_motor_en_gpio_init();
 	hal_motor_dir_gpio_init();
 	hal_motor_axis_gpio_init();
@@ -153,8 +152,31 @@ uint8_t hal_return_axix_gpio_status(uint8_t axis) {
 	return mask;
 }
 
-uint8_t hal_return_dir_gpio_status(uint8_t axis) {
+void hal_set_dir_gpio_status(uint8_t mask) {
 
+	if(mask & 0x01) {HAL_GPIO_WritePin(MOTOR_X_DIR_PORT, MOTOR_X_DIR_PIN, GPIO_PIN_SET);}
+	else {HAL_GPIO_WritePin(MOTOR_X_DIR_PORT, MOTOR_X_DIR_PIN, GPIO_PIN_RESET);}
+
+	if(mask & 0x02) {HAL_GPIO_WritePin(MOTOR_Y_DIR_PORT, MOTOR_Y_DIR_PIN, GPIO_PIN_SET);}
+	else {HAL_GPIO_WritePin(MOTOR_Y_DIR_PORT, MOTOR_Y_DIR_PIN, GPIO_PIN_RESET);}
+
+	if(mask & 0x04) {HAL_GPIO_WritePin(MOTOR_Z_DIR_PORT, MOTOR_Z_DIR_PIN, GPIO_PIN_SET);}
+	else {HAL_GPIO_WritePin(MOTOR_Z_DIR_PORT, MOTOR_Z_DIR_PIN, GPIO_PIN_RESET);}
+}
+
+void hal_set_step_gpio_status(uint8_t mask) {
+
+	if(mask & 0x01) {HAL_GPIO_WritePin(MOTOR_X_AXIS_PORT, MOTOR_X_AXIS_PIN, GPIO_PIN_SET);}
+	else {HAL_GPIO_WritePin(MOTOR_X_AXIS_PORT, MOTOR_X_AXIS_PIN, GPIO_PIN_RESET);}
+
+	if(mask & 0x02) {HAL_GPIO_WritePin(MOTOR_Y_AXIS_PORT, MOTOR_Y_AXIS_PIN, GPIO_PIN_SET);}
+	else {HAL_GPIO_WritePin(MOTOR_Y_AXIS_PORT, MOTOR_Y_AXIS_PIN, GPIO_PIN_RESET);}
+
+	if(mask & 0x04) {HAL_GPIO_WritePin(MOTOR_Z_AXIS_PORT, MOTOR_Z_AXIS_PIN, GPIO_PIN_SET);}
+	else {HAL_GPIO_WritePin(MOTOR_Z_AXIS_PORT, MOTOR_Z_AXIS_PIN, GPIO_PIN_RESET);}
+}
+
+uint8_t hal_return_dir_gpio_status(uint8_t axis) {
 	uint8_t mask = 0;
 	switch(axis) {
 		case X_AXIS: mask = READ_BIT(MOTOR_X_DIR_PORT->ODR, MOTOR_X_DIR_PIN); break;
@@ -165,16 +187,9 @@ uint8_t hal_return_dir_gpio_status(uint8_t axis) {
 }
 
 uint8_t hal_get_moter_dir_gpio_mask(uint8_t axis) {
-
-	// uint8_t mask = 0;
-	// mask |= hal_return_dir_gpio_status(Z_AXIS) << 2;
-	// mask |= hal_return_dir_gpio_status(Y_AXIS) << 1;
-	// mask |= hal_return_dir_gpio_status(X_AXIS) << 0;
-	// mask = hal_return_dir_gpio_status(axis);
-	if(axis == X_AXIS) return 0x01;// hal_return_dir_gpio_status(X_AXIS) << 0;
-	else if(axis == Y_AXIS)	return 0x02;//hal_return_dir_gpio_status(Y_AXIS) << 1;
-	else if(axis == Z_AXIS)	return 0x04;// hal_return_dir_hal_return_dir_gpio_status(Z_AXIS) << 2;
-	// return mask;
+	if(axis == X_AXIS) return 0x01;
+	else if(axis == Y_AXIS)	return 0x02;
+	else return 0x04;
 }
 
 uint8_t hal_get_moter_axis_gpio_mask(uint8_t axis) {
@@ -182,9 +197,12 @@ uint8_t hal_get_moter_axis_gpio_mask(uint8_t axis) {
 	// mask |= hal_return_axix_gpio_status(Z_AXIS) << 2;
 	// mask |= hal_return_axix_gpio_status(Y_AXIS) << 1;
 	// mask |= hal_return_axix_gpio_status(X_AXIS) << 0;
-	if(axis == X_AXIS) return hal_return_axix_gpio_status(X_AXIS) << 0;
-	else if(axis == Y_AXIS)	return hal_return_axix_gpio_status(Y_AXIS) << 1;
-	else return hal_return_axix_gpio_status(Z_AXIS) << 2;
+	// if(axis == X_AXIS) return hal_return_axix_gpio_status(X_AXIS) << 0;
+	// else if(axis == Y_AXIS)	return hal_return_axix_gpio_status(Y_AXIS) << 1;
+	// else return hal_return_axix_gpio_status(Z_AXIS) << 2;
+	if(axis == X_AXIS) return 0x01;
+	else if(axis == Y_AXIS)	return 0x02;
+	else return 0x04;
 }
 
 

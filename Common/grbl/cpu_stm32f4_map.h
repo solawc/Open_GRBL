@@ -7,9 +7,9 @@
 
   // Define step pulse output pins. NOTE: All step bit pins must be on the same port.
 #define STEP_PORT       GPIOB
-#define X_STEP_BIT      1  
-#define Y_STEP_BIT      2  
-#define Z_STEP_BIT      3
+#define X_STEP_BIT      0  
+#define Y_STEP_BIT      1  
+#define Z_STEP_BIT      2
 #define STEP_MASK       ((1<<X_STEP_BIT)|(1<<Y_STEP_BIT)|(1<<Z_STEP_BIT)) // All step bits
 
   // Define step direction output pins. NOTE: All direction pins must be on the same port.
