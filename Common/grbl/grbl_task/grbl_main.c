@@ -106,13 +106,11 @@ void grbl_task_create(void) {
 
 
 void _delay_ms(uint32_t tick) {
-
-
+	vTaskDelay(tick);
 }
 
-void _delau_us(uint32_t tick) {
-
-
+void _delay_us(uint32_t tick) {
+	__NOP();
 }
 
 

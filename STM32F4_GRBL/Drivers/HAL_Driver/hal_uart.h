@@ -9,19 +9,13 @@
 #define RX_BUFFER_SIZE	255
 #define TX_BUFFER_SIZE 	255
 
-typedef enum {
-
-	UART_9600,
-	UART_115200,
-	// ...待添加
-}LASER_BAUD_T;
+#define  __HAL_UART_CLK(uart)	__HAL_RCC_##uart##_CLK_ENABLE()
+#define  UART_IRQn(uart)        uart##_IRQn
 
 
-typedef struct {
+#define LaserUART		USART1
+#define LaserUART_IRQn  UART_IRQn(USART1)
 
-	LASER_BAUD_T laser_baud; 
-	
-}LASET_UART_T; 
 
 void hal_uart_gpio_init(void);
 void hal_uart_init(void);

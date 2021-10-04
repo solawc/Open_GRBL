@@ -4,11 +4,22 @@
 #include "main.h"
 
 // Flash choose
-//#define  sFLASH_ID  0xEF3015   //W25X16
-//#define  sFLASH_ID  0xEF4015   //W25Q16
-//#define  sFLASH_ID  0XEF4017   //W25Q64
-//#define  sFLASH_ID  0XEF4018   //W25Q128
-#define  sFLASH_ID  0XEF4019     //W25Q256
+#define  sFLASH_ID_X16  0xEF3015   //W25X16
+#define  sFLASH_ID_16  0xEF4015   //W25Q16
+#define  sFLASH_ID_64  0XEF4017   //W25Q64
+#define  sFLASH_ID_128  0XEF4018   //W25Q128
+#define  sFLASH_ID_256  0XEF4019     //W25Q256
+
+#define sFLAHS_SPI_MODE         0
+#define sFLASH_QSPI_MODE        1
+
+typedef struct{
+    uint32_t flash_id;
+    uint32_t flash_size;
+    uint32_t flash_delay_time;
+    uint8_t  flash_mode;
+}NFLASH_t;
+extern NFLASH_t sFlash;
 
 
 #define W25QXX_SPI_PORT             SPI5

@@ -51,7 +51,7 @@ void spindle_init()
     #endif
   #endif
 #elif defined(CPU_STM32)
- 
+    
 #endif
   spindle_stop();
 }

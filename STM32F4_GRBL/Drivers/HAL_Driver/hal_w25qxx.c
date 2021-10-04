@@ -5,6 +5,8 @@ spi_setting_t dev_w25qxx_spi_set;
 
 // __weak void hal_w25qxx_spi_init(void) {}
 
+NFLASH_t sFlash;
+
 static void hal_w25qxx_spi_gpio_init(void)
 {
 
@@ -35,18 +37,26 @@ static void hal_w25qxx_spi_gpio_init(void)
 }
 
 void hal_w25qxx_spi_init(void)
-{
+{   
 
-    hal_w25qxx_spi_gpio_init();
+    sFlash.flash_mode = sFLAHS_SPI_MODE;
+    sFlash.flash_delay_time = 10;
+    sFlash.flash_id = 0;
+    sFlash.flash_size = 0;
 
-    dev_w25qxx_spi_set.is_use_irq = false;
-    dev_w25qxx_spi_set.spi_num = SPI_5;
-    dev_w25qxx_spi_set.spi_speed = 8;
-    dev_w25qxx_spi_set.spi_mode_set = spi_mode_0;
-    dev_w25qxx_spi_set.spi_date_size = size_8bit_date;
-    dev_w25qxx_spi_set.spi_trans_mode = master_full_trans;
-    dev_w25qxx_spi_set.spi_frist_bit = trans_msb_mode;
-    hal_spi_begin(&dev_w25qxx_spi, &dev_w25qxx_spi_set);
+    if(sFlash.flash_mode == sFLAHS_SPI_MODE) {
+        hal_w25qxx_spi_gpio_init();
+        dev_w25qxx_spi_set.is_use_irq = false;
+        dev_w25qxx_spi_set.spi_num = SPI_5;
+        dev_w25qxx_spi_set.spi_speed = 8;
+        dev_w25qxx_spi_set.spi_mode_set = spi_mode_0;
+        dev_w25qxx_spi_set.spi_date_size = size_8bit_date;
+        dev_w25qxx_spi_set.spi_trans_mode = master_full_trans;
+        dev_w25qxx_spi_set.spi_frist_bit = trans_msb_mode;
+        hal_spi_begin(&dev_w25qxx_spi, &dev_w25qxx_spi_set);
+    }else {
+
+    }    
 }
 
 bool is_write_had_finish(void)
@@ -115,6 +125,17 @@ void w25qxx_init(void)
     dev_w25qxx_spi.dev_spi_init_cb = hal_w25qxx_spi_init;
     dev_w25qxx_spi.dev_spi_read_write_byte = w25qxx_write_read_16;
     hal_spi_register(&dev_w25qxx_spi);
+
+    sFlash.flash_id =  w25qxx_read_id();
+
+    switch(sFlash.flash_id) {
+        case sFLASH_ID_X16: sFlash.flash_size = (16 / 8) *1024; break;
+        case sFLASH_ID_16: sFlash.flash_size = (16 / 8) *1024; break;
+        case sFLASH_ID_64: sFlash.flash_size = (64 / 8) *1024; break;
+        case sFLASH_ID_128: sFlash.flash_size = (128 / 8) *1024; break;
+        case sFLASH_ID_256: sFlash.flash_size = (258 / 8) *1024; break;
+        default: sFlash.flash_size = 0; break;
+    }
 }
 
 uint32_t w25qxx_read_id(void)

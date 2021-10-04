@@ -91,10 +91,7 @@ int main(void)
   hal_uart_init();
   
   w25qxx_init();
-
-  uint32_t id = 0;
-  id = w25qxx_read_id(); 
-  printf("flash id = 0x%x\n", id);
+  printf("flash id = 0x%x, flash_size = %dMB\n", sFlash.flash_id, (sFlash.flash_size / 1024));
 
   vPortEnterCritical();
   led_task_creat();

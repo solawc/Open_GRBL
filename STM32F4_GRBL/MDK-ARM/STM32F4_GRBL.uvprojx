@@ -745,14 +745,14 @@
               <FilePath>..\..\Common\freeRTOS\src\croutine.c</FilePath>
             </File>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Common\freeRTOS\src\event_groups.c</FilePath>
-            </File>
-            <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Common\freeRTOS\src\list.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Common\freeRTOS\src\event_groups.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>

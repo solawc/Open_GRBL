@@ -20,8 +20,8 @@
 */
 
 #include "grbl.h"
-
-#define _delay_us 
+#include "grbl_main.h"
+// #define _delay_us 
 
 #define MAX_INT_DIGITS 8 // Maximum number of digits in int32 (and float)
 
