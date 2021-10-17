@@ -2,6 +2,7 @@
 
 dev_spi_t dev_w25qxx_spi;
 spi_setting_t dev_w25qxx_spi_set;
+spi_setting_t dev_sdcard_set;
 
 // __weak void hal_w25qxx_spi_init(void) {}
 
@@ -38,7 +39,6 @@ static void hal_w25qxx_spi_gpio_init(void)
 
 void hal_w25qxx_spi_init(void)
 {   
-
     sFlash.flash_mode = sFLAHS_SPI_MODE;
     sFlash.flash_delay_time = 10;
     sFlash.flash_id = 0;

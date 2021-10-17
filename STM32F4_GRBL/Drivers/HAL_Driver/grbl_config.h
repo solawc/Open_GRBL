@@ -2,9 +2,8 @@
 #define __grbl_config_h
 
 /*
-    Here is config st_grbl if want to enable fetura
-
-
+ * Here is config st_grbl if want to enable fetura
+ *
 */
 #define LCD_MKS_TS35
 #ifdef LCD_MKS_TS35

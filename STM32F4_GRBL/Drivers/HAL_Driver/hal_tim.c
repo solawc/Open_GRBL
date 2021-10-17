@@ -1,7 +1,6 @@
 #include "hal_tim.h"
 #include "stepper.h"
 
-STEP_TIM_t my_timer;
 
 
 /*  
@@ -11,6 +10,8 @@ STEP_TIM_t my_timer;
 */
 TIM_HandleTypeDef htim3;    // Configure Timer 1: Stepper Driver Interrupt
 TIM_HandleTypeDef htim4;    // Configure Timer 0: Stepper Port Reset Interrupt
+
+
 
 void hal_set_timer_init(void) {
 
@@ -83,6 +84,4 @@ void TIM4_IRQHandler(void) {
 void TIM3_IRQHandler(void) {
     HAL_TIM_IRQHandler(&STEP_SET_TIMER);
 }
-
-
 

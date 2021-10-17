@@ -378,7 +378,8 @@ void set_timer_irq_handler(void)   // set timer
     DIRECTION_PORT_DUAL = (DIRECTION_PORT_DUAL & ~DIRECTION_MASK_DUAL) | (st.dir_outbits_dual & DIRECTION_MASK_DUAL);
   #endif
 #elif defined(CPU_STM32)
-  uint8_t temp_dir = (st.dir_outbits & DIRECTION_MASK);
+  // uint8_t temp_dir = (st.dir_outbits & DIRECTION_MASK);
+  uint8_t temp_dir = (st.dir_outbits);
   hal_set_dir_gpio_status(temp_dir);
 #endif
 
@@ -449,7 +450,6 @@ void set_timer_irq_handler(void)   // set timer
 #elif defined(CPU_STM32)
       
 #endif
-
       st.step_count = st.exec_segment->n_step; // NOTE: Can sometimes be zero when moving slow.
       // If the new segment starts a new planner block, initialize stepper variables and counters.
       // NOTE: When the segment data index changes, this indicates a new planner block.

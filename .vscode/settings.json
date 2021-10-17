@@ -3,6 +3,9 @@
         "hal_tim.h": "c",
         "gpio.h": "c",
         "hal_uart.h": "c",
-        "grbl_hal.h": "c"
+        "grbl_hal.h": "c",
+        "hal_spi.h": "c",
+        "main.h": "c",
+        "stepper.h": "c"
     }
 }

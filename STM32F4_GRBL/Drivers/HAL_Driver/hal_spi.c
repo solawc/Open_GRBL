@@ -13,7 +13,7 @@ void set_spi_clk(dev_spi_t *drv, uint8_t num) {
             break;
         case SPI_2:
 #ifdef SPI2
-             __HAL_RCC_SPI2_CLK_ENABLE(); 
+            __HAL_RCC_SPI2_CLK_ENABLE(); 
             drv->hal_spi.Instance = SPI2; 
 #endif
             break;
@@ -118,7 +118,7 @@ void set_spi_irq_enable(dev_spi_t *drv, bool num) {
 void set_spi_others(dev_spi_t *drv) {
     drv->hal_spi.Init.NSS = SPI_NSS_SOFT;
     drv->hal_spi.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-    drv->hal_spi.Init.CRCPolynomial     = 7;
+    drv->hal_spi.Init.CRCPolynomial = 7;
 }
 
 void set_spi_start(dev_spi_t *drv) {
@@ -137,11 +137,10 @@ uint8_t hal_spi_transfer_revice_buff(dev_spi_t *drv, uint8_t byte) {
     return rdata;
 }
 
-
 /*******************************************************************************
  *                                  Warning
  *  Do not change the code if it is not necessary
- ******************************************************************************/
+ *******************************************************************************/
 
 void hal_spi_begin(dev_spi_t *drv, spi_setting_t *setting) {
 
@@ -182,7 +181,6 @@ void hal_spi_register(dev_spi_t *drv) {
     drv->dev_spi_init_cb();
 
     if(drv->is_use_dma == true) {
-
         // spi dma init
     }
 }
