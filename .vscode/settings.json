@@ -2,6 +2,7 @@
     "files.associations": {
         "hal_tim.h": "c",
         "gpio.h": "c",
-        "hal_uart.h": "c"
+        "hal_uart.h": "c",
+        "grbl_hal.h": "c"
     }
 }

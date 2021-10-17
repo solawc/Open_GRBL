@@ -1,6 +1,8 @@
 #include "hal_tim.h"
 #include "stepper.h"
 
+STEP_TIM_t my_timer;
+
 
 /*  
  * Note: I use general timer by tim3 and tim4 on stm32h429,
@@ -53,7 +55,7 @@ void hal_set_timer_irq_disable(void) {
 void hal_tim_set_reload(TIM_HandleTypeDef *htim, uint32_t reload) {
     WRITE_REG(htim->Instance->ARR, reload);
 }
-
+ 
 void hal_tim_generateEvent_update(TIM_HandleTypeDef *htim) {
     SET_BIT(htim->Instance->EGR, TIM_EGR_UG);
 }

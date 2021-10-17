@@ -135,28 +135,28 @@ void spindle_stop()
   // and stepper ISR. Keep routine small and efficient.
   void spindle_set_speed(uint8_t pwm_value)
   {
- #if defined(CPU_MAP_ATMEGA328P)
-    SPINDLE_OCR_REGISTER = pwm_value; // Set PWM output level.
-    #ifdef SPINDLE_ENABLE_OFF_WITH_ZERO_SPEED
-      if (pwm_value == SPINDLE_PWM_OFF_VALUE) {
-        spindle_stop();
-      } else {
-        SPINDLE_TCCRA_REGISTER |= (1<<SPINDLE_COMB_BIT); // Ensure PWM output is enabled.
-        #ifdef INVERT_SPINDLE_ENABLE_PIN
-          SPINDLE_ENABLE_PORT &= ~(1<<SPINDLE_ENABLE_BIT);
+    #if defined(CPU_MAP_ATMEGA328P)
+        SPINDLE_OCR_REGISTER = pwm_value; // Set PWM output level.
+        #ifdef SPINDLE_ENABLE_OFF_WITH_ZERO_SPEED
+          if (pwm_value == SPINDLE_PWM_OFF_VALUE) {
+            spindle_stop();
+          } else {
+            SPINDLE_TCCRA_REGISTER |= (1<<SPINDLE_COMB_BIT); // Ensure PWM output is enabled.
+            #ifdef INVERT_SPINDLE_ENABLE_PIN
+              SPINDLE_ENABLE_PORT &= ~(1<<SPINDLE_ENABLE_BIT);
+            #else
+              SPINDLE_ENABLE_PORT |= (1<<SPINDLE_ENABLE_BIT);
+            #endif
+          }
         #else
-          SPINDLE_ENABLE_PORT |= (1<<SPINDLE_ENABLE_BIT);
+          if (pwm_value == SPINDLE_PWM_OFF_VALUE) {
+            SPINDLE_TCCRA_REGISTER &= ~(1<<SPINDLE_COMB_BIT); // Disable PWM. Output voltage is zero.
+          } else {
+            SPINDLE_TCCRA_REGISTER |= (1<<SPINDLE_COMB_BIT); // Ensure PWM output is enabled.
+          }
         #endif
-      }
-    #else
-      if (pwm_value == SPINDLE_PWM_OFF_VALUE) {
-        SPINDLE_TCCRA_REGISTER &= ~(1<<SPINDLE_COMB_BIT); // Disable PWM. Output voltage is zero.
-      } else {
-        SPINDLE_TCCRA_REGISTER |= (1<<SPINDLE_COMB_BIT); // Ensure PWM output is enabled.
-      }
-    #endif
-#elif defined(CPU_STM32)
-		 
+    #elif defined(CPU_STM32)
+        
 #endif
 
   }

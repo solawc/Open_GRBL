@@ -35,25 +35,25 @@
 #define PREP_FLAG_PARKING bit(2)
 #define PREP_FLAG_DECEL_OVERRIDE bit(3)
 
-const PORTPINDEF step_pin_mask[N_AXIS] = {
+// const PORTPINDEF step_pin_mask[N_AXIS] = {
 
-	1 << X_STEP_BIT,
-	1 << Y_STEP_BIT,
-	1 << Z_STEP_BIT,
-};
+// 	1 << X_STEP_BIT,
+// 	1 << Y_STEP_BIT,
+// 	1 << Z_STEP_BIT,
+// };
 
-const PORTPINDEF direction_pin_mask[N_AXIS] = {
-	1 << X_DIRECTION_BIT,
-	1 << Y_DIRECTION_BIT,
-	1 << Z_DIRECTION_BIT,
-};
+// const PORTPINDEF direction_pin_mask[N_AXIS] = {
+// 	1 << X_DIRECTION_BIT,
+// 	1 << Y_DIRECTION_BIT,
+// 	1 << Z_DIRECTION_BIT,
+// };
 
-const PORTPINDEF limit_pin_mask[N_AXIS] =
-{
-	1 << X_LIMIT_BIT,
-	1 << Y_LIMIT_BIT,
-	1 << Z_LIMIT_BIT,
-};
+// const PORTPINDEF limit_pin_mask[N_AXIS] =
+// {
+// 	1 << X_LIMIT_BIT,
+// 	1 << Y_LIMIT_BIT,
+// 	1 << Z_LIMIT_BIT,
+// };
 
 
 // Define Adaptive Multi-Axis Step-Smoothing(AMASS) levels and cutoff frequencies. The highest level
@@ -449,6 +449,7 @@ void set_timer_irq_handler(void)   // set timer
 #elif defined(CPU_STM32)
       
 #endif
+
       st.step_count = st.exec_segment->n_step; // NOTE: Can sometimes be zero when moving slow.
       // If the new segment starts a new planner block, initialize stepper variables and counters.
       // NOTE: When the segment data index changes, this indicates a new planner block.

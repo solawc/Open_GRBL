@@ -19,10 +19,12 @@
 #include "hal_w25qxx.h"
 
 
+#define MCU_INFI_NAME       "STM32F429IG"
+#define MCU_INFO_FLASH      "1024K"
+#define MCU_INFO_RAM        "512K"
 
 
-
-
+void grbl_report_mcu_info(void);
 
 
 
