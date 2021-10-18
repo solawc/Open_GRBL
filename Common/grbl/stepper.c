@@ -590,6 +590,9 @@ void reset_timer_irq_handler(void) {   // reset timer
 
   // uint8_t step_mask = 0;
   // step_mask = hal_get_moter_axis_gpio_mask();
+  // hal_set_step_gpio_toggle(step_port_invert_mask);
+  hal_set_step_gpio_status(step_port_invert_mask);
+  hal_reset_timer_irq_disable();
 }
 
 

@@ -168,15 +168,23 @@ void hal_set_dir_gpio_status(uint8_t mask) {
 
 void hal_set_step_gpio_status(uint8_t mask) {
 
-	if(mask & 0x01) {HAL_GPIO_WritePin(MOTOR_X_AXIS_PORT, MOTOR_X_AXIS_PIN, GPIO_PIN_SET);}
+	if(mask == 0x01) {HAL_GPIO_WritePin(MOTOR_X_AXIS_PORT, MOTOR_X_AXIS_PIN, GPIO_PIN_SET);}
 	else {HAL_GPIO_WritePin(MOTOR_X_AXIS_PORT, MOTOR_X_AXIS_PIN, GPIO_PIN_RESET);}
 
-	if(mask & 0x02) {HAL_GPIO_WritePin(MOTOR_Y_AXIS_PORT, MOTOR_Y_AXIS_PIN, GPIO_PIN_SET);}
+	if(mask == 0x02) {HAL_GPIO_WritePin(MOTOR_Y_AXIS_PORT, MOTOR_Y_AXIS_PIN, GPIO_PIN_SET);}
 	else {HAL_GPIO_WritePin(MOTOR_Y_AXIS_PORT, MOTOR_Y_AXIS_PIN, GPIO_PIN_RESET);}
 
-	if(mask & 0x04) {HAL_GPIO_WritePin(MOTOR_Z_AXIS_PORT, MOTOR_Z_AXIS_PIN, GPIO_PIN_SET);}
+	if(mask == 0x04) {HAL_GPIO_WritePin(MOTOR_Z_AXIS_PORT, MOTOR_Z_AXIS_PIN, GPIO_PIN_SET);}
 	else {HAL_GPIO_WritePin(MOTOR_Z_AXIS_PORT, MOTOR_Z_AXIS_PIN, GPIO_PIN_RESET);}
 }
+
+void hal_set_step_gpio_toggle(uint8_t mask) {
+
+	if(mask == 0x01) {HAL_GPIO_TogglePin(MOTOR_X_AXIS_PORT, MOTOR_X_AXIS_PIN);}
+	if(mask == 0x02) {HAL_GPIO_TogglePin(MOTOR_Y_AXIS_PORT, MOTOR_Y_AXIS_PIN);}
+	if(mask == 0x04) {HAL_GPIO_TogglePin(MOTOR_Z_AXIS_PORT, MOTOR_Z_AXIS_PIN);}
+}
+
 
 uint8_t hal_return_dir_gpio_status(uint8_t axis) {
 	uint8_t mask = 0;

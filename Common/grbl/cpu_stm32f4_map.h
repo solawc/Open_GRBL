@@ -23,12 +23,9 @@
 #define STEPPERS_DISABLE_PORT   GPIOA
 #define STEPPERS_DISABLE_BIT    1
 #define STEPPERS_DISABLE_MASK   (1<<STEPPERS_DISABLE_BIT)
-// #define SetStepperDisableBit() GPIO_SetBits(STEPPERS_DISABLE_PORT,STEPPERS_DISABLE_MASK)
-// #define ResetStepperDisableBit() GPIO_ResetBits(STEPPERS_DISABLE_PORT,STEPPERS_DISABLE_MASK)
 
-
-  // Define homing/hard limit switch input pins and limit interrupt vectors. 
-  // NOTE: All limit bit pins must be on the same port
+// Define homing/hard limit switch input pins and limit interrupt vectors. 
+// NOTE: All limit bit pins must be on the same port
 #define LIMIT_PORT       GPIOB
 #define X_LIMIT_BIT       0  
 #define Y_LIMIT_BIT       13  

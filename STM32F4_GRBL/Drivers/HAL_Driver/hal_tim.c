@@ -11,7 +11,7 @@
 TIM_HandleTypeDef htim3;    // Configure Timer 1: Stepper Driver Interrupt
 TIM_HandleTypeDef htim4;    // Configure Timer 0: Stepper Port Reset Interrupt
 
-
+TIM_HandleTypeDef htim8;
 
 void hal_set_timer_init(void) {
 
@@ -24,7 +24,7 @@ void hal_set_timer_init(void) {
     htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&htim3);
 
-    HAL_NVIC_SetPriority(TIM3_IRQn, 0, 2);
+    HAL_NVIC_SetPriority(TIM3_IRQn, 0, 1);
     HAL_NVIC_DisableIRQ(TIM3_IRQn);
     HAL_TIM_Base_Start_IT(&htim3);
 }
@@ -84,4 +84,61 @@ void TIM4_IRQHandler(void) {
 void TIM3_IRQHandler(void) {
     HAL_TIM_IRQHandler(&STEP_SET_TIMER);
 }
+
+
+/*******************PWM SET***************************/
+
+void hal_pwm_init() {
+
+    TIM_MasterConfigTypeDef sMasterConfig = {0};
+    TIM_OC_InitTypeDef sConfigOC = {0};
+    TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
+
+    htim8.Instance = TIM8;
+    htim8.Init.Prescaler = 1000;
+    htim8.Init.CounterMode = TIM_COUNTERMODE_UP;
+    htim8.Init.Period = 90;
+    htim8.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+    htim8.Init.RepetitionCounter = 0;
+    htim8.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+    if (HAL_TIM_OC_Init(&htim8) != HAL_OK)
+    {
+    Error_Handler();
+    }
+    sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+    sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+    if (HAL_TIMEx_MasterConfigSynchronization(&htim8, &sMasterConfig) != HAL_OK)
+    {
+    Error_Handler();
+    }
+    sConfigOC.OCMode = TIM_OCMODE_PWM1;
+    sConfigOC.Pulse = 50;
+    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+    sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+    sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
+    sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+    if (HAL_TIM_OC_ConfigChannel(&htim8, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+    {
+    Error_Handler();
+    }
+    sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
+    sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
+    sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
+    sBreakDeadTimeConfig.DeadTime = 0;
+    sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
+    sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
+    sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
+    if (HAL_TIMEx_ConfigBreakDeadTime(&htim8, &sBreakDeadTimeConfig) != HAL_OK)
+    {
+    Error_Handler();
+    }
+}
+
+
+void hal_pwm_set(uint32_t duty) {
+
+
+}
+
 

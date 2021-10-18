@@ -6,6 +6,8 @@
         "grbl_hal.h": "c",
         "hal_spi.h": "c",
         "main.h": "c",
-        "stepper.h": "c"
+        "stepper.h": "c",
+        "hal_i2c.h": "c",
+        "hal_gpio.h": "c"
     }
 }
