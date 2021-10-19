@@ -266,7 +266,7 @@ void st_wake_up()
 #if defined(CPU_MAP_ATMEGA328P)
     st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
 #elif defined(CPU_STM32)
-    st.step_pulse_time = ((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND);
+    st.step_pulse_time = ((settings.pulse_microseconds) * TICKS_PER_MICROSECOND);
     // st.step_pulse_time = (settings.fpulse_microseconds) * TICKS_PER_MICROSECOND;
 #endif
 #endif
@@ -278,6 +278,7 @@ void st_wake_up()
   hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time - 1);
   hal_tim_generateEvent_update(&STEP_RESET_TIMER);
   hal_tim_clear_flag_update(&STEP_RESET_TIMER);
+  
   hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
   hal_tim_generateEvent_update(&STEP_SET_TIMER);
   hal_set_timer_irq_enable();
@@ -380,6 +381,7 @@ void set_timer_irq_handler(void)   // set timer
 #elif defined(CPU_STM32)
   // uint8_t temp_dir = (st.dir_outbits & DIRECTION_MASK);
   uint8_t temp_dir = (st.dir_outbits);
+  // printf("set dir , temp_dir = 0x%x\n", temp_dir);
   hal_set_dir_gpio_status(temp_dir);
 #endif
 
@@ -439,6 +441,8 @@ void set_timer_irq_handler(void)   // set timer
       // Initialize new step segment and load number of steps to execute
       st.exec_segment = &segment_buffer[segment_buffer_tail];
 
+      hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
+      
       #ifndef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
         // With AMASS is disabled, set timer prescaler for segments with slow step frequencies (< 250Hz).
         TCCR1B = (TCCR1B & ~(0x07<<CS10)) | (st.exec_segment->prescaler<<CS10);
@@ -593,7 +597,7 @@ void reset_timer_irq_handler(void) {   // reset timer
   // hal_set_step_gpio_toggle(step_port_invert_mask);
   hal_set_step_gpio_status(step_port_invert_mask);
   hal_reset_timer_irq_disable();
-}
+} 
 
 
 #endif

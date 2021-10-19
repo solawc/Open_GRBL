@@ -44,7 +44,6 @@ void hal_reset_timer_init(void) {
     HAL_TIM_Base_Start_IT(&htim4);
 }
 
-
 void hal_set_timer_irq_enable(void) {
     HAL_NVIC_EnableIRQ(TIM3_IRQn);
 }
