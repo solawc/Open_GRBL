@@ -5,6 +5,10 @@
 
 void SystemClock_Config(void);
 
+FATFS fs;
+FIL fnew;
+FRESULT res_flash;
+UINT fnum;
 
 /**
   * @brief  The application entry point.
@@ -20,10 +24,12 @@ int main(void)
 
   hal_led_gpio_init();
   
+  hal_led_off();
+
   hal_uart_init();
   
   w25qxx_init();
-  
+
   grbl_report_mcu_info();
 
   vPortEnterCritical();

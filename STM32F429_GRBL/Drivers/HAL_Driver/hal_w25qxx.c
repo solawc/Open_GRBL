@@ -48,7 +48,7 @@ void hal_w25qxx_spi_init(void)
         hal_w25qxx_spi_gpio_init();
         dev_w25qxx_spi_set.is_use_irq = false;
         dev_w25qxx_spi_set.spi_num = SPI_5;
-        dev_w25qxx_spi_set.spi_speed = 8;
+        dev_w25qxx_spi_set.spi_speed = 2;
         dev_w25qxx_spi_set.spi_mode_set = spi_mode_0;
         dev_w25qxx_spi_set.spi_date_size = size_8bit_date;
         dev_w25qxx_spi_set.spi_trans_mode = master_full_trans;
@@ -126,6 +126,8 @@ void w25qxx_init(void)
     dev_w25qxx_spi.dev_spi_read_write_byte = w25qxx_write_read_16;
     hal_spi_register(&dev_w25qxx_spi);
 
+    w25qxx_enter_flash_mode();
+
     sFlash.flash_id =  w25qxx_read_id();
 
     switch(sFlash.flash_id) {
@@ -189,6 +191,10 @@ void w25qxx_write_sr_reg(uint8_t reg, uint8_t sr)
     case 3:
         command = W25X_ReadStatusReg3;
         break;
+    case 4:
+        command = W25X_PowerDown;
+    break;
+    
     default:
         command = W25X_ReadStatusReg;
         break;
@@ -215,87 +221,204 @@ void w25qxx_write_disable(void)
 
 void w25qxx_wait_busy(void)
 {
-    while ((w25qxx_read_sr_reg(1) & 0x01) == 0x01); // 等待BUSY位清空
+    while ((w25qxx_read_sr_reg(1) & 0x01) == 0x01); // 等待BUSY位清�?
 }
 
-void w25qxx_read_buff(uint8_t *pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead)
-{
-    uint16_t i;
-    w25qxx_enable();                                     //使能器件
-    w25qxx_read_write_byte(W25X_ReadData);               //发送读取命令
-    w25qxx_read_write_byte((uint8_t)((ReadAddr) >> 16)); //发送24bit地址
-    w25qxx_read_write_byte((uint8_t)((ReadAddr) >> 8));
-    w25qxx_read_write_byte((uint8_t)ReadAddr);
-    for (i = 0; i < NumByteToRead; i++)
-    {
-        pBuffer[i] = w25qxx_read_write_byte(0XFF); //循环读数
-    }
+void w25qxx_enter_power_down(void) {
+    w25qxx_enable();
+    w25qxx_read_write_byte(W25X_PowerDown);
     w25qxx_disable();
 }
 
-void w15qxx_write_page(uint8_t *pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite)
-{
-    uint16_t i;
-    w25qxx_write_enable();                    
-    w25qxx_enable();                          
-    w25qxx_read_write_byte(W25X_PageProgram); 
-
-    w25qxx_read_write_byte((uint8_t)((WriteAddr) >> 16)); 
-    w25qxx_read_write_byte((uint8_t)((WriteAddr) >> 8));
-    w25qxx_read_write_byte((uint8_t)WriteAddr);
-    for (i = 0; i < NumByteToWrite; i++)
-    {
-        w25qxx_read_write_byte(pBuffer[i]); 
-    }
+void w25qxx_wakeup(void) {
+    w25qxx_enable();
+    w25qxx_read_write_byte(W25X_ReleasePowerDown);
     w25qxx_disable();
-    w25qxx_wait_busy(); 
 }
 
-void w25qxx_write_no_check(uint8_t *pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite)
+// void SPI_FLASH_Mode_Init(void)
+void w25qxx_enter_flash_mode(void)
 {
-    uint16_t pageremain;
-    pageremain = 256 - WriteAddr % 256; 
-    if (NumByteToWrite <= pageremain)
-        pageremain = NumByteToWrite;
-    while (1)
-    {
-        w15qxx_write_page(pBuffer, WriteAddr, pageremain);
-        if (NumByteToWrite == pageremain)
-            break; 
-        else       
-        {
-            pBuffer += pageremain;
-            WriteAddr += pageremain;
-
-            NumByteToWrite -= pageremain; 
-            if (NumByteToWrite > 256)
-                pageremain = 256; 
-            else
-                pageremain = NumByteToWrite; 
-        }
-    };
+	uint8_t Temp;
+	w25qxx_enable();
+	w25qxx_read_write_byte(W25X_ReadStatusRegister3); 
+	Temp = w25qxx_read_write_byte(Dummy_Byte);
+	w25qxx_disable();
+	
+	if((Temp & 0x01) == 0)
+	{
+		w25qxx_enable();
+		w25qxx_read_write_byte(W25X_Enter4ByteMode);
+		w25qxx_disable();
+	}
 }
 
-void w25qxx_erase_chip(void)   
-{                                   
-    w25qxx_write_enable();                
-    w25qxx_wait_busy();   
-  	w25qxx_enable();                      
-    w25qxx_read_write_byte(W25X_ChipErase);   
-	w25qxx_disable();                        
-	w25qxx_wait_busy();   				  
-} 
+void w25qxx_sector_erase(uint32_t SectorAddr)
+{
+  w25qxx_write_enable();
 
-void w25qxx_erase_sector(uint32_t Dst_Addr)   
-{  	  
- 	Dst_Addr*=4096;
-    w25qxx_write_enable();                
-    w25qxx_wait_busy();   
-  	w25qxx_enable();                         
-    w25qxx_read_write_byte(W25X_SectorErase); 
-    w25qxx_read_write_byte((uint8_t)((Dst_Addr)>>16));  
-    w25qxx_read_write_byte((uint8_t)((Dst_Addr)>>8));   
-    w25qxx_read_write_byte((uint8_t)Dst_Addr);  
-	w25qxx_disable();                            
-    w25qxx_wait_busy();   				    
-} 
+  w25qxx_wait_busy();
+  
+  w25qxx_enable();
+
+  w25qxx_read_write_byte(W25X_SectorErase);
+
+  w25qxx_read_write_byte((SectorAddr & 0xFF000000) >> 24);
+
+  w25qxx_read_write_byte((SectorAddr & 0xFF0000) >> 16);
+
+  w25qxx_read_write_byte((SectorAddr & 0xFF00) >> 8);
+
+  w25qxx_read_write_byte(SectorAddr & 0xFF);
+
+  w25qxx_disable();
+
+  w25qxx_wait_busy();
+}
+
+void w25qxx_bulk_erase(void)
+{
+  w25qxx_write_enable();
+
+  w25qxx_enable();
+
+  w25qxx_read_write_byte(W25X_ChipErase);
+
+  w25qxx_disable();
+
+  w25qxx_wait_busy();
+}
+
+void w25qxx_page_write(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite)
+{
+  w25qxx_write_enable();
+
+  w25qxx_enable();
+
+  w25qxx_read_write_byte(W25X_PageProgram);
+
+  w25qxx_read_write_byte((WriteAddr & 0xFF000000) >> 24);
+
+  w25qxx_read_write_byte((WriteAddr & 0xFF0000) >> 16);
+
+  w25qxx_read_write_byte((WriteAddr & 0xFF00) >> 8);
+
+  w25qxx_read_write_byte(WriteAddr & 0xFF);
+  
+  if(NumByteToWrite > SPI_FLASH_PerWritePageSize)
+  {
+     NumByteToWrite = SPI_FLASH_PerWritePageSize;
+  }
+
+  while (NumByteToWrite--)
+  {
+    w25qxx_read_write_byte(*pBuffer);
+
+    pBuffer++;
+  }
+
+  w25qxx_disable();
+
+  w25qxx_wait_busy();
+}
+
+void w25qxx_buffer_write(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite)
+{
+  uint8_t NumOfPage = 0, NumOfSingle = 0, Addr = 0, count = 0, temp = 0;
+	
+  Addr = WriteAddr % SPI_FLASH_PageSize;
+	
+  count = SPI_FLASH_PageSize - Addr;	
+
+  NumOfPage =  NumByteToWrite / SPI_FLASH_PageSize;
+
+  NumOfSingle = NumByteToWrite % SPI_FLASH_PageSize;
+
+  if (Addr == 0) {
+    if (NumOfPage == 0) 
+    {
+      w25qxx_page_write(pBuffer, WriteAddr, NumByteToWrite);
+    }
+    else {
+
+      while (NumOfPage--) {
+        w25qxx_page_write(pBuffer, WriteAddr, SPI_FLASH_PageSize);
+        WriteAddr +=  SPI_FLASH_PageSize;
+        pBuffer += SPI_FLASH_PageSize;
+      }
+			
+      w25qxx_page_write(pBuffer, WriteAddr, NumOfSingle);
+    }
+  }
+
+  else {
+    if (NumOfPage == 0) {
+
+      if (NumOfSingle > count) 
+      {
+        temp = NumOfSingle - count;
+
+        w25qxx_page_write(pBuffer, WriteAddr, count);
+
+        WriteAddr +=  count;
+
+        pBuffer += count;
+				
+        w25qxx_page_write(pBuffer, WriteAddr, temp);
+      }
+      else 
+      {				
+        w25qxx_page_write(pBuffer, WriteAddr, NumByteToWrite);
+      }
+    }
+    else {
+			
+      NumByteToWrite -= count;
+      NumOfPage =  NumByteToWrite / SPI_FLASH_PageSize;
+      NumOfSingle = NumByteToWrite % SPI_FLASH_PageSize;
+
+      w25qxx_page_write(pBuffer, WriteAddr, count);
+
+      WriteAddr +=  count;
+
+      pBuffer += count;
+
+      while (NumOfPage--)
+      {
+        w25qxx_page_write(pBuffer, WriteAddr, SPI_FLASH_PageSize);
+        WriteAddr +=  SPI_FLASH_PageSize;
+        pBuffer += SPI_FLASH_PageSize;
+      }
+      if (NumOfSingle != 0)
+      {
+        w25qxx_page_write(pBuffer, WriteAddr, NumOfSingle);
+      }
+    }
+  }
+}
+
+void w25qxx_buffer_read(uint8_t* pBuffer, uint32_t ReadAddr, uint32_t NumByteToRead)
+{
+  w25qxx_enable();
+
+  w25qxx_read_write_byte(W25X_ReadData);
+
+  w25qxx_read_write_byte((ReadAddr & 0xFF000000) >> 24);
+
+  w25qxx_read_write_byte((ReadAddr & 0xFF0000) >> 16);
+
+  w25qxx_read_write_byte((ReadAddr& 0xFF00) >> 8);
+
+  w25qxx_read_write_byte(ReadAddr & 0xFF);
+
+  while (NumByteToRead--)
+  {
+    *pBuffer = w25qxx_read_write_byte(Dummy_Byte);
+
+    pBuffer++;
+  }
+  w25qxx_disable();
+}
+
+
+

@@ -34,6 +34,8 @@ extern "C" {
 #include "freertos.h"
 #include "task.h"
 
+#include "ff.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 

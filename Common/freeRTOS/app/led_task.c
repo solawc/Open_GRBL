@@ -7,7 +7,7 @@ void f_led_task(void *parg)   {
 	hal_led_gpio_init();
 
 	while(1) {
-		hal_led_toggle();
+		// hal_led_toggle();
 		vTaskDelay(500);
 	}
 }

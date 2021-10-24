@@ -9,6 +9,8 @@
 
 #include "ff.h"			/* Obtains integer types */
 #include "diskio.h"		/* Declarations of disk functions */
+#include "hal_w25qxx.h"
+
 
 /* Definitions of physical drive number for each drive */
 #define DEV_RAM		0	/* Example: Map Ramdisk to physical drive 0 */
@@ -95,7 +97,6 @@ DSTATUS disk_initialize (
 
 	case DEV_FLASH :
 
-
 		return stat;
 
 	}
@@ -115,7 +116,7 @@ DRESULT disk_read (
 	UINT count		/* Number of sectors to read */
 )
 {
-	DRESULT res;
+	DRESULT res = RES_PARERR;
 	int result;
 
 	switch (pdrv) {
@@ -147,7 +148,6 @@ DRESULT disk_read (
 		return res;
 
 	case DEV_FLASH :
-
 
 		return res;
 	}

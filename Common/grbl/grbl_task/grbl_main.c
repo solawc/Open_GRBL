@@ -17,7 +17,9 @@ volatile uint8_t sys_rt_exec_accessory_override; // Global realtime executor bit
 
 
 void grbl_main_task(void *parg) {
+	
 	while(1) {
+
 	hal_flash_unlock();
 	hal_eeprom_init();
 

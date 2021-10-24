@@ -13,6 +13,9 @@
 #define sFLAHS_SPI_MODE         0
 #define sFLASH_QSPI_MODE        1
 
+#define SPI_FLASH_PageSize              256
+#define SPI_FLASH_PerWritePageSize      256
+
 typedef struct{
     uint32_t flash_id;
     uint32_t flash_size;
@@ -20,6 +23,8 @@ typedef struct{
     uint8_t  flash_mode;
 }NFLASH_t;
 extern NFLASH_t sFlash;
+
+
 
 
 #define W25QXX_SPI_PORT             SPI5
@@ -70,5 +75,12 @@ void w15qxx_write_page(uint8_t *pBuffer, uint32_t WriteAddr, uint16_t NumByteToW
 void w25qxx_write_no_check(uint8_t *pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite);
 void w25qxx_erase_chip(void);
 void w25qxx_erase_sector(uint32_t Dst_Addr);
+void w25qxx_write_buff(uint8_t* pBuffer,uint32_t WriteAddr,uint16_t NumByteToWrite);
+
+void w25qxx_enter_flash_mode(void);
+void w25qxx_sector_erase(uint32_t SectorAddr);
+void w25qxx_bulk_erase(void);
+void w25qxx_buffer_write(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite);
+void w25qxx_buffer_read(uint8_t* pBuffer, uint32_t ReadAddr, uint32_t NumByteToRead);
 
 #endif

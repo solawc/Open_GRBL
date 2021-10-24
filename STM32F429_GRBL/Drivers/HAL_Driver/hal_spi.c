@@ -137,6 +137,10 @@ uint8_t hal_spi_transfer_revice_buff(dev_spi_t *drv, uint8_t byte) {
     return rdata;
 }
 
+uint8_t hal_spi_trans_revice_buf_dma(dev_spi_t *drv, uint8_t *buf, uint32_t buf_size) {
+
+}
+
 /*******************************************************************************
  *                                  Warning
  *  Do not change the code if it is not necessary
