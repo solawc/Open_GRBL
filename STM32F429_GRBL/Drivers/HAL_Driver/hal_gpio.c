@@ -80,7 +80,7 @@ static void hal_motor_en_gpio_init(void) {
 
 	GPIO_InitTypeDef GPIO_Init; 
 	
-	__HAL_RCC_GPIOA_CLK_ENABLE();
+	__HAL_RCC_GPIOI_CLK_ENABLE();
 
 	GPIO_Init.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_Init.Pull = GPIO_NOPULL;

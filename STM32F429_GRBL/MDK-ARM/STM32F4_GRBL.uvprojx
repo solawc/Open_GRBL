@@ -815,14 +815,9 @@
               <FilePath>..\..\Common\fatfs\src\ff.c</FilePath>
             </File>
             <File>
-              <FileName>ffsystem.c</FileName>
+              <FileName>cc936.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\Common\fatfs\src\ffsystem.c</FilePath>
-            </File>
-            <File>
-              <FileName>ffunicode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Common\fatfs\src\ffunicode.c</FilePath>
+              <FilePath>..\..\Common\fatfs\src\option\cc936.c</FilePath>
             </File>
           </Files>
         </Group>

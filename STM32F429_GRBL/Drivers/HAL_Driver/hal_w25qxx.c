@@ -48,7 +48,7 @@ void hal_w25qxx_spi_init(void)
         hal_w25qxx_spi_gpio_init();
         dev_w25qxx_spi_set.is_use_irq = false;
         dev_w25qxx_spi_set.spi_num = SPI_5;
-        dev_w25qxx_spi_set.spi_speed = 2;
+        dev_w25qxx_spi_set.spi_speed = 8;
         dev_w25qxx_spi_set.spi_mode_set = spi_mode_0;
         dev_w25qxx_spi_set.spi_date_size = size_8bit_date;
         dev_w25qxx_spi_set.spi_trans_mode = master_full_trans;
@@ -110,7 +110,7 @@ uint16_t w25qxx_read_write_cb(dev_spi_t *dev, uint16_t data)
 {
     uint16_t rdata = 0;
     rdata = dev->dev_spi_read_write_byte(data);
-    return rdata;
+    return (uint8_t )rdata;
 }
 
 uint16_t w25qxx_read_write_byte(uint16_t wdata)
@@ -397,7 +397,7 @@ void w25qxx_buffer_write(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteT
   }
 }
 
-void w25qxx_buffer_read(uint8_t* pBuffer, uint32_t ReadAddr, uint32_t NumByteToRead)
+void w25qxx_buffer_read(uint8_t* pBuffer, uint32_t ReadAddr, __IO uint32_t NumByteToRead)
 {
   w25qxx_enable();
 

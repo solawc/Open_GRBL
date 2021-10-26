@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*/
-/* Low level disk I/O module SKELETON for FatFs     (C)ChaN, 2019        */
+/* Low level disk I/O module skeleton for FatFs     (C)ChaN, 2014        */
 /*-----------------------------------------------------------------------*/
 /* If a working storage control module is available, it should be        */
 /* attached to the FatFs via a glue function rather than modifying it.   */
@@ -7,248 +7,195 @@
 /* storage control modules to the FatFs module with a defined API.       */
 /*-----------------------------------------------------------------------*/
 
-#include "ff.h"			/* Obtains integer types */
-#include "diskio.h"		/* Declarations of disk functions */
+#include "diskio.h"		/* FatFs lower layer API */
+#include "ff.h"
 #include "hal_w25qxx.h"
-
-
-/* Definitions of physical drive number for each drive */
-#define DEV_RAM		0	/* Example: Map Ramdisk to physical drive 0 */
-#define DEV_MMC		1	/* Example: Map MMC/SD card to physical drive 1 */
-#define DEV_USB		2	/* Example: Map USB MSD to physical drive 2 */
-#define DEV_FLASH	3	
-
+/* 为每个设备定义一个物理编号 */
+#define ATA			    0     // 预留SD卡使用
+#define SPI_FLASH		1     // 外部SPI Flash
 
 /*-----------------------------------------------------------------------*/
-/* Get Drive Status                                                      */
+/* 获取设备状态                                                          */
 /*-----------------------------------------------------------------------*/
-
 DSTATUS disk_status (
-	BYTE pdrv		/* Physical drive nmuber to identify the drive */
+	BYTE pdrv		/* 物理编号 */
 )
 {
-	DSTATUS stat;
-	int result;
 
+	DSTATUS status = STA_NOINIT;
+	
 	switch (pdrv) {
-	case DEV_RAM :
-		// result = RAM_disk_status();
+		case ATA:	/* SD CARD */
+			break;
+    
+		case SPI_FLASH:      
+      /* SPI Flash状态检测：读取SPI Flash 设备ID */
+//      if(sFLASH_ID == SPI_FLASH_ReadID())
+//      {
+        /* 设备ID读取结果正确 */
+        status &= ~STA_NOINIT;
+//      }
+    //   else
+    //   {
+    //     /* 设备ID读取结果错误 */
+    //     status = STA_NOINIT;;
+    //   }
+			break;
 
-		// translate the reslut code here
-
-		return stat;
-
-	case DEV_MMC :
-		// result = MMC_disk_status();
-
-		// translate the reslut code here
-
-		return stat;
-
-	case DEV_USB :
-		// result = USB_disk_status();
-
-		// translate the reslut code here
-
-		return stat;
-
-	case DEV_FLASH :
-
-		return stat;
-	// break;
+		default:
+			status = STA_NOINIT;
 	}
-	return STA_NOINIT;
+	return status;
 }
 
-
-
 /*-----------------------------------------------------------------------*/
-/* Inidialize a Drive                                                    */
+/* 设备初始化                                                            */
 /*-----------------------------------------------------------------------*/
-
 DSTATUS disk_initialize (
-	BYTE pdrv				/* Physical drive nmuber to identify the drive */
+	BYTE pdrv				/* 物理编号 */
 )
 {
-	DSTATUS stat;
-	int result;
-
+  // uint16_t i;
+	DSTATUS status = STA_NOINIT;	
 	switch (pdrv) {
-	case DEV_RAM :
-		// result = RAM_disk_initialize();
-
-		// translate the reslut code here
-
-		return stat;
-
-	case DEV_MMC :
-		// result = MMC_disk_initialize();
-
-		// translate the reslut code here
-
-		return stat;
-
-	case DEV_USB :
-		// result = USB_disk_initialize();
-
-		// translate the reslut code here
-
-		return stat;
-
-	case DEV_FLASH :
-
-		return stat;
-
+		case ATA:	         /* SD CARD */
+			break;
+    
+		case SPI_FLASH:    /* SPI Flash */ 
+      /* 初始化SPI Flash */
+			// SPI_FLASH_Init();
+      /* 延时一小段时间 */
+    //   i=500;
+	    // while(--i);	
+      /* 唤醒SPI Flash */
+	    // SPI_Flash_WAKEUP();
+      /* 获取SPI Flash芯片状态 */
+      status=disk_status(SPI_FLASH);
+			break;
+      
+		default:
+			status = STA_NOINIT;
 	}
-	return STA_NOINIT;
+	return status;
 }
 
 
-
 /*-----------------------------------------------------------------------*/
-/* Read Sector(s)                                                        */
+/* 读扇区：读取扇区内容到指定存储区                                              */
 /*-----------------------------------------------------------------------*/
-
 DRESULT disk_read (
-	BYTE pdrv,		/* Physical drive nmuber to identify the drive */
-	BYTE *buff,		/* Data buffer to store read data */
-	LBA_t sector,	/* Start sector in LBA */
-	UINT count		/* Number of sectors to read */
+	BYTE pdrv,		/* 设备物理编号(0..) */
+	BYTE *buff,		/* 数据缓存区 */
+	DWORD sector,	/* 扇区首地址 */
+	UINT count		/* 扇区个数(1..128) */
 )
 {
-	DRESULT res = RES_PARERR;
-	int result;
-
+	DRESULT status = RES_PARERR;
 	switch (pdrv) {
-	case DEV_RAM :
-		// translate the arguments here
-
-		// result = RAM_disk_read(buff, sector, count);
-
-		// translate the reslut code here
-
-		return res;
-
-	case DEV_MMC :
-		// translate the arguments here
-
-		// result = MMC_disk_read(buff, sector, count);
-
-		// translate the reslut code here
-
-		return res;
-
-	case DEV_USB :
-		// translate the arguments here
-
-		// result = USB_disk_read(buff, sector, count);
-
-		// translate the reslut code here
-
-		return res;
-
-	case DEV_FLASH :
-
-		return res;
+		case ATA:	/* SD CARD */
+			break;
+    
+		case SPI_FLASH:
+      /* 扇区偏移16MB，外部Flash文件系统空间放在SPI Flash后面16MB空间 */
+      sector+=4096;      
+      w25qxx_buffer_read(buff, sector <<12, count<<12);
+      status = RES_OK;
+		break;
+    
+		default:
+			status = RES_PARERR;
 	}
-
-	return RES_PARERR;
+	return status;
 }
 
-
-
 /*-----------------------------------------------------------------------*/
-/* Write Sector(s)                                                       */
+/* 写扇区：见数据写入指定扇区空间上                                      */
 /*-----------------------------------------------------------------------*/
-
-#if FF_FS_READONLY == 0
-
+#if _USE_WRITE
 DRESULT disk_write (
-	BYTE pdrv,			/* Physical drive nmuber to identify the drive */
-	const BYTE *buff,	/* Data to be written */
-	LBA_t sector,		/* Start sector in LBA */
-	UINT count			/* Number of sectors to write */
+	BYTE pdrv,			  /* 设备物理编号(0..) */
+	const BYTE *buff,	/* 欲写入数据的缓存区 */
+	DWORD sector,		  /* 扇区首地址 */
+	UINT count			  /* 扇区个数(1..128) */
 )
 {
-	DRESULT res;
-	int result;
-
-	switch (pdrv) {
-	case DEV_RAM :
-		// translate the arguments here
-
-		// result = RAM_disk_write(buff, sector, count);
-
-		// translate the reslut code here
-
-		return res;
-
-	case DEV_MMC :
-		// translate the arguments here
-
-		// result = MMC_disk_write(buff, sector, count);
-
-		// translate the reslut code here
-
-		return res;
-
-	case DEV_USB :
-		// translate the arguments here
-
-		// result = USB_disk_write(buff, sector, count);
-
-		// translate the reslut code here
-
-		return res;
-
-	case DEV_FLASH :
-
-		return res;
+  uint32_t write_addr; 
+	DRESULT status = RES_PARERR;
+	if (!count) {
+		return RES_PARERR;		/* Check parameter */
 	}
 
-	return RES_PARERR;
-}
+	switch (pdrv) {
+		case ATA:	/* SD CARD */      
+		break;
 
+		case SPI_FLASH:
+      /* 扇区偏移16MB，外部Flash文件系统空间放在SPI Flash后面16MB空间 */
+			sector+=4096;
+      write_addr = sector<<12;    
+      w25qxx_sector_erase(write_addr);
+      w25qxx_buffer_write((uint8_t *)buff,write_addr,count<<12);
+      status = RES_OK;
+		break;
+    
+		default:
+			status = RES_PARERR;
+	}
+	return status;
+}
 #endif
 
 
 /*-----------------------------------------------------------------------*/
-/* Miscellaneous Functions                                               */
+/* 其他控制                                                              */
 /*-----------------------------------------------------------------------*/
 
+#if _USE_IOCTL
 DRESULT disk_ioctl (
-	BYTE pdrv,		/* Physical drive nmuber (0..) */
-	BYTE cmd,		/* Control code */
-	void *buff		/* Buffer to send/receive control data */
+	BYTE pdrv,		/* 物理编号 */
+	BYTE cmd,		  /* 控制指令 */
+	void *buff		/* 写入或者读取数据地址指针 */
 )
 {
-	DRESULT res;
-	int result;
-
+	DRESULT status = RES_PARERR;
 	switch (pdrv) {
-	case DEV_RAM :
-
-		// Process of the command for the RAM drive
-
-		return res;
-
-	case DEV_MMC :
-
-		// Process of the command for the MMC/SD card
-
-		return res;
-
-	case DEV_USB :
-
-		// Process of the command the USB drive
-
-		return res;
-
-	case DEV_FLASH :
-
-		return res;
+		case ATA:	/* SD CARD */
+			break;
+    
+		case SPI_FLASH:
+			switch (cmd) {
+        /* 扇区数量：4096*4096/1024/1024=16(MB) */
+        case GET_SECTOR_COUNT:
+          *(DWORD * )buff = 4096;		
+        break;
+        /* 扇区大小  */
+        case GET_SECTOR_SIZE :
+          *(WORD * )buff = 4096;
+        break;
+        /* 同时擦除扇区个数 */
+        case GET_BLOCK_SIZE :
+          *(DWORD * )buff = 1;
+        break;        
+      }
+      status = RES_OK;
+		break;
+    
+		default:
+			status = RES_PARERR;
 	}
-
-	return RES_PARERR;
+	return status;
 }
+#endif
+
+__weak DWORD get_fattime(void) {
+	/* 返回当前时间戳 */
+	return	  ((DWORD)(2015 - 1980) << 25)	/* Year 2015 */
+			| ((DWORD)1 << 21)				/* Month 1 */
+			| ((DWORD)1 << 16)				/* Mday 1 */
+			| ((DWORD)0 << 11)				/* Hour 0 */
+			| ((DWORD)0 << 5)				  /* Min 0 */
+			| ((DWORD)0 >> 1);				/* Sec 0 */
+}
+
+
 
