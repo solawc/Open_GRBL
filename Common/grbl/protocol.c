@@ -156,9 +156,9 @@ void protocol_main_loop()
     protocol_auto_cycle_start();
 
     protocol_execute_realtime();  // Runtime command check point.
-    if (sys.abort) { return; } // Bail to main() program loop to reset system.
 
-    // vTaskDelay(10);
+    if (sys.abort) { return; } // Bail to main() program loop to reset system.
+    
   }
   return; /* Never reached */
 }

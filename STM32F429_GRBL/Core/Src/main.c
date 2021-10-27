@@ -6,12 +6,7 @@
 void SystemClock_Config(void);
 
 FATFS fs;
-FIL fnew;
-FRESULT res_flash;
-UINT fnum;
-BYTE ReadBuffer[1024]={0};     
-BYTE WriteBuffer[] =           
-"1122334455\r\n";  
+
 
 /**
   * @brief  The application entry point.
@@ -34,38 +29,6 @@ int main(void)
   w25qxx_init();
 
   HAL_Delay(500);
-
-  res_flash = f_mount(&fs,"1:",1);
-
-  if(res_flash == FR_NO_FILESYSTEM)
-	{
-		printf("mount init...\r\n");
-    /* 格式化 */
-		res_flash=f_mkfs("1:",0,0);							
-		
-		if(res_flash == FR_OK)
-		{
-			printf("mount succeed\r\n");
-      /* 格式化后，先取消挂载 */
-			res_flash = f_mount(NULL,"1:",1);			
-      /* 重新挂载	*/			
-			res_flash = f_mount(&fs,"1:",1);
-		}
-		else
-		{
-			printf("mount fail\r\n");
-			while(1);
-		}
-	}
-  else if(res_flash!=FR_OK)
-  {
-    printf("fatfs is fail\r\n",res_flash);
-		while(1);
-  }
-  else
-  {
-    printf("fatfs is succeed\r\n");    
-  }
 
   grbl_report_mcu_info();
 

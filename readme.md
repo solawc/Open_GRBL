@@ -15,7 +15,7 @@
 - TFT_SPI，未完成，用于脱机显示和操作
 - Spindle，未完成，激光或CNC的直流电机控制，输出的是PWM控制
 - FreeRTOS, 已移植完成
-- Fatfs, 未完成
+- Fatfs, 已加入
 
 ## 测试过的MCU
 
