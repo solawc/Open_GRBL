@@ -24,9 +24,6 @@ typedef struct{
 }NFLASH_t;
 extern NFLASH_t sFlash;
 
-
-
-
 #define W25QXX_SPI_PORT             SPI5
 #define W25QXX_SPI_SCK_GPIO         GPIOF
 #define W25QXX_SPI_SCK_PIN          GPIO_PIN_7
