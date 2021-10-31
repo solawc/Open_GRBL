@@ -127,7 +127,7 @@ typedef struct {
   #endif
 
   uint8_t execute_step;     // Flags step execution for each interrupt.
-  uint8_t step_pulse_time;  // Step pulse reset time after step rise
+  uint32_t step_pulse_time;  // Step pulse reset time after step rise
   uint8_t step_outbits;         // The next stepping-bits to be output
   uint8_t dir_outbits;
   #ifdef ENABLE_DUAL_AXIS
@@ -266,8 +266,8 @@ void st_wake_up()
 #if defined(CPU_MAP_ATMEGA328P)
     st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
 #elif defined(CPU_STM32)
-    st.step_pulse_time = ((settings.pulse_microseconds) * TICKS_PER_MICROSECOND);
-    // st.step_pulse_time = (settings.fpulse_microseconds) * TICKS_PER_MICROSECOND;
+    // st.step_pulse_time = ((settings.pulse_microseconds) * TICKS_PER_MICROSECOND);
+    st.step_pulse_time = settings.pulse_microseconds;
 #endif
 #endif
 
@@ -282,6 +282,7 @@ void st_wake_up()
   hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
   hal_tim_generateEvent_update(&STEP_SET_TIMER);
   hal_set_timer_irq_enable();
+
 #endif
 }
 
@@ -372,6 +373,8 @@ void set_timer_irq_handler(void)   // set timer
 {
   if (busy) { return; } // The busy-flag is used to avoid reentering this interrupt
 
+  
+
 #if defined(CPU_MAP_ATMEGA328P)
   // Set the direction pins a couple of nanoseconds before we step the steppers // 优先设置电机方向
   DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | (st.dir_outbits & DIRECTION_MASK);
@@ -421,7 +424,13 @@ void set_timer_irq_handler(void)   // set timer
   TCNT0 = st.step_pulse_time; // Reload Timer0 counter
   TCCR0B = (1<<CS01); // Begin Timer0. Full speed, 1/8 prescaler
 #elif defined(CPU_STM32)
+  // printf("st.step_pulse_time2 = %d\n", st.step_pulse_time);
+  hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
+  STEP_RESET_TIMER.Init.Prescaler = st.step_pulse_time;
+  HAL_TIM_Base_Init(&STEP_RESET_TIMER);
+  __HAL_TIM_CLEAR_IT(&STEP_RESET_TIMER, TIM_IT_UPDATE);
   hal_reset_timer_irq_enable();
+  // printf("low begin\n");
   // hal_set_tim_prescaler(8);
 #endif
 
@@ -484,6 +493,7 @@ void set_timer_irq_handler(void)   // set timer
     } else {
       // Segment buffer empty. Shutdown.
       st_go_idle();
+      // printf("run st go idle\n");
       #ifdef VARIABLE_SPINDLE
         // Ensure pwm is set properly upon completion of rate-controlled motion.
         // if (st.exec_block->is_pwm_rate_adjusted) { spindle_set_speed(SPINDLE_PWM_OFF_VALUE); }
@@ -590,6 +600,16 @@ ISR(TIMER0_OVF_vect)
 }
 #elif defined(CPU_STM32)
 
+
+void delayss( ) {
+  uint32_t a = 1000;
+  while(a) {
+
+    a--;
+  }
+
+}
+
 void reset_timer_irq_handler(void) {   // reset timer
 
   // uint8_t step_mask = 0;
@@ -597,7 +617,10 @@ void reset_timer_irq_handler(void) {   // reset timer
   // hal_set_step_gpio_toggle(step_port_invert_mask);
   hal_set_step_gpio_status(step_port_invert_mask);
   hal_reset_timer_irq_disable();
+  // printf("low finsh\n");
 } 
+
+
 
 
 #endif
