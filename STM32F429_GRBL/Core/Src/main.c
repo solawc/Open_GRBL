@@ -95,6 +95,8 @@ void SystemClock_Config(void)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
+  taskENTER_CRITICAL();
+
   if (htim->Instance == TIM6) {
     HAL_IncTick();
   }
@@ -104,6 +106,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   else if(htim == &STEP_SET_TIMER)  {
     set_timer_irq_handler();
   }
+
+  taskEXIT_CRITICAL();
 }
 
 /**

@@ -282,7 +282,6 @@ void st_wake_up()
   hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
   hal_tim_generateEvent_update(&STEP_SET_TIMER);
   hal_set_timer_irq_enable();
-
 #endif
 }
 
@@ -373,8 +372,6 @@ void set_timer_irq_handler(void)   // set timer
 {
   if (busy) { return; } // The busy-flag is used to avoid reentering this interrupt
 
-  
-
 #if defined(CPU_MAP_ATMEGA328P)
   // Set the direction pins a couple of nanoseconds before we step the steppers // 优先设置电机方向
   DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | (st.dir_outbits & DIRECTION_MASK);
@@ -382,9 +379,8 @@ void set_timer_irq_handler(void)   // set timer
     DIRECTION_PORT_DUAL = (DIRECTION_PORT_DUAL & ~DIRECTION_MASK_DUAL) | (st.dir_outbits_dual & DIRECTION_MASK_DUAL);
   #endif
 #elif defined(CPU_STM32)
-  // uint8_t temp_dir = (st.dir_outbits & DIRECTION_MASK);
   uint8_t temp_dir = (st.dir_outbits);
-  // printf("set dir , temp_dir = 0x%x\n", temp_dir);
+  printf("set dir , temp_dir = 0x%x\n", temp_dir);
   hal_set_dir_gpio_status(temp_dir);
 #endif
 
@@ -424,8 +420,6 @@ void set_timer_irq_handler(void)   // set timer
   TCNT0 = st.step_pulse_time; // Reload Timer0 counter
   TCCR0B = (1<<CS01); // Begin Timer0. Full speed, 1/8 prescaler
 #elif defined(CPU_STM32)
-  // printf("st.step_pulse_time2 = %d\n", st.step_pulse_time);
-  hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
   STEP_RESET_TIMER.Init.Prescaler = st.step_pulse_time;
   HAL_TIM_Base_Init(&STEP_RESET_TIMER);
   __HAL_TIM_CLEAR_IT(&STEP_RESET_TIMER, TIM_IT_UPDATE);
@@ -528,6 +522,7 @@ void set_timer_irq_handler(void)   // set timer
     st.counter_x -= st.exec_block->step_event_count;
     if (st.exec_block->direction_bits & (1<<X_DIRECTION_BIT)) { sys_position[X_AXIS]--; }
     else { sys_position[X_AXIS]++; }
+
   }
   #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
     st.counter_y += st.steps[Y_AXIS];

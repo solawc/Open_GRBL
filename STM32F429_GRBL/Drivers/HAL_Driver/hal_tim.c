@@ -18,7 +18,7 @@ void hal_set_timer_init(void) {
     __HAL_RCC_TIM3_CLK_ENABLE();
 
     htim3.Instance = TIM3; 
-    htim3.Init.Period = 180; // 180 000 000/90 = 2000000Hz
+    htim3.Init.Period = 45; // 180 000 000/90 = 2000000Hz
     htim3.Init.Prescaler = 1;
     htim3.Init.ClockDivision = 0;
     htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -33,7 +33,7 @@ void hal_reset_timer_init(void) {
 
     __HAL_RCC_TIM4_CLK_ENABLE();
     htim4.Instance = TIM4;
-    htim4.Init.Period = 100;// 90;  // 180 000 000/90 = 2000000Hz
+    htim4.Init.Period = 45;// 90;  // 180 000 000/90 = 2000000Hz
     htim4.Init.Prescaler = 1;
     htim4.Init.ClockDivision = 0;
     htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
