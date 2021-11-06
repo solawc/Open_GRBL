@@ -25,7 +25,7 @@
 
 
 void grbl_report_mcu_info(void);
-
+void hal_delay_ms(uint32_t tick);
 
 
 

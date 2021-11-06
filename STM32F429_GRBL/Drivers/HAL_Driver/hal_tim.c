@@ -10,15 +10,14 @@
 */
 TIM_HandleTypeDef htim3;    // Configure Timer 1: Stepper Driver Interrupt
 TIM_HandleTypeDef htim4;    // Configure Timer 0: Stepper Port Reset Interrupt
-
-TIM_HandleTypeDef htim8;
+TIM_HandleTypeDef htim8;    // Configure Timer 8: Set laser/cnc pwm
 
 void hal_set_timer_init(void) {
 
     __HAL_RCC_TIM3_CLK_ENABLE();
 
     htim3.Instance = TIM3; 
-    htim3.Init.Period = 45; // 180 000 000/90 = 2000000Hz
+    htim3.Init.Period = 45;     // 90000000 / 45 = 2MHz
     htim3.Init.Prescaler = 1;
     htim3.Init.ClockDivision = 0;
     htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -33,7 +32,7 @@ void hal_reset_timer_init(void) {
 
     __HAL_RCC_TIM4_CLK_ENABLE();
     htim4.Instance = TIM4;
-    htim4.Init.Period = 45;// 90;  // 180 000 000/90 = 2000000Hz
+    htim4.Init.Period = 45;     // 90000000 / 45 = 2MHz
     htim4.Init.Prescaler = 1;
     htim4.Init.ClockDivision = 0;
     htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -51,7 +50,6 @@ void hal_set_timer_irq_enable(void) {
 }
 
 void hal_set_timer_irq_disable(void) {
-    // HAL_NVIC_DisableIRQ(TIM3_IRQn);
     NVIC_DisableIRQ(TIM3_IRQn);
 }
 
@@ -59,10 +57,8 @@ void hal_tim_set_reload(TIM_HandleTypeDef *htim, uint32_t reload) {
     WRITE_REG(htim->Instance->ARR, reload);
 }
  
-
 void hal_set_tim_cnt(TIM_HandleTypeDef *htim, uint32_t cnt) {
     WRITE_REG(htim->Instance->CNT, cnt);
-
 }
 
 void hal_tim_generateEvent_update(TIM_HandleTypeDef *htim) {
