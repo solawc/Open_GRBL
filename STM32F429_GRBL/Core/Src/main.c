@@ -25,10 +25,8 @@ int main(void)
   hal_led_off();
 
   hal_uart_init();
-  
-  w25qxx_init();
 
-  HAL_Delay(500);
+  w25qxx_init();
 
   grbl_report_mcu_info();
 

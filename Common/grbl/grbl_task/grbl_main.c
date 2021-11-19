@@ -93,6 +93,7 @@ void grbl_main_task(void *parg) {
 }
 
 TaskHandle_t grbl_task_handle = NULL;
+
 void grbl_task_create(void) {
 	xTaskCreate( grbl_main_task,
 				 "grbl",

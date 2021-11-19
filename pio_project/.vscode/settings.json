@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "arduino_freertos.h": "c",
+        "main.h": "c",
+        "hal_f429_system.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "grbl_config.h": "c"
+    }
+}

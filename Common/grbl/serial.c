@@ -91,7 +91,7 @@ void serial_write(uint8_t data) {
   uint8_t next_head = serial_tx_buffer_head + 1;
 
   hal_uart_sendbyte(data);
-  while (!hal_is_uart_sr_txe());		 //�ȴ��������
+  while (!hal_is_uart_sr_txe());		// wait serial had send finish 
     return;
 
   if (next_head == TX_RING_BUFFER) { next_head = 0; }

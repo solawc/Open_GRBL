@@ -12,6 +12,7 @@
         "hal_w25qxx.h": "c",
         "task.h": "c",
         "freertos.h": "c",
-        "grbl_main.h": "c"
+        "grbl_main.h": "c",
+        "stdbool.h": "c"
     }
 }
