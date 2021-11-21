@@ -91,11 +91,17 @@ uint32_t hal_read_uart_dr_reg(void) { return laser_uart.Instance->DR & 0x1FF; }
 void hal_clean_isr(void) { laser_uart.Instance->SR &= ~USART_FLAG_RXNE; }
 
 // use printf , but no suggest!!
-int fputc(int ch,FILE *f)
+// int fputc(int ch,FILE *f)
+// {
+//     uint32_t temp = ch;
+//     HAL_UART_Transmit(&laser_uart, (uint8_t *)&temp, 1, 1000);        //huart3是串口的句柄
+//     return ch;
+// }
+
+int _write(int fd, char *ptr, int len)
 {
-    uint32_t temp = ch;
-    HAL_UART_Transmit(&laser_uart, (uint8_t *)&temp, 1, 1000);        //huart3是串口的句柄
-    return ch;
+	HAL_UART_Transmit(&laser_uart, (uint8_t*)ptr, len, 0xFFFF);
+	return len;
 }
 
 

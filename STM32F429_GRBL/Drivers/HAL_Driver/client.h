@@ -15,8 +15,8 @@
 #define CLIENT_SD               0X03
 #define CLIENT_MAX              4
 
-
 #define RB_BUFF_SEIZ            1024
+
 typedef struct {
 
     bool        _is_rb_full;
@@ -29,9 +29,9 @@ typedef struct {
 
 typedef struct {
 
-    bool _is_client_busy;
-    bool _is_client_full;
-    uint8_t client_buff[CLIENT_MAX];
+    bool        _is_client_busy;
+    bool        _is_client_full;
+    uint8_t     client_buff[CLIENT_MAX];
 
 }clinet_t;
 
