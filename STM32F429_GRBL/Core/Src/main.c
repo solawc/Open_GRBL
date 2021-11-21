@@ -93,7 +93,7 @@ void SystemClock_Config(void)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-  taskENTER_CRITICAL();
+  taskENTER_CRITICAL();  // 进入中段临界段
 
   if (htim->Instance == TIM6) {
     HAL_IncTick();
@@ -105,7 +105,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     set_timer_irq_handler();
   }
 
-  taskEXIT_CRITICAL();
+  taskEXIT_CRITICAL();    // 退出中断临界段
 }
 
 /**
