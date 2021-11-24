@@ -13,6 +13,7 @@
         "task.h": "c",
         "freertos.h": "c",
         "grbl_main.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "grbl.h": "c"
     }
 }

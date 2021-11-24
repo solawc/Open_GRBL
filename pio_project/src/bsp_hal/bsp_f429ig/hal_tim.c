@@ -17,13 +17,13 @@ void hal_set_timer_init(void) {
     __HAL_RCC_TIM3_CLK_ENABLE();
 
     htim3.Instance = TIM3; 
-    htim3.Init.Period = 45;     // 90000000 / 45 = 2MHz
-    htim3.Init.Prescaler = 1;
-    htim3.Init.ClockDivision = 0;
+    htim3.Init.Period = 1;     
+    htim3.Init.Prescaler = 45;
+    htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&htim3);
 
-    HAL_NVIC_SetPriority(TIM3_IRQn, 0, 2);
+    HAL_NVIC_SetPriority(TIM3_IRQn, 0, 1);
     HAL_NVIC_DisableIRQ(TIM3_IRQn);
     HAL_TIM_Base_Start_IT(&htim3);
 }
@@ -32,21 +32,19 @@ void hal_reset_timer_init(void) {
 
     __HAL_RCC_TIM4_CLK_ENABLE();
     htim4.Instance = TIM4;
-    htim4.Init.Period = 45;     // 90000000 / 45 = 2MHz
-    htim4.Init.Prescaler = 1;
-    htim4.Init.ClockDivision = 0;
+    htim4.Init.Period = 1;     
+    htim4.Init.Prescaler = 45;
+    htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&htim4);
 
-    HAL_NVIC_SetPriority(TIM4_IRQn, 0, 1);
+    HAL_NVIC_SetPriority(TIM4_IRQn, 0, 2);
     HAL_NVIC_DisableIRQ(TIM4_IRQn);
     HAL_TIM_Base_Start_IT(&htim4);
 }
 
 void hal_set_timer_irq_enable(void) {
-
     HAL_NVIC_EnableIRQ(TIM3_IRQn);
-    
 }
 
 void hal_set_timer_irq_disable(void) {

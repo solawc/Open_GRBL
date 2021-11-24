@@ -1,5 +1,5 @@
 #include "hal_f429_system.h"
-
+#include "hal_tim.h"
 
 /*
  * 1.set system clock 
@@ -57,15 +57,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 //   taskENTER_CRITICAL();
 
-  if (htim->Instance == TIM6) {
-    HAL_IncTick();
+  if(htim == &STEP_RESET_TIMER) { 
+    // printf("enter reset tim\n");
+    reset_timer_irq_handler();
   }
-//   else if(htim == &STEP_RESET_TIMER) { 
-//     reset_timer_irq_handler();
-//   }
-//   else if(htim == &STEP_SET_TIMER)  {
-//     set_timer_irq_handler();
-//   }
+  else if(htim == &STEP_SET_TIMER)  {
+    // printf("enter set tim\n");
+    set_timer_irq_handler();
+  }
 
 //   taskEXIT_CRITICAL();
 }
