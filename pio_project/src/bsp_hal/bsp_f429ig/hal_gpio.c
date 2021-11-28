@@ -195,9 +195,9 @@ uint8_t hal_return_dir_gpio_status(uint8_t axis) {
 }
 
 uint8_t hal_get_moter_dir_gpio_mask(uint8_t axis) {
-	// if(axis == X_AXIS) return 0x01;
-	// else if(axis == Y_AXIS)	return 0x02;
-	// else return 0x04;
+	if(axis == X_AXIS) return 0x01;
+	else if(axis == Y_AXIS)	return 0x02;
+	else return 0x04;
 }
 
 uint8_t hal_get_moter_axis_gpio_mask(uint8_t axis) {

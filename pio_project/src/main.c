@@ -119,8 +119,11 @@ void SysTick_Handler(void)
 void _delay_ms(uint32_t tick) {
 	// vTaskDelay(tick);
     // HAL_Delay(tick);
+    uint32_t mililoop = SystemCoreClock/1000;
+	for (uint32_t i=0; i< mililoop; i++)
+		__asm__ __volatile__("nop\n\t":::"memory");
 }
 
 void _delay_us(uint32_t tick) {
-	// __NOP();
+	__NOP();
 }
