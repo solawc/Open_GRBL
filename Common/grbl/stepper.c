@@ -267,7 +267,8 @@ void st_wake_up()
     st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
 #elif defined(CPU_STM32)
     // st.step_pulse_time = ((settings.pulse_microseconds) * TICKS_PER_MICROSECOND);
-    st.step_pulse_time = settings.pulse_microseconds;
+    printf("settings.pulse_microseconds=%d\n", settings.pulse_microseconds);
+    st.step_pulse_time = settings.pulse_microseconds*2;
 #endif
 #endif
 
@@ -275,10 +276,13 @@ void st_wake_up()
 #if defined(CPU_MAP_ATMEGA328P)
   TIMSK1 |= (1<<OCIE1A);
 #elif defined(CPU_STM32)
-  hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time - 1);
+  printf("st.step_pulse_time = %d\n", st.step_pulse_time);
+  hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
+  hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time-1);
   hal_tim_generateEvent_update(&STEP_RESET_TIMER);
   hal_tim_clear_flag_update(&STEP_RESET_TIMER);
   
+  printf("st.exec_segment->cycles_per_tick1 = %d\n", st.exec_segment->cycles_per_tick);
   hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
   hal_tim_generateEvent_update(&STEP_SET_TIMER);
   hal_set_timer_irq_enable();
@@ -380,7 +384,6 @@ void set_timer_irq_handler(void)   // set timer
   #endif
 #elif defined(CPU_STM32)
   uint8_t temp_dir = (st.dir_outbits);
-  printf("set dir , temp_dir = 0x%x\n", temp_dir);
   hal_set_dir_gpio_status(temp_dir);
 #endif
 
@@ -404,8 +407,6 @@ void set_timer_irq_handler(void)   // set timer
       st.step_bits_dual = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | st.step_outbits_dual;
     #endif
   #else  // Normal operation
-    // STEP_PORT = (STEP_PORT & ~STEP_MASK) | st.step_outbits;
-    // uint8_t temp_step = 
     hal_set_step_gpio_status(st.step_outbits);
     #ifdef ENABLE_DUAL_AXIS
       // STEP_PORT_DUAL = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | st.step_outbits_dual;
@@ -420,12 +421,10 @@ void set_timer_irq_handler(void)   // set timer
   TCNT0 = st.step_pulse_time; // Reload Timer0 counter
   TCCR0B = (1<<CS01); // Begin Timer0. Full speed, 1/8 prescaler
 #elif defined(CPU_STM32)
-  STEP_RESET_TIMER.Init.Prescaler = st.step_pulse_time;
-  HAL_TIM_Base_Init(&STEP_RESET_TIMER);
+  hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
+  hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time-1);
   __HAL_TIM_CLEAR_IT(&STEP_RESET_TIMER, TIM_IT_UPDATE);
   hal_reset_timer_irq_enable();
-  // printf("low begin\n");
-  // hal_set_tim_prescaler(8);
 #endif
 
   busy = true;

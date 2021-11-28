@@ -1,6 +1,5 @@
 #include "led_task.h"
 
-
 TaskHandle_t led_task_handle = NULL;
 
 void f_led_task(void *parg)   {
