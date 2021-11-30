@@ -126,8 +126,9 @@ void hal_flash_write_buff(uint32_t addr ,uint32_t *buff, uint32_t num) {
 				{
 					break;//发生错误了	
 				}
-				}else addrx+=4;
-				FLASH_WaitForLastOperation(FLASH_WAITETIME);                //等待上次操作完成
+			}else addrx+=4;
+			
+            FLASH_WaitForLastOperation(FLASH_WAITETIME);                //等待上次操作完成
 		}
 	}
 	FlashStatus=FLASH_WaitForLastOperation(FLASH_WAITETIME);            //等待上次操作完成

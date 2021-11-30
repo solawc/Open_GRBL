@@ -267,7 +267,6 @@ void st_wake_up()
     st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
 #elif defined(CPU_STM32)
     // st.step_pulse_time = ((settings.pulse_microseconds) * TICKS_PER_MICROSECOND);
-    printf("settings.pulse_microseconds=%d\n", settings.pulse_microseconds);
     st.step_pulse_time = settings.pulse_microseconds*2;
 #endif
 #endif
@@ -276,13 +275,11 @@ void st_wake_up()
 #if defined(CPU_MAP_ATMEGA328P)
   TIMSK1 |= (1<<OCIE1A);
 #elif defined(CPU_STM32)
-  printf("st.step_pulse_time = %d\n", st.step_pulse_time);
   hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
   hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time-1);
   hal_tim_generateEvent_update(&STEP_RESET_TIMER);
   hal_tim_clear_flag_update(&STEP_RESET_TIMER);
   
-  printf("st.exec_segment->cycles_per_tick1 = %d\n", st.exec_segment->cycles_per_tick);
   hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
   hal_tim_generateEvent_update(&STEP_SET_TIMER);
   hal_set_timer_irq_enable();
@@ -605,13 +602,8 @@ void delayss( ) {
 }
 
 void reset_timer_irq_handler(void) {   // reset timer
-
-  // uint8_t step_mask = 0;
-  // step_mask = hal_get_moter_axis_gpio_mask();
-  // hal_set_step_gpio_toggle(step_port_invert_mask);
   hal_set_step_gpio_status(step_port_invert_mask);
   hal_reset_timer_irq_disable();
-  // printf("low finsh\n");
 } 
 
 

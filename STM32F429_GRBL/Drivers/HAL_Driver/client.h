@@ -3,8 +3,6 @@
 
 #include "grbl_hal.h"
 
-
-
 /*
  * define user client, and they will use different buff,
  * and task will aks and answan client back.

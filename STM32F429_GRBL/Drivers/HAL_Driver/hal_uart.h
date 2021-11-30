@@ -16,28 +16,35 @@ typedef UART_HandleTypeDef  uart_def;
 #define UART_TX_DMA_BUFF_SIZE       1024
 #define UART_RX_DMA_BUFF_SIZE       1024
 
-#define  __HAL_UART_CLK(uart)	__HAL_RCC_##uart##_CLK_ENABLE()
+#define  __HAL_UART_CLK(uart)   __HAL_RCC_##uart##_CLK_ENABLE()
+
 #define  UART_IRQn(uart)        uart##_IRQn
 
+#define LASER_UART_PORT         1
+#define _UART(X)    USART##X
+#define UART(X)     _UART(X)
 
-#define LaserUART		USART1
+#define LaserUART	    UART(LASER_UART_PORT)	// USART1
 #define LaserUART_IRQn  UART_IRQn(USART1)
 
 typedef enum {
     UART_MODE_TX_ONLY,
     UART_MODE_RX_ONLY,
-    UART_MODE_BOTH,
+    UART_MODE_BOTH,         // default both
 }uart_mode_t;
 
 typedef struct {
-
     uart_def        debug_uart;
     uart_mode_t     uart_mode;
-    uint32_t        baud;      // default is 115200
-    uint32_t        stop_bit;  // default is 1
-    uint32_t        parity;    // default is none
-    bool            uart_is_busy;
-}hal_uart_t;
+    uint32_t        baud;               // default is 115200
+    uint32_t        stop_bit;           // default is 1
+    uint32_t        parity;             // default is none
+
+    void (* dev_uart_init)(uint32_t baud);
+    void (* dev_uart_trans_byte_cb)(uint8_t data);
+    void (* dev_uart_irq_set_cb)(void);
+
+}dev_uart_t;
 
 
 void hal_uart_gpio_init(void);

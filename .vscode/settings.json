@@ -14,6 +14,7 @@
         "freertos.h": "c",
         "grbl_main.h": "c",
         "stdbool.h": "c",
-        "grbl.h": "c"
+        "grbl.h": "c",
+        "client.h": "c"
     }
 }
