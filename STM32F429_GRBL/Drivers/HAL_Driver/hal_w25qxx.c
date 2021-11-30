@@ -86,22 +86,22 @@ bool is_read_had_finish(void)
 
 void w25qxx_enable(void)
 {
-    HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_RESET);
 }
 
 void w25qxx_disable(void)
 {
-    HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_SET);
 }
 
 uint8_t w25qxx_write_read_8(uint8_t byte)
 {
-    return hal_spi_transfer_revice_byte(&dev_w25qxx_spi, byte);
+  return hal_spi_transfer_revice_byte(&dev_w25qxx_spi, byte);
 }
 
 uint16_t w25qxx_write_read_16(uint16_t byte)
 {
-    return hal_spi_transfer_revice_byte(&dev_w25qxx_spi, byte);
+  return hal_spi_transfer_revice_byte(&dev_w25qxx_spi, byte);
 }
 
 /*--------------------------------------------------------------------------------------------*/
@@ -115,7 +115,7 @@ uint16_t w25qxx_read_write_cb(dev_spi_t *dev, uint16_t data)
 
 uint16_t w25qxx_read_write_byte(uint16_t wdata)
 {
-    return w25qxx_read_write_cb(&dev_w25qxx_spi, wdata);
+  return w25qxx_read_write_cb(&dev_w25qxx_spi, wdata);
 }
 
 void w25qxx_init(void)
@@ -131,25 +131,25 @@ void w25qxx_init(void)
     sFlash.flash_id =  w25qxx_read_id();
 
     switch(sFlash.flash_id) {
-        case sFLASH_ID_X16: sFlash.flash_size = (16 / 8) *1024; break;
-        case sFLASH_ID_16: sFlash.flash_size = (16 / 8) *1024; break;
-        case sFLASH_ID_64: sFlash.flash_size = (64 / 8) *1024; break;
-        case sFLASH_ID_128: sFlash.flash_size = (128 / 8) *1024; break;
-        case sFLASH_ID_256: sFlash.flash_size = (258 / 8) *1024; break;
-        default: sFlash.flash_size = 0; break;
+      case sFLASH_ID_X16: sFlash.flash_size = (16 / 8) *1024; break;
+      case sFLASH_ID_16: sFlash.flash_size = (16 / 8) *1024; break;
+      case sFLASH_ID_64: sFlash.flash_size = (64 / 8) *1024; break;
+      case sFLASH_ID_128: sFlash.flash_size = (128 / 8) *1024; break;
+      case sFLASH_ID_256: sFlash.flash_size = (258 / 8) *1024; break;
+      default: sFlash.flash_size = 0; break;
     }
 }
 
 uint32_t w25qxx_read_id(void)
 {
-    uint32_t id = 0;
-    w25qxx_enable();
-    w25qxx_read_write_byte(W25X_JedecDeviceID);
-    id |= w25qxx_read_write_byte(0xff) << 16;
-    id |= w25qxx_read_write_byte(0xff) << 8;
-    id |= w25qxx_read_write_byte(0xff) << 0;
-    w25qxx_disable();
-    return id;
+  uint32_t id = 0;
+  w25qxx_enable();
+  w25qxx_read_write_byte(W25X_JedecDeviceID);
+  id |= w25qxx_read_write_byte(0xff) << 16;
+  id |= w25qxx_read_write_byte(0xff) << 8;
+  id |= w25qxx_read_write_byte(0xff) << 0;
+  w25qxx_disable();
+  return id;
 }
 
 uint8_t w25qxx_read_sr_reg(uint8_t reg)
@@ -207,9 +207,9 @@ void w25qxx_write_sr_reg(uint8_t reg, uint8_t sr)
 
 void w25qxx_write_enable(void)
 {
-    w25qxx_enable();
-    w25qxx_read_write_byte(W25X_WriteEnable);
-    w25qxx_disable();
+  w25qxx_enable();
+  w25qxx_read_write_byte(W25X_WriteEnable);
+  w25qxx_disable();
 }
 
 void w25qxx_write_disable(void)

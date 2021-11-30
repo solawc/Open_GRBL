@@ -30,7 +30,6 @@ static void hal_uart1_dma_init() {
 
 
 void uart_send_dma(uint8_t *str,  uint16_t size) {
-
 	HAL_UART_Transmit_DMA (&laser_uart ,str ,size);
 }
 
@@ -75,6 +74,7 @@ void hal_uart_irq_set(void) {
 	HAL_NVIC_SetPriority(LaserUART_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(LaserUART_IRQn);
 }
+
 
 void hal_laser_uart_irq_enable(void) { __HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE); }
 
