@@ -35,26 +35,6 @@
 #define PREP_FLAG_PARKING bit(2)
 #define PREP_FLAG_DECEL_OVERRIDE bit(3)
 
-// const PORTPINDEF step_pin_mask[N_AXIS] = {
-
-// 	1 << X_STEP_BIT,
-// 	1 << Y_STEP_BIT,
-// 	1 << Z_STEP_BIT,
-// };
-
-// const PORTPINDEF direction_pin_mask[N_AXIS] = {
-// 	1 << X_DIRECTION_BIT,
-// 	1 << Y_DIRECTION_BIT,
-// 	1 << Z_DIRECTION_BIT,
-// };
-
-// const PORTPINDEF limit_pin_mask[N_AXIS] =
-// {
-// 	1 << X_LIMIT_BIT,
-// 	1 << Y_LIMIT_BIT,
-// 	1 << Z_LIMIT_BIT,
-// };
-
 
 // Define Adaptive Multi-Axis Step-Smoothing(AMASS) levels and cutoff frequencies. The highest level
 // frequency bin starts at 0Hz and ends at its cutoff frequency. The next lower level frequency bin
@@ -67,10 +47,11 @@
 // and timer accuracy.  Do not alter these settings unless you know what you are doing.
 #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
 	#define MAX_AMASS_LEVEL 3
+  #define STEP_TIME   1000000
 	// AMASS_LEVEL0: Normal operation. No AMASS. No upper cutoff frequency. Starts at LEVEL1 cutoff frequency.
-	#define AMASS_LEVEL1 (F_CPU/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
-	#define AMASS_LEVEL2 (F_CPU/4000) // Over-drives ISR (x4)
-	#define AMASS_LEVEL3 (F_CPU/2000) // Over-drives ISR (x8)
+	#define AMASS_LEVEL1 (STEP_TIME/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
+	#define AMASS_LEVEL2 (STEP_TIME/4000) // Over-drives ISR (x4)
+	#define AMASS_LEVEL3 (STEP_TIME/2000) // Over-drives ISR (x8)
 
   #if MAX_AMASS_LEVEL <= 0
     error "AMASS must have 1 or more levels to operate correctly."
@@ -1144,6 +1125,7 @@ void st_prep_buffer()
     // outputs the exact acceleration and velocity profiles as computed by the planner.
     dt += prep.dt_remainder; // Apply previous segment partial step execute time
     float inv_rate = dt/(last_n_steps_remaining - step_dist_remaining); // Compute adjusted step rate inverse
+
 #if defined(CPU_MAP_ATMEGA328P)
     // Compute CPU cycles per step for the prepped segment.
     uint32_t cycles = ceil( (TICKS_PER_MICROSECOND*1000000*60)*inv_rate ); // (cycles/step)
@@ -1180,8 +1162,9 @@ void st_prep_buffer()
     #endif
 #elif defined(CPU_STM32)
   // Compute CPU cycles per step for the prepped segment.
-    uint32_t cycles = (uint32_t)ceil( (TICKS_PER_MICROSECOND * 1000000*60)*inv_rate ); // (cycles/step)  // ceil 向上取整
-
+    // uint32_t cycles = (uint32_t)ceil( (TICKS_PER_MICROSECOND * 1000000*60)*inv_rate ); // (cycles/step)  // ceil 向上取整
+    uint32_t cycles = (uint32_t)ceil( (STEP_TIME * 60)*inv_rate ); // (cycles/step)  // ceil 向上取整
+  
     #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
       // Compute step timing and multi-axis smoothing level.
       // NOTE: AMASS overdrives the timer with each level, so only one prescalar is required.

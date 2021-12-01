@@ -813,11 +813,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x60CB72E6)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x60CB72E6)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x60CB72E6)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_usart.h)(0x60CB72E6)
-<<<<<<< HEAD
 F (..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c)(0x61A64E16)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\stm32f4xx_hal_uart.o --depend stm32f4_grbl\stm32f4xx_hal_uart.d)
-=======
-F (..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c)(0x61A64BEF)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\stm32f4xx_hal_uart.o --depend stm32f4_grbl\stm32f4xx_hal_uart.d)
->>>>>>> 06934f19a950bf465229f3d1cd7f338d5b6f0c97
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x60F40DC5)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x60F40DCF)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x60CB72E6)
@@ -1027,7 +1023,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x60CB72E6)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x60CB72E6)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x60CB72E6)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_usart.h)(0x60CB72E6)
-F (..\Drivers\HAL_Driver\grbl_hal.c)(0x6199E9AB)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\grbl_hal.o --depend stm32f4_grbl\grbl_hal.d)
+F (..\Drivers\HAL_Driver\grbl_hal.c)(0x61A7B22E)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\grbl_hal.o --depend stm32f4_grbl\grbl_hal.d)
 I (..\Drivers\HAL_Driver\grbl_hal.h)(0x6197C5A2)
 I (../Core/Inc/main.h)(0x61704CE0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x60F40DC5)
@@ -1156,13 +1152,13 @@ I (d:\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (d:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x5E8E3CC2)
 I (d:\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -1243,13 +1239,13 @@ I (d:\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (d:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x5E8E3CC2)
 I (d:\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -1325,11 +1321,7 @@ I (..\..\Common\freeRTOS\src\include\list.h)(0x608A8D12)
 I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
-<<<<<<< HEAD
-F (..\Drivers\HAL_Driver\hal_uart.c)(0x61A7AAFB)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\hal_uart.o --depend stm32f4_grbl\hal_uart.d)
-=======
-F (..\Drivers\HAL_Driver\hal_uart.c)(0x61A64CA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\hal_uart.o --depend stm32f4_grbl\hal_uart.d)
->>>>>>> 06934f19a950bf465229f3d1cd7f338d5b6f0c97
+F (..\Drivers\HAL_Driver\hal_uart.c)(0x61A7AC11)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\hal_uart.o --depend stm32f4_grbl\hal_uart.d)
 I (..\Drivers\HAL_Driver\hal_uart.h)(0x61A64864)
 I (../Core/Inc/main.h)(0x61704CE0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x60F40DC5)
@@ -1453,7 +1445,7 @@ I (..\..\Common\freeRTOS\src\include\list.h)(0x608A8D12)
 I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
-F (..\Drivers\HAL_Driver\hal_tim.c)(0x61A7AA5B)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\hal_tim.o --depend stm32f4_grbl\hal_tim.d)
+F (..\Drivers\HAL_Driver\hal_tim.c)(0x61A7ACC3)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\hal_tim.o --depend stm32f4_grbl\hal_tim.d)
 I (..\Drivers\HAL_Driver\hal_tim.h)(0x6197C5A2)
 I (../Core/Inc/main.h)(0x61704CE0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x60F40DC5)
@@ -1516,11 +1508,7 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\stepper.h)(0x616C1FCF)
-<<<<<<< HEAD
-F (..\Drivers\HAL_Driver\hal_w25qxx.c)(0x61A7AAFB)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\hal_w25qxx.o --depend stm32f4_grbl\hal_w25qxx.d)
-=======
-F (..\Drivers\HAL_Driver\hal_w25qxx.c)(0x61A64A28)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\hal_w25qxx.o --depend stm32f4_grbl\hal_w25qxx.d)
->>>>>>> 06934f19a950bf465229f3d1cd7f338d5b6f0c97
+F (..\Drivers\HAL_Driver\hal_w25qxx.c)(0x61A7AC11)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\hal_w25qxx.o --depend stm32f4_grbl\hal_w25qxx.d)
 I (..\Drivers\HAL_Driver\hal_w25qxx.h)(0x618EA21C)
 I (../Core/Inc/main.h)(0x61704CE0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x60F40DC5)
@@ -1649,13 +1637,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -1736,13 +1724,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -1823,13 +1811,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -1910,13 +1898,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -1997,13 +1985,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -2085,13 +2073,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -2172,13 +2160,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -2259,13 +2247,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -2346,13 +2334,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -2433,13 +2421,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -2520,13 +2508,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -2607,13 +2595,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -2627,11 +2615,7 @@ I (..\..\Common\grbl\serial.h)(0x61A649B4)
 I (..\..\Common\grbl\spindle_control.h)(0x5D63321F)
 I (..\..\Common\grbl\stepper.h)(0x616C1FCF)
 I (..\..\Common\grbl\jog.h)(0x5D63321F)
-<<<<<<< HEAD
-F (..\..\Common\grbl\serial.c)(0x61A7ABB6)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\serial.o --depend stm32f4_grbl\serial.d)
-=======
-F (..\..\Common\grbl\serial.c)(0x61A64C35)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\serial.o --depend stm32f4_grbl\serial.d)
->>>>>>> 06934f19a950bf465229f3d1cd7f338d5b6f0c97
+F (..\..\Common\grbl\serial.c)(0x61A7ABD0)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\serial.o --depend stm32f4_grbl\serial.d)
 I (..\..\Common\grbl\grbl.h)(0x614381E6)
 I (d:\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (d:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x5E8E3CC2)
@@ -2698,13 +2682,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -2785,13 +2769,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -2872,13 +2856,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -2892,7 +2876,7 @@ I (..\..\Common\grbl\serial.h)(0x61A649B4)
 I (..\..\Common\grbl\spindle_control.h)(0x5D63321F)
 I (..\..\Common\grbl\stepper.h)(0x616C1FCF)
 I (..\..\Common\grbl\jog.h)(0x5D63321F)
-F (..\..\Common\grbl\stepper.c)(0x61A4640E)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\stepper.o --depend stm32f4_grbl\stepper.d)
+F (..\..\Common\grbl\stepper.c)(0x61A7B391)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\App\grbl\grbl_task -I ..\Drivers\HAL_Driver -I ..\..\Common\grbl -I ..\..\Common\fatfs\src -I ..\..\Common\grbl\grbl_task -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\MemMang -I ..\..\Common\freeRTOS\app -I ..\..\Common\freeRTOS\src\include -I ..\..\Common\freeRTOS\src\portable\RVDS\ARM_CM4F --diag_suppress=1295,1035,111-I.\RTE\_STM32F4_GRBL-Id:\Users\Administrator\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-Id:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="534" -D_RTE_ -DSTM32F429xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F429xx-o stm32f4_grbl\stepper.o --depend stm32f4_grbl\stepper.d)
 I (..\..\Common\grbl\grbl.h)(0x614381E6)
 I (d:\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (d:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x5E8E3CC2)
@@ -2959,13 +2943,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -3046,13 +3030,13 @@ I (..\..\Common\fatfs\src\ff.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\integer.h)(0x60D833A9)
 I (..\..\Common\fatfs\src\ffconf.h)(0x60D833A9)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
@@ -3133,13 +3117,13 @@ I (d:\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (d:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x5E8E3CC2)
 I (d:\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\..\Common\grbl\config.h)(0x61A64F5E)
-I (..\..\Common\grbl\nuts_bolts.h)(0x617E8C57)
+I (..\..\Common\grbl\nuts_bolts.h)(0x61A7AD1D)
 I (..\..\Common\grbl\settings.h)(0x61439068)
 I (..\..\Common\grbl\system.h)(0x5D63321F)
 I (..\..\Common\grbl\defaults.h)(0x616BB4B6)
 I (..\..\Common\grbl\cpu_map.h)(0x6116AC5F)
 I (..\..\Common\grbl\cpu_stm32f4_map.h)(0x616C4268)
-I (..\..\Common\grbl\planner.h)(0x5D63321F)
+I (..\..\Common\grbl\planner.h)(0x61A7AFAB)
 I (..\..\Common\grbl\coolant_control.h)(0x5D63321F)
 I (..\..\Common\grbl\eeprom.h)(0x5D63321F)
 I (..\..\Common\grbl\gcode.h)(0x5D63321F)
