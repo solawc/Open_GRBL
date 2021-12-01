@@ -221,7 +221,7 @@ void USART1_IRQHandler (void) {
     IIR = hal_read_usrt_status_reg();
     if (IIR & USART_FLAG_RXNE) 
     {                  // read interrupt  
-      
+      data = hal_read_uart_dr_reg();
       // Pick off realtime command characters directly from the serial stream. These characters are
   // not passed into the main buffer, but these set system state flag bits for realtime execution.
   switch (data) {
