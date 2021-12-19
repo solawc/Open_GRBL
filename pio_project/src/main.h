@@ -33,6 +33,7 @@
 void _delay_ms(uint32_t tick);
 void _delay_us(uint32_t tick);
 
-void enter_grbl_task(void);
+// void enter_grbl_task(void);
+void enter_grbl_task(void *parg);
 
 #endif
