@@ -104,10 +104,6 @@ void grbl_task_create(void) {
 	vTaskStartScheduler();
 }
 
-
-
-
-
 void _delay_ms(uint32_t tick) {
 	vTaskDelay(tick);
 }

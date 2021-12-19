@@ -15,6 +15,7 @@
         "grbl_main.h": "c",
         "stdbool.h": "c",
         "grbl.h": "c",
-        "client.h": "c"
+        "client.h": "c",
+        "led_task.h": "c"
     }
 }

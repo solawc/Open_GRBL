@@ -17,7 +17,7 @@ void led_task_creat(void) {
 				"led task",
 				1024,
 				NULL,
-				2,
+				1,
 				&led_task_handle);
 	if(status == pdPASS) {
 	}

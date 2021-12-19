@@ -44,9 +44,7 @@ void hal_reset_timer_init(void) {
 }
 
 void hal_set_timer_irq_enable(void) {
-
     HAL_NVIC_EnableIRQ(TIM3_IRQn);
-    
 }
 
 void hal_set_timer_irq_disable(void) {
@@ -139,7 +137,6 @@ void hal_pwm_init() {
     Error_Handler();
     }
 }
-
 
 void hal_pwm_set(uint32_t duty) {
 
