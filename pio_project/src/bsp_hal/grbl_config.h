@@ -5,17 +5,17 @@
  * Here is config st_grbl if want to enable fetura
  *
 */
-#define LCD_MKS_TS35
+// #define LCD_MKS_TS35
 #ifdef LCD_MKS_TS35
     #define HAS_TS35_CFG
 #endif
 
-#define LCD_MKS_TS24
+// #define LCD_MKS_TS24
 #ifdef LCD_MKS_TS24
     #define HAS_TS24_CFG
 #endif
 
-#define SDSUPPORT
+// #define SDSUPPORT
 #ifdef SDSUPPORT
     #define HAS_SDCARD
 #endif

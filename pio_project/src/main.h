@@ -11,6 +11,10 @@
     #include "bsp_hal/bsp_g0b0ce/hal_g0b0_system.h"
 #endif
 
+#include "FreeRTOS.h"
+#include "task.h"
+#include "cmsis_os.h"
+
 #include "bsp_hal/grbl_hal.h"
 #include "bsp_hal/hal_uart.h"
 #include "bsp_hal/grbl_config.h"

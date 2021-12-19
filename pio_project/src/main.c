@@ -1,7 +1,5 @@
 #include "main.h"
-#include "FreeRTOS.h"
-#include "task.h"
-#include "cmsis_os.h"
+
 
 // Declare system global variable structure
 system_t sys;

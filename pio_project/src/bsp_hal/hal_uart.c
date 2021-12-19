@@ -150,7 +150,10 @@ int fputc(int ch,FILE *f)
 #endif
 
 void LASER_UART_IRQHANDLER() {
+	uint32_t ulReturn;
+	ulReturn = taskENTER_CRITICAL_FROM_ISR();
 	laser_uart_handler();
+	taskEXIT_CRITICAL_FROM_ISR( ulReturn );
 }
 
 int _write(int fd, char *ptr, int len)
