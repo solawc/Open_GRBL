@@ -1,17 +1,17 @@
 Archive member included to satisfy reference by file (symbol)
 
-.pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+.pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
                               .pio\build\DLC_LG0\src\main.o (osKernelStart)
-.pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
-                              .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o) (vPortYield)
-.pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(heap_1.o)
-                              .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o) (pvPortMalloc)
-.pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+.pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
+                              .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o) (vPortYield)
+.pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(heap_1.o)
+                              .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o) (pvPortMalloc)
+.pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
                               .pio\build\DLC_LG0\src\grbl\limits.o (xQueueGenericCreate)
-.pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+.pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                               .pio\build\DLC_LG0\src\grbl\limits.o (xTaskCreate)
-.pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(list.o)
-                              .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o) (vListInitialise)
+.pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(list.o)
+                              .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o) (vListInitialise)
 c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-exit.o)
                               c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/crt0.o (exit)
 c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-impure.o)
@@ -232,7 +232,7 @@ gc_state            0x44              .pio\build\DLC_LG0\src\grbl\gcode.o
 sys_rt_exec_accessory_override
                     0x1               .pio\build\DLC_LG0\src\main.o
 uwTick              0x4               .pio\build\DLC_LG0\FrameworkHALDriver\Src\stm32g0xx_hal.o
-xQueueRegistry      0x40              .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+xQueueRegistry      0x40              .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
 sys_rt_exec_state   0x1               .pio\build\DLC_LG0\src\main.o
 limit_task_handler  0x4               .pio\build\DLC_LG0\src\grbl\limits.o
 dev_sdcard_set      0x10              .pio\build\DLC_LG0\src\bsp_hal\hal_w25qxx.o
@@ -2742,222 +2742,222 @@ Discarded input sections
  .bss           0x00000000        0x0 .pio\build\DLC_LG0\src\main.o
  .text._delay_us
                 0x00000000        0x4 .pio\build\DLC_LG0\src\main.o
- .text          0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
- .data          0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
- .bss           0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+ .text          0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
+ .data          0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
+ .bss           0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osKernelRunning
-                0x00000000        0xe .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0xe .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osKernelSysTick
-                0x00000000       0x16 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x16 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osThreadCreate
-                0x00000000       0x32 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x32 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osThreadGetId
-                0x00000000        0x8 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x8 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osThreadTerminate
-                0x00000000        0xa .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0xa .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osThreadYield
-                0x00000000        0xa .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0xa .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osThreadSetPriority
-                0x00000000       0x14 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x14 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osThreadGetPriority
-                0x00000000       0x22 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
- .text.osDelay  0x00000000       0x10 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x22 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
+ .text.osDelay  0x00000000       0x10 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osTimerCreate
-                0x00000000        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osTimerStart
-                0x00000000        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osTimerStop
-                0x00000000        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osTimerDelete
-                0x00000000        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osSignalSet
-                0x00000000       0x4c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x4c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osSignalWait
-                0x00000000       0x4c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x4c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMutexCreate
-                0x00000000        0xa .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0xa .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMutexWait
-                0x00000000       0x48 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x48 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMutexRelease
-                0x00000000       0x40 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x40 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMutexDelete
-                0x00000000       0x16 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x16 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osSemaphoreCreate
-                0x00000000       0x24 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x24 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osSemaphoreWait
-                0x00000000       0x48 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x48 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osSemaphoreRelease
-                0x00000000        0x8 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x8 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osSemaphoreDelete
-                0x00000000        0x8 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x8 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osPoolCreate
-                0x00000000       0x68 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x68 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osPoolAlloc
-                0x00000000       0x62 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x62 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osPoolCAlloc
-                0x00000000       0x16 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x16 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osPoolFree
-                0x00000000       0x30 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x30 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMessageCreate
-                0x00000000        0xe .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0xe .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMessagePut
-                0x00000000       0x4c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x4c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMessageGet
-                0x00000000       0x74 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x74 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMailCreate
-                0x00000000       0x5a .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x5a .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMailAlloc
-                0x00000000        0xe .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0xe .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMailCAlloc
-                0x00000000       0x22 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x22 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMailPut
-                0x00000000       0x54 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x54 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMailGet
-                0x00000000       0x70 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x70 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMailFree
-                0x00000000       0x12 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x12 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osSystickHandler
-                0x00000000       0x10 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x10 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osThreadSuspend
-                0x00000000        0xa .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0xa .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osThreadResume
-                0x00000000       0x28 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x28 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osThreadSuspendAll
-                0x00000000        0xa .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0xa .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osThreadResumeAll
-                0x00000000       0x12 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x12 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osDelayUntil
-                0x00000000        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osAbortDelay
-                0x00000000        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osThreadList
-                0x00000000        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMessagePeek
-                0x00000000       0x38 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x38 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMessageWaiting
-                0x00000000       0x16 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000       0x16 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMessageAvailableSpace
-                0x00000000        0x8 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x8 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osMessageDelete
-                0x00000000        0x8 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x8 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osRecursiveMutexCreate
-                0x00000000        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osRecursiveMutexRelease
-                0x00000000        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osRecursiveMutexWait
-                0x00000000        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x00000000        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .text.osSemaphoreGetCount
-                0x00000000        0x8 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
- .text          0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
- .data          0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
- .bss           0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x00000000        0x8 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
+ .text          0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
+ .data          0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
+ .bss           0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
  .text.vPortEndScheduler
-                0x00000000       0x18 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
- .text          0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(heap_1.o)
- .data          0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(heap_1.o)
- .bss           0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(heap_1.o)
+                0x00000000       0x18 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
+ .text          0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(heap_1.o)
+ .data          0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(heap_1.o)
+ .bss           0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(heap_1.o)
  .text.vPortInitialiseBlocks
-                0x00000000        0xc .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(heap_1.o)
+                0x00000000        0xc .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(heap_1.o)
  .text.xPortGetFreeHeapSize
-                0x00000000       0x14 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(heap_1.o)
- .text          0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
- .data          0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
- .bss           0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000       0x14 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(heap_1.o)
+ .text          0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
+ .data          0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
+ .bss           0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.xQueueGenericSend
-                0x00000000      0x120 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000      0x120 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.xQueueCreateMutex
-                0x00000000       0x24 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000       0x24 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.xQueueGiveFromISR
-                0x00000000       0x78 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000       0x78 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.xQueueSemaphoreTake
-                0x00000000      0x14a .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000      0x14a .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.xQueuePeek
-                0x00000000      0x10a .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000      0x10a .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.xQueueReceiveFromISR
-                0x00000000       0x7e .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000       0x7e .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.xQueuePeekFromISR
-                0x00000000       0x4a .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000       0x4a .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.uxQueueMessagesWaiting
-                0x00000000       0x18 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000       0x18 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.uxQueueSpacesAvailable
-                0x00000000       0x1c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000       0x1c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.uxQueueMessagesWaitingFromISR
-                0x00000000        0xc .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000        0xc .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.xQueueIsQueueEmptyFromISR
-                0x00000000       0x10 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000       0x10 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.xQueueIsQueueFullFromISR
-                0x00000000       0x14 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000       0x14 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.vQueueAddToRegistry
-                0x00000000       0x24 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000       0x24 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.pcQueueGetName
-                0x00000000       0x24 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000       0x24 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.vQueueUnregisterQueue
-                0x00000000       0x24 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x00000000       0x24 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.vQueueDelete
-                0x00000000       0x16 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
- COMMON         0x00000000       0x40 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
- .text          0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
- .data          0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
- .bss           0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x16 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
+ COMMON         0x00000000       0x40 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
+ .text          0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
+ .data          0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
+ .bss           0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.vTaskDelete
-                0x00000000       0xa0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0xa0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.uxTaskPriorityGet
-                0x00000000       0x20 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x20 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.uxTaskPriorityGetFromISR
-                0x00000000       0x20 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x20 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.vTaskPrioritySet
-                0x00000000       0xa0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0xa0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.vTaskResume
-                0x00000000       0x74 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x74 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.xTaskResumeFromISR
-                0x00000000       0x84 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x84 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.vTaskEndScheduler
-                0x00000000       0x14 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x14 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.xTaskGetTickCount
-                0x00000000        0xc .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000        0xc .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.xTaskGetTickCountFromISR
-                0x00000000        0xc .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000        0xc .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.uxTaskGetNumberOfTasks
-                0x00000000        0xc .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000        0xc .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.pcTaskGetName
-                0x00000000       0x18 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x18 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.xTaskCatchUpTicks
-                0x00000000       0x2c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x2c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.vTaskSuspend
-                0x00000000       0x9c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x9c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.vTaskPlaceOnUnorderedEventList
-                0x00000000       0x40 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x40 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.vTaskRemoveFromUnorderedEventList
-                0x00000000       0x70 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x70 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.vTaskSetTimeOutState
-                0x00000000       0x28 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x28 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.xTaskGetCurrentTaskHandle
-                0x00000000        0xc .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000        0xc .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.xTaskPriorityInherit
-                0x00000000       0x7c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x7c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.vTaskPriorityDisinheritAfterTimeout
-                0x00000000       0x78 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x78 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.uxTaskResetEventItemValue
-                0x00000000       0x18 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x18 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.pvTaskIncrementMutexHeldCount
-                0x00000000       0x18 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x18 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.ulTaskNotifyTake
-                0x00000000       0x5c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x5c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.xTaskNotifyWait
-                0x00000000       0x78 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x78 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.xTaskGenericNotify
-                0x00000000       0xb4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0xb4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.xTaskGenericNotifyFromISR
-                0x00000000       0xe0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0xe0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.vTaskNotifyGiveFromISR
-                0x00000000       0x9c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x9c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.xTaskNotifyStateClear
-                0x00000000       0x28 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x00000000       0x28 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.ulTaskNotifyValueClear
-                0x00000000       0x28 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
- .text          0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(list.o)
- .data          0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(list.o)
- .bss           0x00000000        0x0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(list.o)
+                0x00000000       0x28 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
+ .text          0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(list.o)
+ .data          0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(list.o)
+ .bss           0x00000000        0x0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(list.o)
  .text          0x00000000        0x0 c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-exit.o)
  .data          0x00000000        0x0 c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-exit.o)
  .bss           0x00000000        0x0 c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-exit.o)
@@ -3408,7 +3408,7 @@ LOAD .pio\build\DLC_LG0\src\grbl\stepper.o
 LOAD .pio\build\DLC_LG0\src\grbl\system.o
 LOAD .pio\build\DLC_LG0\src\main.o
 START GROUP
-LOAD .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a
+LOAD .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a
 LOAD c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a
 LOAD c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v6-m\libgcc.a
 LOAD c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v6-m\libm.a
@@ -4313,137 +4313,137 @@ LOAD c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.7020
                 0x0800a100        0x8 .pio\build\DLC_LG0\src\main.o
                 0x0800a100                _delay_ms
  .text.osKernelStart
-                0x0800a108        0xa .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x0800a108        0xa .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
                 0x0800a108                osKernelStart
  *fill*         0x0800a112        0x2 
  .text.prvTaskExitError
-                0x0800a114       0x24 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x0800a114       0x24 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
  *fill*         0x0800a138        0x8 
  .text.vPortStartFirstTask
-                0x0800a140       0x34 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x0800a140       0x34 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
  .text.pxPortInitialiseStack
-                0x0800a174       0x20 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x0800a174       0x20 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
                 0x0800a174                pxPortInitialiseStack
  .text.SVC_Handler
-                0x0800a194        0x2 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x0800a194        0x2 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
                 0x0800a194                SVC_Handler
  *fill*         0x0800a196        0x2 
  .text.vPortYield
-                0x0800a198       0x18 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x0800a198       0x18 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
                 0x0800a198                vPortYield
  .text.vPortEnterCritical
-                0x0800a1b0       0x18 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x0800a1b0       0x18 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
                 0x0800a1b0                vPortEnterCritical
  .text.vPortExitCritical
-                0x0800a1c8       0x1c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x0800a1c8       0x1c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
                 0x0800a1c8                vPortExitCritical
  .text.ulSetInterruptMaskFromISR
-                0x0800a1e4        0x8 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x0800a1e4        0x8 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
                 0x0800a1e4                ulSetInterruptMaskFromISR
  .text.vClearInterruptMaskFromISR
-                0x0800a1ec        0x6 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x0800a1ec        0x6 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
                 0x0800a1ec                vClearInterruptMaskFromISR
  *fill*         0x0800a1f2        0xe 
  .text.PendSV_Handler
-                0x0800a200       0x44 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x0800a200       0x44 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
                 0x0800a200                PendSV_Handler
  .text.xPortSysTickHandler
-                0x0800a244       0x24 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x0800a244       0x24 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
                 0x0800a244                xPortSysTickHandler
  .text.vPortSetupTimerInterrupt
-                0x0800a268       0x34 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x0800a268       0x34 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
                 0x0800a268                vPortSetupTimerInterrupt
  .text.xPortStartScheduler
-                0x0800a29c       0x3c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x0800a29c       0x3c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
                 0x0800a29c                xPortStartScheduler
  .text.pvPortMalloc
-                0x0800a2d8       0x54 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(heap_1.o)
+                0x0800a2d8       0x54 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(heap_1.o)
                 0x0800a2d8                pvPortMalloc
  .text.vPortFree
-                0x0800a32c        0xa .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(heap_1.o)
+                0x0800a32c        0xa .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(heap_1.o)
                 0x0800a32c                vPortFree
  .text.prvIsQueueEmpty
-                0x0800a336       0x14 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x0800a336       0x14 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.prvCopyDataToQueue
-                0x0800a34a       0x70 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x0800a34a       0x70 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.prvCopyDataFromQueue
-                0x0800a3ba       0x24 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x0800a3ba       0x24 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.prvUnlockQueue
-                0x0800a3de       0x6a .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x0800a3de       0x6a .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .text.xQueueGenericReset
-                0x0800a448       0x68 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x0800a448       0x68 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
                 0x0800a448                xQueueGenericReset
  .text.xQueueGenericCreate
-                0x0800a4b0       0x3a .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x0800a4b0       0x3a .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
                 0x0800a4b0                xQueueGenericCreate
  .text.xQueueGenericSendFromISR
-                0x0800a4ea       0x94 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x0800a4ea       0x94 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
                 0x0800a4ea                xQueueGenericSendFromISR
  .text.xQueueReceive
-                0x0800a57e      0x10a .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x0800a57e      0x10a .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
                 0x0800a57e                xQueueReceive
  .text.prvResetNextTaskUnblockTime
-                0x0800a688       0x28 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800a688       0x28 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.prvAddCurrentTaskToDelayedList
-                0x0800a6b0       0x70 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800a6b0       0x70 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.prvIdleTask
-                0x0800a720       0x58 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800a720       0x58 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .text.xTaskCreate
-                0x0800a778      0x194 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800a778      0x194 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800a778                xTaskCreate
  .text.vTaskStartScheduler
-                0x0800a90c       0x54 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800a90c       0x54 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800a90c                vTaskStartScheduler
  .text.vTaskSuspendAll
-                0x0800a960       0x10 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800a960       0x10 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800a960                vTaskSuspendAll
  .text.xTaskIncrementTick
-                0x0800a970       0xfc .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800a970       0xfc .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800a970                xTaskIncrementTick
  .text.xTaskResumeAll
-                0x0800aa6c       0xd0 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800aa6c       0xd0 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800aa6c                xTaskResumeAll
  .text.vTaskDelay
-                0x0800ab3c       0x34 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800ab3c       0x34 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800ab3c                vTaskDelay
  .text.vTaskSwitchContext
-                0x0800ab70       0x6c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800ab70       0x6c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800ab70                vTaskSwitchContext
  .text.vTaskPlaceOnEventList
-                0x0800abdc       0x24 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800abdc       0x24 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800abdc                vTaskPlaceOnEventList
  .text.xTaskRemoveFromEventList
-                0x0800ac00       0x78 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800ac00       0x78 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800ac00                xTaskRemoveFromEventList
  .text.vTaskInternalSetTimeOutState
-                0x0800ac78       0x18 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800ac78       0x18 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800ac78                vTaskInternalSetTimeOutState
  .text.xTaskCheckForTimeOut
-                0x0800ac90       0x64 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800ac90       0x64 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800ac90                xTaskCheckForTimeOut
  .text.vTaskMissedYield
-                0x0800acf4        0xc .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800acf4        0xc .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800acf4                vTaskMissedYield
  .text.xTaskGetSchedulerState
-                0x0800ad00       0x20 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800ad00       0x20 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800ad00                xTaskGetSchedulerState
  .text.xTaskPriorityDisinherit
-                0x0800ad20       0x6c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800ad20       0x6c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x0800ad20                xTaskPriorityDisinherit
  .text.vListInitialise
-                0x0800ad8c       0x16 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(list.o)
+                0x0800ad8c       0x16 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(list.o)
                 0x0800ad8c                vListInitialise
  .text.vListInitialiseItem
-                0x0800ada2        0x6 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(list.o)
+                0x0800ada2        0x6 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(list.o)
                 0x0800ada2                vListInitialiseItem
  .text.vListInsertEnd
-                0x0800ada8       0x18 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(list.o)
+                0x0800ada8       0x18 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(list.o)
                 0x0800ada8                vListInsertEnd
  .text.vListInsert
-                0x0800adc0       0x2e .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(list.o)
+                0x0800adc0       0x2e .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(list.o)
                 0x0800adc0                vListInsert
  .text.uxListRemove
-                0x0800adee       0x22 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(list.o)
+                0x0800adee       0x22 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(list.o)
                 0x0800adee                uxListRemove
  .text.__libc_init_array
                 0x0800ae10       0x48 c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-init.o)
@@ -4737,7 +4737,7 @@ LOAD c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.7020
                 0x0800e0f1        0xa .pio\build\DLC_LG0\src\main.o
                                   0xe (size before relaxing)
  .rodata.vTaskStartScheduler.str1.1
-                0x0800e0fb        0x5 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0800e0fb        0x5 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .rodata._global_impure_ptr
                 0x0800e100        0x4 c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-impure.o)
                 0x0800e100                _global_impure_ptr
@@ -4831,7 +4831,7 @@ LOAD c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.7020
                 0x20000004        0x4 .pio\build\DLC_LG0\FrameworkHALDriver\Src\stm32g0xx_hal.o
                 0x20000004                uwTickPrio
  .data.uxCriticalNesting
-                0x20000008        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x20000008        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
  .data._impure_ptr
                 0x2000000c        0x4 c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-impure.o)
                 0x2000000c                _impure_ptr
@@ -4903,53 +4903,53 @@ LOAD c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.7020
                 0x200005d8        0x1 .pio\build\DLC_LG0\src\grbl\stepper.o
  *fill*         0x200005d9        0x3 
  .bss.pucAlignedHeap.5119
-                0x200005dc        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(heap_1.o)
- .bss.ucHeap    0x200005e0     0x4000 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(heap_1.o)
+                0x200005dc        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(heap_1.o)
+ .bss.ucHeap    0x200005e0     0x4000 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(heap_1.o)
  .bss.xNextFreeByte
-                0x200045e0        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(heap_1.o)
+                0x200045e0        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(heap_1.o)
  .bss.pxCurrentTCB
-                0x200045e4        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x200045e4        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
                 0x200045e4                pxCurrentTCB
  .bss.pxDelayedTaskList
-                0x200045e8        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x200045e8        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.pxOverflowDelayedTaskList
-                0x200045ec        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x200045ec        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.pxReadyTasksLists
-                0x200045f0       0x8c .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x200045f0       0x8c .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.uxCurrentNumberOfTasks
-                0x2000467c        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x2000467c        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.uxDeletedTasksWaitingCleanUp
-                0x20004680        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x20004680        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.uxSchedulerSuspended
-                0x20004684        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x20004684        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.uxTaskNumber
-                0x20004688        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x20004688        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.uxTopReadyPriority
-                0x2000468c        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x2000468c        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.xDelayedTaskList1
-                0x20004690       0x14 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x20004690       0x14 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.xDelayedTaskList2
-                0x200046a4       0x14 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x200046a4       0x14 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.xIdleTaskHandle
-                0x200046b8        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x200046b8        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.xNextTaskUnblockTime
-                0x200046bc        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x200046bc        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.xNumOfOverflows
-                0x200046c0        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x200046c0        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.xPendedTicks
-                0x200046c4        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x200046c4        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.xPendingReadyList
-                0x200046c8       0x14 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x200046c8       0x14 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.xSchedulerRunning
-                0x200046dc        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x200046dc        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.xSuspendedTaskList
-                0x200046e0       0x14 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x200046e0       0x14 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.xTasksWaitingTermination
-                0x200046f4       0x14 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x200046f4       0x14 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.xTickCount
-                0x20004708        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x20004708        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.xYieldPending
-                0x2000470c        0x4 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x2000470c        0x4 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .bss.__malloc_free_list
                 0x20004710        0x4 c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-nano-mallocr.o)
                 0x20004710                __malloc_free_list
@@ -5107,17 +5107,17 @@ LOAD c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.7020
  .ARM.attributes
                 0x00000784       0x32 .pio\build\DLC_LG0\src\main.o
  .ARM.attributes
-                0x000007b6       0x32 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
+                0x000007b6       0x32 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
  .ARM.attributes
-                0x000007e8       0x32 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
+                0x000007e8       0x32 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
  .ARM.attributes
-                0x0000081a       0x32 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(heap_1.o)
+                0x0000081a       0x32 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(heap_1.o)
  .ARM.attributes
-                0x0000084c       0x32 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
+                0x0000084c       0x32 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
  .ARM.attributes
-                0x0000087e       0x32 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
+                0x0000087e       0x32 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
  .ARM.attributes
-                0x000008b0       0x32 .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(list.o)
+                0x000008b0       0x32 .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(list.o)
  .ARM.attributes
                 0x000008e2       0x2c c:/users/administrator/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-impure.o)
  .ARM.attributes
@@ -5348,12 +5348,12 @@ OUTPUT(.pio\build\DLC_LG0\firmware.elf elf32-littlearm)
  .comment       0x0000007e       0x7f .pio\build\DLC_LG0\src\grbl\stepper.o
  .comment       0x0000007e       0x7f .pio\build\DLC_LG0\src\grbl\system.o
  .comment       0x0000007e       0x7f .pio\build\DLC_LG0\src\main.o
- .comment       0x0000007e       0x7f .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(cmsis_os.o)
- .comment       0x0000007e       0x7f .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(port.o)
- .comment       0x0000007e       0x7f .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(heap_1.o)
- .comment       0x0000007e       0x7f .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(queue.o)
- .comment       0x0000007e       0x7f .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(tasks.o)
- .comment       0x0000007e       0x7f .pio\build\DLC_LG0\libd39\libstm32-platformio-freertos.a(list.o)
+ .comment       0x0000007e       0x7f .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(cmsis_os.o)
+ .comment       0x0000007e       0x7f .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(port.o)
+ .comment       0x0000007e       0x7f .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(heap_1.o)
+ .comment       0x0000007e       0x7f .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(queue.o)
+ .comment       0x0000007e       0x7f .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(tasks.o)
+ .comment       0x0000007e       0x7f .pio\build\DLC_LG0\libb19\libstm32-platformio-freertos.a(list.o)
  .comment       0x0000007e       0x7f .pio\build\DLC_LG0\libFrameworkCMSISDevice.a(system_stm32g0xx.o)
 
 .debug_frame    0x00000000     0x11a4

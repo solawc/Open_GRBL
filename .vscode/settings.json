@@ -1,21 +1,20 @@
 {
     "files.associations": {
-        "hal_tim.h": "c",
-        "gpio.h": "c",
-        "hal_uart.h": "c",
-        "grbl_hal.h": "c",
-        "hal_spi.h": "c",
+        "arduino_freertos.h": "c",
         "main.h": "c",
-        "stepper.h": "c",
-        "hal_i2c.h": "c",
+        "hal_f429_system.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "grbl_config.h": "c",
+        "grbl_hal.h": "c",
         "hal_gpio.h": "c",
-        "hal_w25qxx.h": "c",
-        "task.h": "c",
-        "freertos.h": "c",
-        "grbl_main.h": "c",
-        "stdbool.h": "c",
+        "hal_tim.h": "c",
+        "hal_flash_eeprom.h": "c",
+        "hal_spi.h": "c",
         "grbl.h": "c",
-        "client.h": "c",
-        "led_task.h": "c"
+        "hal_uart.h": "c",
+        "stm32g0xx_hal.h": "c",
+        "hal_g0b0_system.h": "c",
+        "stm32g0b0xx.h": "c",
+        "hal_w25qxx.h": "c"
     }
 }
