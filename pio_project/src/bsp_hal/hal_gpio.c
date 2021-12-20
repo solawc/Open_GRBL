@@ -57,24 +57,25 @@ void hal_limit_gpio_init(void) {
 void hal_limit_gpio_irq_enable(void) {
 
 	/* EXTI interrupt init*/
-	HAL_NVIC_SetPriority(EXTI0_1_IRQn, 0, 0);
-	HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
+	HAL_NVIC_SetPriority(LIMIT_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(LIMIT_IRQn);
 }
 
 void hal_limit_gpio_irq_disable(void) {
 
-	HAL_NVIC_DisableIRQ(EXTI0_1_IRQn);
+	HAL_NVIC_DisableIRQ(LIMIT_IRQn);
 }
 
 uint8_t hal_limits_get_gpio_status(uint8_t axis) {
 #ifdef LIMIT_X_PIN
 	if(axis == X_AXIS) 			return HAL_GPIO_ReadPin(LIMIT_X_PORT, LIMIT_X_PIN);
-	#ifdef LIMIT_Y_PIN
+#ifdef LIMIT_Y_PIN
 		else if(axis == Y_AXIS)		return HAL_GPIO_ReadPin(LIMIT_Y_PORT, LIMIT_Y_PIN);
-	#endif
-	#ifdef LIMIT_Z_PIN
+#endif
+
+#ifdef LIMIT_Z_PIN
 	else if(axis == Z_AXIS)		return HAL_GPIO_ReadPin(LIMIT_Z_PORT, LIMIT_Z_PIN);
-	#endif
+#endif
     else return 255;
 #else 
 	return 0;

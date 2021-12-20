@@ -42,6 +42,7 @@
   #define DUAL_AXIS_CHECK_TRIGGER_2   bit(2)
 #endif
 
+TaskHandle_t limit_task_handler;
 void limits_init()
 {
 #if defined(CPU_MAP_ATMEGA328P)
@@ -68,25 +69,27 @@ void limits_init()
 #elif defined(CPU_STM32)
 
   hal_limit_gpio_init();
+  
   if (bit_istrue(settings.flags,BITFLAG_HARD_LIMIT_ENABLE)) {
-    limit_sw_queue = xQueueCreate(LIMIT_QUEUE_SIZE, sizeof(int));
-
     hal_limit_gpio_irq_enable();
   } else {
     limits_disable();
   }
 
-  xTaskCreate(limit_check_task,
-              "limitCheckTask",
-              2048,
-              NULL,
-              5,  // priority
-              NULL);
+  printf("Creat limit task\n");
+
+  if(limit_sw_queue == NULL) {
+    limit_sw_queue = xQueueCreate(LIMIT_QUEUE_SIZE, sizeof(int));
+    xTaskCreate(limit_check_task,
+                "limitCheckTask",
+                128,
+                NULL,
+                5,  // priority
+                &limit_task_handler);
+  }
 
 #endif
 }
-
-
 
 
 // Disables hard limits.
@@ -196,9 +199,11 @@ uint8_t limits_get_state()
       __HAL_GPIO_EXTI_CLEAR_IT(LIMIT_Y_PIN);
     }
 
+#ifdef LIMIT_Z_PIN
     if(__HAL_GPIO_EXTI_GET_IT(LIMIT_Z_PIN) != RESET) {
         __HAL_GPIO_EXTI_CLEAR_IT(LIMIT_Z_PIN);
     }
+#endif
 
     if (sys.state != STATE_ALARM) {
         if (!(sys_rt_exec_alarm)) {
@@ -209,6 +214,7 @@ uint8_t limits_get_state()
               system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
             }
           #else
+            printf("enter limit irq\n");
             // mc_reset(); // Initiate system kill.
             // system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
             int evt;
@@ -219,18 +225,15 @@ uint8_t limits_get_state()
   }
 
   void limit_check_task(void *parg) {
-
     while(1) {
       int evt;
       uint8_t pinStatus;
-      
       xQueueReceive(limit_sw_queue, &evt, portMAX_DELAY);
 #ifdef ENABLE_SOFTWARE_DEBOUNCE
       vTaskDelay(DEBOUNCE_PERIOD / portTICK_PERIOD_MS);    // delay a while
 #endif
       pinStatus = limits_get_state();
       if(pinStatus) {
-        printf("Hard limit, code:%d\n", pinStatus);
         mc_reset();
         system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT);
       }

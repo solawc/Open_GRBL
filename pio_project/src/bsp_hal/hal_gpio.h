@@ -47,9 +47,10 @@ void hal_led_toggle(void);
 #define LIMIT_X_PIN                 GPIO_PIN_0
 #define LIMIT_Y_PORT                GPIOB
 #define LIMIT_Y_PIN                 GPIO_PIN_1
-#define LIMIT_Z_PORT                GPIOB
-#define LIMIT_Z_PIN                 GPIO_PIN_1
-#define LIMIT_IRQnHANDLE            EXTI0_IRQHandler
+// #define LIMIT_Z_PORT                GPIOB
+// #define LIMIT_Z_PIN                 GPIO_PIN_1
+#define LIMIT_IRQnHANDLE            EXTI0_1_IRQHandler
+#define LIMIT_IRQn                  EXTI0_1_IRQn
 
 #define STEP_EN_PORT                GPIOC
 #define STEP_EN_PIN                 GPIO_PIN_15
@@ -58,15 +59,15 @@ void hal_led_toggle(void);
 #define MOTOR_X_DIR_PIN             GPIO_PIN_13
 #define MOTOR_Y_DIR_PORT            GPIOB
 #define MOTOR_Y_DIR_PIN             GPIO_PIN_8
-#define MOTOR_Z_DIR_PORT            GPIOB
-#define MOTOR_Z_DIR_PIN             GPIO_PIN_8
+// #define MOTOR_Z_DIR_PORT            GPIOB
+// #define MOTOR_Z_DIR_PIN             GPIO_PIN_8
 
 #define MOTOR_X_AXIS_PORT           GPIOC
 #define MOTOR_X_AXIS_PIN            GPIO_PIN_14
 #define MOTOR_Y_AXIS_PORT           GPIOB
 #define MOTOR_Y_AXIS_PIN            GPIO_PIN_9
-#define MOTOR_Z_AXIS_PORT           GPIOB
-#define MOTOR_Z_AXIS_PIN            GPIO_PIN_9
+// #define MOTOR_Z_AXIS_PORT           GPIOB
+// #define MOTOR_Z_AXIS_PIN            GPIO_PIN_9
 #endif
 
 void hal_limit_gpio_init(void);
