@@ -11,8 +11,8 @@
 #define  sFLASH_ID_128  0X4018        //W25Q128
 #define  sFLASH_ID_256  0X4019        //W25Q256  
 
-#define sFLAHS_SPI_MODE         0
-#define sFLASH_QSPI_MODE        1
+#define sFLAHS_SPI_MODE                 0
+#define sFLASH_QSPI_MODE                1
 
 #define SPI_FLASH_PageSize              256
 #define SPI_FLASH_PerWritePageSize      256

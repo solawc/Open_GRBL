@@ -6,8 +6,8 @@
 #include "stdlib.h"
 #include "stdbool.h"
 
-#define RX_BUFFER_SIZE	255
-#define TX_BUFFER_SIZE 	255
+// #define RX_BUFFER_SIZE	255
+// #define TX_BUFFER_SIZE 	255
 
 #define UART_TX_DMA_BUFF_SIZE       1024
 #define UART_RX_DMA_BUFF_SIZE       1024

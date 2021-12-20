@@ -38,4 +38,6 @@ void limits_go_home(uint8_t cycle_mask);
 // Check for soft limit violations
 void limits_soft_check(float *target);
 
+void limit_check_task(void *parg);
+
 #endif

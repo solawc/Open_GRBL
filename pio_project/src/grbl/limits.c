@@ -21,6 +21,10 @@
 
 #include "grbl.h"
 
+#ifdef CPU_STM32
+  #define LIMIT_QUEUE_SIZE      10
+  xQueueHandle limit_sw_queue;  // used by limit switch debouncing
+#endif
 
 // Homing axis search distance multiplier. Computed by this value times the cycle travel.
 #ifndef HOMING_AXIS_SEARCH_SCALAR
@@ -62,14 +66,27 @@ void limits_init()
     WDTCSR = (1<<WDP0); // Set time-out at ~32msec.
   #endif
 #elif defined(CPU_STM32)
+
   hal_limit_gpio_init();
   if (bit_istrue(settings.flags,BITFLAG_HARD_LIMIT_ENABLE)) {
+    limit_sw_queue = xQueueCreate(LIMIT_QUEUE_SIZE, sizeof(int));
+
     hal_limit_gpio_irq_enable();
   } else {
     limits_disable();
   }
+
+  xTaskCreate(limit_check_task,
+              "limitCheckTask",
+              2048,
+              NULL,
+              5,  // priority
+              NULL);
+
 #endif
 }
+
+
 
 
 // Disables hard limits.
@@ -192,12 +209,34 @@ uint8_t limits_get_state()
               system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
             }
           #else
-            mc_reset(); // Initiate system kill.
-            system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
+            // mc_reset(); // Initiate system kill.
+            // system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
+            int evt;
+            xQueueSendFromISR(limit_sw_queue, &evt, NULL);
           #endif
         }
       }
   }
+
+  void limit_check_task(void *parg) {
+
+    while(1) {
+      int evt;
+      uint8_t pinStatus;
+      
+      xQueueReceive(limit_sw_queue, &evt, portMAX_DELAY);
+#ifdef ENABLE_SOFTWARE_DEBOUNCE
+      vTaskDelay(DEBOUNCE_PERIOD / portTICK_PERIOD_MS);    // delay a while
+#endif
+      pinStatus = limits_get_state();
+      if(pinStatus) {
+        printf("Hard limit, code:%d\n", pinStatus);
+        mc_reset();
+        system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT);
+      }
+    }
+  }
+
 #endif
 
 // Homes the specified cycle axes, sets the machine position, and performs a pull-off motion after

@@ -39,7 +39,7 @@ int main() {
     w25qxx_init();
 
 #ifdef STM32G0B0xx
-    HAL_Delay(500);
+    HAL_Delay(100);  // 等待外设反应，因为没有加入外部晶振
 #endif
 
     grbl_report_mcu_info();
@@ -85,7 +85,7 @@ void enter_grbl_task(void *parg) {
 	// not after disabling the alarm locks. Prevents motion startup blocks from crashing into
 	// things uncontrollably. Very bad.
 #ifdef HOMING_INIT_LOCK
-	if (bit_istrue(settings.flags,BITFLAG_HOMING_ENABLE)) { sys.state = STATE_ALARM; }
+	if (bit_istrue(settings.flags, BITFLAG_HOMING_ENABLE)) { sys.state = STATE_ALARM; }
 #endif
 	// Grbl initialization loop upon power-up or a system abort. For the latter, all processes
   // will return to this loop to be cleanly re-initialized.
@@ -145,9 +145,10 @@ void SysTick_Handler(void)
 
 
 void _delay_ms(uint32_t tick) {
-  uint32_t mililoop = SystemCoreClock / 1000;
-	for (uint32_t i=0; i< mililoop; i++)
-		__asm__ __volatile__("nop\n\t":::"memory");
+  // uint32_t mililoop = SystemCoreClock / 1000;
+	// for (uint32_t i=0; i< mililoop; i++)
+	// 	__asm__ __volatile__("nop\n\t":::"memory");
+  vTaskDelay(tick);
 }
 
 void _delay_us(uint32_t tick) {

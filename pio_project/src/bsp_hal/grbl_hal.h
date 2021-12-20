@@ -28,8 +28,19 @@
 #define MCU_INFO_RAM        "144K"
 #endif
 
-void grbl_report_mcu_info(void);
+/*
+ * 这是一个用于保存grbl需求信息的结构体
+ * 它需要包含一下内容：
+ * 1、MCU主频
+ * 2、定时器主频
+*/ 
+typedef struct {
+    uint32_t mcu_clk;
+    uint32_t step_tim_clk;              
+}grbl_hw_t;
 
+void grbl_report_mcu_info(void);
+void grbl_hw_info_get(void);
 
 
 

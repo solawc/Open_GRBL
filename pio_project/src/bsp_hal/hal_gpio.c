@@ -38,15 +38,20 @@ void hal_limit_gpio_init(void) {
 
 	GPIO_Init.Mode = GPIO_MODE_IT_RISING;
 	GPIO_Init.Pull = GPIO_NOPULL;
-
+#ifdef LIMIT_X_PIN
 	GPIO_Init.Pin = LIMIT_X_PIN;
     HAL_GPIO_Init(LIMIT_X_PORT, &GPIO_Init);
+#endif
 
+#ifdef LIMIT_Y_PIN
 	GPIO_Init.Pin = LIMIT_Y_PIN;
     HAL_GPIO_Init(LIMIT_Y_PORT, &GPIO_Init);
+#endif
 
+#ifdef LIMIT_Z_PIN 
 	GPIO_Init.Pin = LIMIT_Z_PIN;
     HAL_GPIO_Init(LIMIT_Z_PORT, &GPIO_Init);
+#endif
 }
 
 void hal_limit_gpio_irq_enable(void) {
