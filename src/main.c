@@ -26,6 +26,8 @@ TaskHandle_t led_task_han;
 
 TaskHandle_t grbl_task_handler;
 
+uint8_t logo[] = "sadasd\n";
+
 int main() {
 
     HAL_Init();

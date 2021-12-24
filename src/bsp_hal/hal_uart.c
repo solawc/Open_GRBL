@@ -3,12 +3,16 @@
 
 UART_HandleTypeDef laser_uart;
 
-#ifdef STM32F429xx
-	DMA_HandleTypeDef dma_tx;
-	DMA_HandleTypeDef dma_rx;
+DMA_HandleTypeDef dma_tx;
+DMA_HandleTypeDef dma_rx;
+
+uint8_t laser_rx_buf[10];
+
+
+// #define USE_SERIAL_DMA
 
 static void hal_uart1_dma_init() {
-
+#ifdef STM32F429xx
 	__HAL_RCC_DMA2_CLK_ENABLE();
 
 	dma_tx.Instance = DMA2_Stream7;
@@ -28,10 +32,34 @@ static void hal_uart1_dma_init() {
 	HAL_DMA_Init(&dma_tx);
 	__HAL_LINKDMA(&laser_uart, hdmatx, dma_tx);
 }
+#elif defined(STM32G0B0xx)
+
+	__HAL_RCC_DMA1_CLK_ENABLE();
+
+	dma_tx.Instance = DMA1_Channel2;
+    dma_tx.Init.Request = DMA_REQUEST_USART2_TX;
+    dma_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    dma_tx.Init.PeriphInc = DMA_PINC_DISABLE;
+    dma_tx.Init.MemInc = DMA_MINC_ENABLE;
+    dma_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    dma_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    dma_tx.Init.Mode = DMA_NORMAL;
+    dma_tx.Init.Priority = DMA_PRIORITY_LOW;
+
+    if (HAL_DMA_Init(&dma_tx) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+	__HAL_LINKDMA(&laser_uart, hdmatx, dma_tx);
+
+	HAL_NVIC_SetPriority(DMA1_Channel2_3_IRQn, 0, 0);
+  	HAL_NVIC_EnableIRQ(DMA1_Channel2_3_IRQn);
+	__HAL_DMA_ENABLE_IT(&dma_tx, DMA_IT_TC);
+}
 #endif
 
-void uart_send_dma(uint8_t *str,  uint16_t size) {
-
+void uart_send_dma(uint8_t *str,  uint16_t size) {	
 	HAL_UART_Transmit_DMA (&laser_uart ,str ,size);
 }
 
@@ -82,14 +110,13 @@ void hal_uart_init(void) {
 	}
 #endif
 
-
-#ifdef STM32F429xx
+#ifdef USE_SERIAL_DMA
 	hal_uart1_dma_init();
-#endif
-
+#else 
 	HAL_NVIC_SetPriority(LaserUART_IRQn, 1, 1);
     HAL_NVIC_EnableIRQ(LaserUART_IRQn);
 	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE);
+#endif
 }
 
 void hal_uart_irq_set(void) {
@@ -136,6 +163,7 @@ void hal_clean_isr(void) {
 #endif
 }
 
+
 // use printf , but no suggest!!
 /*
  * C标准库的重定向, 该方法适用于使用Keil/IAR等这类型的编译器，如果使用GCC/G++等编译链工具进行编译，请使用_write(int fd, char *ptr, int len)	
@@ -150,6 +178,24 @@ int fputc(int ch,FILE *f)
 }
 #endif
 
+void DMA1_Channel1_IRQHandler(void)
+{
+	printf("enter dma handler\n");
+	HAL_DMA_IRQHandler(&dma_rx);
+}
+
+void DMA1_Channel2_3_IRQHandler(void)
+{
+	uint32_t flag_it = dma_tx.DmaBaseAddress->ISR;
+	uint32_t source_it = dma_tx.Instance->CCR;
+
+	if ((0U != (flag_it & (DMA_FLAG_TC1 << (dma_tx.ChannelIndex & 0x1CU)))) && (0U != (source_it & DMA_IT_TC))) {
+		laser_uart.gState = HAL_UART_STATE_READY;
+	}
+
+  	HAL_DMA_IRQHandler(&dma_tx);
+}
+
 void LASER_UART_IRQHANDLER() {
 	uint32_t ulReturn;
 	ulReturn = taskENTER_CRITICAL_FROM_ISR();
@@ -158,8 +204,14 @@ void LASER_UART_IRQHANDLER() {
 }
 
 int _write(int fd, char *ptr, int len)
-{
-	HAL_UART_Transmit(&laser_uart, (uint8_t*)ptr, len, 0xFFFF);
+{	
+#ifdef USE_SERIAL_DMA
+	uart_send_dma((uint8_t*)ptr, len);
+	while(__HAL_DMA_GET_FLAG(&dma_tx, DMA_FLAG_TC2));
+	__HAL_DMA_CLEAR_FLAG(&dma_tx,DMA_FLAG_TC2);
+#else 
+	HAL_UART_Transmit(&laser_uart, (uint8_t *)ptr, len, 1000);        //huart3是串口的句柄
+#endif
 	return len;
 }
 

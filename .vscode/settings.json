@@ -15,6 +15,11 @@
         "stm32g0xx_hal.h": "c",
         "hal_g0b0_system.h": "c",
         "stm32g0b0xx.h": "c",
-        "hal_w25qxx.h": "c"
+        "hal_w25qxx.h": "c",
+        "freertos.h": "c",
+        "stm32g0xx_hal_conf.h": "c",
+        "stm32g0xx_hal_dma.h": "c",
+        "stm32g0xx_ll_dma.h": "c",
+        "stm32g0xx_hal_uart.h": "c"
     }
 }
