@@ -179,6 +179,11 @@ void hal_spi_begin(dev_spi_t *drv, spi_setting_t *setting) {
     set_spi_start(drv);
 }
 
+void hal_set_bit_order(dev_spi_t *drv, spi_setting_t *setting) {
+    set_spi_date_size(drv, setting->spi_date_size);
+    HAL_SPI_Init(&drv->hal_spi);
+}
+
 
 void hal_spi_register(dev_spi_t *drv) {
 

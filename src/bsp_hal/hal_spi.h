@@ -76,6 +76,7 @@ typedef struct {
 
 void hal_spi_begin(dev_spi_t *drv, spi_setting_t *setting);
 void hal_spi_register(dev_spi_t *dev_spi);
+void hal_set_bit_order(dev_spi_t *drv, spi_setting_t *setting);
 uint8_t hal_spi_transfer_revice_byte(dev_spi_t *drv, uint8_t byte);
 #endif
 
