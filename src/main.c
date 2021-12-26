@@ -22,7 +22,7 @@ void led_task(void *parg) {
     }
 }
 
-TaskHandle_t led_task_han;
+TaskHandle_t led_task_handler;
 
 TaskHandle_t grbl_task_handler;
 
@@ -46,7 +46,9 @@ int main() {
 
     grbl_report_mcu_info();
 
-    xTaskCreate(led_task, "led", 1024, NULL, 1, &led_task_han);
+    serial_task_init(); 
+
+    xTaskCreate(led_task, "led", 1024, NULL, 1, &led_task_handler);
 
     xTaskCreate(enter_grbl_task, "grbl task", 1024, NULL, 1, &grbl_task_handler);
 
@@ -54,7 +56,6 @@ int main() {
 }
 
 void enter_grbl_task(void *parg) {
-// void enter_grbl_task(void) {
 
   hal_flash_unlock();
 	hal_eeprom_init();

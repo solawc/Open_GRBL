@@ -87,30 +87,14 @@ void serial_init()
 
 // Writes one byte to the TX serial buffer. Called by main program.
 void serial_write(uint8_t data) {
-  // Calculate next head
-  uint8_t next_head = serial_tx_buffer_head + 1;
+  // hal_uart_sendbyte(data);
+  // while (!hal_is_uart_sr_txe());		// wait serial had send finish 
 
-  hal_uart_sendbyte(data);
-  while (!hal_is_uart_sr_txe());		// wait serial had send finish 
-    return;
+  uart_send_dma(&data, 1);
+	// while(!__HAL_USART_GET_FLAG(&laser_uart, USART_FLAG_TC));
+  while (!hal_is_uart_sr_txe());
 
-  if (next_head == TX_RING_BUFFER) { next_head = 0; }
-
-  // Wait until there is space in the buffer
-  while (next_head == serial_tx_buffer_tail) {
-    // TODO: Restructure st_prep_buffer() calls to be executed here during a long print.
-    if (sys_rt_exec_state & EXEC_RESET) { return; } // Only check for abort to avoid an endless loop.
-  }
-
-  // Store data and advance head
-  serial_tx_buffer[serial_tx_buffer_head] = data;
-  serial_tx_buffer_head = next_head;
-#if defined(CPU_MAP_ATMEGA328P)
-  // Enable Data Register Empty Interrupt to make sure tx-streaming is running
-  UCSR0B |=  (1 << UDRIE0);
-#elif defined(CPU_STM32)
-    // hal_uart_sendbyte(data);
-#endif
+    // rb_write(&serial_rb, data);
 }
 
 
@@ -215,14 +199,14 @@ ISR(SERIAL_RX)
 // void USART1_IRQHandler (void) {
 void laser_uart_handler(void) { 
     volatile unsigned int IIR;
-    uint8_t data;
+    __IO uint8_t data;
     uint8_t next_head;
     //IIR = USART1->ISR;
     IIR = hal_read_usrt_status_reg();
     if (IIR & USART_FLAG_RXNE) 
     {                  // read interrupt
       data = hal_read_uart_dr_reg();
-      
+      // rb_write(&serial_rb, data);
       // Pick off realtime command characters directly from the serial stream. These characters are
       // not passed into the main buffer, but these set system state flag bits for realtime execution.
   switch (data) {

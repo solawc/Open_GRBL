@@ -6,11 +6,8 @@
 #include "stdlib.h"
 #include "stdbool.h"
 
-// #define RX_BUFFER_SIZE	255
-// #define TX_BUFFER_SIZE 	255
-
-#define UART_TX_DMA_BUFF_SIZE       1024
-#define UART_RX_DMA_BUFF_SIZE       1024
+#define UART_RB_BUFF_MAX            255
+#define UART_RB_BUFF_MIN            0
 
 #define  __HAL_UART_CLK(uart)	__HAL_RCC_##uart##_CLK_ENABLE()
 #define  UART_IRQn(uart)        uart##_IRQn
@@ -40,6 +37,13 @@
 #define LASER_UART_IRQHANDLER           USART2_IRQHandler
 #endif
 
+typedef struct {
+    uint16_t head;
+    uint16_t tail;
+    uint16_t len;
+    uint8_t rb_buf[UART_RB_BUFF_MAX];
+}serial_rb_t;
+extern serial_rb_t serial_rb;
 
 void hal_uart_gpio_init(void);
 void hal_uart_init(void);
@@ -51,7 +55,10 @@ bool hal_is_uart_sr_txe(void);
 uint32_t hal_read_usrt_status_reg(void);
 uint32_t hal_read_uart_dr_reg(void);
 void hal_clean_isr(void) ;
-
 void uart_send_dma(uint8_t *str, uint16_t size);
+
+void serial_task_init(void);
+bool rb_write(serial_rb_t *rb, uint8_t data);
+bool rb_read(serial_rb_t *rb, uint8_t *rdata);
 
 #endif

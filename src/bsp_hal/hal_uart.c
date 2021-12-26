@@ -6,6 +6,8 @@ UART_HandleTypeDef laser_uart;
 DMA_HandleTypeDef dma_tx;
 DMA_HandleTypeDef dma_rx;
 
+serial_rb_t serial_rb;
+
 uint8_t laser_rx_buf[255];
 
 #define USE_SERIAL_DMA
@@ -54,7 +56,6 @@ static void hal_uart1_dma_init() {
 
 	HAL_NVIC_SetPriority(DMA1_Channel2_3_IRQn, 0, 0);
   	HAL_NVIC_EnableIRQ(DMA1_Channel2_3_IRQn);
-	// __HAL_DMA_ENABLE_IT(&dma_tx, DMA_IT_TC);
 }
 #endif
 
@@ -117,7 +118,6 @@ void hal_uart_init(void) {
 	HAL_NVIC_SetPriority(LaserUART_IRQn, 1, 1);
     HAL_NVIC_EnableIRQ(LaserUART_IRQn);
 	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE);
-	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_TXE);
 }
 
 void hal_uart_irq_set(void) {
@@ -133,10 +133,9 @@ void hal_uart_sendbyte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 
 
 bool hal_is_uart_sr_txe(void) { 
 #ifdef STM32F429xx
-	return (laser_uart.Instance->SR & USART_FLAG_TXE); 
+	return (__HAL_UART_GET_FLAG(&laser_uart, USART_FLAG_TXE));
 #elif defined(STM32G0B0xx)
-	// __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_TXE); 
-	return (__HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_TXE));
+	return (__HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_TC));
 #endif
 }
 
@@ -179,6 +178,8 @@ int fputc(int ch,FILE *f)
 }
 #endif
 
+
+
 void DMA1_Channel1_IRQHandler(void)
 {
 	printf("enter dma handler\n");
@@ -190,7 +191,9 @@ void DMA1_Channel2_3_IRQHandler(void)
   	HAL_DMA_IRQHandler(&dma_tx);
 }
 
+bool uart_trans_lock = false;
 void LASER_UART_IRQHANDLER() {
+
 	uint32_t ulReturn;
 
 	ulReturn = taskENTER_CRITICAL_FROM_ISR();
@@ -207,14 +210,81 @@ void LASER_UART_IRQHANDLER() {
 int _write(int fd, char *ptr, int len)
 {	
 #ifdef USE_SERIAL_DMA
+	uart_trans_lock = true;
 	uart_send_dma((uint8_t*)ptr, len);
-	while(__HAL_DMA_GET_FLAG(&dma_tx, DMA_FLAG_TC2));
+	while(!hal_is_uart_sr_txe());
 #else 
 	HAL_UART_Transmit(&laser_uart, (uint8_t *)ptr, len, 1000);        //huart3是串口的句柄
 #endif
 	return len;
 }
 
+
+void rb_init(serial_rb_t *rb) {
+	rb->head = 0;
+	rb->tail = 0;
+	rb->len = 0;
+}
+
+bool rb_write(serial_rb_t *rb, uint8_t data) {
+
+	if(rb->len >= UART_RB_BUFF_MAX) {
+		printf("[error]:rb is full\n");
+		return false;
+	}
+
+	rb->rb_buf[rb->tail] = data;
+
+	rb->tail = (rb->tail+1) % UART_RB_BUFF_MAX;
+
+	rb->len++;
+
+	return true;
+}
+
+bool rb_read(serial_rb_t *rb, uint8_t *rdata) {
+
+	if(rb->len == UART_RB_BUFF_MIN) {
+		// printf("[error]:rb is empty\n");
+		return false;	
+	}
+
+	*rdata = rb->rb_buf[rb->head];
+
+	rb->head = (rb->head +1 ) % UART_RB_BUFF_MAX;
+
+	rb->len--;
+
+	return true;
+}
+
+bool rb_read_buff(serial_rb_t *rb, uint8_t *rdata) {
+
+	if(rb->len == UART_RB_BUFF_MIN) {
+		return false;	
+	}
+
+	for(uint32_t i = 0; i < rb->len; i++)
+    {
+        rb_read(rb, &rdata[i]);
+    }
+
+	return true;
+}
+
+
+void serial_task(void *parg) {
+
+	while(1) {
+		
+	}
+}
+
+TaskHandle_t serial_task_handler;
+
+void serial_task_init(void) {
+	xTaskCreate(serial_task, "serial task", 512, NULL, 1, &serial_task_handler);
+}
 
 
 
