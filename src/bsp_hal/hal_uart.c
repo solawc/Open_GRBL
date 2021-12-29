@@ -10,7 +10,7 @@ serial_rb_t serial_rb;
 
 uint8_t laser_rx_buf[255];
 
-#define USE_SERIAL_DMA
+// #define USE_SERIAL_DMA
 
 static void hal_uart1_dma_init() {
 #ifdef STM32F429xx
@@ -283,7 +283,7 @@ void serial_task(void *parg) {
 TaskHandle_t serial_task_handler;
 
 void serial_task_init(void) {
-	xTaskCreate(serial_task, "serial task", 512, NULL, 1, &serial_task_handler);
+	// xTaskCreate(serial_task, "serial task", 512, NULL, 1, &serial_task_handler);
 }
 
 

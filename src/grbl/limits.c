@@ -76,8 +76,6 @@ void limits_init()
     limits_disable();
   }
 
-  printf("Creat limit task\n");
-
   if(limit_sw_queue == NULL) {
     limit_sw_queue = xQueueCreate(LIMIT_QUEUE_SIZE, sizeof(int));
     xTaskCreate(limit_check_task,
