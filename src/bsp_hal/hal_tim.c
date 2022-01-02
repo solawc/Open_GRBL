@@ -21,8 +21,8 @@ void hal_set_timer_init(void) {
     SET_TIM_CLK_ENABLED();   
 
     htim_set.Instance = SETP_SET_TIM; 
-    htim_set.Init.Period = 32;     
-    htim_set.Init.Prescaler = 1;
+    htim_set.Init.Period = 32-1;     
+    htim_set.Init.Prescaler = 1-1;
     htim_set.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim_set.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&htim_set);
@@ -36,8 +36,8 @@ void hal_reset_timer_init(void) {
 
     RESET_TIM_CLK_ENABLED()
     htim_reset.Instance = SETP_RESET_TIM;
-    htim_reset.Init.Period = 32;     
-    htim_reset.Init.Prescaler = 1;     
+    htim_reset.Init.Period = 32-1;     
+    htim_reset.Init.Prescaler = 1-1;     
     htim_reset.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim_reset.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&htim_reset);

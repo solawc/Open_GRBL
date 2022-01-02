@@ -48,12 +48,12 @@
 #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
 	#define MAX_AMASS_LEVEL 3
 	// AMASS_LEVEL0: Normal operation. No AMASS. No upper cutoff frequency. Starts at LEVEL1 cutoff frequency.
-	#define AMASS_LEVEL1 (F_CPU/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
-	#define AMASS_LEVEL2 (F_CPU/4000) // Over-drives ISR (x4)
-	#define AMASS_LEVEL3 (F_CPU/2000) // Over-drives ISR (x8)
-  // #define AMASS_LEVEL1 (STP_TIMER/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
-	// #define AMASS_LEVEL2 (STP_TIMER/4000) // Over-drives ISR (x4)
-	// #define AMASS_LEVEL3 (STP_TIMER/2000) // Over-drives ISR (x8)
+	// #define AMASS_LEVEL1 (F_CPU/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
+	// #define AMASS_LEVEL2 (F_CPU/4000) // Over-drives ISR (x4)
+	// #define AMASS_LEVEL3 (F_CPU/2000) // Over-drives ISR (x8)
+  #define AMASS_LEVEL1 (STP_TIMER/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
+	#define AMASS_LEVEL2 (STP_TIMER/4000) // Over-drives ISR (x4)
+	#define AMASS_LEVEL3 (STP_TIMER/2000) // Over-drives ISR (x8)
 
   #if MAX_AMASS_LEVEL <= 0
     error "AMASS must have 1 or more levels to operate correctly."
