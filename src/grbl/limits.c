@@ -89,7 +89,6 @@ void limits_init()
 #endif
 }
 
-
 // Disables hard limits.
 void limits_disable()
 {

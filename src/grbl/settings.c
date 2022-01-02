@@ -107,8 +107,8 @@ void settings_restore(uint8_t restore_flag) {
 #if defined(CPU_MAP_ATMEGA328P)
     settings = defaults;
 #elif defined(CPU_STM32)
-    settings.pulse_microseconds = DEFAULT_STEP_PULSE_MICROSECONDS;
-    // settings.fpulse_microseconds = (float)DEFAULT_STEP_PULSE_MICROSECONDS;
+    // settings.pulse_microseconds = DEFAULT_STEP_PULSE_MICROSECONDS;
+    settings.fpulse_microseconds = (float)DEFAULT_STEP_PULSE_MICROSECONDS;
     settings.stepper_idle_lock_time = DEFAULT_STEPPER_IDLE_LOCK_TIME;
     settings.step_invert_mask = DEFAULT_STEPPING_INVERT_MASK;
     settings.dir_invert_mask = DEFAULT_DIRECTION_INVERT_MASK;
@@ -274,8 +274,8 @@ uint8_t settings_store_global_setting(uint8_t parameter, float value) {
     switch(parameter) {
       case 0:
         if (int_value < 3) { return(STATUS_SETTING_STEP_PULSE_MIN); }
-        settings.pulse_microseconds = int_value; break;
-        // settings.fpulse_microseconds = int_value; break;
+        // settings.pulse_microseconds = int_value; break;
+        settings.fpulse_microseconds = int_value; break;
       case 1: settings.stepper_idle_lock_time = int_value; break;
       case 2:
         settings.step_invert_mask = int_value;

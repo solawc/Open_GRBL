@@ -40,7 +40,7 @@ typedef struct
     timer_def step_reset;
 
     uint8_t tim_addr;   // tim自动重装载
-    uint8_t tim_p;      
+    uint8_t tim_p;     
 
     void (*tim_set_handler)(void *);
     void (*tim_reset_handler)(void *);
