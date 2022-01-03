@@ -21,7 +21,6 @@
 
 #include "grbl.h"
 
-
 // Some useful constants.
 #define DT_SEGMENT (1.0/(ACCELERATION_TICKS_PER_SECOND*60.0)) // min/segment
 #define REQ_MM_INCREMENT_SCALAR 1.25
@@ -250,8 +249,8 @@ void st_wake_up()
     st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
 #elif defined(CPU_STM32)
     // st.step_pulse_time = (settings.fpulse_microseconds) * (float)TICKS_PER_MICROSECOND;
-    // st.step_pulse_time = (settings.fpulse_microseconds) * 2;
-    st.step_pulse_time = (settings.pulse_microseconds) * 2;
+    st.step_pulse_time = (settings.fpulse_microseconds) * 2;
+    // st.step_pulse_time = (settings.pulse_microseconds) * 2;
 #endif
 #endif
 
@@ -259,7 +258,6 @@ void st_wake_up()
 #if defined(CPU_MAP_ATMEGA328P)
   TIMSK1 |= (1<<OCIE1A);
 #elif defined(CPU_STM32)
-
   hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
   hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time-1);
   hal_tim_generateEvent_update(&STEP_RESET_TIMER);
@@ -1163,7 +1161,9 @@ void st_prep_buffer()
     #endif
 #elif defined(CPU_STM32)
   // Compute CPU cycles per step for the prepped segment.
-    uint32_t cycles = (uint32_t)ceilf( (TICKS_PER_MICROSECOND * 1000000 * 60.0f) * inv_rate); // (cycles/step)
+    // uint32_t cycles = (uint32_t)ceilf( (TICKS_PER_MICROSECOND * 1000000 * 60.0f) * inv_rate); // (cycles/step)
+    uint32_t cycles = (uint32_t)ceilf( (STP_TIMER * 60.0f) * inv_rate); // (cycles/step)
+    
     #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
       // Compute step timing and multi-axis smoothing level.
       // NOTE: AMASS overdrives the timer with each level, so only one prescalar is required.

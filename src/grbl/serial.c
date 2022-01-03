@@ -87,12 +87,12 @@ void serial_init()
 
 // Writes one byte to the TX serial buffer. Called by main program.
 void serial_write(uint8_t data) {
-  // hal_uart_sendbyte(data);
-  // while (!hal_is_uart_sr_txe());		// wait serial had send finish 
+  hal_uart_sendbyte(data);
+  while (!hal_is_uart_sr_txe());		// wait serial had send finish 
 
-  uart_send_dma(&data, 1);
+  // uart_send_dma(&data, 1);
 	// while(!__HAL_USART_GET_FLAG(&laser_uart, USART_FLAG_TC));
-  while (!hal_is_uart_sr_txe());
+  // while (!hal_is_uart_sr_txe());
 
     // rb_write(&serial_rb, data);
 }

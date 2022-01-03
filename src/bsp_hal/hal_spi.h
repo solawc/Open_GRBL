@@ -7,7 +7,6 @@
 #define USE_TFT_SPI
 
 #define SPI_DIV(div)  SPI_BAUDRATEPRESCALER_##div
-
 #define SPI_NUM(num)  SPI##num
 #define SPI_CLK_ENABLE(spi) __HAL_RCC_##spi##_CLK_ENABLE
 

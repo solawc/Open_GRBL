@@ -96,7 +96,8 @@ typedef struct {
 #ifdef STM32F429xx
   float fpulse_microseconds;  // change for F4
 #elif defined(STM32G0B0xx)
-  uint8_t pulse_microseconds;
+  // uint8_t pulse_microseconds;
+  float fpulse_microseconds;
 #endif
   uint8_t step_invert_mask;
   uint8_t dir_invert_mask;

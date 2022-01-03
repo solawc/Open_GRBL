@@ -1,16 +1,11 @@
 #include "hal_tim.h"
 // #include "stepper.h"
 
-
-
 /*  
  * Note: I use general timer by tim3 and tim4 on stm32h429,
  * also you can choose other timer as step count, the timer,
  * need handle with updata
 */
-// TIM_HandleTypeDef htim3;    // Configure Timer 1: Stepper Driver Interrupt
-// TIM_HandleTypeDef htim_reset;    // Configure Timer 0: Stepper Port Reset Interrupt
-// TIM_HandleTypeDef htim_laser;    // Configure Timer 8: Set laser/cnc pwm
 
 TIM_HandleTypeDef htim_set;    // Configure Timer 6: Stepper Driver Interrupt
 TIM_HandleTypeDef htim_reset;    // Configure Timer 7: Stepper Port Reset Interrupt
@@ -37,7 +32,11 @@ void hal_reset_timer_init(void) {
     RESET_TIM_CLK_ENABLED()
     htim_reset.Instance = SETP_RESET_TIM;
     htim_reset.Init.Period = 32-1;     
+<<<<<<< HEAD
     htim_reset.Init.Prescaler = 1-1;     
+=======
+    htim_reset.Init.Prescaler = 1-1; 
+>>>>>>> fcbe05e009d74228b129c23a042bed9d9cb3b5e4
     htim_reset.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim_reset.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&htim_reset);
