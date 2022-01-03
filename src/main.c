@@ -14,19 +14,7 @@ volatile uint8_t sys_rt_exec_accessory_override; // Global realtime executor bit
   volatile uint8_t sys_rt_exec_debug;
 #endif
 
-void led_task(void *parg) {
-
-    while(1) {
-      hal_led_toggle();
-      vTaskDelay(500);
-    }
-}
-
-TaskHandle_t led_task_handler;
-
 TaskHandle_t grbl_task_handler;
-
-uint8_t logo[] = "sadasd\n";
 
 int main() {
 
@@ -46,9 +34,7 @@ int main() {
 
     grbl_report_mcu_info();
 
-    serial_task_init(); 
-
-    xTaskCreate(led_task, "led", 1024, NULL, 1, &led_task_handler);
+    // serial_task_init(); 
 
     xTaskCreate(enter_grbl_task, "grbl task", 1024, NULL, 1, &grbl_task_handler);
 

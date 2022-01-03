@@ -178,8 +178,7 @@ int fputc(int ch,FILE *f)
 }
 #endif
 
-
-
+#ifdef USE_SERIAL_DMA
 void DMA1_Channel1_IRQHandler(void)
 {
 	printf("enter dma handler\n");
@@ -190,8 +189,12 @@ void DMA1_Channel2_3_IRQHandler(void)
 {
   	HAL_DMA_IRQHandler(&dma_tx);
 }
+#endif
 
-bool uart_trans_lock = false;
+#ifdef USE_SERIAL_DMA
+	bool uart_trans_lock = false;
+#endif
+
 void LASER_UART_IRQHANDLER() {
 
 	uint32_t ulReturn;
@@ -245,7 +248,6 @@ bool rb_write(serial_rb_t *rb, uint8_t data) {
 bool rb_read(serial_rb_t *rb, uint8_t *rdata) {
 
 	if(rb->len == UART_RB_BUFF_MIN) {
-		// printf("[error]:rb is empty\n");
 		return false;	
 	}
 

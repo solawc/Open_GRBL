@@ -8,15 +8,15 @@
 #include "grbl_config.h"
 
 // hal header
-// #include "hal_gpio.h"
+#include "hal_gpio.h"
 #include "hal_uart.h"
 // #include "hal_i2c.h"
 #include "hal_flash_eeprom.h"
-// #include "hal_spi.h"
-// #include "hal_tim.h"
+#include "hal_spi.h"
+#include "hal_tim.h"
 // 
 // #include "led_task.h"
-// #include "hal_w25qxx.h"
+#include "hal_w25qxx.h"
 
 #ifdef STM32F429xx
 #define MCU_INFI_NAME       "STM32F429IG"
