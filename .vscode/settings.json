@@ -20,6 +20,7 @@
         "stm32g0xx_hal_conf.h": "c",
         "stm32g0xx_hal_dma.h": "c",
         "stm32g0xx_ll_dma.h": "c",
-        "stm32g0xx_hal_uart.h": "c"
+        "stm32g0xx_hal_uart.h": "c",
+        "tft_lcd_dev.h": "c"
     }
 }

@@ -32,11 +32,7 @@ void hal_reset_timer_init(void) {
     RESET_TIM_CLK_ENABLED()
     htim_reset.Instance = SETP_RESET_TIM;
     htim_reset.Init.Period = 32-1;     
-<<<<<<< HEAD
-    htim_reset.Init.Prescaler = 1-1;     
-=======
     htim_reset.Init.Prescaler = 1-1; 
->>>>>>> fcbe05e009d74228b129c23a042bed9d9cb3b5e4
     htim_reset.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim_reset.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&htim_reset);
