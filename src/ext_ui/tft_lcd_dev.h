@@ -21,6 +21,8 @@
 #define LCD_TP_CS_PIN       GPIO_PIN_0
 #define LCD_PIN_AF          GPIO_AF4_SPI3
 
+#define CMD_MODE_SET()      HAL_GPIO_WritePin(LCD_DC_PORT, LCD_DC_PIN, GPIO_PIN_RESET)
+#define DATA_MODE_SET()     HAL_GPIO_WritePin(LCD_DC_PORT, LCD_DC_PIN, GPIO_PIN_SET)
 typedef enum {
 
     LCD_TFT_24,              
@@ -34,18 +36,27 @@ typedef struct {
     uint32_t lcd_id;
 
     void (*tft_lcd_init)(void);
+    void (*tft_lcd_config)(void);
     void (*tft_lcd_touch_init)(void);
     void (*tft_lcd_enable)(void);
     void (*tft_lcd_disable)(void);
     void (*tft_touch_enable)(void);
     void (*tft_touch_disable)(void);
 
+    void (*tft_lcd_display_on)(void);
+    void (*tft_lcd_display_off)(void);
+
     void (*tft_lcd_write_cmd)(uint8_t);
     void (*tft_lcd_write_data)(uint8_t);
 
     void (*tft_lcd_write_buff)(uint8_t *);
     void (*tft_lcd_write_buff_dma)(uint8_t *);
-    
+
+    void (*tft_lcd_draw_point)(uint16_t ,uint16_t ,uint16_t);
+    void (*tft_lcd_draw_fill)(uint16_t, uint16_t, uint16_t, uint16_t, uint16_t);
+    void (*tft_lcd_clear)(uint16_t);
+
+
 }dev_lcd_t;
 
 

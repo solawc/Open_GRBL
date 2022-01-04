@@ -68,23 +68,64 @@ static uint8_t hal_tft_write_8(uint8_t data) {
 }
 
 static void hal_tft_write_cmd_8(uint8_t data) {
-
+    CMD_MODE_SET();
     hal_tft_write_8(data);
 }
 
 static void hal_tft_write_data_8(uint8_t data) {
-
+    DATA_MODE_SET();
     hal_tft_write_8(data);
+}
+
+static void hal_tft_display_on(void) {
+    hal_tft_write_cmd_8(0x29);
+}
+
+static void hal_tft_display_off(void) {
+    hal_tft_write_cmd_8(0x28);
 }
 
 
 void dev_lcd_init(void) {
-
     tft.tft_lcd_init = hal_tft_spi_init;
     tft.tft_lcd_enable = hal_tft_trans_enable;
     tft.tft_lcd_disable = hal_tft_trans_disable;
     tft.tft_lcd_write_cmd = hal_tft_write_cmd_8;
     tft.tft_lcd_write_data = hal_tft_write_data_8;
+    tft.tft_lcd_display_on = hal_tft_display_on;
+    tft.tft_lcd_display_off = hal_tft_display_off;
+
+    tft.tft_lcd_init();
 }
+
+
+void dev_lcd_set_window(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2) {
+    tft.tft_lcd_write_cmd(0x2A);
+    tft.tft_lcd_write_data(x1>>8);
+    tft.tft_lcd_write_data(x1);
+    tft.tft_lcd_write_data(x2>>8);
+    tft.tft_lcd_write_data(x2);
+    
+    tft.tft_lcd_write_cmd(0x2B);
+    tft.tft_lcd_write_data(y1>>8);
+    tft.tft_lcd_write_data(y1);
+    tft.tft_lcd_write_data(y2>>8);
+    tft.tft_lcd_write_data(y2);
+
+    tft.tft_lcd_write_cmd(0x2C);
+    DATA_MODE_SET();
+}
+
+void dev_lcd_draw_fill() {
+
+
+
+
+
+}
+
+
+
+
 
 
