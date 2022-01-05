@@ -56,10 +56,9 @@ typedef struct {
     void (*tft_lcd_draw_fill)(uint16_t, uint16_t, uint16_t, uint16_t, uint16_t);
     void (*tft_lcd_clear)(uint16_t);
 
-
 }dev_lcd_t;
 
-
-
+void dev_lcd_init(void);
+void dev_lcd_draw_fill(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2,uint16_t color);
 
 #endif /* __tft_lcd_dev_h */

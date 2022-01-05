@@ -8,6 +8,12 @@ static void hal_tft_spi_init(void) {
 
     GPIO_InitTypeDef GPIO_Init = {0};
 
+    __HAL_RCC_SPI3_CLK_ENABLE();
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    __HAL_RCC_GPIOD_CLK_ENABLE();
+
     GPIO_Init.Alternate = LCD_PIN_AF;
     GPIO_Init.Mode = GPIO_MODE_AF_PP;
     GPIO_Init.Pull = GPIO_NOPULL;
@@ -19,8 +25,8 @@ static void hal_tft_spi_init(void) {
     GPIO_Init.Pin = LCD_MISO_PIN;
     HAL_GPIO_Init(LCD_MISO_PORT, &GPIO_Init);
 
-    GPIO_Init.Pin = LCD_MOSI_PORT;
-    HAL_GPIO_Init(LCD_MOSI_PIN, &GPIO_Init);
+    GPIO_Init.Pin = LCD_MOSI_PIN;
+    HAL_GPIO_Init(LCD_MOSI_PORT, &GPIO_Init);
 
 
     GPIO_Init.Mode = GPIO_MODE_OUTPUT_PP;
@@ -44,7 +50,7 @@ static void hal_tft_spi_init(void) {
 
     tft_spi_set.is_use_irq = false;
     tft_spi_set.spi_num = SPI_3;
-    tft_spi_set.spi_speed = 8;
+    tft_spi_set.spi_speed = 2;
     tft_spi_set.spi_mode_set = spi_mode_3;
     tft_spi_set.spi_date_size = size_8bit_date;
     tft_spi_set.spi_trans_mode = master_full_trans;
@@ -52,13 +58,15 @@ static void hal_tft_spi_init(void) {
     hal_spi_begin(&tft_spi, &tft_spi_set);
 }
 
-static void hal_tft_trans_enable(void) {
+static void lcd_delay_ms(uint32_t ms) {
+    HAL_Delay(ms);
+}
 
+static void hal_tft_trans_enable(void) {
     HAL_GPIO_WritePin(LCD_CS_PORT, LCD_CS_PIN, GPIO_PIN_RESET);
 }
 
 static void hal_tft_trans_disable() {
-
     HAL_GPIO_WritePin(LCD_CS_PORT, LCD_CS_PIN, GPIO_PIN_SET);
 }
 
@@ -69,12 +77,21 @@ static uint8_t hal_tft_write_8(uint8_t data) {
 
 static void hal_tft_write_cmd_8(uint8_t data) {
     CMD_MODE_SET();
+    hal_tft_trans_enable();
     hal_tft_write_8(data);
+    hal_tft_trans_disable();
 }
 
 static void hal_tft_write_data_8(uint8_t data) {
     DATA_MODE_SET();
+    hal_tft_trans_enable();
     hal_tft_write_8(data);
+    hal_tft_trans_disable();
+}
+
+static void hal_tft_write_data_16(uint16_t data) {
+    hal_tft_write_data_8(data >> 8);
+    hal_tft_write_data_8(data);
 }
 
 static void hal_tft_display_on(void) {
@@ -85,6 +102,115 @@ static void hal_tft_display_off(void) {
     hal_tft_write_cmd_8(0x28);
 }
 
+static void hal_tft_display_config(void) {
+
+    hal_tft_write_cmd_8(0X11);   // Sleep out
+    lcd_delay_ms(120);
+    hal_tft_write_cmd_8(0X13);    // Normal display mode on
+
+    hal_tft_write_cmd_8(0X36);
+    hal_tft_write_data_8(0x08);
+
+    // JLX240 display datasheet
+    hal_tft_write_cmd_8(0xB6);
+    hal_tft_write_data_8(0x0A);
+    hal_tft_write_data_8(0x82);
+
+    hal_tft_write_cmd_8(0xB0);
+    hal_tft_write_data_8(0x00);
+    hal_tft_write_data_8(0xE0); // 5 to 6 bit conversion: r0 = r5, b0 = b5
+
+        
+    hal_tft_write_cmd_8(0x3A);
+    hal_tft_write_data_8(0x55);
+    lcd_delay_ms(10);
+
+    //--------------------------------ST7789V Frame rate setting----------------------------------//
+    hal_tft_write_cmd_8(0xB2);
+    hal_tft_write_data_8(0x0c);
+    hal_tft_write_data_8(0x0c);
+    hal_tft_write_data_8(0x00);
+    hal_tft_write_data_8(0x33);
+    hal_tft_write_data_8(0x33);
+
+    hal_tft_write_cmd_8(0xB7);      // Voltages: VGH / VGL
+    hal_tft_write_data_8(0x35);
+
+    //---------------------------------ST7789V Power setting--------------------------------------//
+    hal_tft_write_cmd_8(0xBB);
+    hal_tft_write_data_8(0x28);		// JLX240 display datasheet
+
+    hal_tft_write_cmd_8(0xC0);
+    hal_tft_write_data_8(0x0C);
+
+    hal_tft_write_cmd_8(0xC2);
+    hal_tft_write_data_8(0x01);
+    hal_tft_write_data_8(0xFF);
+
+    hal_tft_write_cmd_8(0xC3);       // voltage VRHS
+    hal_tft_write_data_8(0x10);
+
+    hal_tft_write_cmd_8(0xC4);
+    hal_tft_write_data_8(0x20);
+
+    hal_tft_write_cmd_8(0xC6);
+    hal_tft_write_data_8(0x0f);
+
+    hal_tft_write_cmd_8(0xD0);
+    hal_tft_write_data_8(0xa4);
+    hal_tft_write_data_8(0xa1);
+
+    //--------------------------------ST7789V gamma setting---------------------------------------//
+    hal_tft_write_cmd_8(0xE0);
+    hal_tft_write_data_8(0xd0);
+    hal_tft_write_data_8(0x00);
+    hal_tft_write_data_8(0x02);
+    hal_tft_write_data_8(0x07);
+    hal_tft_write_data_8(0x0a);
+    hal_tft_write_data_8(0x28);
+    hal_tft_write_data_8(0x32);
+    hal_tft_write_data_8(0x44);
+    hal_tft_write_data_8(0x42);
+    hal_tft_write_data_8(0x06);
+    hal_tft_write_data_8(0x0e);
+    hal_tft_write_data_8(0x12);
+    hal_tft_write_data_8(0x14);
+    hal_tft_write_data_8(0x17);
+
+    hal_tft_write_cmd_8(0xE1);
+    hal_tft_write_data_8(0xd0);
+    hal_tft_write_data_8(0x00);
+    hal_tft_write_data_8(0x02);
+    hal_tft_write_data_8(0x07);
+    hal_tft_write_data_8(0x0a);
+    hal_tft_write_data_8(0x28);
+    hal_tft_write_data_8(0x31);
+    hal_tft_write_data_8(0x54);
+    hal_tft_write_data_8(0x47);
+    hal_tft_write_data_8(0x0e);
+    hal_tft_write_data_8(0x1c);
+    hal_tft_write_data_8(0x17);
+    hal_tft_write_data_8(0x1b);
+    hal_tft_write_data_8(0x1e);
+
+    hal_tft_write_cmd_8(0x21);
+
+    hal_tft_write_cmd_8(0x2A);    // Column address set
+    hal_tft_write_data_8(0x00);
+    hal_tft_write_data_8(0x00);
+    hal_tft_write_data_8(0x00);
+    hal_tft_write_data_8(0xE5);    // 239
+
+    hal_tft_write_cmd_8(0x2B);    // Row address set
+    hal_tft_write_data_8(0x00);
+    hal_tft_write_data_8(0x00);
+    hal_tft_write_data_8(0x01);
+    hal_tft_write_data_8(0x3F);    // 319
+
+    lcd_delay_ms(120);
+    hal_tft_write_cmd_8(0x29);    //Display on
+    lcd_delay_ms(120);
+}
 
 void dev_lcd_init(void) {
     tft.tft_lcd_init = hal_tft_spi_init;
@@ -95,7 +221,15 @@ void dev_lcd_init(void) {
     tft.tft_lcd_display_on = hal_tft_display_on;
     tft.tft_lcd_display_off = hal_tft_display_off;
 
+    printf("[debug]enter lcd init\n");
     tft.tft_lcd_init();
+    printf("[debug]enter lcd init finish\n");
+    printf("[debug]enter lcd config\n");
+    hal_tft_display_config();
+    printf("[debug]enter lcd config finish\n");
+    HAL_GPIO_WritePin(LCD_EN_PORT, LCD_EN_PIN, GPIO_PIN_SET);
+
+    dev_lcd_draw_fill(0,0, 100, 100, 0x1010ff);
 }
 
 
@@ -116,12 +250,19 @@ void dev_lcd_set_window(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2) {
     DATA_MODE_SET();
 }
 
-void dev_lcd_draw_fill() {
+void dev_lcd_draw_fill(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2,uint16_t color) {
 
+    uint32_t x,y;
+    y = (x2-x1)*(y2-y1);
+    dev_lcd_set_window(x1,y1,x2,y2);      //设置光标位置
 
+    tft.tft_lcd_enable();
+    DATA_MODE_SET();
 
-
-
+    for(x=0; x<y; x++)  {
+        hal_tft_write_data_16(color);
+    }
+    tft.tft_lcd_disable(); 
 }
 
 

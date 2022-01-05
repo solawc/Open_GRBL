@@ -24,6 +24,7 @@
 #include "bsp_hal/hal_spi.h"
 
 #include "bsp_hal/hal_w25qxx.h"
+#include "ext_ui/tft_lcd_dev.h"
 
 #include "grbl/grbl.h"
 
