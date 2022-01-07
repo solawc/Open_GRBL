@@ -100,7 +100,13 @@ void protocol_main_loop()
           // Everything else is gcode. Block if in alarm or jog mode.
           report_status_message(STATUS_SYSTEM_GC_LOCK);
         } else {
-          // Parse and execute g-code block.
+          // Parse and execute g-code block. 
+          /*
+           * 获取完整的指令后，line将会填充完成，填充完成后会来到这个地方
+           * 进入 gc_execute_line（）这个函数，这个函数会解析line[]里面
+           * 包含的指令，并且在正确解析之后,通过report_status_message（）来
+           * 返回"OK",如果解析错误，则返回相关错误.
+          */
           report_status_message(gc_execute_line(line));
         }
 
@@ -150,6 +156,7 @@ void protocol_main_loop()
       }
     }
 
+    gc_execute_line("G1X10F1000\n");
     // If there are no more characters in the serial read buffer to be processed and executed,
     // this indicates that g-code streaming has either filled the planner buffer or has
     // completed. In either case, auto-cycle start, if enabled, any queued moves.

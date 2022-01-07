@@ -371,9 +371,9 @@ void system_set_exec_state_flag(uint8_t mask) {
   sys_rt_exec_state |= (mask);
   SREG = sreg;
 #elif defined(CPU_STM32)
-  __disable_irq();
+  // __disable_irq();
   sys_rt_exec_state |= (mask);
-  __enable_irq();
+  // __enable_irq();
 #endif
 }
 

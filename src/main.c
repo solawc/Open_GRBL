@@ -28,15 +28,13 @@ int main() {
 
     w25qxx_init();
 
-    dev_lcd_init();
+    // dev_lcd_init();
 
 #ifdef STM32G0B0xx
     HAL_Delay(100);  // 等待外设反应，因为没有加入外部晶振
 #endif
 
     grbl_report_mcu_info();
-
-    // serial_task_init(); 
 
     xTaskCreate(enter_grbl_task, "grbl task", 1024, NULL, 1, &grbl_task_handler);
 

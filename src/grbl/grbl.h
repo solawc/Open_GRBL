@@ -23,14 +23,9 @@
 
 // Grbl versioning system
 #define GRBL_VERSION "1.4h"
-#define GRBL_VERSION_BUILD "20220103"
+#define GRBL_VERSION_BUILD "20220108"
 
 // Define standard libraries used by Grbl.
-//#include <avr/io.h>
-//#include <avr/pgmspace.h>
-//#include <avr/interrupt.h>
-//#include <avr/wdt.h>
-//#include <util/delay.h>
 #include <math.h>
 #include <inttypes.h>
 #include <string.h>
