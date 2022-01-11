@@ -51,19 +51,23 @@ void hal_set_timer_irq_disable(void) {
 }
 
 void hal_tim_set_reload(TIM_HandleTypeDef *htim, uint32_t reload) {
-    WRITE_REG(htim->Instance->ARR, reload);
+    // WRITE_REG(htim->Instance->ARR, reload);
+    __HAL_TIM_SET_AUTORELOAD(htim, reload);
 }
  
 void hal_set_tim_cnt(TIM_HandleTypeDef *htim, uint32_t cnt) {
-    WRITE_REG(htim->Instance->CNT, cnt);
+    // WRITE_REG(htim->Instance->CNT, cnt);
+    __HAL_TIM_SET_COUNTER(htim, cnt);
 }
 
 void hal_tim_generateEvent_update(TIM_HandleTypeDef *htim) {
-    SET_BIT(htim->Instance->EGR, TIM_EGR_UG);
+    // SET_BIT(htim->Instance->EGR, TIM_EGR_UG);
+    HAL_TIM_GenerateEvent(htim, TIM_EVENTSOURCE_UPDATE);
 }
 
 void hal_tim_clear_flag_update(TIM_HandleTypeDef *htim) {
-    WRITE_REG(htim->Instance->SR, ~(TIM_SR_UIF));
+    // WRITE_REG(htim->Instance->SR, ~(TIM_SR_UIF));
+    __HAL_TIM_CLEAR_FLAG(htim, TIM_FLAG_UPDATE);
 }
 
 void hal_reset_timer_irq_enable(void) {
@@ -74,11 +78,6 @@ void hal_reset_timer_irq_disable(void) {
     HAL_NVIC_DisableIRQ(RESET_TIM_IRQn);
 }
 
-void hal_set_tim_prescaler(uint32_t prescaler) {
-    STEP_SET_TIMER.Init.Prescaler = prescaler;
-}
-
-
 void STEP_RESET_HANDLER(void) {
     HAL_TIM_IRQHandler(&STEP_RESET_TIMER);
 }
@@ -86,7 +85,6 @@ void STEP_RESET_HANDLER(void) {
 void STEP_SET_HANDLER(void) {
     HAL_TIM_IRQHandler(&STEP_SET_TIMER);
 }
-
 
 /*******************PWM SET***************************/
 void hal_pwm_init() {

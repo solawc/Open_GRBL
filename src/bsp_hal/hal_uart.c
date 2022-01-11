@@ -12,7 +12,9 @@ uint8_t laser_rx_buf[255];
 
 // #define USE_SERIAL_DMA
 
+#if defined(USE_SERIAL_DMA)
 static void hal_uart1_dma_init() {
+
 #ifdef STM32F429xx
 	__HAL_RCC_DMA2_CLK_ENABLE();
 
@@ -57,6 +59,7 @@ static void hal_uart1_dma_init() {
 	HAL_NVIC_SetPriority(DMA1_Channel2_3_IRQn, 0, 0);
   	HAL_NVIC_EnableIRQ(DMA1_Channel2_3_IRQn);
 }
+#endif
 #endif
 
 void uart_send_dma(uint8_t *str,  uint16_t size) {	
@@ -118,6 +121,8 @@ void hal_uart_init(void) {
 	HAL_NVIC_SetPriority(LaserUART_IRQn, 1, 1);
     HAL_NVIC_EnableIRQ(LaserUART_IRQn);
 	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE);
+
+	laser_uart.hdmarx->XferCpltCallback = laser_handler_cb; // register callback
 }
 
 void hal_uart_irq_set(void) {
@@ -176,6 +181,18 @@ int fputc(int ch,FILE *f)
     HAL_UART_Transmit(&laser_uart, (uint8_t *)&temp, 1, 1000);        //huart3是串口的句柄
     return ch;
 }
+#else 
+int _write(int fd, char *ptr, int len)
+{	
+#ifdef USE_SERIAL_DMA
+	uart_trans_lock = true;
+	uart_send_dma((uint8_t*)ptr, len);
+	while(!hal_is_uart_sr_txe());
+#else 
+	HAL_UART_Transmit(&laser_uart, (uint8_t *)ptr, len, 1000);        //huart3是串口的句柄
+#endif
+	return len;
+}
 #endif
 
 #ifdef USE_SERIAL_DMA
@@ -201,26 +218,20 @@ void LASER_UART_IRQHANDLER() {
 
 	ulReturn = taskENTER_CRITICAL_FROM_ISR();
 	
-	if(__HAL_USART_GET_FLAG(&laser_uart, USART_FLAG_RXNE) != RESET) {
-		laser_uart_handler();
-	}
+	// if(__HAL_USART_GET_FLAG(&laser_uart, USART_FLAG_RXNE) != RESET) {
+	// 	laser_uart_handler();
+	// }
 
 	HAL_UART_IRQHandler(&laser_uart);
 
 	taskEXIT_CRITICAL_FROM_ISR( ulReturn );
 }
 
-int _write(int fd, char *ptr, int len)
-{	
-#ifdef USE_SERIAL_DMA
-	uart_trans_lock = true;
-	uart_send_dma((uint8_t*)ptr, len);
-	while(!hal_is_uart_sr_txe());
-#else 
-	HAL_UART_Transmit(&laser_uart, (uint8_t *)ptr, len, 1000);        //huart3是串口的句柄
-#endif
-	return len;
+void laser_handler_cb(struct __DMA_HandleTypeDef *hdma) {
+
+	laser_uart_handler();
 }
+
 
 
 void rb_init(serial_rb_t *rb) {

@@ -56,6 +56,7 @@ uint32_t hal_read_usrt_status_reg(void);
 uint32_t hal_read_uart_dr_reg(void);
 void hal_clean_isr(void) ;
 void uart_send_dma(uint8_t *str, uint16_t size);
+void laser_handler_cb(struct __DMA_HandleTypeDef *hdma);
 
 void serial_task_init(void);
 bool rb_write(serial_rb_t *rb, uint8_t data);
