@@ -89,12 +89,6 @@ void serial_init()
 void serial_write(uint8_t data) {
   hal_uart_sendbyte(data);
   while (!hal_is_uart_sr_txe());		// wait serial had send finish 
-
-  // uart_send_dma(&data, 1);
-	// while(!__HAL_USART_GET_FLAG(&laser_uart, USART_FLAG_TC));
-  // while (!hal_is_uart_sr_txe());
-
-    // rb_write(&serial_rb, data);
 }
 
 
@@ -197,18 +191,12 @@ ISR(SERIAL_RX)
 }
 #elif defined(CPU_STM32)
 // void USART1_IRQHandler (void) {
-void laser_uart_handler(void) { 
-    volatile unsigned int IIR;
-    __IO uint8_t data;
-    uint8_t next_head;
-    //IIR = USART1->ISR;
-    IIR = hal_read_usrt_status_reg();
-    if (IIR & USART_FLAG_RXNE) 
-    {                  // read interrupt
-      data = hal_read_uart_dr_reg();
-      // rb_write(&serial_rb, data);
-      // Pick off realtime command characters directly from the serial stream. These characters are
-      // not passed into the main buffer, but these set system state flag bits for realtime execution.
+void laser_uart_handler(__IO uint8_t data) { 
+
+  uint8_t next_head;
+  
+  // Pick off realtime command characters directly from the serial stream. These characters are
+  // not passed into the main buffer, but these set system state flag bits for realtime execution.
   switch (data) {
     case CMD_RESET:         mc_reset(); break; // Call motion control reset routine.
     case CMD_STATUS_REPORT: system_set_exec_state_flag(EXEC_STATUS_REPORT); break; // Set as true
@@ -257,9 +245,6 @@ void laser_uart_handler(void) {
         }
       }
   }
-      //USART1->ISR &= ~USART_FLAG_RXNE;
-        hal_clean_isr();// clear interrupt
-    }
 }
 #endif
  

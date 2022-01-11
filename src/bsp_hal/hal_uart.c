@@ -8,7 +8,7 @@ DMA_HandleTypeDef dma_rx;
 
 serial_rb_t serial_rb;
 
-uint8_t laser_rx_buf[255];
+uint8_t laser_rx_buf[1];
 
 // #define USE_SERIAL_DMA
 
@@ -122,7 +122,7 @@ void hal_uart_init(void) {
     HAL_NVIC_EnableIRQ(LaserUART_IRQn);
 	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE);
 
-	laser_uart.hdmarx->XferCpltCallback = laser_handler_cb; // register callback
+	HAL_UART_Receive_IT(&laser_uart, laser_rx_buf, 1);
 }
 
 void hal_uart_irq_set(void) {
@@ -143,31 +143,6 @@ bool hal_is_uart_sr_txe(void) {
 	return (__HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_TC));
 #endif
 }
-
-uint32_t hal_read_usrt_status_reg(void) { 
-#ifdef STM32F429xx
-	return laser_uart.Instance->SR; 
-#elif defined(STM32G0B0xx)
-	return laser_uart.Instance->ISR;
-#endif
-}
-
-uint32_t hal_read_uart_dr_reg(void) { 
-#ifdef STM32F429xx
-	return laser_uart.Instance->DR & 0x1FF; 
-#elif defined(STM32G0B0xx)
-	return laser_uart.Instance->RDR & 0x1FF;
-#endif
-}
-
-void hal_clean_isr(void) { 
-#ifdef STM32F429xx
-	laser_uart.Instance->SR &= ~USART_FLAG_RXNE; 
-#elif defined(STM32G0B0xx)
-	laser_uart.Instance->ISR &= ~USART_FLAG_RXNE;
-#endif
-}
-
 
 // use printf , but no suggest!!
 /*
@@ -217,21 +192,20 @@ void LASER_UART_IRQHANDLER() {
 	uint32_t ulReturn;
 
 	ulReturn = taskENTER_CRITICAL_FROM_ISR();
-	
-	// if(__HAL_USART_GET_FLAG(&laser_uart, USART_FLAG_RXNE) != RESET) {
-	// 	laser_uart_handler();
-	// }
 
 	HAL_UART_IRQHandler(&laser_uart);
 
 	taskEXIT_CRITICAL_FROM_ISR( ulReturn );
 }
 
-void laser_handler_cb(struct __DMA_HandleTypeDef *hdma) {
 
-	laser_uart_handler();
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{	
+	if(huart == &laser_uart) {
+		laser_uart_handler(laser_rx_buf[0]);
+		HAL_UART_Receive_IT(&laser_uart, laser_rx_buf, 1);       // 重新注册一次，要不然下次收不到了
+	}
 }
-
 
 
 void rb_init(serial_rb_t *rb) {
