@@ -52,7 +52,7 @@ void hal_laser_uart_irq_enable(void);
 void hal_laser_uart_irq_disable(void);
 void hal_uart_sendbyte(uint8_t data);
 bool hal_is_uart_sr_txe(void);
-void hal_clean_isr(void) ;
+
 void uart_send_dma(uint8_t *str, uint16_t size);
 
 void serial_task_init(void);
