@@ -229,7 +229,7 @@ void dev_lcd_init(void) {
     printf("[debug]enter lcd config finish\n");
     HAL_GPIO_WritePin(LCD_EN_PORT, LCD_EN_PIN, GPIO_PIN_SET);
 
-    dev_lcd_draw_fill(0,0, 100, 100, 0x1010ff);
+    // dev_lcd_draw_fill(0,0, 100, 100, 0x1010ff);
 }
 
 

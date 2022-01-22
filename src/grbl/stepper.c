@@ -259,7 +259,7 @@ void st_wake_up()
   TIMSK1 |= (1<<OCIE1A);
 #elif defined(CPU_STM32)
   hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
-  hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time-1);
+  hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time - 1);
   hal_tim_generateEvent_update(&STEP_RESET_TIMER);
   hal_tim_clear_flag_update(&STEP_RESET_TIMER);
   

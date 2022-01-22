@@ -61,4 +61,6 @@ uint8_t serial_get_tx_buffer_count();
 // void laser_uart_handler();
 void laser_uart_handler(__IO uint8_t data);
 
+bool cmd_parse(uint8_t data);
+
 #endif

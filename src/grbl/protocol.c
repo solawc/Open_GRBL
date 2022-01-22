@@ -22,15 +22,14 @@
 #include "grbl.h"
 
 // Define line flags. Includes comment type tracking and line overflow detection.
-#define LINE_FLAG_OVERFLOW bit(0)
-#define LINE_FLAG_COMMENT_PARENTHESES bit(1)
-#define LINE_FLAG_COMMENT_SEMICOLON bit(2)
+#define LINE_FLAG_OVERFLOW bit(0)               // 单条指令溢出标志
+#define LINE_FLAG_COMMENT_PARENTHESES bit(1)    // 标注遇到注释，需要去掉该部分 
+#define LINE_FLAG_COMMENT_SEMICOLON bit(2)      // 行标注分号    
 
 
 static char line[LINE_BUFFER_SIZE]; // Line to be executed. Zero-terminated.
 
 static void protocol_exec_rt_suspend();
-
 
 /*
   GRBL PRIMARY LOOP:
@@ -68,7 +67,8 @@ void protocol_main_loop()
   // This is also where Grbl idles while waiting for something to do.
   // ---------------------------------------------------------------------------------
 
-  uint8_t line_flags = 0;
+  // line_flags: 0000 0000 |  0000 0 (bit2) (bit1) (bit0)
+  uint8_t line_flags = 0;   
   uint8_t char_counter = 0;
   uint8_t c;
   for (;;) {
@@ -76,6 +76,9 @@ void protocol_main_loop()
     // Process one line of incoming serial data, as the data becomes available. Performs an
     // initial filtering by removing spaces and comments and capitalizing all letters.
     while((c = serial_read()) != SERIAL_NO_DATA) {
+
+      if(cmd_parse(c) == true) break;
+
       if ((c == '\n') || (c == '\r')) { // End of line reached
 
         protocol_execute_realtime(); // Runtime command check point.
@@ -156,7 +159,6 @@ void protocol_main_loop()
       }
     }
 
-    gc_execute_line("G1X10F1000\n");
     // If there are no more characters in the serial read buffer to be processed and executed,
     // this indicates that g-code streaming has either filled the planner buffer or has
     // completed. In either case, auto-cycle start, if enabled, any queued moves.

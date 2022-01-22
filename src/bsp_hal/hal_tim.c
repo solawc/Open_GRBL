@@ -22,7 +22,7 @@ void hal_set_timer_init(void) {
     htim_set.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&htim_set);
 
-    HAL_NVIC_SetPriority(SET_TIM_IRQn, 0, 1);
+    HAL_NVIC_SetPriority(SET_TIM_IRQn, 0, 1);       // 使定时器中断的优先级保持最高
     HAL_NVIC_DisableIRQ(SET_TIM_IRQn);
     HAL_TIM_Base_Start_IT(&htim_set);
 }

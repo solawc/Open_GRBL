@@ -49,8 +49,6 @@
   #define CPU_STM32
 #endif
 
-
-
 // Serial baud rate
 // #define BAUD_RATE 230400
 #define BAUD_RATE 115200
@@ -61,11 +59,12 @@
 // used, if they are available per user setup. Also, extended ASCII codes (>127), which are never in
 // g-code programs, maybe selected for interface programs.
 // NOTE: If changed, manually update help message in report.c.
-
-#define CMD_RESET 0x18 // ctrl-x.
-#define CMD_STATUS_REPORT '?'
-#define CMD_CYCLE_START '~'
-#define CMD_FEED_HOLD '!'
+enum {
+  CMD_RESET = 0X18,
+  CMD_STATUS_REPORT = '?',
+  CMD_CYCLE_START = '~',
+  CMD_FEED_HOLD = '!',
+};
 
 // NOTE: All override realtime commands must be in the extended ASCII character set, starting
 // at character value 128 (0x80) and up to 255 (0xFF). If the normal set of realtime commands,

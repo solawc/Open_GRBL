@@ -145,7 +145,6 @@ uint8_t hal_spi_trans_revice_buf_dma(dev_spi_t *drv, uint8_t *buf, uint32_t buf_
  *                                  Warning
  *  Do not change the code if it is not necessary
  *******************************************************************************/
-
 void hal_spi_begin(dev_spi_t *drv, spi_setting_t *setting) {
 
     // enable spi clk

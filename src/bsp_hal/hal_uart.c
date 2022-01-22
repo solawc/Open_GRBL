@@ -6,7 +6,7 @@ UART_HandleTypeDef laser_uart;
 DMA_HandleTypeDef dma_tx;
 DMA_HandleTypeDef dma_rx;
 
-serial_rb_t serial_rb;
+// serial_rb_t serial_rb;
 
 uint8_t laser_rx_buf[1];
 
@@ -118,16 +118,16 @@ void hal_uart_init(void) {
 #else 
 
 #endif
-	HAL_NVIC_SetPriority(LaserUART_IRQn, 1, 1);
-    HAL_NVIC_EnableIRQ(LaserUART_IRQn);
-	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE);
+
+	hal_uart_irq_set();
 
 	HAL_UART_Receive_IT(&laser_uart, laser_rx_buf, 1);
 }
 
 void hal_uart_irq_set(void) {
-	HAL_NVIC_SetPriority(LaserUART_IRQn, 0, 0);
+	HAL_NVIC_SetPriority(LaserUART_IRQn, 1, 0);
     HAL_NVIC_EnableIRQ(LaserUART_IRQn);
+	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE);
 }
 
 void hal_laser_uart_irq_enable(void) { __HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE); }
@@ -208,70 +208,43 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 }
 
 
-void rb_init(serial_rb_t *rb) {
-	rb->head = 0;
-	rb->tail = 0;
-	rb->len = 0;
-}
+// void rb_init(serial_rb_t *rb) {
+// 	rb->head = 0;
+// 	rb->tail = 0;
+// 	rb->len = 0;
+// }
 
-bool rb_write(serial_rb_t *rb, uint8_t data) {
+// bool rb_write(serial_rb_t *rb, uint8_t data) {
 
-	if(rb->len >= UART_RB_BUFF_MAX) {
-		printf("[error]:rb is full\n");
-		return false;
-	}
+// 	if(rb->len >= UART_RB_BUFF_MAX) {
+// 		printf("[error]:rb is full\n");
+// 		return false;
+// 	}
 
-	rb->rb_buf[rb->tail] = data;
+// 	rb->rb_buf[rb->tail] = data;
 
-	rb->tail = (rb->tail+1) % UART_RB_BUFF_MAX;
+// 	rb->tail = (rb->tail+1) % UART_RB_BUFF_MAX;
 
-	rb->len++;
+// 	rb->len++;
 
-	return true;
-}
+// 	return true;
+// }
 
-bool rb_read(serial_rb_t *rb, uint8_t *rdata) {
+// bool rb_read(serial_rb_t *rb, uint8_t *rdata) {
 
-	if(rb->len == UART_RB_BUFF_MIN) {
-		return false;	
-	}
+// 	if(rb->len == UART_RB_BUFF_MIN) {
+// 		return false;	
+// 	}
 
-	*rdata = rb->rb_buf[rb->head];
+// 	*rdata = rb->rb_buf[rb->head];
 
-	rb->head = (rb->head +1 ) % UART_RB_BUFF_MAX;
+// 	rb->head = (rb->head +1 ) % UART_RB_BUFF_MAX;
 
-	rb->len--;
+// 	rb->len--;
 
-	return true;
-}
+// 	return true;
+// }
 
-bool rb_read_buff(serial_rb_t *rb, uint8_t *rdata) {
-
-	if(rb->len == UART_RB_BUFF_MIN) {
-		return false;	
-	}
-
-	for(uint32_t i = 0; i < rb->len; i++)
-    {
-        rb_read(rb, &rdata[i]);
-    }
-
-	return true;
-}
-
-
-void serial_task(void *parg) {
-
-	while(1) {
-		
-	}
-}
-
-TaskHandle_t serial_task_handler;
-
-void serial_task_init(void) {
-	// xTaskCreate(serial_task, "serial task", 512, NULL, 1, &serial_task_handler);
-}
 
 
 

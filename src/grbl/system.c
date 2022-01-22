@@ -384,9 +384,9 @@ void system_clear_exec_state_flag(uint8_t mask) {
   sys_rt_exec_state &= ~(mask);
   SREG = sreg;
 #elif defined(CPU_STM32)
-  __disable_irq();
+  // __disable_irq();
   sys_rt_exec_state &= ~(mask);
-  __enable_irq();
+  // __enable_irq();
 #endif
 }
 
@@ -397,9 +397,9 @@ void system_set_exec_alarm(uint8_t code) {
   sys_rt_exec_alarm = code;
   SREG = sreg;
 #elif defined(CPU_STM32)
-  __disable_irq();
+  // __disable_irq();
   sys_rt_exec_alarm |= (code);
-  __enable_irq();
+  // __enable_irq();
 #endif
 }
 
@@ -410,9 +410,9 @@ void system_clear_exec_alarm() {
   sys_rt_exec_alarm = 0;
   SREG = sreg;
 #elif defined(CPU_STM32)
-   __disable_irq();
+  //  __disable_irq();
   sys_rt_exec_alarm = 0;
-  __enable_irq();
+  // __enable_irq();
 #endif
 }
 
@@ -423,9 +423,9 @@ void system_set_exec_motion_override_flag(uint8_t mask) {
   sys_rt_exec_motion_override |= (mask);
   SREG = sreg;
 #elif defined(CPU_STM32)
-  __disable_irq();
+  // __disable_irq();
   sys_rt_exec_motion_override |= (mask);
-  __enable_irq();
+  // __enable_irq();
 #endif
 }
 
@@ -436,9 +436,9 @@ void system_set_exec_accessory_override_flag(uint8_t mask) {
   sys_rt_exec_accessory_override |= (mask);
   SREG = sreg;
 #elif defined(CPU_STM32)
-  __disable_irq();
+  // __disable_irq();
   sys_rt_exec_accessory_override |= (mask);
-  __enable_irq();
+  // __enable_irq();
 #endif
 }
 
@@ -449,9 +449,9 @@ void system_clear_exec_motion_overrides() {
   sys_rt_exec_motion_override = 0;
   SREG = sreg;
 #elif defined(CPU_STM32)
-  __disable_irq();
+  // __disable_irq();
   sys_rt_exec_motion_override = 0;
-  __enable_irq();
+  // __enable_irq();
 #endif
 }
 
@@ -462,8 +462,8 @@ void system_clear_exec_accessory_overrides() {
   sys_rt_exec_accessory_override = 0;
   SREG = sreg;
 #elif defined(CPU_STM32)
-  __disable_irq();
+  // __disable_irq();
   sys_rt_exec_accessory_override = 0;
-  __enable_irq();
+  // __enable_irq();
 #endif
 }

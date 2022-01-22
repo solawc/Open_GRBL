@@ -41,6 +41,7 @@ void hal_w25qxx_spi_init(void)
 
     if(sFlash.flash_mode == sFLAHS_SPI_MODE) {
         hal_w25qxx_spi_gpio_init();
+
         dev_w25qxx_spi_set.is_use_irq = false;
         dev_w25qxx_spi_set.spi_num = SPI_2;
         dev_w25qxx_spi_set.spi_speed = 8;
@@ -80,22 +81,22 @@ bool is_read_had_finish(void)
 
 void w25qxx_enable(void)
 {
-    HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_RESET);
 }
 
 void w25qxx_disable(void)
 {
-    HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_SET);
 }
 
 uint8_t w25qxx_write_read_8(uint8_t byte)
 {
-    return hal_spi_transfer_revice_byte(&dev_w25qxx_spi, byte);
+  return hal_spi_transfer_revice_byte(&dev_w25qxx_spi, byte);
 }
 
 uint16_t w25qxx_write_read_16(uint16_t byte)
 {
-    return hal_spi_transfer_revice_byte(&dev_w25qxx_spi, byte);
+  return hal_spi_transfer_revice_byte(&dev_w25qxx_spi, byte);
 }
 
 /*--------------------------------------------------------------------------------------------*/
