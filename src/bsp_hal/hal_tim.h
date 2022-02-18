@@ -62,4 +62,7 @@ void hal_tim_generateEvent_update(TIM_HandleTypeDef *htim);
 void hal_tim_clear_flag_update(TIM_HandleTypeDef *htim);
 void hal_set_tim_cnt(TIM_HandleTypeDef *htim, uint32_t cnt);
 
+void hal_pwm_init();
+void hal_pwm_set(uint32_t duty);
+uint32_t hal_pwm_ccr_get(void);
 #endif

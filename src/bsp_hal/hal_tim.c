@@ -83,11 +83,29 @@ void STEP_SET_HANDLER(void) {
 }
 
 /*******************PWM SET***************************/
+
+static void laser_pin_config() {
+
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_TIM4_CLK_ENABLE();
+
+    GPIO_InitStruct.Pin = GPIO_PIN_7;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Alternate = GPIO_AF9_TIM4;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+}
+
 void hal_pwm_init() {
 
     TIM_MasterConfigTypeDef sMasterConfig = {0};
     TIM_OC_InitTypeDef sConfigOC = {0};
     TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
+
+    laser_pin_config();
 
     htim_laser.Instance = LASER_TIM;
     htim_laser.Init.Prescaler = 1000;
@@ -108,13 +126,13 @@ void hal_pwm_init() {
     }
 
     sConfigOC.OCMode = TIM_OCMODE_PWM1;
-    sConfigOC.Pulse = 50;
+    sConfigOC.Pulse = 500;
     sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
     sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
     sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
     sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
     sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-    if (HAL_TIM_OC_ConfigChannel(&htim_laser, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+    if (HAL_TIM_OC_ConfigChannel(&htim_laser, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
     {
         Error_Handler();
     }
@@ -129,11 +147,18 @@ void hal_pwm_init() {
     {
         Error_Handler();
     }
+    HAL_TIM_PWM_Start(&htim_laser, TIM_CHANNEL_2);
 }
 
 void hal_pwm_set(uint32_t duty) {
 
+    // htim_laser.Instance->CCR2 = duty;
+    __HAL_TIM_SetCompare(&htim_laser, TIM_CHANNEL_2, duty);
+}
 
+uint32_t hal_pwm_ccr_get(void) {
+    
+    return __HAL_TIM_GetCompare(&htim_laser, TIM_CHANNEL_2);
 }
 
 

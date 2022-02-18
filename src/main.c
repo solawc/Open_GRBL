@@ -24,7 +24,9 @@ int main() {
 
     hal_uart_init();
 
-    hal_led_gpio_init();
+    // hal_led_gpio_init();
+
+    hal_pwm_init();
 
     w25qxx_init();
 

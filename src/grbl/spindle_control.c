@@ -51,7 +51,7 @@ void spindle_init()
     #endif
   #endif
 #elif defined(CPU_STM32)
-    
+  hal_pwm_init();
 #endif
   spindle_stop();
 }
@@ -94,9 +94,45 @@ uint8_t spindle_get_state()
     }
   #endif
 #elif defined(CPU_STM32)
-   
-#endif
+   #ifdef VARIABLE_SPINDLE
+    #ifdef USE_SPINDLE_DIR_AS_ENABLE_PIN
+      // No spindle direction output pin. 
+      #ifdef INVERT_SPINDLE_ENABLE_PIN
+        if (bit_isfalse(SPINDLE_ENABLE_PORT,(1<<SPINDLE_ENABLE_BIT))) { return(SPINDLE_STATE_CW); }
+      #else
+        if (bit_istrue(SPINDLE_ENABLE_PORT,(1<<SPINDLE_ENABLE_BIT))) { return(SPINDLE_STATE_CW); }
+      #endif
+    #else
+      // if (SPINDLE_TCCRA_REGISTER & (1<<SPINDLE_COMB_BIT)) { // Check if PWM is enabled.
+      //   #ifdef ENABLE_DUAL_AXIS
+      //     return(SPINDLE_STATE_CW);
+      //   #else
+      //     if (SPINDLE_DIRECTION_PORT & (1<<SPINDLE_DIRECTION_BIT)) { return(SPINDLE_STATE_CCW); }
+      //     else { return(SPINDLE_STATE_CW); }
+      //   #endif
+      // }
+      if(hal_pwm_ccr_get() != 0) {
+          return(SPINDLE_STATE_CCW);
+      }else{
+          return(SPINDLE_STATE_CW);
+      }
 
+    #endif
+  #else
+    // #ifdef INVERT_SPINDLE_ENABLE_PIN
+    //   if (bit_isfalse(SPINDLE_ENABLE_PORT,(1<<SPINDLE_ENABLE_BIT))) { 
+    // #else
+    //   if (bit_istrue(SPINDLE_ENABLE_PORT,(1<<SPINDLE_ENABLE_BIT))) {
+    // #endif
+    //   #ifdef ENABLE_DUAL_AXIS    
+    //     return(SPINDLE_STATE_CW);
+    //   #else
+    //     if (SPINDLE_DIRECTION_PORT & (1<<SPINDLE_DIRECTION_BIT)) { return(SPINDLE_STATE_CCW); }
+    //     else { return(SPINDLE_STATE_CW); }
+    //   #endif
+    // }
+  #endif
+#endif
   return(SPINDLE_STATE_DISABLE);
 }
 
@@ -124,11 +160,10 @@ void spindle_stop()
     #endif
   #endif
 #elif defined(CPU_STM32)
-	 
+	 hal_pwm_set(0);
 #endif
 
 }
-
 
 #ifdef VARIABLE_SPINDLE
   // Sets spindle speed PWM output and enable pin, if configured. Called by spindle_set_state()
@@ -156,11 +191,10 @@ void spindle_stop()
           }
         #endif
     #elif defined(CPU_STM32)
-        
-#endif
+        hal_pwm_set(pwm_value);
+    #endif
 
   }
-
 
   #ifdef ENABLE_PIECEWISE_LINEAR_SPINDLE
   
@@ -210,7 +244,7 @@ void spindle_stop()
     // Called by spindle_set_state() and step segment generator. Keep routine small and efficient.
     uint8_t spindle_compute_pwm_value(float rpm) // 328p PWM register is 8-bit.
     {
-      uint8_t pwm_value;
+      uint32_t pwm_value;
 #if defined(CPU_MAP_ATMEGA328P)
 
       rpm *= (0.010*sys.spindle_speed_ovr); // Scale by spindle speed override value.
@@ -234,9 +268,28 @@ void spindle_stop()
         pwm_value = floor((rpm-settings.rpm_min)*pwm_gradient) + SPINDLE_PWM_MIN_VALUE;
       }
 #elif defined(CPU_STM32)
-			   
+		// rpm *= (0.010*sys.spindle_speed_ovr); // Scale by spindle speed override value.
+    //   // Calculate PWM register value based on rpm max/min settings and programmed rpm.
+    //   if ((settings.rpm_min >= settings.rpm_max) || (rpm >= settings.rpm_max)) {
+    //     // No PWM range possible. Set simple on/off spindle control pin state.
+    //     sys.spindle_speed = settings.rpm_max;
+    //     pwm_value = 1000;
+    //   } else if (rpm <= settings.rpm_min) {
+    //     if (rpm == 0.0) { // S0 disables spindle
+    //       sys.spindle_speed = 0.0;
+    //       pwm_value = 0;
+    //     } else { // Set minimum PWM output
+    //       sys.spindle_speed = settings.rpm_min;
+    //       pwm_value = 0;
+    //     }
+    //   } else { 
+    //     // Compute intermediate PWM value with linear spindle speed model.
+    //     // NOTE: A nonlinear model could be installed here, if required, but keep it VERY light-weight.
+    //     sys.spindle_speed = rpm;
+    //     pwm_value = floor((rpm-settings.rpm_min)*pwm_gradient) + 0;
+    //   }	   
 #endif
-
+      pwm_value = rpm;
       return(pwm_value);
     }
     
@@ -293,7 +346,42 @@ void spindle_stop()
 
   }
 #elif defined(CPU_STM32)
-			   
+		if (state == SPINDLE_DISABLE) { // Halt or set spindle direction and rpm.
+  
+    #ifdef VARIABLE_SPINDLE
+      sys.spindle_speed = 0.0;
+    #endif
+    spindle_stop();
+  
+  } else {
+    
+    #if !defined(USE_SPINDLE_DIR_AS_ENABLE_PIN) && !defined(ENABLE_DUAL_AXIS)
+      if (state == SPINDLE_ENABLE_CW) {
+      //   SPINDLE_DIRECTION_PORT &= ~(1<<SPINDLE_DIRECTION_BIT);
+      // } else {
+      //   SPINDLE_DIRECTION_PORT |= (1<<SPINDLE_DIRECTION_BIT);
+      }
+    #endif
+  
+    #ifdef VARIABLE_SPINDLE
+      // NOTE: Assumes all calls to this function is when Grbl is not moving or must remain off.
+      if (settings.flags & BITFLAG_LASER_MODE) { 
+        if (state == SPINDLE_ENABLE_CCW) { rpm = 0.0; } // TODO: May need to be rpm_min*(100/MAX_SPINDLE_SPEED_OVERRIDE);
+      }
+      spindle_set_speed(spindle_compute_pwm_value(rpm));
+    #endif
+    #if (defined(USE_SPINDLE_DIR_AS_ENABLE_PIN) && \
+        !defined(SPINDLE_ENABLE_OFF_WITH_ZERO_SPEED)) || !defined(VARIABLE_SPINDLE)
+      // NOTE: Without variable spindle, the enable bit should just turn on or off, regardless
+      // if the spindle speed value is zero, as its ignored anyhow.
+      #ifdef INVERT_SPINDLE_ENABLE_PIN
+        SPINDLE_ENABLE_PORT &= ~(1<<SPINDLE_ENABLE_BIT);
+      #else
+        // SPINDLE_ENABLE_PORT |= (1<<SPINDLE_ENABLE_BIT);
+      #endif    
+    #endif
+
+  }	   
 #endif
   sys.report_ovr_counter = 0; // Set to report change immediately
 }
