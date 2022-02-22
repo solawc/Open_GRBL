@@ -1,7 +1,7 @@
 #ifndef __tft_lcd_dev_h
 #define __tft_lcd_dev_h
 
-#include "../main.h"
+#include "../../main.h"
 
 #define LCD_MOSI_PORT       GPIOB
 #define LCD_MOSI_PIN        GPIO_PIN_5
