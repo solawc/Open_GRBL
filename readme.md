@@ -9,11 +9,11 @@
 
 - GPIO，读写操作和中断，用于限位和Probe
 - UART，用于上位机连接，目前与上位机正常连接
-- EEPROM，在STM32F429IG上使用的是内部Flash模拟EEPROM，读写与保存正常
+- EEPROM，读写与保存正常
 - W25qxx，驱动已经正常，后期可以针对GUI，用于图片存放和字库存放
 - SDCard, 未加入， 用于脱机
 - TFT_SPI，未完成，用于脱机显示和操作
-- Spindle，未完成，激光或CNC的直流电机控制，输出的是PWM控制
+- Spindle，已完成
 - FreeRTOS, 已移植完成
 - Fatfs, 已加入
 
