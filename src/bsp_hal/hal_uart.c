@@ -140,7 +140,7 @@ bool hal_is_uart_sr_txe(void) {
 #ifdef STM32F429xx
 	return (__HAL_UART_GET_FLAG(&laser_uart, USART_FLAG_TXE));
 #elif defined(STM32G0B0xx)
-	return (__HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_TC));
+	return (__HAL_UART_GET_FLAG(&laser_uart, USART_FLAG_TXE)); 
 #endif
 }
 

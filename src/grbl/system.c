@@ -112,7 +112,7 @@ void system_execute_startup(char *line)
   for (n=0; n < N_STARTUP_LINE; n++) {
     if (!(settings_read_startup_line(n, line))) {
       line[0] = 0;
-      report_execute_startup_message(line,STATUS_SETTING_READ_FAIL);
+      report_execute_startup_message(line, STATUS_SETTING_READ_FAIL);
     } else {
       if (line[0] != 0) {
         uint8_t status_code = gc_execute_line(line);
