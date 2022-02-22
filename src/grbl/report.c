@@ -116,11 +116,9 @@ void report_status_message(uint8_t status_code)
 {
   switch(status_code) {
     case STATUS_OK: // STATUS_OK
-      // printPgmString(PSTR("ok\r\n")); break;
-      printf("ok\r\n"); break;
+      printPgmString(PSTR("ok\r\n")); break;
     default:
-      // printPgmString(PSTR("error:"));
-      printf("error:"); break;
+      printPgmString(PSTR("error:"));
       print_uint8_base10(status_code);
       report_util_line_feed();
   }
@@ -181,7 +179,6 @@ void report_init_message()
 void report_grbl_help() {
   printPgmString(PSTR("[HLP:$$ $# $G $I $N $x=val $Nx=line $J=line $SLP $C $X $H ~ ! ? ctrl-x]\r\n"));    
 }
-
 
 // Grbl global settings print out.
 // NOTE: The numbering scheme here must correlate to storing in settings.c

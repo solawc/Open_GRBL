@@ -307,8 +307,11 @@ enum {
 // NOTE: Changing this value also changes the execution time of a segment in the step segment buffer.
 // When increasing this value, this stores less overall time in the segment buffer and vice versa. Make
 // certain the step segment buffer is increased/decreased to account for these changes.
+#ifdef CPU_STM32
+#define ACCELERATION_TICKS_PER_SECOND 5000
+#else
 #define ACCELERATION_TICKS_PER_SECOND 100
-
+#endif
 // Adaptive Multi-Axis Step Smoothing (AMASS) is an advanced feature that does what its name implies,
 // smoothing the stepping of multi-axis motions. This feature smooths motion particularly at low step
 // frequencies below 10kHz, where the aliasing between axes of multi-axis motions can cause audible

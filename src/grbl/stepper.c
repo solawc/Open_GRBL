@@ -403,7 +403,8 @@ void set_timer_irq_handler(void)   // set timer
 #elif defined(CPU_STM32)
   hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
   hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time-1);
-  __HAL_TIM_CLEAR_IT(&STEP_RESET_TIMER, TIM_IT_UPDATE);
+  // __HAL_TIM_CLEAR_IT(&STEP_RESET_TIMER, TIM_IT_UPDATE);
+  hal_tim_clear_flag_update(&STEP_RESET_TIMER);
   hal_reset_timer_irq_enable();
 #endif
 

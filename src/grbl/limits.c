@@ -211,7 +211,6 @@ uint8_t limits_get_state()
               system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
             }
           #else
-            printf("enter limit irq\n");
             // mc_reset(); // Initiate system kill.
             // system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
             int evt;
