@@ -3,7 +3,7 @@
 
 ## 描述：
 
-该项目主要是出于个人兴趣，将原生的GRBL的源码，移植到STM32的MCU上，移植的源码的地址：https://github.com/gnea/grbl。
+该项目主要是出于个人兴趣，将原生的GRBL的源码，移植到STM32的MCU上，移植的源码的地址：https://github.com/gnea/grbl
 
 目前该项目还未完善，主要原因是因为电机控制部分还未完全调试完成，其余完成的部分：
 
