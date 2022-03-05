@@ -79,18 +79,16 @@ void serial_init()
   // enable rx, tx, and interrupt on complete reception of a byte
   UCSR0B |= (1<<RXEN0 | 1<<TXEN0 | 1<<RXCIE0);
 #elif defined(CPU_STM32)
-
+  // init befor HAL_Init();
 #endif
   // defaults to 8-bit, no parity, 1 stop bit
 }
-
 
 // Writes one byte to the TX serial buffer. Called by main program.
 void serial_write(uint8_t data) {
   hal_uart_sendbyte(data);
   while (!hal_is_uart_sr_txe()); // check uart is empty
 }
-
 
 // Data Register Empty Interrupt handler
 #if defined(CPU_MAP_ATMEGA328P)
@@ -112,6 +110,22 @@ ISR(SERIAL_UDRE)
 }
 #elif defined(CPU_STM32)
 
+void laser_uart_tx_handler() {
+
+  uint8_t tail = serial_tx_buffer_tail;
+
+  // Send a byte from the buffer
+  // UDR0 = serial_tx_buffer[tail];
+
+  // Update tail position
+  // tail++;
+  // if (tail == TX_RING_BUFFER) { tail = 0; }
+
+  // serial_tx_buffer_tail = tail;
+
+  // Turn off Data Register Empty Interrupt to stop tx-streaming if this concludes the transfer
+  // if (tail == serial_tx_buffer_head) { UCSR0B &= ~(1 << UDRIE0); }
+}
 #endif
 
 // Fetches the first byte in the serial read buffer. Called by main program.
@@ -190,8 +204,8 @@ ISR(SERIAL_RX)
   }
 }
 #elif defined(CPU_STM32)
-// void USART1_IRQHandler (void) {
-void laser_uart_handler(__IO uint8_t data) { 
+
+void laser_uart_rx_handler(__IO uint8_t data) { 
 
   uint8_t next_head;
   

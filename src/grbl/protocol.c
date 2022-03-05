@@ -82,6 +82,7 @@ void protocol_main_loop()
       if ((c == '\n') || (c == '\r')) { // End of line reached
 
         protocol_execute_realtime(); // Runtime command check point.
+        
         if (sys.abort) { return; } // Bail to calling function upon system abort
 
         line[char_counter] = 0; // Set string termination character.

@@ -36,12 +36,12 @@
 */ 
 typedef struct {
     uint32_t mcu_clk;
-    uint32_t step_tim_clk;              
+    uint32_t step_tim_clk;   
 }grbl_hw_t;
 
 void grbl_report_mcu_info(void);
 void grbl_hw_info_get(void);
-
+void grbl_hw_init(void);
 
 
 #endif

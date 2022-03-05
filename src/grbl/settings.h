@@ -116,6 +116,9 @@ typedef struct {
   float homing_seek_rate;
   uint16_t homing_debounce_delay;
   float homing_pulloff;
+
+  // can add more flag to set if the eeprom is enough
+
 } settings_t;
 extern settings_t settings;
 

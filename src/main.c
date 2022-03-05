@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 // Declare system global variable structure
 system_t sys;
 int32_t sys_position[N_AXIS];      // Real-time machine (aka home) position vector in steps.
@@ -18,28 +17,21 @@ TaskHandle_t grbl_task_handler;
 
 int main() {
 
-    HAL_Init();
+  grbl_hw_init();
 
-    SYSTEM_INTI();
-
-    hal_uart_init();
-
-    // hal_led_gpio_init();
-
-    hal_pwm_init();
-
-    w25qxx_init();
-
-    // dev_lcd_init();
 #ifdef STM32G0B0xx
     HAL_Delay(100);  // 等待外设反应，因为没有加入外部晶振
 #endif
-    grbl_report_mcu_info();
 
-    xTaskCreate(enter_grbl_task, "grbl task", 1024, NULL, 1, &grbl_task_handler);
+  grbl_report_mcu_info();
 
-    osKernelStart();
+  xTaskCreate(enter_grbl_task, "grbl task", 1024, NULL, 1, &grbl_task_handler);
+
+  osKernelStart();
 }
+
+
+
 
 void enter_grbl_task(void *parg) {
 
@@ -53,6 +45,7 @@ void enter_grbl_task(void *parg) {
 	system_init();   // Configure pinout pins and pin-change interrupt
 
 	memset(sys_position,0,sizeof(sys_position)); // Clear machine position.
+
 #if defined(CPU_MAP_ATMEGA328P)
   	sei(); // Enable interrupts
 #elif defined(CPU_STM32)

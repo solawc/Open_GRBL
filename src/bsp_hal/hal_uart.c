@@ -202,48 +202,11 @@ void LASER_UART_IRQHANDLER() {
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {	
 	if(huart == &laser_uart) {
-		laser_uart_handler(laser_rx_buf[0]);
+		laser_uart_rx_handler(laser_rx_buf[0]);
 		HAL_UART_Receive_IT(&laser_uart, laser_rx_buf, 1);       // 重新注册一次，要不然下次收不到了
 	}
 }
 
-
-// void rb_init(serial_rb_t *rb) {
-// 	rb->head = 0;
-// 	rb->tail = 0;
-// 	rb->len = 0;
-// }
-
-// bool rb_write(serial_rb_t *rb, uint8_t data) {
-
-// 	if(rb->len >= UART_RB_BUFF_MAX) {
-// 		printf("[error]:rb is full\n");
-// 		return false;
-// 	}
-
-// 	rb->rb_buf[rb->tail] = data;
-
-// 	rb->tail = (rb->tail+1) % UART_RB_BUFF_MAX;
-
-// 	rb->len++;
-
-// 	return true;
-// }
-
-// bool rb_read(serial_rb_t *rb, uint8_t *rdata) {
-
-// 	if(rb->len == UART_RB_BUFF_MIN) {
-// 		return false;	
-// 	}
-
-// 	*rdata = rb->rb_buf[rb->head];
-
-// 	rb->head = (rb->head +1 ) % UART_RB_BUFF_MAX;
-
-// 	rb->len--;
-
-// 	return true;
-// }
 
 
 

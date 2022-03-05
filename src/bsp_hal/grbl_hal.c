@@ -23,3 +23,15 @@ void grbl_hw_info_get(void) {
     grbl_hw_get.step_tim_clk = HAL_RCC_GetHCLKFreq();
 }
 
+void grbl_hw_init(void) {
+
+    HAL_Init();
+
+    SYSTEM_INTI();
+
+    hal_uart_init();
+
+    hal_pwm_init();
+
+    w25qxx_init();
+}

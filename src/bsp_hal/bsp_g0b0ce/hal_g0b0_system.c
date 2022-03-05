@@ -65,12 +65,23 @@ void hal_g0b0_clk_init(void) {
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
+
+  uint32_t ulReturn;
+
+	ulReturn = taskENTER_CRITICAL_FROM_ISR();
+
   if(htim == &STEP_RESET_TIMER) { 
+
     reset_timer_irq_handler();
+
   }
   else if(htim == &STEP_SET_TIMER)  {
+
     set_timer_irq_handler();
+    
   }
+
+  taskEXIT_CRITICAL_FROM_ISR( ulReturn );
 }
 
 void systick_setting_init() {

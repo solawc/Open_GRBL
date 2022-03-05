@@ -15,7 +15,7 @@
 
 // #define PAGE_SIZE                   0X400
 #define PAGE_SIZE                   0x400
-#define EEPROM_SIZE(str)            sizeof(str)/4+(( sizeof(str) %4 )?1:0)   
+#define EEPROM_SIZE(str)            sizeof(str)/4+( ( sizeof(str) % 4 ) ? 1 : 0 )   
 
 #ifdef STM32F429xx
 #define EEPROM_START_ADDR           ADDR_FLASH_SECTOR_11  // 80D FC00  ADDR_FLASH_SECTOR_11
