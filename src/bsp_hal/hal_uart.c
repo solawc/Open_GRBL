@@ -6,8 +6,6 @@ UART_HandleTypeDef laser_uart;
 DMA_HandleTypeDef dma_tx;
 DMA_HandleTypeDef dma_rx;
 
-// serial_rb_t serial_rb;
-
 uint8_t laser_rx_buf[1];
 
 // #define USE_SERIAL_DMA

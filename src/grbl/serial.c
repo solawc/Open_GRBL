@@ -112,7 +112,7 @@ ISR(SERIAL_UDRE)
 
 void laser_uart_tx_handler() {
 
-  uint8_t tail = serial_tx_buffer_tail;
+  // uint8_t tail = serial_tx_buffer_tail;
 
   // Send a byte from the buffer
   // UDR0 = serial_tx_buffer[tail];
