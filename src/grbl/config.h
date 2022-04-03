@@ -29,6 +29,9 @@
 #define config_h
 #include "grbl.h" // For Arduino IDE compatibility.
 
+// Define if use freeRTOS
+// #define USE_RTOS_FREERTOS
+// #define USR_RTOS_RTTHREAD      // Need add into project
 
 // Define CPU pin map and default settings.
 // NOTE: OEMs can avoid the need to maintain/update the defaults.h and cpu_map.h files and use only
@@ -38,8 +41,8 @@
 // #define CPU_MAP_ATMEGA328P 		// Arduino Uno CPU
 
 // #define CPU_MAP_STM32F1
-#define CPU_MAP_STM32F4
-// #define CPU_MAP_STM32G0
+// #define CPU_MAP_STM32F4
+#define CPU_MAP_STM32G0
 // #define CPU_MAP_STM32H7
 
 

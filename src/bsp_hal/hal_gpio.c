@@ -66,6 +66,21 @@ void hal_limit_gpio_irq_disable(void) {
 	HAL_NVIC_DisableIRQ(LIMIT_IRQn);
 }
 
+void hal_probe_gpio_init(void) {
+
+	GPIO_InitTypeDef GPIO_Init = {0};
+
+	GPIO_Init.Mode = MODE_INPUT;
+	GPIO_Init.Pull = GPIO_NOPULL;
+	GPIO_Init.Pin = PROBE_PIN;
+    HAL_GPIO_Init(PROBE_PORT, &GPIO_Init);
+}
+
+uint8_t hal_probe_gpio_read(void) {
+
+	return HAL_GPIO_ReadPin(PROBE_PORT, PROBE_PIN);
+}
+
 uint8_t hal_limits_get_gpio_status(uint8_t axis) {
 #ifdef LIMIT_X_PIN
 	if(axis == X_AXIS) 			return HAL_GPIO_ReadPin(LIMIT_X_PORT, LIMIT_X_PIN);

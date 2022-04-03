@@ -68,6 +68,10 @@ void hal_led_toggle(void);
 #define MOTOR_Y_AXIS_PIN            GPIO_PIN_9
 // #define MOTOR_Z_AXIS_PORT           GPIOB
 // #define MOTOR_Z_AXIS_PIN            GPIO_PIN_9
+
+#define PROBE_PORT                  GPIOB
+#define PROBE_PIN                   GPIO_PIN_11
+
 #endif
 
 void hal_limit_gpio_init(void);
@@ -82,5 +86,8 @@ void hal_motor_gpio_init(void);
 void hal_step_en_gpio_set(bool status);
 uint8_t hal_get_moter_dir_gpio_mask(uint8_t axis);
 uint8_t hal_get_moter_axis_gpio_mask(uint8_t axis);
+
+void hal_probe_gpio_init(void);
+uint8_t hal_probe_gpio_read(void);
 
 #endif

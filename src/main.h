@@ -1,7 +1,7 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
-// #define USE_FREERTOS_RTOS
+#define USE_FREERTOS_RTOS
 
 #ifdef STM32G070xx
     #include "stm32g0xx_hal.h"

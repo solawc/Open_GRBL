@@ -37,7 +37,8 @@ void probe_init()
   #endif
   probe_configure_invert_mask(false); // Initialize invert mask.
 #elif defined(CPU_STM32)
-    
+  hal_probe_gpio_init();
+  probe_configure_invert_mask(false);
 #endif
 }
 
@@ -52,7 +53,11 @@ void probe_configure_invert_mask(uint8_t is_probe_away)
   if (bit_isfalse(settings.flags,BITFLAG_INVERT_PROBE_PIN)) { probe_invert_mask ^= PROBE_MASK; }
   if (is_probe_away) { probe_invert_mask ^= PROBE_MASK; }
 #elif defined(CPU_STM32)
-    
+  probe_invert_mask = 0; // Initialize as zero.
+  // if (bit_isfalse(settings.flags, BITFLAG_INVERT_PROBE_PIN)) { probe_invert_mask ^= PROBE_MASK; }
+  // if (is_probe_away) { probe_invert_mask ^= PROBE_MASK; }
+  if(bit_isfalse(settings.flags, BITFLAG_INVERT_PROBE_PIN)) {probe_invert_mask = 1;}
+  else {probe_invert_mask = 0;}
     
 #endif
 }
@@ -64,7 +69,9 @@ uint8_t probe_get_state() {
 #if defined(CPU_MAP_ATMEGA328P)
 return((PROBE_PIN & PROBE_MASK) ^ probe_invert_mask); 
 #elif defined(CPU_STM32)
-    return 0; 
+    // return hal_probe_gpio_read();
+    if(probe_invert_mask && hal_probe_gpio_read()) return 0;
+    else { return 1;}
 #endif
 }
 
