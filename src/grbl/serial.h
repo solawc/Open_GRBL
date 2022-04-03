@@ -62,4 +62,7 @@ void laser_uart_rx_handler(__IO uint8_t data);
 
 bool cmd_parse(uint8_t data);
 
+bool protocol_rt_command(char data);
+bool protocol_rt_command_run(char data);
+
 #endif

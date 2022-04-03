@@ -1,6 +1,8 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
+// #define USE_FREERTOS_RTOS
+
 #ifdef STM32G070xx
     #include "stm32g0xx_hal.h"
 #elif defined(STM32F429xx)
@@ -11,9 +13,11 @@
     #include "bsp_hal/bsp_g0b0ce/hal_g0b0_system.h"
 #endif
 
+#if defined(USE_FREERTOS_RTOS)
 #include "FreeRTOS.h"
 #include "task.h"
 #include "cmsis_os.h"
+#endif
 
 #include "bsp_hal/grbl_hal.h"
 #include "bsp_hal/hal_uart.h"
@@ -39,7 +43,10 @@
 void _delay_ms(uint32_t tick);
 void _delay_us(uint32_t tick);
 
-// void enter_grbl_task(void);
+#if defined(USE_FREERTOS_RTOS)
 void enter_grbl_task(void *parg);
+#else
+void enter_grbl_task(void);
+#endif
 
 #endif

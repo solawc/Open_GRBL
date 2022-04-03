@@ -109,7 +109,6 @@ ISR(SERIAL_UDRE)
   if (tail == serial_tx_buffer_head) { UCSR0B &= ~(1 << UDRIE0); }
 }
 #elif defined(CPU_STM32)
-
 void laser_uart_tx_handler() {
 
   // uint8_t tail = serial_tx_buffer_tail;
@@ -205,6 +204,60 @@ ISR(SERIAL_RX)
 }
 #elif defined(CPU_STM32)
 
+bool protocol_rt_command(char data) {
+  bool status = false;
+  switch(data) {
+    case CMD_RESET:         mc_reset(); status = true; break; // Call motion control reset routine.
+    case CMD_STATUS_REPORT: system_set_exec_state_flag(EXEC_STATUS_REPORT); status = true; break; // Set as true
+    case CMD_CYCLE_START:   system_set_exec_state_flag(EXEC_CYCLE_START); status = true; break; // Set as true
+    case CMD_FEED_HOLD:     system_set_exec_state_flag(EXEC_FEED_HOLD); status = true; break; // Set as true
+    default:
+      status = false;
+    break;
+  }
+  return status;
+}
+
+bool protocol_rt_command_run(char data) {
+  bool status = false;
+  if (data > 0x7F) { // Real-time control characters are extended ACSII only.
+        switch(data) {
+          case CMD_SAFETY_DOOR:   system_set_exec_state_flag(EXEC_SAFETY_DOOR); status = true; break; // Set as true
+          case CMD_JOG_CANCEL:   
+            if (sys.state & STATE_JOG) { // Block all other states from invoking motion cancel.
+              system_set_exec_state_flag(EXEC_MOTION_CANCEL); 
+            }
+            status = true; 
+            break; 
+          #ifdef DEBUG
+            case CMD_DEBUG_REPORT: {uint8_t sreg = SREG; cli(); bit_true(sys_rt_exec_debug,EXEC_DEBUG_REPORT); SREG = sreg;} break;
+          #endif
+          case CMD_FEED_OVR_RESET: system_set_exec_motion_override_flag(EXEC_FEED_OVR_RESET); status = true; break;
+          case CMD_FEED_OVR_COARSE_PLUS: system_set_exec_motion_override_flag(EXEC_FEED_OVR_COARSE_PLUS); status = true; break;
+          case CMD_FEED_OVR_COARSE_MINUS: system_set_exec_motion_override_flag(EXEC_FEED_OVR_COARSE_MINUS); status = true; break;
+          case CMD_FEED_OVR_FINE_PLUS: system_set_exec_motion_override_flag(EXEC_FEED_OVR_FINE_PLUS); status = true; break;
+          case CMD_FEED_OVR_FINE_MINUS: system_set_exec_motion_override_flag(EXEC_FEED_OVR_FINE_MINUS); status = true; break;
+          case CMD_RAPID_OVR_RESET: system_set_exec_motion_override_flag(EXEC_RAPID_OVR_RESET); status = true; break;
+          case CMD_RAPID_OVR_MEDIUM: system_set_exec_motion_override_flag(EXEC_RAPID_OVR_MEDIUM); status = true; break;
+          case CMD_RAPID_OVR_LOW: system_set_exec_motion_override_flag(EXEC_RAPID_OVR_LOW); status = true; break;
+          case CMD_SPINDLE_OVR_RESET: system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_RESET); status = true; break;
+          case CMD_SPINDLE_OVR_COARSE_PLUS: system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_COARSE_PLUS); status = true; break;
+          case CMD_SPINDLE_OVR_COARSE_MINUS: system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_COARSE_MINUS); status = true; break;
+          case CMD_SPINDLE_OVR_FINE_PLUS: system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_FINE_PLUS); status = true; break;
+          case CMD_SPINDLE_OVR_FINE_MINUS: system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_FINE_MINUS); status = true; break;
+          case CMD_SPINDLE_OVR_STOP: system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_STOP); status = true; break;
+          case CMD_COOLANT_FLOOD_OVR_TOGGLE: system_set_exec_accessory_override_flag(EXEC_COOLANT_FLOOD_OVR_TOGGLE); status = true; break;
+          #ifdef ENABLE_M7
+            case CMD_COOLANT_MIST_OVR_TOGGLE: system_set_exec_accessory_override_flag(EXEC_COOLANT_MIST_OVR_TOGGLE); break;
+          #endif
+
+          default: status = false; break;
+        }
+        // Throw away any unfound extended-ASCII character by not passing it to the serial buffer.
+      } 
+    return status;
+}
+
 void laser_uart_rx_handler(__IO uint8_t data) { 
 
   uint8_t next_head;
@@ -248,7 +301,8 @@ void laser_uart_rx_handler(__IO uint8_t data) {
           #endif
         }
         // Throw away any unfound extended-ASCII character by not passing it to the serial buffer.
-      } else { // Write character to buffer
+      } 
+      else { // Write character to buffer
         next_head = serial_rx_buffer_head + 1;
         if (next_head == RX_RING_BUFFER) { next_head = 0; }
 
@@ -267,58 +321,5 @@ void serial_reset_read_buffer()
   serial_rx_buffer_tail = serial_rx_buffer_head;
 }
 
-bool cmd_parse(uint8_t data) {
-  
-  bool status = true;
-
-  switch (data) {
-    case CMD_RESET:         mc_reset(); break; // Call motion control reset routine.
-    case CMD_STATUS_REPORT: system_set_exec_state_flag(EXEC_STATUS_REPORT); break; // Set as true
-    case CMD_CYCLE_START:   system_set_exec_state_flag(EXEC_CYCLE_START); break; // Set as true
-    case CMD_FEED_HOLD:     system_set_exec_state_flag(EXEC_FEED_HOLD); break; // Set as true
-
-    default:
-      status = false; // 表明不是特殊控制指令
-  }
-
-  if(!status && (data > 0x7F)) {
-    
-    status = true;
-
-    switch(data) {
-      case CMD_SAFETY_DOOR:   system_set_exec_state_flag(EXEC_SAFETY_DOOR); break; // Set as true
-      case CMD_JOG_CANCEL:   
-        if (sys.state & STATE_JOG) { // Block all other states from invoking motion cancel.
-          system_set_exec_state_flag(EXEC_MOTION_CANCEL); 
-        }
-        break; 
-      #ifdef DEBUG
-        case CMD_DEBUG_REPORT: {uint8_t sreg = SREG; cli(); bit_true(sys_rt_exec_debug,EXEC_DEBUG_REPORT); SREG = sreg;} break;
-      #endif
-      case CMD_FEED_OVR_RESET: system_set_exec_motion_override_flag(EXEC_FEED_OVR_RESET); break;
-      case CMD_FEED_OVR_COARSE_PLUS: system_set_exec_motion_override_flag(EXEC_FEED_OVR_COARSE_PLUS); break;
-      case CMD_FEED_OVR_COARSE_MINUS: system_set_exec_motion_override_flag(EXEC_FEED_OVR_COARSE_MINUS); break;
-      case CMD_FEED_OVR_FINE_PLUS: system_set_exec_motion_override_flag(EXEC_FEED_OVR_FINE_PLUS); break;
-      case CMD_FEED_OVR_FINE_MINUS: system_set_exec_motion_override_flag(EXEC_FEED_OVR_FINE_MINUS); break;
-      case CMD_RAPID_OVR_RESET: system_set_exec_motion_override_flag(EXEC_RAPID_OVR_RESET); break;
-      case CMD_RAPID_OVR_MEDIUM: system_set_exec_motion_override_flag(EXEC_RAPID_OVR_MEDIUM); break;
-      case CMD_RAPID_OVR_LOW: system_set_exec_motion_override_flag(EXEC_RAPID_OVR_LOW); break;
-      case CMD_SPINDLE_OVR_RESET: system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_RESET); break;
-      case CMD_SPINDLE_OVR_COARSE_PLUS: system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_COARSE_PLUS); break;
-      case CMD_SPINDLE_OVR_COARSE_MINUS: system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_COARSE_MINUS); break;
-      case CMD_SPINDLE_OVR_FINE_PLUS: system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_FINE_PLUS); break;
-      case CMD_SPINDLE_OVR_FINE_MINUS: system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_FINE_MINUS); break;
-      case CMD_SPINDLE_OVR_STOP: system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_STOP); break;
-      case CMD_COOLANT_FLOOD_OVR_TOGGLE: system_set_exec_accessory_override_flag(EXEC_COOLANT_FLOOD_OVR_TOGGLE); break;
-      #ifdef ENABLE_M7
-        case CMD_COOLANT_MIST_OVR_TOGGLE: system_set_exec_accessory_override_flag(EXEC_COOLANT_MIST_OVR_TOGGLE); break;
-      #endif
-
-      default:
-        status = false; // 表明不是实时指令，需要加入line进行判断
-    }
-  }
-  return status;
-}
 
 

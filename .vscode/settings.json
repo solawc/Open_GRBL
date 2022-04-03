@@ -22,6 +22,9 @@
         "stm32g0xx_ll_dma.h": "c",
         "stm32g0xx_hal_uart.h": "c",
         "tft_lcd_dev.h": "c",
-        "client.h": "c"
-    }
+        "client.h": "c",
+        "stdio.h": "c",
+        "stm32g0xx_hal_tim.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

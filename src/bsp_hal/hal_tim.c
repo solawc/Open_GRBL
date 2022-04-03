@@ -16,8 +16,8 @@ void hal_set_timer_init(void) {
     SET_TIM_CLK_ENABLED();   
 
     htim_set.Instance = SETP_SET_TIM; 
-    htim_set.Init.Period = 32-1;     
-    htim_set.Init.Prescaler = 1-1;
+    htim_set.Init.Period = 32;     
+    htim_set.Init.Prescaler = 1;
     htim_set.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim_set.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&htim_set);
@@ -31,13 +31,13 @@ void hal_reset_timer_init(void) {
 
     RESET_TIM_CLK_ENABLED()
     htim_reset.Instance = SETP_RESET_TIM;
-    htim_reset.Init.Period = 32-1;     
-    htim_reset.Init.Prescaler = 1-1; 
+    htim_reset.Init.Period = 32;     
+    htim_reset.Init.Prescaler = 1; 
     htim_reset.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim_reset.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&htim_reset);
 
-    HAL_NVIC_SetPriority(RESET_TIM_IRQn, 0, 2);
+    HAL_NVIC_SetPriority(RESET_TIM_IRQn, 0, 1);
     HAL_NVIC_DisableIRQ(RESET_TIM_IRQn);
     HAL_TIM_Base_Start_IT(&htim_reset);
 }
@@ -110,7 +110,7 @@ void hal_pwm_init() {
     htim_laser.Instance = LASER_TIM;
     htim_laser.Init.Prescaler = 1000;
     htim_laser.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim_laser.Init.Period = 32;
+    htim_laser.Init.Period = 32-1;
     htim_laser.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim_laser.Init.RepetitionCounter = 0;
     htim_laser.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;

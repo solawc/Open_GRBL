@@ -57,6 +57,7 @@
 #include "spindle_control.h"
 #include "stepper.h"
 #include "jog.h"
+#include "error.h"
 
 // #define M_PI	3.1415926535
 #define PSTR(x) x

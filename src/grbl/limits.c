@@ -22,8 +22,10 @@
 #include "grbl.h"
 
 #ifdef CPU_STM32
+  #if defined(USE_FREERTOS_RTOS)
   #define LIMIT_QUEUE_SIZE      10
   xQueueHandle limit_sw_queue;  // used by limit switch debouncing
+  #endif
 #endif
 
 // Homing axis search distance multiplier. Computed by this value times the cycle travel.
@@ -42,7 +44,10 @@
   #define DUAL_AXIS_CHECK_TRIGGER_2   bit(2)
 #endif
 
+#if defined(USE_FREERTOS_RTOS)
 TaskHandle_t limit_task_handler;
+#endif
+
 void limits_init()
 {
 #if defined(CPU_MAP_ATMEGA328P)
@@ -76,6 +81,7 @@ void limits_init()
     limits_disable();
   }
 
+#if defined(USE_FREERTOS_RTOS)
   if(limit_sw_queue == NULL) {
     limit_sw_queue = xQueueCreate(LIMIT_QUEUE_SIZE, sizeof(int));
     xTaskCreate(limit_check_task,
@@ -85,6 +91,7 @@ void limits_init()
                 5,  // priority
                 &limit_task_handler);
   }
+#endif
 
 #endif
 }
@@ -211,15 +218,19 @@ uint8_t limits_get_state()
               system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
             }
           #else
-            // mc_reset(); // Initiate system kill.
-            // system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
+#if defined(USE_FREERTOS_RTOS)
             int evt;
             xQueueSendFromISR(limit_sw_queue, &evt, NULL);
+#else
+            mc_reset(); // Initiate system kill.
+            system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
+#endif
           #endif
         }
       }
   }
 
+#if defined(USE_FREERTOS_RTOS)
   void limit_check_task(void *parg) {
     while(1) {
       int evt;
@@ -235,6 +246,7 @@ uint8_t limits_get_state()
       }
     }
   }
+#endif
 
 #endif
 

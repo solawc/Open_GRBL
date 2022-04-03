@@ -116,14 +116,13 @@ void hal_uart_init(void) {
 #else 
 
 #endif
-
 	hal_uart_irq_set();
 
-	HAL_UART_Receive_IT(&laser_uart, laser_rx_buf, 1);
+	// HAL_UART_Receive_IT(&laser_uart, laser_rx_buf, 1);
 }
 
 void hal_uart_irq_set(void) {
-	HAL_NVIC_SetPriority(LaserUART_IRQn, 1, 0);
+	HAL_NVIC_SetPriority(LaserUART_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(LaserUART_IRQn);
 	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE);
 }
@@ -185,24 +184,40 @@ void DMA1_Channel2_3_IRQHandler(void)
 	bool uart_trans_lock = false;
 #endif
 
+
+// Serial UART ISR Handler
 void LASER_UART_IRQHANDLER() {
 
+#if defined(USE_FREERTOS_RTOS)
 	uint32_t ulReturn;
+#endif
+	uint16_t data;
 
+#if defined(USE_FREERTOS_RTOS)
 	ulReturn = taskENTER_CRITICAL_FROM_ISR();
+#endif
+
+	// HAL_UART_IRQHandler(&laser_uart);
+	
+	if(__HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET) {
+		data = laser_uart.Instance->RDR;
+		laser_uart_rx_handler(data);
+	}
 
 	HAL_UART_IRQHandler(&laser_uart);
 
+#if defined(USE_FREERTOS_RTOS)
 	taskEXIT_CRITICAL_FROM_ISR( ulReturn );
+#endif
 }
 
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {	
-	if(huart == &laser_uart) {
-		laser_uart_rx_handler(laser_rx_buf[0]);
-		HAL_UART_Receive_IT(&laser_uart, laser_rx_buf, 1);       // 重新注册一次，要不然下次收不到了
-	}
+	// if(huart == &laser_uart) {
+	// 	laser_uart_rx_handler(laser_rx_buf[0]);
+	// 	HAL_UART_Receive_IT(&laser_uart, laser_rx_buf, 1);       // 重新注册一次，要不然下次收不到了
+	// }
 }
 
 

@@ -13,7 +13,9 @@ volatile uint8_t sys_rt_exec_accessory_override; // Global realtime executor bit
   volatile uint8_t sys_rt_exec_debug;
 #endif
 
+#if defined(USE_FREERTOS_RTOS)
 TaskHandle_t grbl_task_handler;
+#endif
 
 int main() {
 
@@ -25,15 +27,23 @@ int main() {
 
   grbl_report_mcu_info();
 
+#if defined(USE_FREERTOS_RTOS)
   xTaskCreate(enter_grbl_task, "grbl task", 1024, NULL, 1, &grbl_task_handler);
+#else 
+  enter_grbl_task();
+#endif
 
+#if defined(USE_FREERTOS_RTOS)
   osKernelStart();
+#endif
 }
 
 
-
-
+#if defined(USE_FREERTOS_RTOS)
 void enter_grbl_task(void *parg) {
+#else 
+void enter_grbl_task(void) {
+#endif
 
   hal_flash_unlock();
 	hal_eeprom_init();
@@ -107,10 +117,11 @@ void enter_grbl_task(void *parg) {
     }	
 }
 
-
 void SysTick_Handler(void)
 {
     HAL_IncTick();
+
+#if defined(USE_FREERTOS_RTOS)
 
 #if (INCLUDE_xTaskGetSchedulerState == 1 )
   if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)
@@ -120,6 +131,7 @@ void SysTick_Handler(void)
 #if (INCLUDE_xTaskGetSchedulerState == 1 )
   }
 #endif /* INCLUDE_xTaskGetSchedulerState */
+#endif
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -127,10 +139,14 @@ void SysTick_Handler(void)
 
 
 void _delay_ms(uint32_t tick) {
-  // uint32_t mililoop = SystemCoreClock / 1000;
-	// for (uint32_t i=0; i< mililoop; i++)
-	// 	__asm__ __volatile__("nop\n\t":::"memory");
+  
+#if defined(USE_FREERTOS_RTOS)
   vTaskDelay(tick);
+#else 
+  uint32_t mililoop = SystemCoreClock / 1000;
+	for (uint32_t i=0; i< mililoop; i++)
+		__asm__ __volatile__("nop\n\t":::"memory");
+#endif
 }
 
 void _delay_us(uint32_t tick) {
