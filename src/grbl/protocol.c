@@ -73,15 +73,19 @@ ERROR_LIST_t add_char_to_line(char c) {
 }
 
 ERROR_LIST_t execute_line(char* line) {
-    ERROR_LIST_t result = OK;
+
+    // ERROR_LIST_t result = OK;
+
     // Empty or comment line. For syncing purposes.
     if (line[0] == 0) {
         return OK;
     }
+
     // Grbl '$' or WebUI '[ESPxxx]' system command
     if (line[0] == '$' || line[0] == '[') {
         return system_execute_line(line);
     }
+
     // Everything else is gcode. Block if in alarm or jog mode.
     if (sys.state == STATE_ALARM || sys.state == STATE_JOG) {
         return SystemGcLock;

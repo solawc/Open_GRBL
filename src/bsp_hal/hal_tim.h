@@ -20,6 +20,8 @@ extern TIM_HandleTypeDef htim_laser;    // Configure Timer 7: Stepper Port Reset
 #define RESET_TIM_IRQn              TIM4_IRQn
 #define SET_TIM_CLK_ENABLED()       __HAL_RCC_TIM3_CLK_ENABLE();
 #define RESET_TIM_CLK_ENABLED()     __HAL_RCC_TIM4_CLK_ENABLE();
+#define LASER_TIM                   TIM1
+#define LASER_PIN_AF                GPIO_AF1_TIM1
 #elif defined(STM32G0B0xx)
 #define SETP_SET_TIM                TIM6
 #define SETP_RESET_TIM              TIM7
@@ -32,6 +34,7 @@ extern TIM_HandleTypeDef htim_laser;    // Configure Timer 7: Stepper Port Reset
 #define STEP_SET_HANDLER            TIM6_IRQHandler
 #define STEP_RESET_HANDLER          TIM7_IRQHandler
 #define LASER_TIM                   TIM4
+#define LASER_PIN_AF                GPIO_AF9_TIM4
 #endif
 
 typedef struct  

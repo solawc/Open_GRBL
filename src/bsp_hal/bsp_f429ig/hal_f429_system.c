@@ -3,8 +3,6 @@
 #include "hal_f429_system.h"
 #include "../hal_tim.h"
 
-
-
 /*
  * 1.set system clock 
  * 2.init system and clock
@@ -54,18 +52,45 @@ void hal_f429_system_init(void) {
     {
         Error_Handler();
     }
+
+    hal_f429_clk_init();
 }
 
+void hal_f429_clk_init(void) {
+
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOF_CLK_ENABLE();
+
+  __HAL_RCC_USART1_CLK_ENABLE();
+  __HAL_RCC_SPI1_CLK_ENABLE();
+}
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 
+#if defined(USE_FREERTOS_RTOS)
+  uint32_t ulReturn;
+	ulReturn = taskENTER_CRITICAL_FROM_ISR();
+#endif
+
   if(htim == &STEP_RESET_TIMER) { 
+
     reset_timer_irq_handler();
+
   }
   else if(htim == &STEP_SET_TIMER)  {
+
     set_timer_irq_handler();
+    
   }
+
+#if defined(USE_FREERTOS_RTOS)
+  taskEXIT_CRITICAL_FROM_ISR( ulReturn );
+#endif
 }
 
 

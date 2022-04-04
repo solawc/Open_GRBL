@@ -18,9 +18,12 @@ void hal_led_toggle(void);
 #define LIMIT_X_PIN         GPIO_PIN_4
 #define LIMIT_Y_PORT        GPIOD
 #define LIMIT_Y_PIN         GPIO_PIN_11
-#define LIMIT_Z_PORT        GPIOD
-#define LIMIT_Z_PIN         GPIO_PIN_12
+// #define LIMIT_Z_PORT        GPIOD
+// #define LIMIT_Z_PIN         GPIO_PIN_12
 #define LIMIT_IRQnHANDLE    EXTI0_IRQHandler
+
+#define LIMIT_IRQnHANDLE            EXTI0_IRQHandler
+#define LIMIT_IRQn                  EXTI0_IRQn
 
 #define STEP_EN_PORT        GPIOI
 #define STEP_EN_PIN         GPIO_PIN_8
@@ -29,15 +32,19 @@ void hal_led_toggle(void);
 #define MOTOR_X_DIR_PIN     GPIO_PIN_5
 #define MOTOR_Y_DIR_PORT    GPIOI
 #define MOTOR_Y_DIR_PIN     GPIO_PIN_6
-#define MOTOR_Z_DIR_PORT    GPIOI
-#define MOTOR_Z_DIR_PIN     GPIO_PIN_7
+// #define MOTOR_Z_DIR_PORT    GPIOI
+// #define MOTOR_Z_DIR_PIN     GPIO_PIN_7
 
 #define MOTOR_X_AXIS_PORT   GPIOA
 #define MOTOR_X_AXIS_PIN    GPIO_PIN_4
 #define MOTOR_Y_AXIS_PORT   GPIOA
 #define MOTOR_Y_AXIS_PIN    GPIO_PIN_6
-#define MOTOR_Z_AXIS_PORT   GPIOA
-#define MOTOR_Z_AXIS_PIN    GPIO_PIN_8
+// #define MOTOR_Z_AXIS_PORT   GPIOA
+// #define MOTOR_Z_AXIS_PIN    GPIO_PIN_8
+
+#define PROBE_PORT                  GPIOB
+#define PROBE_PIN                   GPIO_PIN_11
+
 #elif defined(STM32G0B0xx)
 #define LASER_PORT                  GPIOB
 #define LASER_PIN                   GPIO_PIN_7

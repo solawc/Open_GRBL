@@ -179,6 +179,7 @@ uint8_t system_execute_line(char *line)
           break;
       }
       break;
+
     default :
       // Block any system command that requires the state as IDLE/ALARM. (i.e. EEPROM, homing)
       if ( !(sys.state == STATE_IDLE || sys.state == STATE_ALARM) ) { return(STATUS_IDLE_ERROR); }

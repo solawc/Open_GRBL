@@ -24,7 +24,11 @@
         "tft_lcd_dev.h": "c",
         "client.h": "c",
         "stdio.h": "c",
-        "stm32g0xx_hal_tim.h": "c"
+        "stm32g0xx_hal_tim.h": "c",
+        "core_cm4.h": "c",
+        "stm32f4xx_hal_conf.h": "c",
+        "task.h": "c",
+        "cmsis_gcc.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

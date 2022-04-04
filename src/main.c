@@ -38,7 +38,6 @@ int main() {
 #endif
 }
 
-
 #if defined(USE_FREERTOS_RTOS)
 void enter_grbl_task(void *parg) {
 #else 

@@ -656,7 +656,6 @@ void report_realtime_status()
   report_util_line_feed();
 }
 
-
 #ifdef DEBUG
   void report_realtime_debug()
   {

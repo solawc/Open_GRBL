@@ -95,7 +95,7 @@ static void laser_pin_config() {
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF9_TIM4;
+    GPIO_InitStruct.Alternate = LASER_PIN_AF;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
 

@@ -133,6 +133,17 @@ void hal_laser_uart_irq_disable(void) { __HAL_UART_DISABLE_IT(&laser_uart, UART_
 
 void hal_uart_sendbyte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 1000); }
 
+uint8_t hal_uart_read_dr(void) { 
+
+#ifdef STM32G0B0xx
+	return laser_uart.Instance->RDR;
+#endif
+
+#ifdef STM32F429xx
+	return laser_uart.Instance->DR;
+#endif
+}
+
 bool hal_is_uart_sr_txe(void) { 
 #ifdef STM32F429xx
 	return (__HAL_UART_GET_FLAG(&laser_uart, USART_FLAG_TXE));
@@ -197,10 +208,8 @@ void LASER_UART_IRQHANDLER() {
 	ulReturn = taskENTER_CRITICAL_FROM_ISR();
 #endif
 
-	// HAL_UART_IRQHandler(&laser_uart);
-	
 	if(__HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET) {
-		data = laser_uart.Instance->RDR;
+		data = hal_uart_read_dr();
 		laser_uart_rx_handler(data);
 	}
 

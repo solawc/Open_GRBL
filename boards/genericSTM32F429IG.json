@@ -8,6 +8,10 @@
     "product_line": "STM32F429xx",
     "variant": "STM32F4xx/F429IG"
   },
+  "connectivity": [
+    "can",
+    "ethernet"
+  ],
   "debug": {
     "default_tools": [
       "jlink"

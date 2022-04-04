@@ -3,6 +3,25 @@
 
 #include "../../main.h"
 
+#ifdef STM32F429xx
+#define LCD_MOSI_PORT       GPIOB
+#define LCD_MOSI_PIN        GPIO_PIN_5
+#define LCD_MISO_PORT       GPIOB
+#define LCD_MISO_PIN        GPIO_PIN_4
+#define LCD_SCK_PORT        GPIOB
+#define LCD_SCK_PIN         GPIO_PIN_3
+#define LCD_CS_PORT         GPIOD
+#define LCD_CS_PIN          GPIO_PIN_3
+#define LCD_EN_PORT         GPIOD
+#define LCD_EN_PIN          GPIO_PIN_2
+#define LCD_RS_PORT         GPIOD
+#define LCD_RS_PIN          GPIO_PIN_1
+#define LCD_DC_PORT         GPIOA
+#define LCD_DC_PIN          GPIO_PIN_15
+#define LCD_TP_CS_PORT      GPIOD
+#define LCD_TP_CS_PIN       GPIO_PIN_0
+#define LCD_PIN_AF          GPIO_AF5_SPI3
+#elif defined(STM32G0B0xx)
 #define LCD_MOSI_PORT       GPIOB
 #define LCD_MOSI_PIN        GPIO_PIN_5
 #define LCD_MISO_PORT       GPIOB
@@ -20,6 +39,7 @@
 #define LCD_TP_CS_PORT      GPIOD
 #define LCD_TP_CS_PIN       GPIO_PIN_0
 #define LCD_PIN_AF          GPIO_AF4_SPI3
+#endif
 
 #define CMD_MODE_SET()      HAL_GPIO_WritePin(LCD_DC_PORT, LCD_DC_PIN, GPIO_PIN_RESET)
 #define DATA_MODE_SET()     HAL_GPIO_WritePin(LCD_DC_PORT, LCD_DC_PIN, GPIO_PIN_SET)
