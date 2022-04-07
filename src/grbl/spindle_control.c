@@ -117,7 +117,6 @@ uint8_t spindle_get_state()
       }else{
           return(SPINDLE_STATE_CW);
       }
-
     #endif
   #else
     // #ifdef INVERT_SPINDLE_ENABLE_PIN
@@ -169,7 +168,7 @@ void spindle_stop()
 #ifdef VARIABLE_SPINDLE
   // Sets spindle speed PWM output and enable pin, if configured. Called by spindle_set_state()
   // and stepper ISR. Keep routine small and efficient.
-  void spindle_set_speed(uint8_t pwm_value)
+  void spindle_set_speed(uint16_t pwm_value)
   {
     #if defined(CPU_MAP_ATMEGA328P)
         SPINDLE_OCR_REGISTER = pwm_value; // Set PWM output level.
@@ -194,9 +193,6 @@ void spindle_stop()
     #elif defined(CPU_STM32)
         hal_pwm_set(pwm_value);
     #endif
-
-    
-
   }
 
   #ifdef ENABLE_PIECEWISE_LINEAR_SPINDLE
@@ -245,7 +241,7 @@ void spindle_stop()
   #else 
   
     // Called by spindle_set_state() and step segment generator. Keep routine small and efficient.
-    uint8_t spindle_compute_pwm_value(float rpm) // 328p PWM register is 8-bit.
+    uint16_t spindle_compute_pwm_value(float rpm) // 328p PWM register is 8-bit.
     {
       uint16_t pwm_value;
 #if defined(CPU_MAP_ATMEGA328P)
@@ -293,7 +289,6 @@ void spindle_stop()
         // pwm_value = (SPINDLE_PWM_TYPE) floor((rpm - settings.rpm_min) * pwm_gradient) + SPINDLE_PWM_MIN_VALUE;
       }	   
 #endif
-      // pwm_value = rpm;
       return(pwm_value);
     }
     
@@ -311,6 +306,7 @@ void spindle_stop()
 #endif
 {
   if (sys.abort) { return; } // Block during abort.
+
 #if defined(CPU_MAP_ATMEGA328P)
 
   if (state == SPINDLE_DISABLE) { // Halt or set spindle direction and rpm.
@@ -372,6 +368,7 @@ void spindle_stop()
       if (settings.flags & BITFLAG_LASER_MODE) { 
         if (state == SPINDLE_ENABLE_CCW) { rpm = 0.0; } // TODO: May need to be rpm_min*(100/MAX_SPINDLE_SPEED_OVERRIDE);
       }
+
       spindle_set_speed(spindle_compute_pwm_value(rpm));
     #endif
     #if (defined(USE_SPINDLE_DIR_AS_ENABLE_PIN) && \
@@ -398,7 +395,7 @@ void spindle_stop()
   {
     if (sys.state == STATE_CHECK_MODE) { return; }
     protocol_buffer_synchronize(); // Empty planner buffer to ensure spindle is set when programmed.
-    spindle_set_state(state,rpm);
+    spindle_set_state(state, (uint16_t)rpm);
   }
 #else
   void _spindle_sync(uint8_t state)

@@ -23,7 +23,7 @@
 
 // Grbl versioning system
 #define GRBL_VERSION "1.4h"
-#define GRBL_VERSION_BUILD "20220223"
+#define GRBL_VERSION_BUILD "20220407"
 
 // Define standard libraries used by Grbl.
 #include <math.h>
@@ -64,7 +64,7 @@
 #define pgm_read_byte_near(x) *(x)
 #define false 0
 #define true 1
-#define PORTPINDEF uint16_t         // to define port bit
+#define PORTPINDEF uint8_t         // to define port bit
 #define PIN_MASK PORTPINDEF
 #define printPgmString printString
 // ---------------------------------------------------------------------------------------

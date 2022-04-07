@@ -311,7 +311,7 @@ enum {
 // When increasing this value, this stores less overall time in the segment buffer and vice versa. Make
 // certain the step segment buffer is increased/decreased to account for these changes.
 #ifdef CPU_STM32
-#define ACCELERATION_TICKS_PER_SECOND 5000
+#define ACCELERATION_TICKS_PER_SECOND 100
 #else
 #define ACCELERATION_TICKS_PER_SECOND 100
 #endif

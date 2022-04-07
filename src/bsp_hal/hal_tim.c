@@ -16,7 +16,7 @@ void hal_set_timer_init(void) {
     SET_TIM_CLK_ENABLED();   
 
     htim_set.Instance = SETP_SET_TIM; 
-    htim_set.Init.Period = 32;     
+    htim_set.Init.Period = 32-1;     
     htim_set.Init.Prescaler = 1;
     htim_set.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim_set.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -31,7 +31,7 @@ void hal_reset_timer_init(void) {
 
     RESET_TIM_CLK_ENABLED()
     htim_reset.Instance = SETP_RESET_TIM;
-    htim_reset.Init.Period = 32;     
+    htim_reset.Init.Period = 32-1;     
     htim_reset.Init.Prescaler = 1; 
     htim_reset.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim_reset.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -108,9 +108,9 @@ void hal_pwm_init() {
     laser_pin_config();
 
     htim_laser.Instance = LASER_TIM;
-    htim_laser.Init.Prescaler = 1000;
+    htim_laser.Init.Prescaler = 64-1;       // psc
     htim_laser.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim_laser.Init.Period = 32-1;
+    htim_laser.Init.Period = 1000-1;            // arr
     htim_laser.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim_laser.Init.RepetitionCounter = 0;
     htim_laser.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -126,9 +126,9 @@ void hal_pwm_init() {
     }
 
     sConfigOC.OCMode = TIM_OCMODE_PWM1;
-    sConfigOC.Pulse = 500;
+    sConfigOC.Pulse = 0;
     sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-    sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+    sConfigOC.OCNPolarity = TIM_OCNPOLARITY_LOW;
     sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
     sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
     sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;

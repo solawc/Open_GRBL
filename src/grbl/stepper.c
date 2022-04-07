@@ -44,14 +44,15 @@
 // NOTE: Current settings are set to overdrive the ISR to no more than 16kHz, balancing CPU overhead
 // and timer accuracy.  Do not alter these settings unless you know what you are doing.
 #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
+  #define STP_TIMER     F_CPU/2
 	#define MAX_AMASS_LEVEL 3
 	// AMASS_LEVEL0: Normal operation. No AMASS. No upper cutoff frequency. Starts at LEVEL1 cutoff frequency.
-	#define AMASS_LEVEL1 (F_CPU/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
-	#define AMASS_LEVEL2 (F_CPU/4000) // Over-drives ISR (x4)
-	#define AMASS_LEVEL3 (F_CPU/2000) // Over-drives ISR (x8)
-  // #define AMASS_LEVEL1 (STP_TIMER/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
-	// #define AMASS_LEVEL2 (STP_TIMER/4000) // Over-drives ISR (x4)
-	// #define AMASS_LEVEL3 (STP_TIMER/2000) // Over-drives ISR (x8)
+	// #define AMASS_LEVEL1 (F_CPU/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
+	// #define AMASS_LEVEL2 (F_CPU/4000) // Over-drives ISR (x4)
+	// #define AMASS_LEVEL3 (F_CPU/2000) // Over-drives ISR (x8)
+  #define AMASS_LEVEL1 (STP_TIMER/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
+	#define AMASS_LEVEL2 (STP_TIMER/4000) // Over-drives ISR (x4)
+	#define AMASS_LEVEL3 (STP_TIMER/2000) // Over-drives ISR (x8)
 
   #if MAX_AMASS_LEVEL <= 0
     error "AMASS must have 1 or more levels to operate correctly."
@@ -92,7 +93,7 @@ typedef struct {
     uint8_t prescaler;      // Without AMASS, a prescaler is required to adjust for slow timing.
   #endif
   #ifdef VARIABLE_SPINDLE
-    uint8_t spindle_pwm;
+    uint16_t spindle_pwm;  // uint8_t
   #endif
 } segment_t;
 static segment_t segment_buffer[SEGMENT_BUFFER_SIZE];
@@ -176,7 +177,7 @@ typedef struct {
 
   #ifdef VARIABLE_SPINDLE
     float inv_rate;    // Used by PWM laser mode to speed up segment calculations.
-    uint8_t current_spindle_pwm; 
+    uint16_t current_spindle_pwm;  // uint8_t
   #endif
 } st_prep_t;
 static st_prep_t prep;
@@ -248,7 +249,7 @@ void st_wake_up()
     st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
 #elif defined(CPU_STM32)
     // st.step_pulse_time = (settings.fpulse_microseconds) * (float)TICKS_PER_MICROSECOND;
-    st.step_pulse_time = (settings.fpulse_microseconds) * 2;
+    st.step_pulse_time = (settings.fpulse_microseconds);
     // st.step_pulse_time = (settings.pulse_microseconds) * 2;
 #endif
 #endif
@@ -265,6 +266,8 @@ void st_wake_up()
   hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
   hal_tim_generateEvent_update(&STEP_SET_TIMER);
   hal_set_timer_irq_enable();
+  // printf("debug st.step_pulse_time:%d\n", st.step_pulse_time);
+  // printf("debug st.exec_segment->cycles_per_tick:%d\n\n", st.exec_segment->cycles_per_tick);
 #endif
 }
 
@@ -402,7 +405,6 @@ void set_timer_irq_handler(void)   // set timer
 #elif defined(CPU_STM32)
   hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
   hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time-1);
-  // __HAL_TIM_CLEAR_IT(&STEP_RESET_TIMER, TIM_IT_UPDATE);
   hal_tim_clear_flag_update(&STEP_RESET_TIMER);
   hal_reset_timer_irq_enable();
 #endif
@@ -464,7 +466,7 @@ void set_timer_irq_handler(void)   // set timer
     } else {
       // Segment buffer empty. Shutdown.
       st_go_idle();
-      // printf("run st go idle\n");
+      
       #ifdef VARIABLE_SPINDLE
         // Ensure pwm is set properly upon completion of rate-controlled motion.
         // if (st.exec_block->is_pwm_rate_adjusted) { spindle_set_speed(SPINDLE_PWM_OFF_VALUE); }
@@ -1162,11 +1164,14 @@ void st_prep_buffer()
 #elif defined(CPU_STM32)
   // Compute CPU cycles per step for the prepped segment.
     // uint32_t cycles = (uint32_t)ceilf( (TICKS_PER_MICROSECOND * 1000000 * 60.0f) * inv_rate); // (cycles/step)
-    uint32_t cycles = (uint32_t)ceilf( (F_CPU * 60.0f) * inv_rate); // (cycles/step)
+    uint32_t cycles = (uint32_t)ceilf( (STP_TIMER * 60.0f) * inv_rate); // (cycles/step)
     
     #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
       // Compute step timing and multi-axis smoothing level.
       // NOTE: AMASS overdrives the timer with each level, so only one prescalar is required.
+
+      // printf("get clcles:%d\n", cycles);
+
       if (cycles < AMASS_LEVEL1) { prep_segment->amass_level = 0; }
       else {
         if (cycles < AMASS_LEVEL2) { prep_segment->amass_level = 1; }
