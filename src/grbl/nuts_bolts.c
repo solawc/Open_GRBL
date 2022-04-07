@@ -131,7 +131,8 @@ void delay_sec(float seconds, uint8_t mode)
 // which only accepts constants in future compiler releases.
 void delay_ms(uint16_t ms)
 {
-  while ( ms-- ) { _delay_ms(1); }
+  // while ( ms-- ) { _delay_ms(1); }
+  _delay_ms(ms);
 }
 
 

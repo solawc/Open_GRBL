@@ -113,9 +113,9 @@ uint8_t spindle_get_state()
       //   #endif
       // }
       if(hal_pwm_ccr_get() != 0) {
-          return(SPINDLE_STATE_CCW);
-      }else{
           return(SPINDLE_STATE_CW);
+      }else{
+          return(SPINDLE_STATE_CCW);
       }
     #endif
   #else

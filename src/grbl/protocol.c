@@ -136,6 +136,7 @@ void protocol_main_loop()
   // uint8_t line_flags = 0;   
   // uint8_t char_counter = 0;
   uint8_t c;
+
   for (;;) {
 
     char *get_line;
@@ -170,86 +171,6 @@ void protocol_main_loop()
         default:
           break;
       }
-
-    //   if ((c == '\n') || (c == '\r')) { // End of line reached
-
-    //     protocol_execute_realtime(); // Runtime command check point.
-        
-    //     if (sys.abort) { return; } // Bail to calling function upon system abort
-
-    //     line[char_counter] = 0; // Set string termination character.
-    //     #ifdef REPORT_ECHO_LINE_RECEIVED
-    //       report_echo_line_received(line);
-    //     #endif
-
-    //     // Direct and execute one line of formatted input, and report status of execution.
-    //     if (line_flags & LINE_FLAG_OVERFLOW) {
-    //       // Report line overflow error.
-    //       report_status_message(STATUS_OVERFLOW);
-    //     } else if (line[0] == 0) {
-    //       // Empty or comment line. For syncing purposes.
-    //       report_status_message(STATUS_OK);
-    //     } else if (line[0] == '$') {
-    //       // Grbl '$' system command
-    //       report_status_message(system_execute_line(line));
-    //     } else if (sys.state & (STATE_ALARM | STATE_JOG)) {
-    //       // Everything else is gcode. Block if in alarm or jog mode.
-    //       report_status_message(STATUS_SYSTEM_GC_LOCK);
-    //     } else {
-    //       // Parse and execute g-code block. 
-    //       /*
-    //        * 获取完整的指令后，line将会填充完成，填充完成后会来到这个地方
-    //        * 进入 gc_execute_line（）这个函数，这个函数会解析line[]里面
-    //        * 包含的指令，并且在正确解析之后,通过report_status_message（）来
-    //        * 返回"OK",如果解析错误，则返回相关错误.
-    //       */
-    //       report_status_message(gc_execute_line(line));
-    //     }
-
-    //     // Reset tracking data for next line.
-    //     line_flags = 0;
-    //     char_counter = 0;
-
-    //   } else {
-
-    //     if (line_flags) {
-    //       // Throw away all (except EOL) comment characters and overflow characters.
-    //       if (c == ')') {
-    //         // End of '()' comment. Resume line allowed.
-    //         if (line_flags & LINE_FLAG_COMMENT_PARENTHESES) { line_flags &= ~(LINE_FLAG_COMMENT_PARENTHESES); }
-    //       }
-    //     } else {
-    //       if (c <= ' ') {
-    //         // Throw away whitepace and control characters
-    //       } else if (c == '/') {
-    //         // Block delete NOT SUPPORTED. Ignore character.
-    //         // NOTE: If supported, would simply need to check the system if block delete is enabled.
-    //       } else if (c == '(') {
-    //         // Enable comments flag and ignore all characters until ')' or EOL.
-    //         // NOTE: This doesn't follow the NIST definition exactly, but is good enough for now.
-    //         // In the future, we could simply remove the items within the comments, but retain the
-    //         // comment control characters, so that the g-code parser can error-check it.
-    //         line_flags |= LINE_FLAG_COMMENT_PARENTHESES;
-    //       } else if (c == ';') {
-    //         // NOTE: ';' comment to EOL is a LinuxCNC definition. Not NIST.
-    //         line_flags |= LINE_FLAG_COMMENT_SEMICOLON;
-    //       // TODO: Install '%' feature
-    //       // } else if (c == '%') {
-    //         // Program start-end percent sign NOT SUPPORTED.
-    //         // NOTE: This maybe installed to tell Grbl when a program is running vs manual input,
-    //         // where, during a program, the system auto-cycle start will continue to execute
-    //         // everything until the next '%' sign. This will help fix resuming issues with certain
-    //         // functions that empty the planner buffer to execute its task on-time.
-    //       } else if (char_counter >= (LINE_BUFFER_SIZE-1)) {
-    //         // Detect line buffer overflow and set flag.
-    //         line_flags |= LINE_FLAG_OVERFLOW;
-    //       } else if (c >= 'a' && c <= 'z') { // Upcase lowercase
-    //         line[char_counter++] = c-'a'+'A';
-    //       } else {
-    //         line[char_counter++] = c;
-    //       }
-    //     }
-    //   }
     }
 
     // If there are no more characters in the serial read buffer to be processed and executed,

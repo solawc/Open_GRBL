@@ -22,7 +22,8 @@ int main() {
   grbl_hw_init();
 
 #ifdef STM32G0B0xx
-    HAL_Delay(100);  // 等待外设反应，因为没有加入外部晶振
+  // here must wait for some time, beacuse STM32G0B0CE have no XTAL
+    HAL_Delay(100);  
 #endif
 
   grbl_report_mcu_info();

@@ -44,7 +44,7 @@
 // NOTE: Current settings are set to overdrive the ISR to no more than 16kHz, balancing CPU overhead
 // and timer accuracy.  Do not alter these settings unless you know what you are doing.
 #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
-  #define STP_TIMER     F_CPU/2
+  #define STP_TIMER     F_CPU/4
 	#define MAX_AMASS_LEVEL 3
 	// AMASS_LEVEL0: Normal operation. No AMASS. No upper cutoff frequency. Starts at LEVEL1 cutoff frequency.
 	// #define AMASS_LEVEL1 (F_CPU/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
@@ -249,7 +249,7 @@ void st_wake_up()
     st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
 #elif defined(CPU_STM32)
     // st.step_pulse_time = (settings.fpulse_microseconds) * (float)TICKS_PER_MICROSECOND;
-    st.step_pulse_time = (settings.fpulse_microseconds);
+    st.step_pulse_time = (settings.pulse_microseconds);
     // st.step_pulse_time = (settings.pulse_microseconds) * 2;
 #endif
 #endif
@@ -266,8 +266,6 @@ void st_wake_up()
   hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
   hal_tim_generateEvent_update(&STEP_SET_TIMER);
   hal_set_timer_irq_enable();
-  // printf("debug st.step_pulse_time:%d\n", st.step_pulse_time);
-  // printf("debug st.exec_segment->cycles_per_tick:%d\n\n", st.exec_segment->cycles_per_tick);
 #endif
 }
 
@@ -574,7 +572,6 @@ ISR(TIMER0_OVF_vect)
 }
 #elif defined(CPU_STM32)
 
-
 void delayss( ) {
   uint32_t a = 1000;
   while(a) {
@@ -588,10 +585,6 @@ void reset_timer_irq_handler(void) {   // reset timer
   hal_set_step_gpio_status(step_port_invert_mask);
   hal_reset_timer_irq_disable();
 } 
-
-
-
-
 #endif
 
 #ifdef STEP_PULSE_DELAY
@@ -1164,7 +1157,8 @@ void st_prep_buffer()
 #elif defined(CPU_STM32)
   // Compute CPU cycles per step for the prepped segment.
     // uint32_t cycles = (uint32_t)ceilf( (TICKS_PER_MICROSECOND * 1000000 * 60.0f) * inv_rate); // (cycles/step)
-    uint32_t cycles = (uint32_t)ceilf( (STP_TIMER * 60.0f) * inv_rate); // (cycles/step)
+    // 
+    uint32_t cycles = (uint32_t)ceil( (STP_TIMER * 60.0f) * inv_rate); // (cycles/step)
     
     #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
       // Compute step timing and multi-axis smoothing level.

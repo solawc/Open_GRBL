@@ -37,13 +37,6 @@
 #define LASER_UART_IRQHANDLER           USART2_IRQHandler
 #endif
 
-// typedef struct {
-//     uint16_t head;
-//     uint16_t tail;
-//     uint16_t len;
-//     uint8_t rb_buf[UART_RB_BUFF_MAX];
-// }serial_rb_t;
-// extern serial_rb_t serial_rb;
 
 void hal_uart_gpio_init(void);
 void hal_uart_init(void);
