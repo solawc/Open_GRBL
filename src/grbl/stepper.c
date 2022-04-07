@@ -1069,7 +1069,7 @@ void st_prep_buffer()
 #if defined(CPU_MAP_ATMEGA328P)
           prep.current_spindle_pwm = SPINDLE_PWM_OFF_VALUE;
 #elif defined(CPU_STM32)
-
+          prep.current_spindle_pwm = 0;
 #endif
         }
         bit_false(sys.step_control,STEP_CONTROL_UPDATE_SPINDLE_PWM);
