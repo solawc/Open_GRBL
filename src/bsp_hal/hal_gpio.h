@@ -85,6 +85,7 @@ void hal_limit_gpio_init(void);
 void hal_limit_gpio_irq_enable(void);
 void hal_limit_gpio_irq_disable(void);
 uint8_t hal_limits_get_gpio_status(uint8_t axis);
+uint8_t hal_get_all_limits_status(uint8_t bit_select);
 
 void hal_set_dir_gpio_status(uint8_t mask);
 void hal_set_step_gpio_status(uint8_t mask);

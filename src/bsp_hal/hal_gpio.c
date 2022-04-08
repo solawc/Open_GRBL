@@ -91,10 +91,24 @@ uint8_t hal_limits_get_gpio_status(uint8_t axis) {
 #ifdef LIMIT_Z_PIN
 	else if(axis == Z_AXIS)		return HAL_GPIO_ReadPin(LIMIT_Z_PORT, LIMIT_Z_PIN);
 #endif
-    else return 255;
+    else return 0;
 #else 
 	return 0;
 #endif
+}
+
+uint8_t hal_get_all_limits_status(uint8_t bit_select) {
+
+	uint8_t limit_status = 0x00;
+	// if(bit_select) limit_status = 0x0;
+	// else limit_status = 0xff;
+
+	limit_status |= HAL_GPIO_ReadPin(LIMIT_X_PORT, LIMIT_X_PIN) << 0;
+	limit_status |= (HAL_GPIO_ReadPin(LIMIT_Y_PORT, LIMIT_Y_PIN)) << 1;
+#ifdef LIMIT_Z_PIN
+	limit_status |= (HAL_GPIO_ReadPin(LIMIT_Y_PORT, LIMIT_Y_PIN)) << 2;
+#endif
+	return limit_status;
 }
 
 

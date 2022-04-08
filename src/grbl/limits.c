@@ -130,11 +130,19 @@ uint8_t limits_get_state()
     #endif
   }
 #elif defined(CPU_STM32)
-  uint8_t idx;
-  uint8_t pin = 0xff;
-  for (idx=0; idx<N_AXIS; idx++) {
-    if (pin & get_limit_pin_mask(idx)) { limit_state |= (1 << idx); }
-  }
+  // uint8_t idx;
+
+  // uint8_t pin = 0xff;
+
+  // if (bit_isfalse(settings.flags,BITFLAG_INVERT_LIMIT_PINS)) { pin ^= LIMIT_MASK; }
+
+  limit_state = hal_get_all_limits_status(bit_isfalse(settings.flags,BITFLAG_INVERT_LIMIT_PINS));
+
+  if (bit_isfalse(settings.flags,BITFLAG_INVERT_LIMIT_PINS)) { limit_state ^= LIMIT_MASK; }
+
+  // for (idx=0; idx<N_AXIS; idx++) {
+  //   if (pin & get_limit_pin_mask(idx)) { limit_state |= (1 << idx); }
+  // }
 #endif
   return(limit_state);
 }
@@ -250,6 +258,18 @@ uint8_t limits_get_state()
 
 #endif
 
+
+// get axis which need to back limit!
+uint8_t get_limit_axix_num(uint8_t cycle_mask) {
+
+  uint8_t axis_num = 0;
+  uint8_t idx = 0;
+  for(idx=0; idx < N_AXIS; idx++) {
+    if(cycle_mask & (1<<idx)) axis_num++;
+  }
+  return axis_num;
+}
+
 // Homes the specified cycle axes, sets the machine position, and performs a pull-off motion after
 // completing. Homing is a special motion case, which involves rapid uncontrolled stops to locate
 // the trigger point of the limit switches. The rapid stops are handled by a system level axis lock
@@ -292,7 +312,8 @@ void limits_go_home(uint8_t cycle_mask)
   uint8_t idx;
   for (idx=0; idx < N_AXIS; idx++) {
     // Initialize step pin masks
-    step_pin[idx] = get_step_pin_mask(idx);
+    step_pin[idx] = get_step_bit(idx); // get_step_pin_mask(idx);
+
     #ifdef COREXY
       if ((idx==A_MOTOR)||(idx==B_MOTOR)) { step_pin[idx] = (get_step_pin_mask(X_AXIS)|get_step_pin_mask(Y_AXIS)); }
     #endif
@@ -311,7 +332,9 @@ void limits_go_home(uint8_t cycle_mask)
   bool approach = true;
   float homing_rate = settings.homing_seek_rate;
 
-  uint8_t limit_state, axislock, n_active_axis;
+  uint8_t limit_state,      // 限位状态
+          axislock,         // 移动轴锁
+          n_active_axis;    // 需要活动的轴
   do {
 
     system_convert_array_steps_to_mpos(target,sys_position);
@@ -352,13 +375,13 @@ void limits_go_home(uint8_t cycle_mask)
           else { target[idx] = -max_travel; }
         }
         // Apply axislock to the step port pins active in this cycle.
-        axislock |= step_pin[idx];
+        axislock |= step_pin[idx];  // same with cycle_mask
         #ifdef ENABLE_DUAL_AXIS
           if (idx == DUAL_AXIS_SELECT) { sys.homing_axis_lock_dual = step_pin_dual; }
         #endif
       }
-
     }
+
     homing_rate *= sqrt(n_active_axis); // [sqrt(N_AXIS)] Adjust so individual axes all move at homing rate.
     sys.homing_axis_lock = axislock;
 
@@ -373,6 +396,7 @@ void limits_go_home(uint8_t cycle_mask)
       if (approach) {
         // Check limit state. Lock out cycle axes when they change.
         limit_state = limits_get_state();
+
         for (idx=0; idx<N_AXIS; idx++) {
           if (axislock & step_pin[idx]) {
             if (limit_state & (1 << idx)) {
@@ -388,7 +412,11 @@ void limits_go_home(uint8_t cycle_mask)
             }
           }
         }
+
         sys.homing_axis_lock = axislock;
+
+        // printf("sys.homing_axis_lock:%d\n", sys.homing_axis_lock);
+
         #ifdef ENABLE_DUAL_AXIS
           if (sys.homing_axis_lock_dual) { // NOTE: Only true when homing dual axis.
             if (limit_state & (1 << N_AXIS)) { 
@@ -441,15 +469,16 @@ void limits_go_home(uint8_t cycle_mask)
           break;
         }
       }
-
-    #ifdef ENABLE_DUAL_AXIS
+      
+      #ifdef ENABLE_DUAL_AXIS
       } while ((STEP_MASK & axislock) || (sys.homing_axis_lock_dual));
-    #else
+      #else
       } while (
 #if defined(CPU_MAP_ATMEGA328P)
       STEP_MASK & axislock
 #elif defined(CPU_STM32)
-	0
+	// STEP_MASK & axislock
+  axislock & 0x7
 #endif
 	);
     #endif

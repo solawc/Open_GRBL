@@ -28,8 +28,8 @@
 // NOTE: All limit bit pins must be on the same port
 #define LIMIT_PORT       GPIOB
 #define X_LIMIT_BIT       0  
-#define Y_LIMIT_BIT       13  
-#define Z_LIMIT_BIT       14  
+#define Y_LIMIT_BIT       1  
+#define Z_LIMIT_BIT       2  
 #define LIMIT_MASK       ((1<<X_LIMIT_BIT)|(1<<Y_LIMIT_BIT)|(1<<Z_LIMIT_BIT)) // All limit bits
 
   // Define spindle enable and spindle direction output pins.
