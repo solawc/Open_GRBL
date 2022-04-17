@@ -43,7 +43,7 @@ void hal_w25qxx_spi_init(void)
         hal_w25qxx_spi_gpio_init();
 
         dev_w25qxx_spi_set.is_use_irq = false;
-        dev_w25qxx_spi_set.spi_num = SPI_2;
+        dev_w25qxx_spi_set.spi_num = W25QXX_SPI_NUM;
         dev_w25qxx_spi_set.spi_speed = 8;
         dev_w25qxx_spi_set.spi_mode_set = spi_mode_0;
         dev_w25qxx_spi_set.spi_date_size = size_8bit_date;

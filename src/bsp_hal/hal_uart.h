@@ -15,7 +15,7 @@
 #ifdef STM32F429xx
 #define LaserUART		USART1
 #define LaserUART_IRQn  UART_IRQn(USART1)
-#define LASER_UART_CLK_ENABLE()     __HAL_UART_CLK(USART1)
+#define LASER_UART_CLK_ENABLE()          __HAL_UART_CLK(USART1)
 #define LASER_UART_TX_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE();
 #define LASER_UART_RX_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE();
 #define LASER_UART_TX_PORT              GPIOA
@@ -23,6 +23,7 @@
 #define LASER_UART_RX_PORT              GPIOA
 #define LASER_UART_RX_PIN               GPIO_PIN_10
 #define LASER_UART_AF_MODE              GPIO_AF7_USART1
+#define LASER_UART_IRQHANDLER           USART1_IRQHandler
 #elif defined(STM32G0B0xx) 
 #define LaserUART		                USART2
 #define LaserUART_IRQn                  UART_IRQn(USART2)

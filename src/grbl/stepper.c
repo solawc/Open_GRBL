@@ -249,8 +249,11 @@ void st_wake_up()
     st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
 #elif defined(CPU_STM32)
     // st.step_pulse_time = (settings.fpulse_microseconds) * (float)TICKS_PER_MICROSECOND;
-    st.step_pulse_time = (settings.pulse_microseconds);
-    // st.step_pulse_time = (settings.pulse_microseconds) * 2;
+    #ifdef STM32F429xx
+      st.step_pulse_time = (settings.fpulse_microseconds);
+    #elif defined(STM32G0B0xx)
+      st.step_pulse_time = (settings.pulse_microseconds);
+    #endif
 #endif
 #endif
 

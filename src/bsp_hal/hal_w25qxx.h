@@ -27,6 +27,7 @@ typedef struct{
 extern NFLASH_t sFlash;
 
 #ifdef STM32F429xx
+#define W25QXX_SPI_NUM              SPI_5
 #define W25QXX_SPI_PORT             SPI5
 #define W25QXX_SPI_SCK_GPIO         GPIOF
 #define W25QXX_SPI_SCK_PIN          GPIO_PIN_7
@@ -38,6 +39,7 @@ extern NFLASH_t sFlash;
 #define W25QXX_SPI_CS_PIN           GPIO_PIN_6
 #define W25QXX_PIN_AF               GPIO_AF5_SPI5
 #elif defined(STM32G0B0xx)
+#define W25QXX_SPI_NUM              SPI_2
 #define W25QXX_SPI_PORT             SPI2
 #define W25QXX_SPI_SCK_GPIO         GPIOB
 #define W25QXX_SPI_SCK_PIN          GPIO_PIN_13
