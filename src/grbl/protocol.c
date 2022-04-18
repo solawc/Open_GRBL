@@ -148,7 +148,6 @@ void protocol_main_loop()
       ERROR_LIST_t err = add_char_to_line(c);
 
       switch(err) {
-
         case OK:  break;
         case EOL: 
           protocol_execute_realtime();  // Runtime command check point.
@@ -164,8 +163,8 @@ void protocol_main_loop()
         break;
 
         case Overflow:
-        report_status_message(Overflow);
-        empty_line(0);
+          report_status_message(Overflow);
+          empty_line(0);
         break;
 
         default:

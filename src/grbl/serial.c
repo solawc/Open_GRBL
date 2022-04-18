@@ -64,23 +64,8 @@ uint8_t serial_get_tx_buffer_count()
 
 void serial_init()
 {
-#if defined(CPU_MAP_ATMEGA328P)
-  // Set baud rate
-  #if BAUD_RATE < 57600
-    uint16_t UBRR0_value = ((F_CPU / (8L * BAUD_RATE)) - 1)/2 ;
-    UCSR0A &= ~(1 << U2X0); // baud doubler off  - Only needed on Uno XXX
-  #else
-    uint16_t UBRR0_value = ((F_CPU / (4L * BAUD_RATE)) - 1)/2;
-    UCSR0A |= (1 << U2X0);  // baud doubler on for high baud rates, i.e. 115200
-  #endif
-  UBRR0H = UBRR0_value >> 8;
-  UBRR0L = UBRR0_value;
-
-  // enable rx, tx, and interrupt on complete reception of a byte
-  UCSR0B |= (1<<RXEN0 | 1<<TXEN0 | 1<<RXCIE0);
-#elif defined(CPU_STM32)
   // init befor HAL_Init();
-#endif
+
   // defaults to 8-bit, no parity, 1 stop bit
 }
 
@@ -123,6 +108,7 @@ void laser_uart_tx_handler() {
   // serial_tx_buffer_tail = tail;
 
   // Turn off Data Register Empty Interrupt to stop tx-streaming if this concludes the transfer
+  
   // if (tail == serial_tx_buffer_head) { UCSR0B &= ~(1 << UDRIE0); }
 }
 #endif

@@ -143,9 +143,10 @@ void _delay_ms(uint32_t tick) {
 #if defined(USE_FREERTOS_RTOS)
   vTaskDelay(tick);
 #else 
-  uint32_t mililoop = SystemCoreClock / 1000;
-	for (uint32_t i=0; i< mililoop; i++)
-		__asm__ __volatile__("nop\n\t":::"memory");
+  // uint32_t mililoop = SystemCoreClock / 1000;
+	// for (uint32_t i=0; i< mililoop; i++)
+	// 	__asm__ __volatile__("nop\n\t":::"memory");
+  HAL_Delay(tick);
 #endif
 }
 

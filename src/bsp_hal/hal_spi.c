@@ -1,5 +1,7 @@
 #include "hal_spi.h"
 
+dev_spi_dma_t w25qxx_dma;
+
 void set_spi_clk(dev_spi_t *drv, uint8_t num) {
 
     switch(num) {
@@ -198,6 +200,11 @@ void hal_spi_change_speed(dev_spi_t *drv, uint32_t speed) {
     HAL_SPI_Init(&drv->hal_spi);
 }
 
+void hal_spi_dma_init(dev_spi_dma_t *dev) {
+    memset(dev->spi_dma_read_buff, 0, sizeof(dev->spi_dma_read_buff));
+    memset(dev->spi_dma_trans_buff, 0, sizeof(dev->spi_dma_trans_buff));
+}
+ 
 
 
 

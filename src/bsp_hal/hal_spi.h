@@ -73,9 +73,35 @@ typedef struct {
 }dev_spi_t;
 
 
+#define SPI_DMA_SEND_BUFF           65535
+#define SPI_DMA_READ_BUFF           65535
+
+typedef struct {
+
+    DMA_HandleTypeDef dma_tx;
+    DMA_HandleTypeDef dma_rx;
+
+    uint8_t spi_dma_trans_buff[SPI_DMA_SEND_BUFF];
+    uint8_t spi_dma_read_buff[SPI_DMA_READ_BUFF];
+
+    void(*dev_spi_dma_init)(void);
+    void(*dev_spi_dma_trans_enable)(void);
+    void(*dev_spi_dma_trans_diasble)();
+    void(*dev_spi_dma_trans_buff)(uint8_t *, uint32_t );
+    void(*dev_spi_dma_read_buff)(uint8_t *, uint32_t );
+    void(*dev_spi_dma_trans_read_buff)(uint8_t *, uint8_t *, uint32_t );
+
+    bool(*dev_is_spi_dma_busy)(void);
+}dev_spi_dma_t;
+extern dev_spi_dma_t w25qxx_dma;
+
 void hal_spi_begin(dev_spi_t *drv, spi_setting_t *setting);
 void hal_spi_register(dev_spi_t *dev_spi);
 void hal_set_bit_order(dev_spi_t *drv, spi_setting_t *setting);
 uint8_t hal_spi_transfer_revice_byte(dev_spi_t *drv, uint8_t byte);
+
+
+void hal_spi_dma_init(dev_spi_dma_t *dev);
+
 #endif
 

@@ -32,10 +32,14 @@ static void hal_w25qxx_spi_gpio_init(void)
     HAL_GPIO_Init(W25QXX_SPI_CS_GPIO, &GPIO_Init);
 }
 
+void hal_w25qxx_dma_init(void) {
+    hal_spi_dma_init(&w25qxx_dma);
+}
+
 void hal_w25qxx_spi_init(void)
 {   
     sFlash.flash_mode = sFLAHS_SPI_MODE;
-    sFlash.flash_delay_time = 10;
+    sFlash.flash_delay_time = 10;   
     sFlash.flash_id = 0;
     sFlash.flash_size = 0;
 
