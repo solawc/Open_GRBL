@@ -39,6 +39,10 @@
 #define SYSTEM_INTI()       hal_g0b0_system_init()
 #endif
 
+#define SYSTEM_UART()       hal_uart_init()
+#define SYSTEM_LASER()      hal_pwm_init()
+#define SYSTEM_FLASH()      w25qxx_init()
+#define SYSTEM_LCD()        dev_lcd_init()
 
 void _delay_ms(uint32_t tick);
 void _delay_us(uint32_t tick);

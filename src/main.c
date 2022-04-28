@@ -14,7 +14,7 @@ volatile uint8_t sys_rt_exec_accessory_override; // Global realtime executor bit
 #endif
 
 #if defined(USE_FREERTOS_RTOS)
-TaskHandle_t grbl_task_handler;
+  TaskHandle_t grbl_task_handler;
 #endif
 
 int main() {
@@ -119,7 +119,7 @@ void enter_grbl_task(void) {
 
 void SysTick_Handler(void)
 {
-    HAL_IncTick();
+  HAL_IncTick();
 
 #if defined(USE_FREERTOS_RTOS)
 

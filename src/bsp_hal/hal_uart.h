@@ -6,15 +6,15 @@
 #include "stdlib.h"
 #include "stdbool.h"
 
-#define UART_RB_BUFF_MAX            255
-#define UART_RB_BUFF_MIN            0
+#define UART_RB_BUFF_MAX                255
+#define UART_RB_BUFF_MIN                0
 
-#define  __HAL_UART_CLK(uart)	__HAL_RCC_##uart##_CLK_ENABLE()
-#define  UART_IRQn(uart)        uart##_IRQn
+#define  __HAL_UART_CLK(uart)	        __HAL_RCC_##uart##_CLK_ENABLE()
+#define  UART_IRQn(uart)                uart##_IRQn
 
 #ifdef STM32F429xx
-#define LaserUART		USART1
-#define LaserUART_IRQn  UART_IRQn(USART1)
+#define LaserUART		                USART1
+#define LaserUART_IRQn                  UART_IRQn(USART1)
 #define LASER_UART_CLK_ENABLE()          __HAL_UART_CLK(USART1)
 #define LASER_UART_TX_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE();
 #define LASER_UART_RX_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE();

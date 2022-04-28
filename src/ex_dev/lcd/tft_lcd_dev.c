@@ -28,7 +28,6 @@ static void hal_tft_spi_init(void) {
     GPIO_Init.Pin = LCD_MOSI_PIN;
     HAL_GPIO_Init(LCD_MOSI_PORT, &GPIO_Init);
 
-
     GPIO_Init.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_Init.Pull = GPIO_PULLUP;
     GPIO_Init.Speed = GPIO_SPEED_FREQ_MEDIUM;
@@ -213,6 +212,7 @@ static void hal_tft_display_config(void) {
 }
 
 void dev_lcd_init(void) {
+
     tft.tft_lcd_init = hal_tft_spi_init;
     tft.tft_lcd_enable = hal_tft_trans_enable;
     tft.tft_lcd_disable = hal_tft_trans_disable;

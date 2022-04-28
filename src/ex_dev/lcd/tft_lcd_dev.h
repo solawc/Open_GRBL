@@ -23,32 +23,39 @@
 #define LCD_PIN_AF          GPIO_AF5_SPI3
 #elif defined(STM32G0B0xx)
 #define LCD_MOSI_PORT       GPIOB
-#define LCD_MOSI_PIN        GPIO_PIN_5
+#define LCD_MOSI_PIN        GPIO_PIN_5      // spi mosi
+
 #define LCD_MISO_PORT       GPIOB
-#define LCD_MISO_PIN        GPIO_PIN_4
+#define LCD_MISO_PIN        GPIO_PIN_4      // spi miso
+
 #define LCD_SCK_PORT        GPIOB
-#define LCD_SCK_PIN         GPIO_PIN_3
-#define LCD_CS_PORT         GPIOD
-#define LCD_CS_PIN          GPIO_PIN_3
-#define LCD_EN_PORT         GPIOD
-#define LCD_EN_PIN          GPIO_PIN_2
-#define LCD_RS_PORT         GPIOD
-#define LCD_RS_PIN          GPIO_PIN_1
+#define LCD_SCK_PIN         GPIO_PIN_3      // spi sck
+
+#define LCD_CS_PORT         GPIOC
+#define LCD_CS_PIN          GPIO_PIN_7      // lcd cs
+
+#define LCD_EN_PORT         GPIOA
+#define LCD_EN_PIN          GPIO_PIN_15      // lcd en
+
+#define LCD_RS_PORT         GPIOA
+#define LCD_RS_PIN          GPIO_PIN_12      // lcd rs (lcd 复位引脚)
+
 #define LCD_DC_PORT         GPIOA
-#define LCD_DC_PIN          GPIO_PIN_15
-#define LCD_TP_CS_PORT      GPIOD
-#define LCD_TP_CS_PIN       GPIO_PIN_0
+#define LCD_DC_PIN          GPIO_PIN_15     // lcd dc (lcd 命令/数据选择引脚)
+
+#define LCD_TP_CS_PORT      GPIOA
+#define LCD_TP_CS_PIN       GPIO_PIN_11      // 触摸片选
+
 #define LCD_PIN_AF          GPIO_AF4_SPI3
 #endif
 
 #define CMD_MODE_SET()      HAL_GPIO_WritePin(LCD_DC_PORT, LCD_DC_PIN, GPIO_PIN_RESET)
 #define DATA_MODE_SET()     HAL_GPIO_WritePin(LCD_DC_PORT, LCD_DC_PIN, GPIO_PIN_SET)
+
 typedef enum {
-
-    LCD_TFT_24,              
-    LCD_TFT_35,
-    LCD_FIRE_5,     // fire 5.0 inc LCD , Use dma2d to driver
-
+    LCD_TFT_24,     // mks ts24 2.4 inc LCD, Use spi dma to driver
+    LCD_TFT_35,     // mks ts35 3.5 inc LCD, Use spi dma to driver 
+    LCD_FIRE_5,     // fire 5.0 inc LCD, Use dma2d to driver
 }dev_lcd_id_t;
 
 typedef struct {

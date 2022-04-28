@@ -29,9 +29,11 @@ void grbl_hw_init(void) {
 
     SYSTEM_INTI();
 
-    hal_uart_init();
+    SYSTEM_UART();  // hal_uart_init();
 
-    hal_pwm_init();
+    SYSTEM_LASER(); // hal_pwm_init();
 
-    w25qxx_init();
+    SYSTEM_FLASH(); // w25qxx_init();
+    
+    SYSTEM_LCD();   // dev_lcd_init();
 }
