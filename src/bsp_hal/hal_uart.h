@@ -36,6 +36,7 @@
 #define LASER_UART_RX_PIN               GPIO_PIN_3
 #define LASER_UART_AF_MODE              GPIO_AF1_USART2
 #define LASER_UART_IRQHANDLER           USART2_IRQHandler
+#define LASER_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
 #endif
 
 

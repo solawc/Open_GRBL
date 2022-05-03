@@ -179,22 +179,21 @@ int _write(int fd, char *ptr, int len)
 #endif
 
 #ifdef USE_SERIAL_DMA
-void DMA1_Channel1_IRQHandler(void)
-{
-	printf("enter dma handler\n");
-	HAL_DMA_IRQHandler(&dma_rx);
-}
+	void DMA1_Channel1_IRQHandler(void)
+	{
+		printf("enter dma handler\n");
+		HAL_DMA_IRQHandler(&dma_rx);
+	}
 
-void DMA1_Channel2_3_IRQHandler(void)
-{
-  	HAL_DMA_IRQHandler(&dma_tx);
-}
+	void DMA1_Channel2_3_IRQHandler(void)
+	{
+		HAL_DMA_IRQHandler(&dma_tx);
+	}
 #endif
 
 #ifdef USE_SERIAL_DMA
 	bool uart_trans_lock = false;
 #endif
-
 
 // Serial UART ISR Handler
 void LASER_UART_IRQHANDLER() {
@@ -208,7 +207,7 @@ void LASER_UART_IRQHANDLER() {
 	ulReturn = taskENTER_CRITICAL_FROM_ISR();
 #endif
 
-	if(__HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET) {
+	if(LASER_UART_RX_FLAG) {
 		data = hal_uart_read_dr();
 		laser_uart_rx_handler(data);
 	}
@@ -219,7 +218,6 @@ void LASER_UART_IRQHANDLER() {
 	taskEXIT_CRITICAL_FROM_ISR( ulReturn );
 #endif
 }
-
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {	
