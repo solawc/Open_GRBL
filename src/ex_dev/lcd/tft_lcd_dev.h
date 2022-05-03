@@ -35,18 +35,18 @@
 #define LCD_CS_PIN          GPIO_PIN_7      // lcd cs
 
 #define LCD_EN_PORT         GPIOA
-#define LCD_EN_PIN          GPIO_PIN_15      // lcd en
+#define LCD_EN_PIN          GPIO_PIN_15     // lcd en
 
-#define LCD_RS_PORT         GPIOA
-#define LCD_RS_PIN          GPIO_PIN_12      // lcd rs (lcd 复位引脚)
+// #define LCD_RS_PORT         GPIOA
+// #define LCD_RS_PIN          GPIO_PIN_12     // lcd rs (lcd 复位引脚)
 
-#define LCD_DC_PORT         GPIOA
-#define LCD_DC_PIN          GPIO_PIN_15     // lcd dc (lcd 命令/数据选择引脚)
+#define LCD_DC_PORT         GPIOC
+#define LCD_DC_PIN          GPIO_PIN_6      // lcd dc (lcd 命令/数据选择引脚)
 
 #define LCD_TP_CS_PORT      GPIOA
-#define LCD_TP_CS_PIN       GPIO_PIN_11      // 触摸片选
+#define LCD_TP_CS_PIN       GPIO_PIN_11     // 触摸片选
 
-#define LCD_PIN_AF          GPIO_AF4_SPI3
+#define LCD_PIN_AF          GPIO_AF9_SPI3
 #endif
 
 #define CMD_MODE_SET()      HAL_GPIO_WritePin(LCD_DC_PORT, LCD_DC_PIN, GPIO_PIN_RESET)

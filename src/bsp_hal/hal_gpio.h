@@ -46,6 +46,7 @@ void hal_led_toggle(void);
 #define PROBE_PIN                   GPIO_PIN_11
 
 #elif defined(STM32G0B0xx)
+
 #define LASER_PORT                  GPIOB
 #define LASER_PIN                   GPIO_PIN_7
 #define LASER_PIN_CLK_ENABLE()      __HAL_RCC_GPIOB_CLK_ENABLE()

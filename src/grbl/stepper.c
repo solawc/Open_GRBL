@@ -227,13 +227,8 @@ static st_prep_t prep;
 void st_wake_up()
 {
   // Enable stepper drivers.
-#if defined(CPU_MAP_ATMEGA328P)
-  if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE)) { STEPPERS_DISABLE_PORT |= (1<<STEPPERS_DISABLE_BIT); }
-  else { STEPPERS_DISABLE_PORT &= ~(1<<STEPPERS_DISABLE_BIT); }
-#elif defined(CPU_STM32)
   if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE))  { hal_step_en_gpio_set(true); }
   else { hal_step_en_gpio_set(false); }
-#endif
   // Initialize stepper output bits to ensure first ISR call does not step.
   st.step_outbits = step_port_invert_mask;
 
@@ -248,7 +243,6 @@ void st_wake_up()
 #if defined(CPU_MAP_ATMEGA328P)
     st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
 #elif defined(CPU_STM32)
-    // st.step_pulse_time = (settings.fpulse_microseconds) * (float)TICKS_PER_MICROSECOND;
     #ifdef STM32F429xx
       st.step_pulse_time = (settings.fpulse_microseconds);
     #elif defined(STM32G0B0xx)
@@ -1069,11 +1063,11 @@ void st_prep_buffer()
           prep.current_spindle_pwm = spindle_compute_pwm_value(rpm);
         } else { 
           sys.spindle_speed = 0.0;
-#if defined(CPU_MAP_ATMEGA328P)
+        #if defined(CPU_MAP_ATMEGA328P)
           prep.current_spindle_pwm = SPINDLE_PWM_OFF_VALUE;
-#elif defined(CPU_STM32)
+        #elif defined(CPU_STM32)
           prep.current_spindle_pwm = 0;
-#endif
+        #endif
         }
         bit_false(sys.step_control,STEP_CONTROL_UPDATE_SPINDLE_PWM);
       }
@@ -1123,7 +1117,7 @@ void st_prep_buffer()
     // outputs the exact acceleration and velocity profiles as computed by the planner.
     dt += prep.dt_remainder; // Apply previous segment partial step execute time
     float inv_rate = dt / (last_n_steps_remaining - step_dist_remaining); // Compute adjusted step rate inverse
-#if defined(CPU_MAP_ATMEGA328P)
+  #if defined(CPU_MAP_ATMEGA328P)
     // Compute CPU cycles per step for the prepped segment.
     uint32_t cycles = ceil( (TICKS_PER_MICROSECOND*1000000*60)*inv_rate ); // (cycles/step)
 
@@ -1157,7 +1151,7 @@ void st_prep_buffer()
         }
       }
     #endif
-#elif defined(CPU_STM32)
+  #elif defined(CPU_STM32)
   // Compute CPU cycles per step for the prepped segment.
     // uint32_t cycles = (uint32_t)ceilf( (TICKS_PER_MICROSECOND * 1000000 * 60.0f) * inv_rate); // (cycles/step)
     // 
@@ -1196,7 +1190,7 @@ void st_prep_buffer()
         }
       }
     #endif
-#endif
+  #endif
     // Segment complete! Increment segment buffer indices, so stepper ISR can immediately execute it.
     segment_buffer_head = segment_next_head;
     if ( ++segment_next_head == SEGMENT_BUFFER_SIZE ) { segment_next_head = 0; }
