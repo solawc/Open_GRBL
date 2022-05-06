@@ -16,8 +16,8 @@ void hal_set_timer_init(void) {
     SET_TIM_CLK_ENABLED();   
 
     htim_set.Instance = SETP_SET_TIM; 
-    htim_set.Init.Period = 32-1;     
-    htim_set.Init.Prescaler = 4-1;
+    htim_set.Init.Period = 1-1;     
+    htim_set.Init.Prescaler = 10-1;
     htim_set.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim_set.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&htim_set);
@@ -29,15 +29,15 @@ void hal_set_timer_init(void) {
 
 void hal_reset_timer_init(void) {
 
-    RESET_TIM_CLK_ENABLED()
+    RESET_TIM_CLK_ENABLED();
     htim_reset.Instance = SETP_RESET_TIM;
-    htim_reset.Init.Period = 32-1;     
-    htim_reset.Init.Prescaler = 4-1; 
+    htim_reset.Init.Period = 1-1;     
+    htim_reset.Init.Prescaler = 10-1; 
     htim_reset.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim_reset.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&htim_reset);
 
-    HAL_NVIC_SetPriority(RESET_TIM_IRQn, 0, 1);
+    HAL_NVIC_SetPriority(RESET_TIM_IRQn, 0, 2);
     HAL_NVIC_DisableIRQ(RESET_TIM_IRQn);
     HAL_TIM_Base_Start_IT(&htim_reset);
 }
@@ -151,14 +151,13 @@ void hal_pwm_init() {
 }
 
 void hal_pwm_set(uint32_t duty) {
-
-    // htim_laser.Instance->CCR2 = duty;
-    __HAL_TIM_SetCompare(&htim_laser, TIM_CHANNEL_2, duty);
+    // __HAL_TIM_SetCompare(&htim_laser, TIM_CHANNEL_2, duty);
 }
 
 uint32_t hal_pwm_ccr_get(void) {
     
-    return __HAL_TIM_GetCompare(&htim_laser, TIM_CHANNEL_2);
+    // return __HAL_TIM_GetCompare(&htim_laser, TIM_CHANNEL_2);
+    return 0;
 }
 
 

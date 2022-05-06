@@ -131,22 +131,22 @@ void SysTick_Handler(void)
 #if (INCLUDE_xTaskGetSchedulerState == 1 )
   }
 #endif /* INCLUDE_xTaskGetSchedulerState */
+
 #endif
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
 }
 
-
 void _delay_ms(uint32_t tick) {
   
 #if defined(USE_FREERTOS_RTOS)
   vTaskDelay(tick);
 #else 
-  // uint32_t mililoop = SystemCoreClock / 1000;
-	// for (uint32_t i=0; i< mililoop; i++)
-	// 	__asm__ __volatile__("nop\n\t":::"memory");
-  HAL_Delay(tick);
+  uint32_t mililoop = SystemCoreClock / 1000;
+	for (uint32_t i=0; i< mililoop; i++)
+		__asm__ __volatile__("nop\n\t":::"memory");
+  // HAL_Delay(tick);
 #endif
 }
 

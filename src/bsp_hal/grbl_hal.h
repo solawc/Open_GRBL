@@ -14,6 +14,7 @@
 #include "hal_flash_eeprom.h"
 #include "hal_spi.h"
 #include "hal_tim.h"
+#include "hal_debug.h"
 // 
 // #include "led_task.h"
 #include "hal_w25qxx.h"

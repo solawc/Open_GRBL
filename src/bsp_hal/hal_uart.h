@@ -24,6 +24,7 @@
 #define LASER_UART_RX_PIN               GPIO_PIN_10
 #define LASER_UART_AF_MODE              GPIO_AF7_USART1
 #define LASER_UART_IRQHANDLER           USART1_IRQHandler
+#define LASER_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
 #elif defined(STM32G0B0xx) 
 #define LaserUART		                USART2
 #define LaserUART_IRQn                  UART_IRQn(USART2)
