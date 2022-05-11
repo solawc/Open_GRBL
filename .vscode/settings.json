@@ -29,7 +29,8 @@
         "stm32f4xx_hal_conf.h": "c",
         "task.h": "c",
         "cmsis_gcc.h": "c",
-        "hal_debug.h": "c"
+        "hal_debug.h": "c",
+        "spi.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

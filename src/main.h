@@ -31,6 +31,8 @@
 #include "ex_dev/lcd/tft_lcd_dev.h"
 #include "ex_dev/sd/sdcard.h"
 
+#include "client.h"
+
 #include "grbl/grbl.h"
 
 #ifdef STM32F429xx

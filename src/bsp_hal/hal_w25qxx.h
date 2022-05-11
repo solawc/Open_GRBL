@@ -80,7 +80,6 @@ extern NFLASH_t sFlash;
 #define Dummy_Byte                      0xFF
 
 
-
 void hal_w25qxx_spi_init(void);
 void w25qxx_init(void);
 uint32_t w25qxx_read_id(void);

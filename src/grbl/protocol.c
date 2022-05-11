@@ -74,8 +74,6 @@ ERROR_LIST_t add_char_to_line(char c) {
 
 ERROR_LIST_t execute_line(char* line) {
 
-    // ERROR_LIST_t result = OK;
-
     // Empty or comment line. For syncing purposes.
     if (line[0] == 0) {
         return OK;
@@ -93,8 +91,10 @@ ERROR_LIST_t execute_line(char* line) {
     return gc_execute_line(line);
 }
 
-
-
+void over_flow_run(void) {
+  report_status_message(Overflow);
+  empty_line(0);
+}
 
 /*
   GRBL PRIMARY LOOP:
@@ -110,6 +110,7 @@ void protocol_main_loop()
       }
     }
   #endif
+
   // Check for and report alarm state after a reset, error, or an initial power up.
   // NOTE: Sleep mode disables the stepper drivers and position can't be guaranteed.
   // Re-initialize the sleep state as an ALARM mode to ensure user homes or acknowledges.
@@ -135,40 +136,43 @@ void protocol_main_loop()
   // line_flags: 0000 0000 |  0000 0 (bit2) (bit1) (bit0)
   // uint8_t line_flags = 0;   
   // uint8_t char_counter = 0;
-  uint8_t c;
 
+  uint8_t c;
   for (;;) {
 
     char *get_line;
 
     // Process one line of incoming serial data, as the data becomes available. Performs an
     // initial filtering by removing spaces and comments and capitalizing all letters.
+
     while((c = serial_read()) != SERIAL_NO_DATA) {
 
       ERROR_LIST_t err = add_char_to_line(c);
 
       switch(err) {
         case OK:  break;
+        
         case EOL: 
-          protocol_execute_realtime();  // Runtime command check point.
-          if (sys.abort) {
-              return;  // Bail to calling function upon system abort
-          }
-          get_line = client_lines[0].buffer;
+          protocol_execute_realtime();                            // Runtime command check point.
+
+          if (sys.abort) { return; }                              // Bail to calling function upon system abort
+          
+          get_line = client_lines[CLIENT_SERIAL].buffer;
+
 #ifdef REPORT_ECHO_RAW_LINE_RECEIVED
                         report_echo_line_received(line, client);
 #endif  
+
         report_status_message(execute_line(get_line));
-        empty_line(0);
+
+        empty_line(CLIENT_SERIAL);
+
         break;
 
-        case Overflow:
-          report_status_message(Overflow);
-          empty_line(0);
-        break;
+        case Overflow: over_flow_run(); break;                    // report overflow, and reset buff 
 
         default:
-          break;
+        break;
       }
     }
 
@@ -180,7 +184,6 @@ void protocol_main_loop()
     protocol_execute_realtime();  // Runtime command check point.
 
     if (sys.abort) { return; } // Bail to main() program loop to reset system.
-    
   }
   return; /* Never reached */
 }
