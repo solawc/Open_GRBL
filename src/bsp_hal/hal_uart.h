@@ -40,7 +40,6 @@
 #define LASER_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
 #endif
 
-
 void hal_uart_gpio_init(void);
 void hal_uart_init(void);
 void hal_uart_irq_set(void);

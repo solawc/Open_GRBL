@@ -3,15 +3,6 @@
 
 #include "main.h"
 
-
-
-
-
-void hal_led_gpio_init(void);
-void hal_led_on(void);
-void hal_led_off(void);
-void hal_led_toggle(void);
-
 // limits
 #ifdef STM32F429xx
 #define LASER_PORT                  GPIOB

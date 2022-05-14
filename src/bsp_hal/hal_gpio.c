@@ -1,31 +1,4 @@
 #include "hal_gpio.h"
-// #include "grbl.h"
-
-
-void hal_led_gpio_init(void) {
-	
-    GPIO_InitTypeDef GPIO_Init; 
-	
-	LASER_PIN_CLK_ENABLE();
-
-	GPIO_Init.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_Init.Pin = LASER_PIN;
-	GPIO_Init.Pull = GPIO_NOPULL;
-	GPIO_Init.Speed = GPIO_SPEED_FREQ_MEDIUM;
-    HAL_GPIO_Init(LASER_PORT, &GPIO_Init);
-}
-
-void hal_led_on(void) {
-	HAL_GPIO_WritePin(LASER_PORT, LASER_PIN, GPIO_PIN_RESET);
-}
-
-void hal_led_off(void) {
-	HAL_GPIO_WritePin(LASER_PORT, LASER_PIN, GPIO_PIN_SET);
-}
-
-void hal_led_toggle(void) {
-	HAL_GPIO_TogglePin(LASER_PORT, LASER_PIN);
-}
 
 /*
 	Choose limits pins need know, if use st mcu ,you must konw pins interrupt 
