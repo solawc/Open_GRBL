@@ -6,40 +6,37 @@
  * also you can choose other timer as step count, the timer,
  * need handle with updata
 */
-
-TIM_HandleTypeDef htim_set;    // Configure Timer 6: Stepper Driver Interrupt
-TIM_HandleTypeDef htim_reset;    // Configure Timer 7: Stepper Port Reset Interrupt
-TIM_HandleTypeDef htim_laser;    // Configure Timer 7: Stepper Port Reset Interrupt
+hal_tim_t hal_step_tim;
 
 void hal_set_timer_init(void) {
 
     SET_TIM_CLK_ENABLED();   
 
-    htim_set.Instance = SETP_SET_TIM; 
-    htim_set.Init.Period = 1-1;     
-    htim_set.Init.Prescaler = 10-1;
-    htim_set.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-    htim_set.Init.CounterMode = TIM_COUNTERMODE_UP;
-    HAL_TIM_Base_Init(&htim_set);
+    STEP_SET_TIM.Instance = SETP_SET_TIM; 
+    STEP_SET_TIM.Init.Period = 1-1;     
+    STEP_SET_TIM.Init.Prescaler = 10-1;
+    STEP_SET_TIM.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+    STEP_SET_TIM.Init.CounterMode = TIM_COUNTERMODE_UP;
+    HAL_TIM_Base_Init(&STEP_SET_TIM);
 
     HAL_NVIC_SetPriority(SET_TIM_IRQn, 0, 1);       // 使定时器中断的优先级保持最高
     HAL_NVIC_DisableIRQ(SET_TIM_IRQn);
-    HAL_TIM_Base_Start_IT(&htim_set);
+    HAL_TIM_Base_Start_IT(&STEP_SET_TIM);
 }
 
 void hal_reset_timer_init(void) {
 
     RESET_TIM_CLK_ENABLED();
-    htim_reset.Instance = SETP_RESET_TIM;
-    htim_reset.Init.Period = 1-1;     
-    htim_reset.Init.Prescaler = 10-1; 
-    htim_reset.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-    htim_reset.Init.CounterMode = TIM_COUNTERMODE_UP;
-    HAL_TIM_Base_Init(&htim_reset);
+    STEP_RESET_TIM.Instance = SETP_RESET_TIM;
+    STEP_RESET_TIM.Init.Period = 1-1;     
+    STEP_RESET_TIM.Init.Prescaler = 10-1; 
+    STEP_RESET_TIM.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+    STEP_RESET_TIM.Init.CounterMode = TIM_COUNTERMODE_UP;
+    HAL_TIM_Base_Init(&STEP_RESET_TIM);
 
     HAL_NVIC_SetPriority(RESET_TIM_IRQn, 0, 2);
     HAL_NVIC_DisableIRQ(RESET_TIM_IRQn);
-    HAL_TIM_Base_Start_IT(&htim_reset);
+    HAL_TIM_Base_Start_IT(&STEP_RESET_TIM);
 }
 
 void hal_set_timer_irq_enable(void) {
@@ -107,20 +104,20 @@ void hal_pwm_init() {
 
     laser_pin_config();
 
-    htim_laser.Instance = LASER_TIM;
-    htim_laser.Init.Prescaler = 64-1;       // psc
-    htim_laser.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim_laser.Init.Period = 1000-1;            // arr
-    htim_laser.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-    htim_laser.Init.RepetitionCounter = 0;
-    htim_laser.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-    if (HAL_TIM_OC_Init(&htim_laser) != HAL_OK)
+    LASER_TIM.Instance = LASER_TIM_PORT;
+    LASER_TIM.Init.Prescaler = 64-1;       // psc
+    LASER_TIM.Init.CounterMode = TIM_COUNTERMODE_UP;
+    LASER_TIM.Init.Period = 1000-1;            // arr
+    LASER_TIM.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+    LASER_TIM.Init.RepetitionCounter = 0;
+    LASER_TIM.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+    if (HAL_TIM_OC_Init(&LASER_TIM) != HAL_OK)
     {
         Error_Handler();
     }
     sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
     sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-    if (HAL_TIMEx_MasterConfigSynchronization(&htim_laser, &sMasterConfig) != HAL_OK)
+    if (HAL_TIMEx_MasterConfigSynchronization(&LASER_TIM, &sMasterConfig) != HAL_OK)
     {
         Error_Handler();
     }
@@ -132,7 +129,7 @@ void hal_pwm_init() {
     sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
     sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
     sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-    if (HAL_TIM_OC_ConfigChannel(&htim_laser, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
+    if (HAL_TIM_OC_ConfigChannel(&LASER_TIM, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
     {
         Error_Handler();
     }
@@ -143,21 +140,20 @@ void hal_pwm_init() {
     sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
     sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
     sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
-    if (HAL_TIMEx_ConfigBreakDeadTime(&htim_laser, &sBreakDeadTimeConfig) != HAL_OK)
+    if (HAL_TIMEx_ConfigBreakDeadTime(&LASER_TIM, &sBreakDeadTimeConfig) != HAL_OK)
     {
         Error_Handler();
     }
-    HAL_TIM_PWM_Start(&htim_laser, TIM_CHANNEL_2);
+    HAL_TIM_PWM_Start(&LASER_TIM, TIM_CHANNEL_2);
 }
 
 void hal_pwm_set(uint32_t duty) {
-    // __HAL_TIM_SetCompare(&htim_laser, TIM_CHANNEL_2, duty);
+    __HAL_TIM_SetCompare(&LASER_TIM, TIM_CHANNEL_2, duty);
 }
 
 uint32_t hal_pwm_ccr_get(void) {
     
-    // return __HAL_TIM_GetCompare(&htim_laser, TIM_CHANNEL_2);
-    return 0;
+    return __HAL_TIM_GetCompare(&LASER_TIM, TIM_CHANNEL_2);
 }
 
 

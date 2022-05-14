@@ -1,5 +1,5 @@
 #ifndef __spi_h
-#deinit __spi_h
+#define __spi_h
 
 #include "../../main.h"
 
@@ -8,11 +8,6 @@
 #define SPI_MODE2 2
 #define SPI_MODE3 3
 
-typedef enum {
-
-
-
-}_spi_type_t;
 
 
 typedef struct {

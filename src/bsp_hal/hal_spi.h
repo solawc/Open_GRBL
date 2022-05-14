@@ -73,16 +73,18 @@ typedef struct {
 }dev_spi_t;
 
 
-#define SPI_DMA_SEND_BUFF           65535
-#define SPI_DMA_READ_BUFF           65535
+// #define SPI_DMA_SEND_BUFF           65535
+// #define SPI_DMA_READ_BUFF           65535
+
+#define SPI_DMA_BUFF_SIZE               65535
 
 typedef struct {
 
     DMA_HandleTypeDef dma_tx;
     DMA_HandleTypeDef dma_rx;
 
-    uint8_t spi_dma_trans_buff[SPI_DMA_SEND_BUFF];
-    uint8_t spi_dma_read_buff[SPI_DMA_READ_BUFF];
+    uint8_t spi_dma_trans_buff[SPI_DMA_BUFF_SIZE];
+    uint8_t spi_dma_read_buff[SPI_DMA_BUFF_SIZE];
 
     void(*dev_spi_dma_init)(void);
     void(*dev_spi_dma_trans_enable)(void);
