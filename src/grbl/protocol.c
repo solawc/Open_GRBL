@@ -133,18 +133,14 @@ void protocol_main_loop()
   // This is also where Grbl idles while waiting for something to do.
   // ---------------------------------------------------------------------------------
 
-  // line_flags: 0000 0000 |  0000 0 (bit2) (bit1) (bit0)
-  // uint8_t line_flags = 0;   
-  // uint8_t char_counter = 0;
-
   uint8_t c;
+
   for (;;) {
 
     char *get_line;
 
     // Process one line of incoming serial data, as the data becomes available. Performs an
     // initial filtering by removing spaces and comments and capitalizing all letters.
-
     while((c = serial_read()) != SERIAL_NO_DATA) {
 
       ERROR_LIST_t err = add_char_to_line(c);
