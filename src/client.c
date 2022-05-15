@@ -17,7 +17,7 @@ bool client_write(uint8_t client, uint8_t wdata) {
 
     client_rb[client].buff[client] = wdata;
     
-    client_rb[client].tail = (client_rb[client].tail+1)%255;
+    client_rb[client].tail = (client_rb[client].tail+1) % 255;
 
     client_rb[client].len++;
     
