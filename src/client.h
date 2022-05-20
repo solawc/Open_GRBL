@@ -9,7 +9,6 @@
 #define CLIENT_ETH          3
 #define CLIENT_MAX          4
 
-
 typedef struct {
 
     uint32_t tail;

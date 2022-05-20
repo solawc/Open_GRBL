@@ -1,68 +1,14 @@
 #include "hal_uart.h"
 
 
+hal_uart_t rb_serial_rx;
+
 UART_HandleTypeDef laser_uart;
 
 DMA_HandleTypeDef dma_tx;
 DMA_HandleTypeDef dma_rx;
 
 uint8_t laser_rx_buf[1];
-
-// #define USE_SERIAL_DMA
-
-#if defined(USE_SERIAL_DMA)
-static void hal_uart1_dma_init() {
-
-#ifdef STM32F429xx
-	__HAL_RCC_DMA2_CLK_ENABLE();
-
-	dma_tx.Instance = DMA2_Stream7;
-	dma_tx.Init.Channel = DMA_CHANNEL_4;
-	dma_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
-	dma_tx.Init.PeriphInc = DMA_PINC_DISABLE;
-	dma_tx.Init.MemInc = DMA_MINC_ENABLE;
-	dma_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;  // 8bit
-	dma_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-	dma_tx.Init.Mode = DMA_NORMAL;
-	dma_tx.Init.Priority = DMA_PRIORITY_MEDIUM;
-	dma_tx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-	dma_tx.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
-	dma_tx.Init.MemBurst = DMA_MBURST_SINGLE;
-	dma_tx.Init.PeriphBurst = DMA_PBURST_SINGLE;
-	HAL_DMA_DeInit(&dma_tx);
-	HAL_DMA_Init(&dma_tx);
-	__HAL_LINKDMA(&laser_uart, hdmatx, dma_tx);
-}
-#elif defined(STM32G0B0xx)
-
-	__HAL_RCC_DMA1_CLK_ENABLE();
-
-	dma_tx.Instance = DMA1_Channel2;
-    dma_tx.Init.Request = DMA_REQUEST_USART2_TX;
-    dma_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
-    dma_tx.Init.PeriphInc = DMA_PINC_DISABLE;
-    dma_tx.Init.MemInc = DMA_MINC_ENABLE;
-    dma_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    dma_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-    dma_tx.Init.Mode = DMA_NORMAL;
-    dma_tx.Init.Priority = DMA_PRIORITY_LOW;
-
-    if (HAL_DMA_Init(&dma_tx) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-	__HAL_LINKDMA(&laser_uart, hdmatx, dma_tx);
-
-	HAL_NVIC_SetPriority(DMA1_Channel2_3_IRQn, 0, 0);
-  	HAL_NVIC_EnableIRQ(DMA1_Channel2_3_IRQn);
-}
-#endif
-#endif
-
-void uart_send_dma(uint8_t *str,  uint16_t size) {	
-	HAL_UART_Transmit_DMA (&laser_uart ,str ,size);
-}
 
 void hal_uart_gpio_init(void) {
 
@@ -111,14 +57,7 @@ void hal_uart_init(void) {
 	}
 #endif
 
-#ifdef USE_SERIAL_DMA
-	hal_uart1_dma_init();
-#else 
-
-#endif
 	hal_uart_irq_set();
-
-	// HAL_UART_Receive_IT(&laser_uart, laser_rx_buf, 1);
 }
 
 void hal_uart_irq_set(void) {
@@ -167,33 +106,11 @@ int fputc(int ch,FILE *f)
 #else 
 int _write(int fd, char *ptr, int len)
 {	
-#ifdef USE_SERIAL_DMA
-	uart_trans_lock = true;
-	uart_send_dma((uint8_t*)ptr, len);
-	while(!hal_is_uart_sr_txe());
-#else 
 	HAL_UART_Transmit(&laser_uart, (uint8_t *)ptr, len, 1000);        //huart3是串口的句柄
-#endif
 	return len;
 }
 #endif
 
-#ifdef USE_SERIAL_DMA
-	void DMA1_Channel1_IRQHandler(void)
-	{
-		printf("enter dma handler\n");
-		HAL_DMA_IRQHandler(&dma_rx);
-	}
-
-	void DMA1_Channel2_3_IRQHandler(void)
-	{
-		HAL_DMA_IRQHandler(&dma_tx);
-	}
-#endif
-
-#ifdef USE_SERIAL_DMA
-	bool uart_trans_lock = false;
-#endif
 
 // Serial UART ISR Handler
 void LASER_UART_IRQHANDLER() {
@@ -225,6 +142,38 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	// 	laser_uart_rx_handler(laser_rx_buf[0]);
 	// 	HAL_UART_Receive_IT(&laser_uart, laser_rx_buf, 1);       // 重新注册一次，要不然下次收不到了
 	// }
+}
+
+void serial_rb_init(hal_uart_t *rb) {
+	rb->head = 0;
+	rb->tail = 0;
+}
+
+void serial_rb_write(hal_uart_t *rb, uint8_t data) {
+
+	uint8_t next = rb->head + 1;
+
+	if(next == UART_RB_BUFF_MAX) { next = 0; }
+
+	if(next != rb->tail) {
+		rb->buffer[rb->head] = data;
+		rb->head = next;
+	}
+}
+
+uint8_t serial_rb_read(hal_uart_t *rb, uint8_t *data) {
+
+	uint8_t tail = rb->tail;
+
+	if(rb->head == tail) {
+		return 0;
+	}else {
+		*data = rb->buffer[tail];
+		tail++;
+		if(tail == UART_RB_BUFF_MAX) {tail = 0;}
+		rb->tail = tail;
+		return 1;
+	}
 }
 
 

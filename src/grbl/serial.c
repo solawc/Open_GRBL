@@ -66,55 +66,18 @@ uint8_t serial_get_tx_buffer_count()
 }
 
 
-
-void serial_handler_task(void *parg) {
-  
-  while(1) {
-
-    uint8_t tail = serial_tx_buffer_tail; // Temporary serial_tx_buffer_tail (to optimize for volatile)
-      
-    if (tail != serial_tx_buffer_head) {
-
-      taskENTER_CRITICAL();
-      // printf("serial task\n");
-
-      hal_uart_sendbyte(serial_tx_buffer[tail]);
-
-      // Update tail position
-      tail++;
-      if (tail == TX_RING_BUFFER) { tail = 0; }
-
-      serial_tx_buffer_tail = tail;
-
-      taskEXIT_CRITICAL();
-    }
-    vTaskDelay(1);
-  }
-}
-
-void serial_handler_task_init(void) {
-
-  xTaskCreate(serial_handler_task, 
-              "serial task", 
-              1024, 
-              NULL, 
-              1, 
-              &serial_task_handler);
-
-}
-
 void serial_init()
 {
   // init befor HAL_Init();
 
-  // serial_handler_task_init();
-
-
+  serial_rb_init(&rb_serial_rx);
+  
   // defaults to 8-bit, no parity, 1 stop bit
 }
 
 // Writes one byte to the TX serial buffer. Called by main program.
 void serial_write(uint8_t data) {
+
   hal_uart_sendbyte(data);
   while (!hal_is_uart_sr_txe()); // check uart is empty
 
@@ -160,26 +123,28 @@ void laser_uart_tx_handler() {
 // Fetches the first byte in the serial read buffer. Called by main program.
 uint8_t serial_read()
 {
-  uint8_t tail = serial_rx_buffer_tail; // Temporary serial_rx_buffer_tail (to optimize for volatile)
+  // uint8_t tail = serial_rx_buffer_tail; // Temporary serial_rx_buffer_tail (to optimize for volatile)
   
-  if (serial_rx_buffer_head == tail) {
-    return SERIAL_NO_DATA;
-  } else {
-    uint8_t data = serial_rx_buffer[tail];
+  // if (serial_rx_buffer_head == tail) {
+  //   return SERIAL_NO_DATA;
+  // } else {
+  //   uint8_t data = serial_rx_buffer[tail];
 
-    tail++;
-    if (tail == RX_RING_BUFFER) { tail = 0; }
-    serial_rx_buffer_tail = tail;
+  //   tail++;
+  //   if (tail == RX_RING_BUFFER) { tail = 0; }
+  //   serial_rx_buffer_tail = tail;
 
+  //   return data;
+  // }
+
+  uint8_t data;
+  uint8_t flag;
+  flag = serial_rb_read(&rb_serial_rx, &data);
+
+  if(flag == 0) return SERIAL_NO_DATA;
+  else {
     return data;
   }
-
-  // uint8_t c;
-  // if(client_read(CLIENT_SERIAL, &c) == false) {
-  //   return SERIAL_NO_DATA;
-  // }else {
-  //   return c;
-  // }
 }
 
 #if defined(CPU_MAP_ATMEGA328P)
@@ -297,7 +262,7 @@ bool protocol_rt_command_run(char data) {
 
 void laser_uart_rx_handler(__IO uint8_t data) { 
 
-  uint8_t next_head;
+  // uint8_t next_head;
   
   // Pick off realtime command characters directly from the serial stream. These characters are
   // not passed into the main buffer, but these set system state flag bits for realtime execution.
@@ -340,14 +305,16 @@ void laser_uart_rx_handler(__IO uint8_t data) {
         // Throw away any unfound extended-ASCII character by not passing it to the serial buffer.
       } 
       else { // Write character to buffer
-        next_head = serial_rx_buffer_head + 1;
-        if (next_head == RX_RING_BUFFER) { next_head = 0; }
+        // next_head = serial_rx_buffer_head + 1;
+        // if (next_head == RX_RING_BUFFER) { next_head = 0; }
 
-        // Write data to buffer unless it is full.
-        if (next_head != serial_rx_buffer_tail) {
-          serial_rx_buffer[serial_rx_buffer_head] = data;
-          serial_rx_buffer_head = next_head;
-        }
+        // // Write data to buffer unless it is full.
+        // if (next_head != serial_rx_buffer_tail) {
+        //   serial_rx_buffer[serial_rx_buffer_head] = data;
+        //   serial_rx_buffer_head = next_head;
+        // }
+
+        serial_rb_write(&rb_serial_rx, data);
 
         // client_write(CLIENT_SERIAL, data);
       }

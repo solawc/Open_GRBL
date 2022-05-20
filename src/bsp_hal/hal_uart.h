@@ -40,6 +40,13 @@
 #define LASER_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
 #endif
 
+typedef struct {
+    uint8_t head;
+    uint8_t tail;
+    uint8_t buffer[255];
+}hal_uart_t;
+extern hal_uart_t rb_serial_rx;
+
 void hal_uart_gpio_init(void);
 void hal_uart_init(void);
 void hal_uart_irq_set(void);
@@ -48,7 +55,9 @@ void hal_laser_uart_irq_disable(void);
 void hal_uart_sendbyte(uint8_t data);
 bool hal_is_uart_sr_txe(void);
 
-void uart_send_dma(uint8_t *str, uint16_t size);
-
+// ringbuffer
+void serial_rb_init(hal_uart_t *rb);
+void serial_rb_write(hal_uart_t *rb, uint8_t data);
+uint8_t serial_rb_read(hal_uart_t *rb, uint8_t *data);
 
 #endif
