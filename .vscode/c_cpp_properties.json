@@ -90,7 +90,6 @@
                 "C:/Users/Administrator/.platformio/packages/framework-stm32cubef4/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src",
                 "C:/Users/Administrator/.platformio/packages/framework-stm32cubef4/Middlewares/ST/STM32_USB_Host_Library/Class/MTP/Inc",
                 "C:/Users/Administrator/.platformio/packages/framework-stm32cubef4/Middlewares/ST/STM32_USB_Host_Library/Class/MTP/Src",
-                "C:/Users/Administrator/.platformio/packages/tool-unity",
                 ""
             ],
             "browse": {
@@ -178,12 +177,11 @@
                     "C:/Users/Administrator/.platformio/packages/framework-stm32cubef4/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src",
                     "C:/Users/Administrator/.platformio/packages/framework-stm32cubef4/Middlewares/ST/STM32_USB_Host_Library/Class/MTP/Inc",
                     "C:/Users/Administrator/.platformio/packages/framework-stm32cubef4/Middlewares/ST/STM32_USB_Host_Library/Class/MTP/Src",
-                    "C:/Users/Administrator/.platformio/packages/tool-unity",
                     ""
                 ]
             },
             "defines": [
-                "PLATFORMIO=50205",
+                "PLATFORMIO=60001",
                 "STM32F4",
                 "STM32F429xx",
                 "USE_HAL_DRIVER",

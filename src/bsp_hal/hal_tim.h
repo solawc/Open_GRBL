@@ -45,8 +45,11 @@ typedef struct
     timer_def step_reset;
     timer_def laser;
 
-    uint8_t tim_addr;   // tim自动重装载
-    uint8_t tim_p;     
+    uint16_t set_timer_psc;    
+    uint16_t set_timer_arr;
+
+    uint16_t reset_timer_psc;    
+    uint16_t reset_timer_arr;
 
     void (*tim_set_handler)(void *);
     void (*tim_reset_handler)(void *);

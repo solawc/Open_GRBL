@@ -22,8 +22,18 @@ void hal_set_timer_init(void) {
     HAL_NVIC_SetPriority(SET_TIM_IRQn, 0, 1);       // 使定时器中断的优先级保持最高
     HAL_NVIC_DisableIRQ(SET_TIM_IRQn);
     HAL_TIM_Base_Start_IT(&STEP_SET_TIM);
+
+    hal_step_tim.set_timer_psc = 0;
+    hal_step_tim.set_timer_arr = 0;
+
+    hal_step_tim.reset_timer_psc = 0;
+    hal_step_tim.reset_timer_arr = 0;
 }
 
+
+/*
+ * 设置用于拉低的定时器的tick为1us
+*/
 void hal_reset_timer_init(void) {
 
     RESET_TIM_CLK_ENABLED();
