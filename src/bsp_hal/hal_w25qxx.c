@@ -4,7 +4,6 @@ dev_spi_t dev_w25qxx_spi;
 spi_setting_t dev_w25qxx_spi_set;
 spi_setting_t dev_sdcard_set;
 
-
 NFLASH_t sFlash;
 
 static void hal_w25qxx_spi_gpio_init(void)

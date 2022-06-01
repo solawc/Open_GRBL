@@ -8,6 +8,6 @@
 void hal_f429_system_init(void);
 void Error_Handler(void);
 void hal_f429_clk_init(void);
-#endif
+#endif // STM32F429xx
 
 #endif

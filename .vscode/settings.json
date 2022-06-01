@@ -30,7 +30,8 @@
         "task.h": "c",
         "cmsis_gcc.h": "c",
         "hal_debug.h": "c",
-        "spi.h": "c"
+        "spi.h": "c",
+        "hal_f407_system.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

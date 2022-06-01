@@ -8,9 +8,9 @@
 void hal_limit_gpio_init(void) {
 
 	GPIO_InitTypeDef GPIO_Init = {0};
-
 	GPIO_Init.Mode = GPIO_MODE_IT_RISING;
 	GPIO_Init.Pull = GPIO_NOPULL;
+
 #ifdef LIMIT_X_PIN
 	GPIO_Init.Pin = LIMIT_X_PIN;
     HAL_GPIO_Init(LIMIT_X_PORT, &GPIO_Init);

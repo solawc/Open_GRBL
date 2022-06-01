@@ -27,6 +27,10 @@
 #define MCU_INFI_NAME       "STM32G0B0CE"
 #define MCU_INFO_FLASH      "512K"
 #define MCU_INFO_RAM        "144K"
+#elif defined(STM32407xx)  
+#define MCU_INFI_NAME       "STM32F407VE"
+#define MCU_INFO_FLASH      "512K"
+#define MCU_INFO_RAM        "128K"
 #endif
 
 /*

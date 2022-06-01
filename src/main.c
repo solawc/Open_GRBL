@@ -58,12 +58,6 @@ void enter_grbl_task(void) {
 
 	memset(sys_position,0,sizeof(sys_position)); // Clear machine position.
 
-#if defined(CPU_MAP_ATMEGA328P)
-  	sei(); // Enable interrupts
-#elif defined(CPU_STM32)
-	
-#endif
-
 	// Initialize system state.
 #ifdef FORCE_INITIALIZATION_ALARM
 	  // Force Grbl into an ALARM state upon a power-cycle or hard reset.

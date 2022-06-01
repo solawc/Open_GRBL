@@ -8,9 +8,9 @@ void grbl_report_mcu_info(void) {
 
     printf("/*********************************************************/\r\n");
     printf("ST-GRBL\r\n");
-    printf("CPU Name:%s\r\n", MCU_INFI_NAME);
-    printf("CPU Flash:%s\r\n", MCU_INFI_NAME);
-    printf("CPU RAM:%s\r\n", MCU_INFI_NAME);
+    // printf("CPU Name:%s\r\n", MCU_INFI_NAME);
+    // printf("CPU Flash:%s\r\n", MCU_INFI_NAME);
+    // printf("CPU RAM:%s\r\n", MCU_INFI_NAME);
     printf("CPU Clock:%ldMHz\r\n", grbl_hw_get.mcu_clk/1000000);
     printf("CPU Step Clock:%ldMHz\r\n", grbl_hw_get.step_tim_clk/1000000);
     printf("Flash Info 0x%lx, flash_size = %ldMB\n", (uint32_t)sFlash.flash_id, (sFlash.flash_size / (uint32_t)1024));

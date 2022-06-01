@@ -11,6 +11,9 @@
 #elif defined(STM32G0B0xx)
     #include "stm32g0xx_hal.h"
     #include "bsp_hal/bsp_g0b0ce/hal_g0b0_system.h"
+#elif defined(STM32F407xx)
+    #include "stm32f4xx_hal.h"
+    #include "bsp_hal/bsp_f407ve/hal_f407_system.h"
 #endif
 
 #if defined(USE_FREERTOS_RTOS)
@@ -39,6 +42,8 @@
 #define SYSTEM_INTI()       hal_f429_system_init()
 #elif defined(STM32G0B0xx)
 #define SYSTEM_INTI()       hal_g0b0_system_init()
+#elif defined(STM32F407xx)
+#define SYSTEM_INTI()
 #endif
 
 #define SYSTEM_UART()       hal_uart_init()

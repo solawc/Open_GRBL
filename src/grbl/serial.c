@@ -79,6 +79,7 @@ void serial_init()
 void serial_write(uint8_t data) {
 
   hal_uart_sendbyte(data);
+  
   while (!hal_is_uart_sr_txe()); // check uart is empty
 
   // // Calculate next head
