@@ -25,7 +25,7 @@ int main() {
 
 #ifdef STM32G0B0xx
   // here must wait for some time, beacuse STM32G0B0CE have no XTAL
-    HAL_Delay(100);  
+  HAL_Delay(100);  
 #endif
 
   grbl_report_mcu_info();

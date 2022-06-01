@@ -133,6 +133,7 @@ void system_execute_startup(char *line)
 // be an issue, since these commands are not typically used during a cycle.
 uint8_t system_execute_line(char *line)
 {
+  collapseGCode(line);
   uint8_t char_counter = 1;
   uint8_t helper_var = 0; // Helper variable
   float parameter, value;
