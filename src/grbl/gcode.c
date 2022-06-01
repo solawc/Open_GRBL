@@ -20,6 +20,7 @@
 */
 
 #include "grbl.h"
+#include "ctype.h"
 
 // NOTE: Max line number is defined by the g-code standard to be 99999. It seems to be an
 // arbitrary value, and some GUIs may require more. So we increased it based on a max safe
@@ -57,6 +58,58 @@ void gc_sync_position()
   system_convert_array_steps_to_mpos(gc_state.position,sys_position);
 }
 
+void collapseGCode(char* line) {
+
+    char* parenPtr = NULL;
+    char* outPtr = line;
+    char  c;
+
+    for (char* inPtr = line; (c = *inPtr) != '\0'; inPtr++) {
+        if (isspace(c)) {continue; }
+        switch (c) {
+            case ')':
+                if (parenPtr) {
+                    *inPtr = '\0';                      // Terminate comment by replacing ) with NUL
+                    parenPtr = NULL;                    // report_gcode_comment(parenPtr);
+                }
+                // Strip out ) that does not follow a (
+                break;
+            case '(':
+                // Start the comment at the character after (
+                parenPtr = inPtr + 1;
+                break;
+            case ';':
+                // NOTE: ';' comment to EOL is a LinuxCNC definition. Not NIST.
+#ifdef REPORT_SEMICOLON_COMMENTS
+                report_gcode_comment(inPtr + 1);
+#endif
+                *outPtr = '\0';
+                return;
+            case '%':
+                // TODO: Install '%' feature
+                // Program start-end percent sign NOT SUPPORTED.
+                // NOTE: This maybe installed to tell Grbl when a program is running vs manual input,
+                // where, during a program, the system auto-cycle start will continue to execute
+                // everything until the next '%' sign. This will help fix resuming issues with certain
+                // functions that empty the planner buffer to execute its task on-time.
+                break;
+            case '\r':
+                // In case one sneaks in
+                break;
+            default:
+                if (!parenPtr) {
+                    *outPtr++ = toupper(c);  // make upper case
+                }
+        }
+    }
+    // On loop exit, *inPtr is '\0'
+    if (parenPtr) {
+        // Handle unterminated ( comments
+        // report_gcode_comment(parenPtr);
+    }
+    *outPtr = '\0';
+}
+
 
 // Executes one line of 0-terminated G-Code. The line is assumed to contain only uppercase
 // characters and signed floating point values (no whitespace). Comments and block delete
@@ -65,6 +118,11 @@ void gc_sync_position()
 // coordinates, respectively.
 uint8_t gc_execute_line(char *line)
 {
+  /* -------------------------------------------------------------------------------------
+    STEP 0: Remvoe space and make a-z to A-Z
+  */
+  collapseGCode(line);
+
   /* -------------------------------------------------------------------------------------
      STEP 1: Initialize parser block struct and copy current g-code state modes. The parser
      updates these modes and commands as the block line is parser and will only be used and

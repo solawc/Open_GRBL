@@ -8,7 +8,36 @@ UART_HandleTypeDef laser_uart;
 DMA_HandleTypeDef dma_tx;
 DMA_HandleTypeDef dma_rx;
 
-uint8_t laser_rx_buf[1];
+uint8_t laser_dma_rx_buf[5];
+
+
+// DMA2 CH4 STREAM5
+
+void hal_uart_dma_rx_config(void) {
+
+	__HAL_RCC_DMA2_CLK_ENABLE();
+
+	dma_rx.Instance = DMA2_Stream5;
+	dma_rx.Init.Channel = DMA_CHANNEL_4;
+	dma_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;  		// 设置为外设到内存
+	dma_rx.Init.PeriphInc = DMA_PINC_DISABLE; 			// 外设地址不增
+	dma_rx.Init.MemInc = DMA_MINC_ENABLE; 				//内存地址自增
+	dma_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+	dma_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+	dma_rx.Init.Mode = DMA_CIRCULAR;		// 循环模式
+	dma_rx.Init.Priority = DMA_PRIORITY_MEDIUM;
+	dma_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
+
+	HAL_DMA_DeInit(&dma_rx);
+
+	HAL_DMA_Init(&dma_rx);
+
+	__HAL_LINKDMA(&laser_uart, hdmarx, dma_rx);
+
+	// HAL_NVIC_SetPriority(DMA2_Stream5_IRQn, 2, 0);
+  	// HAL_NVIC_EnableIRQ(DMA2_Stream5_IRQn);
+}
+
 
 void hal_uart_gpio_init(void) {
 
@@ -57,7 +86,11 @@ void hal_uart_init(void) {
 	}
 #endif
 
+	// hal_uart_dma_rx_config();
+
 	hal_uart_irq_set();
+
+	// HAL_UART_Receive_DMA(&laser_uart, laser_dma_rx_buf, 5);
 }
 
 void hal_uart_irq_set(void) {
@@ -138,10 +171,9 @@ void LASER_UART_IRQHANDLER() {
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {	
-	// if(huart == &laser_uart) {
-	// 	laser_uart_rx_handler(laser_rx_buf[0]);
-	// 	HAL_UART_Receive_IT(&laser_uart, laser_rx_buf, 1);       // 重新注册一次，要不然下次收不到了
-	// }
+	if(huart == &laser_uart) {
+		HAL_UART_Transmit(&laser_uart,laser_dma_rx_buf, 5, 0xFFFF);
+	}
 }
 
 void serial_rb_init(hal_uart_t *rb) {

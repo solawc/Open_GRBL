@@ -149,6 +149,7 @@ void protocol_main_loop()
         case OK:  break;
         
         case EOL: 
+        
           protocol_execute_realtime();                            // Runtime command check point.
 
           if (sys.abort) { return; }                              // Bail to calling function upon system abort
