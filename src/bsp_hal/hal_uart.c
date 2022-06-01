@@ -13,6 +13,7 @@ uint8_t laser_dma_rx_buf[5];
 
 // DMA2 CH4 STREAM5
 
+#if 0 
 void hal_uart_dma_rx_config(void) {
 
 	__HAL_RCC_DMA2_CLK_ENABLE();
@@ -37,6 +38,8 @@ void hal_uart_dma_rx_config(void) {
 	// HAL_NVIC_SetPriority(DMA2_Stream5_IRQn, 2, 0);
   	// HAL_NVIC_EnableIRQ(DMA2_Stream5_IRQn);
 }
+
+#endif
 
 
 void hal_uart_gpio_init(void) {
