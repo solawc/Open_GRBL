@@ -44,6 +44,38 @@ typedef struct {
     uint32_t step_tim_clk;   
 }grbl_hw_t;
 
+typedef struct {
+
+/*********************************************
+ * Motor
+ * ******************************************/
+    void (*motor_pin_init)(void *);   
+    void (*motor_set_dir)(uint8_t mask); 
+    void (*motor_set_en)(bool status);
+    uint8_t (*motor_get_dir)(uint8_t axis);
+    uint8_t (*motor_get_axis)(uint8_t axis);
+
+/*********************************************
+ * Limit
+ * ******************************************/
+    void (*limit_pin_init)(void *);
+    void (*limit_pin_isr)(uint16_t pin);
+    void (*limit_irq_enable)(void *);
+    void (*limit_irq_disable)(void *);
+    uint8_t (*limit_get_status)(axis);
+    uint8_t (*limit_get_all)(uint8_t bit);
+    
+}hal_gpio_t;
+
+
+typedef struct{
+
+
+
+}hal_t;
+
+
+
 void grbl_report_mcu_info(void);
 void grbl_hw_info_get(void);
 void grbl_hw_init(void);

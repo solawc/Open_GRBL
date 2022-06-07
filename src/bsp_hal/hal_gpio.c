@@ -1,10 +1,10 @@
 #include "hal_gpio.h"
 
-/*
-	Choose limits pins need know, if use st mcu ,you must konw pins interrupt 
-	int whitch exit line? you'd best make the pins in the same exit line! than 
-	you just need to use the same irq handle function to deal with the job.
-*/
+/*******************************************************************************
+ * Choose limits pins need know, if use st mcu ,you must konw pins interrupt 
+ * int whitch exit line? you'd best make the pins in the same exit line! than 
+ * you just need to use the same irq handle function to deal with the job.
+*******************************************************************************/
 void hal_limit_gpio_init(void) {
 
 	GPIO_InitTypeDef GPIO_Init = {0};
@@ -73,9 +73,7 @@ uint8_t hal_limits_get_gpio_status(uint8_t axis) {
 uint8_t hal_get_all_limits_status(uint8_t bit_select) {
 
 	uint8_t limit_status = 0x00;
-	// if(bit_select) limit_status = 0x0;
-	// else limit_status = 0xff;
-
+	
 	limit_status |= HAL_GPIO_ReadPin(LIMIT_X_PORT, LIMIT_X_PIN) << 0;
 	limit_status |= (HAL_GPIO_ReadPin(LIMIT_Y_PORT, LIMIT_Y_PIN)) << 1;
 #ifdef LIMIT_Z_PIN

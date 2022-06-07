@@ -58,6 +58,13 @@
 #define STEP_EN_PORT                GPIOC
 #define STEP_EN_PIN                 GPIO_PIN_15
 
+// #define STEP_X_EN_PORT
+// #define STEP_X_EN_PIN
+// #define STEP_Y_EN_PORT
+// #define STEP_Y_EN_PIN
+// #define STEP_Z_EN_PORT
+// #define STEP_Z_EN_PIN
+
 #define MOTOR_X_DIR_PORT            GPIOC
 #define MOTOR_X_DIR_PIN             GPIO_PIN_13
 #define MOTOR_Y_DIR_PORT            GPIOB
@@ -118,10 +125,9 @@ void hal_limit_gpio_irq_disable(void);
 uint8_t hal_limits_get_gpio_status(uint8_t axis);
 uint8_t hal_get_all_limits_status(uint8_t bit_select);
 
+void hal_motor_gpio_init(void);
 void hal_set_dir_gpio_status(uint8_t mask);
 void hal_set_step_gpio_status(uint8_t mask);
-void hal_set_step_gpio_toggle(uint8_t mask);
-void hal_motor_gpio_init(void);
 void hal_step_en_gpio_set(bool status);
 uint8_t hal_get_moter_dir_gpio_mask(uint8_t axis);
 uint8_t hal_get_moter_axis_gpio_mask(uint8_t axis);

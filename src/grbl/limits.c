@@ -46,6 +46,8 @@
 
 #if defined(USE_FREERTOS_RTOS)
 TaskHandle_t limit_task_handler;
+
+const int DEBOUNCE_PERIOD = 32;
 #endif
 
 void limits_init()
@@ -217,7 +219,7 @@ uint8_t limits_get_state()
     }
 #endif
 
-    if (sys.state != STATE_ALARM) {
+    if (sys.state != STATE_ALARM && sys.state != STATE_HOMING) {
         if (!(sys_rt_exec_alarm)) {
           #ifdef HARD_LIMIT_FORCE_STATE_CHECK
             // Check limit pin state.
@@ -244,6 +246,7 @@ uint8_t limits_get_state()
       int evt;
       uint8_t pinStatus;
       xQueueReceive(limit_sw_queue, &evt, portMAX_DELAY);
+      vTaskDelay(DEBOUNCE_PERIOD / portTICK_PERIOD_MS);
 #ifdef ENABLE_SOFTWARE_DEBOUNCE
       vTaskDelay(DEBOUNCE_PERIOD / portTICK_PERIOD_MS);    // delay a while
 #endif
