@@ -174,9 +174,9 @@ void LASER_UART_IRQHANDLER() {
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {	
-	if(huart == &laser_uart) {
-		HAL_UART_Transmit(&laser_uart,laser_dma_rx_buf, 5, 0xFFFF);
-	}
+	// if(huart == &laser_uart) {
+	// 	HAL_UART_Transmit(&laser_uart,laser_dma_rx_buf, 5, 0xFFFF);
+	// }
 }
 
 void serial_rb_init(hal_uart_t *rb) {
