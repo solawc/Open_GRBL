@@ -62,7 +62,7 @@ typedef struct {
     void (*limit_pin_isr)(uint16_t pin);
     void (*limit_irq_enable)(void *);
     void (*limit_irq_disable)(void *);
-    uint8_t (*limit_get_status)(axis);
+    uint8_t (*limit_get_status)(uint8_t axis);
     uint8_t (*limit_get_all)(uint8_t bit);
     
 }hal_gpio_t;
