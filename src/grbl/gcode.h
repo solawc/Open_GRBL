@@ -245,4 +245,7 @@ uint8_t gc_execute_line(char *line);
 // Set g-code parser position. Input in steps.
 void gc_sync_position();
 
+// Remove space and make a-z to A-Z
+void collapseGCode(char* line);
+
 #endif
