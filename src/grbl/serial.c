@@ -77,9 +77,7 @@ void serial_init()
 
 // Writes one byte to the TX serial buffer. Called by main program.
 void serial_write(uint8_t data) {
-
   hal_uart_sendbyte(data);
-  
   while (!hal_is_uart_sr_txe()); // check uart is empty
 
   // // Calculate next head
