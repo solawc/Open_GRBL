@@ -161,6 +161,31 @@ uint8_t limits_get_state()
 // homing cycles and will not respond correctly. Upon user request or need, there may be a
 // special pinout for an e-stop, but it is generally recommended to just directly connect
 // your e-stop switch to the Arduino reset pin, since it is the most correct way to do this.
+
+void limit_isr_handler_cb(void) {
+
+  if (sys.state != STATE_ALARM && sys.state != STATE_HOMING) {
+        if (!(sys_rt_exec_alarm)) {
+          #ifdef HARD_LIMIT_FORCE_STATE_CHECK
+            // Check limit pin state.
+            if (limits_get_state()) {
+              mc_reset(); // Initiate system kill.
+              system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
+            }
+          #else
+#if defined(USE_FREERTOS_RTOS)
+            int evt;
+            xQueueSendFromISR(limit_sw_queue, &evt, NULL);
+#else
+            mc_reset(); // Initiate system kill.
+            system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
+#endif
+          #endif
+        }
+  }
+}
+
+
 #if defined(CPU_MAP_ATMEGA328P)
   #ifndef ENABLE_SOFTWARE_DEBOUNCE
     ISR(LIMIT_INT_vect) // DEFAULT: Limit pin change interrupt process.
@@ -218,26 +243,27 @@ uint8_t limits_get_state()
         __HAL_GPIO_EXTI_CLEAR_IT(LIMIT_Z_PIN);
     }
 #endif
+    limit_isr_handler_cb();
 
-    if (sys.state != STATE_ALARM && sys.state != STATE_HOMING) {
-        if (!(sys_rt_exec_alarm)) {
-          #ifdef HARD_LIMIT_FORCE_STATE_CHECK
-            // Check limit pin state.
-            if (limits_get_state()) {
-              mc_reset(); // Initiate system kill.
-              system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
-            }
-          #else
-#if defined(USE_FREERTOS_RTOS)
-            int evt;
-            xQueueSendFromISR(limit_sw_queue, &evt, NULL);
-#else
-            mc_reset(); // Initiate system kill.
-            system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
-#endif
-          #endif
-        }
-      }
+//     if (sys.state != STATE_ALARM && sys.state != STATE_HOMING) {
+//         if (!(sys_rt_exec_alarm)) {
+//           #ifdef HARD_LIMIT_FORCE_STATE_CHECK
+//             // Check limit pin state.
+//             if (limits_get_state()) {
+//               mc_reset(); // Initiate system kill.
+//               system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
+//             }
+//           #else
+// #if defined(USE_FREERTOS_RTOS)
+//             int evt;
+//             xQueueSendFromISR(limit_sw_queue, &evt, NULL);
+// #else
+//             mc_reset(); // Initiate system kill.
+//             system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
+// #endif
+//           #endif
+//         }
+//       }
   }
 
 #if defined(USE_FREERTOS_RTOS)
