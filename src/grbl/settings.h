@@ -27,7 +27,7 @@
 
 // Version of the EEPROM data. Will be used to migrate existing data from older versions of Grbl
 // when firmware is upgraded. Always stored in byte 0 of eeprom
-#define SETTINGS_VERSION 11  // NOTE: Check settings_reset() when moving to next version.
+#define SETTINGS_VERSION 12  // NOTE: Check settings_reset() when moving to next version.
 
 // Define bit flag masks for the boolean settings in settings.flag.
 #define BIT_REPORT_INCHES      0
@@ -117,7 +117,7 @@ typedef struct {
   float homing_pulloff;
 
   // can add more flag to set if the eeprom is enough
-
+  uint8_t flame_state;      // for flame sensor 
 } settings_t;
 extern settings_t settings;
 
