@@ -1,5 +1,5 @@
-#ifndef __cpu_stm32f4_map_h
-#define __cpu_stm32f4_map_h
+#ifndef __cpu_stm32g0_map_h
+#define __cpu_stm32g0_map_h
 
 #include "grbl.h"
 

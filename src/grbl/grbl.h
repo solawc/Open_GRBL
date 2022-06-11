@@ -23,7 +23,7 @@
 
 // Grbl versioning system
 #define GRBL_VERSION "1.4h"
-#define GRBL_VERSION_BUILD "20220609"
+#define GRBL_VERSION_BUILD "20220611"
 
 // Define standard libraries used by Grbl.
 #include <math.h>
@@ -40,8 +40,7 @@
 #include "settings.h"
 #include "system.h"
 #include "defaults.h"
-#include "cpu_map.h"
-#include "cpu_stm32f4_map.h"
+
 #include "planner.h"
 #include "coolant_control.h"
 #include "eeprom.h"
@@ -58,6 +57,12 @@
 #include "stepper.h"
 #include "jog.h"
 #include "error.h"
+
+#ifdef STM32F4
+  #include "cpu_stm32f4_map.h"
+#elif defined(STM32G0xx)
+  #include "cpu_stm32g0_map.h"
+#endif
 
 // #define M_PI	3.1415926535
 #define PSTR(x) x
