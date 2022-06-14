@@ -148,6 +148,7 @@
                 "PLATFORMIO=60002",
                 "STM32G0xx",
                 "STM32G0B0xx",
+                "NAME=DLC_LG0_V2",
                 "USE_HAL_DRIVER",
                 "F_CPU=64000000L",
                 ""
