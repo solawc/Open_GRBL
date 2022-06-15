@@ -33,7 +33,10 @@
         "spi.h": "c",
         "hal_f407_system.h": "c",
         "sdcard.h": "c",
-        "cpu_stm32f4_map.h": "c"
+        "cpu_stm32f4_map.h": "c",
+        "hal_sdcard.h": "c",
+        "cpu_stm32g0_map.h": "c",
+        "sd_file.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

@@ -30,13 +30,18 @@
 #include "bsp_hal/hal_flash_eeprom.h"
 #include "bsp_hal/hal_spi.h"
 
+#include "bsp_hal/hal_sdcard.h"
 #include "bsp_hal/hal_w25qxx.h"
 #include "ex_dev/lcd/tft_lcd_dev.h"
 #include "ex_dev/sd/sdcard.h"
+#include "ex_dev/sd/sd_file.h"
 
 #include "client.h"
 
 #include "grbl/grbl.h"
+
+// Fatfs 
+#include "ff.h"
 
 #ifdef STM32F429xx
 #define SYSTEM_INTI()       hal_f429_system_init()

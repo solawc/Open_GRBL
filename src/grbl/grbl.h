@@ -59,12 +59,16 @@
 #include "error.h"
 
 #ifdef STM32F4
-  #include "cpu_stm32f4_map.h"
+  #include "../bsp_hal/bsp_f429ig/cpu_stm32f4_map.h"
 #elif defined(STM32G0xx)
-  #include "cpu_stm32g0_map.h"
+  
+  #include "../bsp_hal/bsp_g0b0ce/cpu_stm32g0_map.h"
 #endif
 
-// #define M_PI	3.1415926535
+#ifndef M_PI
+#define M_PI	3.1415926535
+#endif
+
 #define PSTR(x) x
 #define pgm_read_byte_near(x) *(x)
 #define false 0
