@@ -91,8 +91,26 @@ static void hal_motor_en_gpio_init(void) {
 	GPIO_Init.Pull = GPIO_NOPULL;
 	GPIO_Init.Speed = GPIO_SPEED_FREQ_MEDIUM;
 
+#ifdef STEP_EN_PORT
 	GPIO_Init.Pin = STEP_EN_PIN;
     HAL_GPIO_Init(STEP_EN_PORT, &GPIO_Init);
+#endif
+
+#ifdef STEP_X_EN_PORT
+	GPIO_Init.Pin = STEP_X_EN_PIN;
+    HAL_GPIO_Init(STEP_X_EN_PORT, &GPIO_Init);
+#endif
+
+#ifdef STEP_Y_EN_PORT
+	GPIO_Init.Pin = STEP_X_EN_PIN;
+    HAL_GPIO_Init(STEP_X_EN_PORT, &GPIO_Init);
+#endif
+
+#ifdef STEP_Z_EN_PORT
+	GPIO_Init.Pin = STEP_X_EN_PIN;
+    HAL_GPIO_Init(STEP_X_EN_PORT, &GPIO_Init);
+#endif
+
 }
 
 static void hal_motor_dir_gpio_init(void) {
@@ -141,8 +159,16 @@ void hal_motor_gpio_init(void) {
 }
 
 void hal_step_en_gpio_set(bool status) {
-	if(status) { HAL_GPIO_WritePin(STEP_EN_PORT, STEP_EN_PIN, GPIO_PIN_SET); }
-	else { HAL_GPIO_WritePin(STEP_EN_PORT, STEP_EN_PIN, GPIO_PIN_RESET); }
+	if(status) { 
+	#ifdef STEP_EN_PORT
+		HAL_GPIO_WritePin(STEP_EN_PORT, STEP_EN_PIN, GPIO_PIN_SET); 
+	#endif
+	}
+	else { 
+	#ifdef STEP_EN_PORT
+		HAL_GPIO_WritePin(STEP_EN_PORT, STEP_EN_PIN, GPIO_PIN_RESET); 
+	#endif
+	}
 }
 
 uint8_t hal_return_axix_gpio_status(uint8_t axis) {
