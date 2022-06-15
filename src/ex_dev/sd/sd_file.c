@@ -43,3 +43,14 @@ bool sd_mount(void) {
     if(fs_res == FR_OK) return true;
     else return false;
 }
+
+
+char *sd_read_line() {
+
+    char *line;
+
+    return line;
+}
+
+
+
