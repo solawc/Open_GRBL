@@ -8,29 +8,16 @@
 
 该项目主要是出于个人兴趣，将原生的GRBL的源码，移植到STM32的MCU上，移植的源码的地址：https://github.com/gnea/grbl
 
-目前该项目还未完善，主要原因是因为电机控制部分还未完全调试完成，其余完成的部分：
-
-- GPIO，读写操作和中断，用于限位和Probe
-- UART，用于上位机连接，目前与上位机正常连接
-- EEPROM，读写与保存正常
-- W25qxx，驱动已经正常，后期可以针对GUI，用于图片存放和字库存放
-- SDCard, 未加入， 用于脱机
-- TFT_SPI，未完成，用于脱机显示和操作
-- Spindle，已完成
-- FreeRTOS, 已移植完成
-- Fatfs, 已加入
-
 ## 测试过的MCU
 
 测试方法是在保持工程结构不改变的前提下，只修改了底层接口，其余地方不改变，
 
-|    内核    |                 MCU型号                 |
-| :--------: | :-------------------------------------: |
-| @Cortex-M0 |               STM32G070RB               |
-| @Cortex-M0 |               STM32G0B0CE               |
-| @Cortex-M3 |               STM32F103VE               |
-| @Cortex-M4 |               STM32F429IG               |
-| @Cortex-M7 | STM32H750XB/i.MX RT1064/i.MX RT1010-EVK |
+|    内核    |   MCU型号   |
+| :--------: | :---------: |
+| @Cortex-M0 | STM32G070RB |
+| @Cortex-M0 | STM32G0B0CE |
+| @Cortex-M3 | STM32F103VE |
+| @Cortex-M4 | STM32F429IG |
 
 目前Vscode+PlatformIO的环境已经搭建完成，抛弃了Keil的环境，Keil环境的代码将会移植到PIO中执行。
 
