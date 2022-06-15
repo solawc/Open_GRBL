@@ -38,7 +38,6 @@ void hal_uart_dma_rx_config(void) {
 	// HAL_NVIC_SetPriority(DMA2_Stream5_IRQn, 2, 0);
   	// HAL_NVIC_EnableIRQ(DMA2_Stream5_IRQn);
 }
-
 #endif
 
 

@@ -26,6 +26,9 @@
 #define Z_LIMIT_BIT       2  
 #define LIMIT_MASK       ((1<<X_LIMIT_BIT)|(1<<Y_LIMIT_BIT)|(1<<Z_LIMIT_BIT)) // All limit bits
 
+/*************************************************************************
+ * Allow laser output 0-10000Hz
+ * **********************************************************************/
 #define SPINDLE_PWM_FREQUENCY       1000                   
 #define SPINDLE_PWM_MAX_VALUE       (1000000 / SPINDLE_PWM_FREQUENCY)
 #ifndef SPINDLE_PWM_MIN_VALUE

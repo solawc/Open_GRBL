@@ -115,7 +115,7 @@ void hal_pwm_init() {
     laser_pin_config();
 
     LASER_TIM.Instance = LASER_TIM_PORT;
-    LASER_TIM.Init.Prescaler = (F_CPU/1000000)-1;                   // psc
+    LASER_TIM.Init.Prescaler = (F_CPU / 1000000) - 1;                   // psc
     LASER_TIM.Init.CounterMode = TIM_COUNTERMODE_UP;
     LASER_TIM.Init.Period = SPINDLE_PWM_MAX_VALUE -1;               // arr
     LASER_TIM.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;

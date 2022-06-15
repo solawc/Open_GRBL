@@ -69,26 +69,6 @@ void hal_f429_clk_init(void) {
   __HAL_RCC_SPI1_CLK_ENABLE();
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-
-#if defined(USE_FREERTOS_RTOS)
-  uint32_t ulReturn;
-	ulReturn = taskENTER_CRITICAL_FROM_ISR();
-#endif
-
-  if(htim == &STEP_RESET_TIMER) { 
-    reset_timer_irq_handler();
-  }
-  else if(htim == &STEP_SET_TIMER)  {
-    set_timer_irq_handler();
-  }
-
-#if defined(USE_FREERTOS_RTOS)
-  taskEXIT_CRITICAL_FROM_ISR( ulReturn );
-#endif
-}
-
 void systick_setting_init() {
 
 
