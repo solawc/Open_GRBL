@@ -1,7 +1,7 @@
 #ifndef __hal_gpio_h
 #define __hal_gpio_h
 
-#include "main.h"
+#include "../../../main.h"
 
 // limits
 #ifdef STM32F429xx
@@ -58,12 +58,14 @@
 #define STEP_EN_PORT                GPIOC
 #define STEP_EN_PIN                 GPIO_PIN_15
 
-// #define STEP_X_EN_PORT
-// #define STEP_X_EN_PIN
-// #define STEP_Y_EN_PORT
-// #define STEP_Y_EN_PIN
-// #define STEP_Z_EN_PORT
-// #define STEP_Z_EN_PIN
+#ifndef STEP_EN_PORT
+#define STEP_X_EN_PORT           GPIOC           
+#define STEP_X_EN_PIN            GPIO_PIN_15
+#define STEP_Y_EN_PORT           GPIOC           
+#define STEP_Y_EN_PIN            GPIO_PIN_15
+#define STEP_Z_EN_PORT           GPIOC           
+#define STEP_Z_EN_PIN            GPIO_PIN_15
+#endif
 
 #define MOTOR_X_DIR_PORT            GPIOC
 #define MOTOR_X_DIR_PIN             GPIO_PIN_13

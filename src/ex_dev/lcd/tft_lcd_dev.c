@@ -76,12 +76,12 @@ static uint8_t hal_tft_write_8(uint8_t data) {
     return hal_spi_transfer_revice_byte(&tft_spi, data);
 }
 
-static uint16_t hal_tft_write_16(uint16_t data) {
-    // return hal_spi_transfer_revice_byte(&tft_spi, data);
-    uint16_t rdata = 0;
-    HAL_SPI_TransmitReceive(&tft_spi.hal_spi, (uint8_t *)&data, &rdata, 1,100);
-    return rdata;
-}
+// static uint16_t hal_tft_write_16(uint16_t data) {
+//     // return hal_spi_transfer_revice_byte(&tft_spi, data);
+//     uint16_t rdata = 0;
+//     HAL_SPI_TransmitReceive(&tft_spi.hal_spi, (uint8_t *)&data, &rdata, 1,100);
+//     return rdata;
+// }
 
 
 static void hal_tft_write_cmd_8(uint8_t data) {
@@ -247,7 +247,7 @@ void dev_lcd_init(void) {
     printf("[debug]enter lcd config finish\n");
     HAL_GPIO_WritePin(LCD_EN_PORT, LCD_EN_PIN, GPIO_PIN_SET);
 
-    dev_lcd_draw_fill(0, 0, 240, 320, 0x1010ff);
+    dev_lcd_draw_fill(0, 0, 240, 320, 0x1010);
 }
 
 void dev_lcd_set_window(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2) {
@@ -267,7 +267,7 @@ void dev_lcd_set_window(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2) {
     DATA_MODE_SET();
 }
 
-void dev_lcd_draw_fill(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2,uint16_t color) {
+void dev_lcd_draw_fill(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2, uint32_t color) {
 
     uint32_t x,y;
 

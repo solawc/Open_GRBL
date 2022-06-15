@@ -1,7 +1,7 @@
 #ifndef hal_spi_h
 #define hal_spi_h
 
-#include "main.h"
+#include "../../../main.h"
 
 #define USE_SD_SPI
 #define USE_TFT_SPI

@@ -39,7 +39,7 @@ void hal_reset_timer_init(void) {
     RESET_TIM_CLK_ENABLED();
     STEP_RESET_TIM.Instance = SETP_RESET_TIM;
     STEP_RESET_TIM.Init.Period = 1-1;     
-    STEP_RESET_TIM.Init.Prescaler = 10-1; 
+    STEP_RESET_TIM.Init.Prescaler = (F_CPU/1000000) -1; 
     STEP_RESET_TIM.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     STEP_RESET_TIM.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&STEP_RESET_TIM);
@@ -110,14 +110,14 @@ void hal_pwm_init() {
 
     TIM_MasterConfigTypeDef sMasterConfig = {0};
     TIM_OC_InitTypeDef sConfigOC = {0};
-    TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
+    // TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
 
     laser_pin_config();
 
     LASER_TIM.Instance = LASER_TIM_PORT;
-    LASER_TIM.Init.Prescaler = 64-1;       // psc
+    LASER_TIM.Init.Prescaler = (F_CPU / 1000000) - 1;                   // psc
     LASER_TIM.Init.CounterMode = TIM_COUNTERMODE_UP;
-    LASER_TIM.Init.Period = 1000-1;            // arr
+    LASER_TIM.Init.Period = SPINDLE_PWM_MAX_VALUE -1;               // arr
     LASER_TIM.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     LASER_TIM.Init.RepetitionCounter = 0;
     LASER_TIM.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -143,17 +143,17 @@ void hal_pwm_init() {
     {
         Error_Handler();
     }
-    sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
-    sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
-    sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
-    sBreakDeadTimeConfig.DeadTime = 0;
-    sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
-    sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
-    sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
-    if (HAL_TIMEx_ConfigBreakDeadTime(&LASER_TIM, &sBreakDeadTimeConfig) != HAL_OK)
-    {
-        Error_Handler();
-    }
+    // sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
+    // sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
+    // sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
+    // sBreakDeadTimeConfig.DeadTime = 0;
+    // sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
+    // sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
+    // sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
+    // if (HAL_TIMEx_ConfigBreakDeadTime(&LASER_TIM, &sBreakDeadTimeConfig) != HAL_OK)
+    // {
+    //     Error_Handler();
+    // }
     HAL_TIM_PWM_Start(&LASER_TIM, TIM_CHANNEL_2);
 }
 

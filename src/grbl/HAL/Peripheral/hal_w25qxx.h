@@ -1,7 +1,7 @@
 #ifndef __hal_w25qxx_h__
 #define __hal_w25qxx_h__
 
-#include "main.h"
+#include "../../../main.h"
 
 // Flash choose
 // EF
