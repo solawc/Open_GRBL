@@ -1,7 +1,7 @@
 #ifndef __hal_gpio_h
 #define __hal_gpio_h
 
-#include "main.h"
+#include "../../../main.h"
 
 // limits
 #ifdef STM32F429xx

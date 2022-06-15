@@ -1,7 +1,7 @@
 #ifndef __hal_tim_h
 #define __hal_tim_h
 
-#include "../main.h"
+#include "../../../main.h"
 
 typedef TIM_HandleTypeDef timer_def;
 

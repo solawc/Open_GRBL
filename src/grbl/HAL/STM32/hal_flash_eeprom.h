@@ -1,7 +1,7 @@
 #ifndef __hal_flash_eeprom_h__
 #define __hal_flash_eeprom_h__
 
-#include "grbl_hal.h"
+#include "../grbl_hal.h"
 
 #define USE_FLASH_AS_EEPROM
 // #define USE_EEPROM_IC        

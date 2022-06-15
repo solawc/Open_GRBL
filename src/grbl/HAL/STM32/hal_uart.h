@@ -1,10 +1,8 @@
 #ifndef __hal_uart_h
 #define __hal_uart_h
 
-#include "main.h"
-#include "stdio.h"
-#include "stdlib.h"
-#include "stdbool.h"
+#include "../../../main.h"
+
 
 #define UART_RB_BUFF_MAX                255
 #define UART_RB_BUFF_MIN                0

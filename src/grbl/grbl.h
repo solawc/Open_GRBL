@@ -59,10 +59,9 @@
 #include "error.h"
 
 #ifdef STM32F4
-  #include "../bsp_hal/bsp_f429ig/cpu_stm32f4_map.h"
+  #include "HAL/STM32/bsp_f429ig/cpu_stm32f4_map.h"
 #elif defined(STM32G0xx)
-  
-  #include "../bsp_hal/bsp_g0b0ce/cpu_stm32g0_map.h"
+  #include "HAL/STM32/bsp_g0b0ce/cpu_stm32g0_map.h"
 #endif
 
 #ifndef M_PI

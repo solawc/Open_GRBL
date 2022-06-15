@@ -28,7 +28,6 @@ void sd_state_check(void) {
     if(!hal_sd.sd_get_status()) {
         if(hal_sd.is_has_sd == 1) printf("SDCard Ok\n");
         else { printf("SDCard Error\n"); }
-
     }else{
         if(hal_sd.is_has_sd == 1) printf("No SDCard\n");
     }
@@ -47,7 +46,7 @@ bool sd_mount(void) {
 
 char *sd_read_line() {
 
-    char *line;
+    char *line = 0;
 
     return line;
 }

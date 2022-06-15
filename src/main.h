@@ -3,17 +3,21 @@
 
 #define USE_FREERTOS_RTOS
 
+#include "stdio.h"
+#include "stdlib.h"
+#include "stdbool.h"
+
 #ifdef STM32G070xx
     #include "stm32g0xx_hal.h"
 #elif defined(STM32F429xx)
     #include "stm32f4xx_hal.h"
-    #include "bsp_hal/bsp_f429ig/hal_f429_system.h"
+    #include "grbl/HAL/STM32/bsp_f429ig/hal_f429_system.h"
 #elif defined(STM32G0B0xx)
     #include "stm32g0xx_hal.h"
-    #include "bsp_hal/bsp_g0b0ce/hal_g0b0_system.h"
+    #include "grbl/HAL/STM32/bsp_g0b0ce/hal_g0b0_system.h"
 #elif defined(STM32F407xx)
     #include "stm32f4xx_hal.h"
-    #include "bsp_hal/bsp_f407ve/hal_f407_system.h"
+    #include "grbl/HAL/STM32/bsp_f407ve/hal_f407_system.h"
 #endif
 
 #if defined(USE_FREERTOS_RTOS)
@@ -22,16 +26,19 @@
 #include "cmsis_os.h"
 #endif
 
-#include "bsp_hal/grbl_hal.h"
-#include "bsp_hal/hal_uart.h"
-#include "bsp_hal/grbl_config.h"
-#include "bsp_hal/hal_gpio.h"
-#include "bsp_hal/hal_tim.h"
-#include "bsp_hal/hal_flash_eeprom.h"
-#include "bsp_hal/hal_spi.h"
+// #include "bsp_hal/grbl_hal.h"
 
-#include "bsp_hal/hal_sdcard.h"
-#include "bsp_hal/hal_w25qxx.h"
+#include "grbl/HAL/grbl_hal.h"
+#include "grbl/HAL/grbl_config.h"
+#include "grbl/HAL/STM32/hal_gpio.h"
+#include "grbl/HAL/STM32/hal_uart.h"
+#include "grbl/HAL/STM32/hal_tim.h"
+#include "grbl/HAL/STM32/hal_flash_eeprom.h"
+#include "grbl/HAL/STM32/hal_spi.h"
+
+#include "grbl/HAL/Peripheral/hal_sdcard.h"
+#include "grbl/HAL/Peripheral/hal_w25qxx.h"
+
 #include "ex_dev/lcd/tft_lcd_dev.h"
 #include "ex_dev/sd/sdcard.h"
 #include "ex_dev/sd/sd_file.h"
