@@ -37,5 +37,5 @@ void grbl_hw_init(void) {
 
     SYSTEM_FLASH(); // w25qxx_init();
     
-    // SYSTEM_LCD();   // dev_lcd_init();
+    SYSTEM_LCD();   // dev_lcd_init();
 }
