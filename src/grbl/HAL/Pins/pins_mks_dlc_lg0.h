@@ -2,66 +2,66 @@
 #define __pins_mks_dlc_lg0_h
 
 /* For Limit */
-#define BOARD_LIMIT_X_PORT          GPIOD
-#define BOARD_LIMIT_X_PIN           GPIO_PIN_3
-#define BOARD_LIMIT_Y_PORT          GPIOD
-#define BOARD_LIMIT_Y_PIN           GPIO_PIN_2
-#define BOARD_LIMIT_Z_PORT          GPIOD
-#define BOARD_LIMIT_Z_PIN           GPIO_PIN_2
-#define BOARD_LIMIT_IRQ             EXTI2_3_IRQn
-#define BOARD_LIMIT_IRQnHANDLER     EXTI2_3_IRQHandler
+#define BOARD_LIMIT_X_PORT              GPIOD
+#define BOARD_LIMIT_X_PIN               GPIO_PIN_3
+#define BOARD_LIMIT_Y_PORT              GPIOD
+#define BOARD_LIMIT_Y_PIN               GPIO_PIN_2
+#define BOARD_LIMIT_Z_PORT              GPIOD
+#define BOARD_LIMIT_Z_PIN               GPIO_PIN_2
+#define BOARD_LIMIT_IRQ                 EXTI2_3_IRQn
+#define BOARD_LIMIT_IRQnHANDLER         EXTI2_3_IRQHandler
 
 /* For Motor axis */
-#define BOARD_X_EN_PORT             GPIOC
-#define BOARD_X_EN_PIN              GPIO_PIN_15
-#define BOARD_Y_EN_PORT             GPIOB           
-#define BOARD_Y_EN_PIN              GPIO_PIN_9
-#define BOARD_Z_EN_PORT             GPIOC          
-#define BOARD_Z_EN_PIN              GPIO_PIN_15
-#define BOARD_X_STEP_PORT           GPIOC
-#define BOARD_X_STEP_PIN            GPIO_PIN_14
-#define BOARD_Y_STEP_PORT           GPIOB           
-#define BOARD_Y_STEP_PIN            GPIO_PIN_8
-#define BOARD_Z_STEP_PORT           GPIOB          
-#define BOARD_Z_STEP_PIN            GPIO_PIN_9
-#define BOARD_X_DIR_PORT            GPIOC
-#define BOARD_X_DIR_PIN             GPIO_PIN_13
-#define BOARD_Y_DIR_PORT            GPIOB           
-#define BOARD_Y_DIR_PIN             GPIO_PIN_7
-#define BOARD_Z_DIR_PORT            GPIOB          
-#define BOARD_Z_DIR_PIN             GPIO_PIN_8
+#define BOARD_X_EN_PORT                 GPIOC
+#define BOARD_X_EN_PIN                  GPIO_PIN_15
+#define BOARD_Y_EN_PORT                 GPIOB           
+#define BOARD_Y_EN_PIN                  GPIO_PIN_9
+#define BOARD_Z_EN_PORT                 GPIOC          
+#define BOARD_Z_EN_PIN                  GPIO_PIN_15
+#define BOARD_X_STEP_PORT               GPIOC
+#define BOARD_X_STEP_PIN                GPIO_PIN_14
+#define BOARD_Y_STEP_PORT               GPIOB           
+#define BOARD_Y_STEP_PIN                GPIO_PIN_8
+#define BOARD_Z_STEP_PORT               GPIOB          
+#define BOARD_Z_STEP_PIN                GPIO_PIN_9
+#define BOARD_X_DIR_PORT                GPIOC
+#define BOARD_X_DIR_PIN                 GPIO_PIN_13
+#define BOARD_Y_DIR_PORT                GPIOB           
+#define BOARD_Y_DIR_PIN                 GPIO_PIN_7
+#define BOARD_Z_DIR_PORT                GPIOB          
+#define BOARD_Z_DIR_PIN                 GPIO_PIN_8
 
 /* Probe */
-#define BOARD_PROBE_PORT            GPIOB
-#define BOARD_PROBE_PIN             GPIO_PIN_11
+#define BOARD_PROBE_PORT                GPIOB
+#define BOARD_PROBE_PIN                 GPIO_PIN_11
 
 /* For W25qxx */
-#define W25QXX_SPI_NUM              SPI_2
-#define W25QXX_SPI_PORT             SPI2
-#define W25QXX_SPI_SCK_GPIO         GPIOB
-#define W25QXX_SPI_SCK_PIN          GPIO_PIN_13
-#define W25QXX_SPI_MISO_GPIO        GPIOB
-#define W25QXX_SPI_MISO_PIN         GPIO_PIN_14
-#define W25QXX_SPI_MOSI_GPIO        GPIOB
-#define W25QXX_SPI_MOSI_PIN         GPIO_PIN_15
-#define W25QXX_SPI_CS_GPIO          GPIOB
-#define W25QXX_SPI_CS_PIN           GPIO_PIN_12
-#define W25QXX_PIN_AF               GPIO_AF0_SPI2
-#define W25QXX_SPEED                SPI_BAUDRATEPRESCALER_4
+#define W25QXX_SPI_NUM                  SPI_2
+#define W25QXX_SPI_PORT                 SPI2
+#define W25QXX_SPI_SCK_GPIO             GPIOB
+#define W25QXX_SPI_SCK_PIN              GPIO_PIN_13
+#define W25QXX_SPI_MISO_GPIO            GPIOB
+#define W25QXX_SPI_MISO_PIN             GPIO_PIN_14
+#define W25QXX_SPI_MOSI_GPIO            GPIOB
+#define W25QXX_SPI_MOSI_PIN             GPIO_PIN_15
+#define W25QXX_SPI_CS_GPIO              GPIOB
+#define W25QXX_SPI_CS_PIN               GPIO_PIN_12
+#define W25QXX_PIN_AF                   GPIO_AF0_SPI2
+#define W25QXX_SPEED                    SPI_BAUDRATEPRESCALER_4
 
 /* For SDCard */
-#define BOARD_SD_SPI                SPI1
-#define BOARD_SD_SCK_PORT           GPIOA
-#define BOARD_SD_SCK_PIN            GPIO_PIN_5
-#define BOARD_SD_MISO_PORT          GPIOA
-#define BOARD_SD_MISO_PIN           GPIO_PIN_6
-#define BOARD_SD_MOSI_PORT          GPIOA
-#define BOARD_SD_MOSI_PIN           GPIO_PIN_7
-#define BOARD_SD_CS_PORT            GPIOA
-#define BOARD_SD_CS_PIN             GPIO_PIN_4
-#define BOARD_SD_DET_PORT           GPIOB
-#define BOARD_SD_DET_PIN            GPIO_PIN_0
-#define BOARD_SD_GPIO_AF            GPIO_AF0_SPI1
+#define BOARD_SD_SPI                    SPI1
+#define BOARD_SD_SCK_PORT               GPIOA
+#define BOARD_SD_SCK_PIN                GPIO_PIN_5
+#define BOARD_SD_MISO_PORT              GPIOA
+#define BOARD_SD_MISO_PIN               GPIO_PIN_6
+#define BOARD_SD_MOSI_PORT              GPIOA
+#define BOARD_SD_MOSI_PIN               GPIO_PIN_7
+#define BOARD_SD_CS_PORT                GPIOA
+#define BOARD_SD_CS_PIN                 GPIO_PIN_4
+#define BOARD_SD_DET_PORT               GPIOB
+#define BOARD_SD_DET_PIN                GPIO_PIN_0
+#define BOARD_SD_GPIO_AF                GPIO_AF0_SPI1
 
 /* For Serial UART */
 #define  __HAL_UART_CLK(uart)	        __HAL_RCC_##uart##_CLK_ENABLE()

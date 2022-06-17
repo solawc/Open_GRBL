@@ -4,6 +4,7 @@
  *                              W25QXX SPI Init
  * ****************************************************************************/
 SPI_HandleTypeDef w25qxx_spi;
+SPI_HandleTypeDef tft_spi;
 
 void spi_for_w25qxx_init(void) {
 
@@ -37,9 +38,9 @@ uint8_t w25qxx_spi_read_write(uint8_t data) {
 /*******************************************************************************
  *                              TFT SPI Init
  * ****************************************************************************/
-void spi_for_tft_init() {
+void spi_for_tft_init(void) {
 
-    
+    __HAL_RCC_SPI3_CLK_ENABLE();
 }
 
 /*******************************************************************************
