@@ -18,14 +18,12 @@
 #define BOARD_Y_EN_PIN              GPIO_PIN_9
 #define BOARD_Z_EN_PORT             GPIOC          
 #define BOARD_Z_EN_PIN              GPIO_PIN_15
-
 #define BOARD_X_STEP_PORT           GPIOC
 #define BOARD_X_STEP_PIN            GPIO_PIN_14
 #define BOARD_Y_STEP_PORT           GPIOB           
 #define BOARD_Y_STEP_PIN            GPIO_PIN_8
 #define BOARD_Z_STEP_PORT           GPIOB          
 #define BOARD_Z_STEP_PIN            GPIO_PIN_9
-
 #define BOARD_X_DIR_PORT            GPIOC
 #define BOARD_X_DIR_PIN             GPIO_PIN_13
 #define BOARD_Y_DIR_PORT            GPIOB           
@@ -64,5 +62,22 @@
 #define BOARD_SD_DET_PORT           GPIOB
 #define BOARD_SD_DET_PIN            GPIO_PIN_0
 #define BOARD_SD_GPIO_AF            GPIO_AF0_SPI1
+
+/* For Serial UART */
+#define  __HAL_UART_CLK(uart)	        __HAL_RCC_##uart##_CLK_ENABLE()
+#define  UART_IRQn(uart)                uart##_IRQn
+
+#define BOARD_UART                      USART2
+#define BOARD_UART_IRQ                  UART_IRQn(USART2)
+#define BOARD_UART_CLK_ENABLE()         __HAL_UART_CLK(USART2)
+#define BOARD_UART_IRQnHANDLER          USART2_IRQHandler
+#define BOARD_UART_TX_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE();
+#define BOARD_UART_RX_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE();
+#define BOARD_UART_TX_PORT              GPIOA
+#define BOARD_UART_TX_PIN               GPIO_PIN_2
+#define BOARD_UART_RX_PORT              GPIOA
+#define BOARD_UART_RX_PIN               GPIO_PIN_3
+#define BOARD_UART_AF_MODE              GPIO_AF1_USART2
+#define BOARD_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
 
 #endif

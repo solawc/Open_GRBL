@@ -71,6 +71,7 @@ static void hal_tft_trans_disable() {
 
 static uint8_t hal_tft_write_8(uint8_t data) {
     // return hal_spi_transfer_revice_byte(&tft_spi, data);
+    return 0;
 }
 
 // static uint16_t hal_tft_write_16(uint16_t data) {
