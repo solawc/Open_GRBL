@@ -8,18 +8,18 @@
 extern SPI_HandleTypeDef sd_hspi;
 
 
-#define BOARD_SD_SPI        SPI2
-#define BOARD_SD_SCK_PORT   GPIOB
-#define BOARD_SD_SCK_PIN    GPIO_PIN_13
-#define BOARD_SD_MISO_PORT  GPIOB
-#define BOARD_SD_MISO_PIN   GPIO_PIN_14
-#define BOARD_SD_MOSI_PORT  GPIOB
-#define BOARD_SD_MOSI_PIN   GPIO_PIN_15
-#define BOARD_SD_CS_PORT    GPIOB
-#define BOARD_SD_CS_PIN     GPIO_PIN_12
-#define BOARD_SD_DET_PORT   GPIOC
-#define BOARD_SD_DET_PIN    GPIO_PIN_3
-#define BOARD_SD_GPIO_AF    GPIO_AF5_SPI2
+#define BOARD_SD_SPI                SPI1
+#define BOARD_SD_SCK_PORT           GPIOA
+#define BOARD_SD_SCK_PIN            GPIO_PIN_5
+#define BOARD_SD_MISO_PORT          GPIOA
+#define BOARD_SD_MISO_PIN           GPIO_PIN_6
+#define BOARD_SD_MOSI_PORT          GPIOA
+#define BOARD_SD_MOSI_PIN           GPIO_PIN_7
+#define BOARD_SD_CS_PORT            GPIOA
+#define BOARD_SD_CS_PIN             GPIO_PIN_4
+#define BOARD_SD_DET_PORT           GPIOB
+#define BOARD_SD_DET_PIN            GPIO_PIN_0
+#define BOARD_SD_GPIO_AF            GPIO_AF0_SPI1
 
 
 #ifdef SD_USE_SPI
@@ -72,13 +72,13 @@ extern SPI_HandleTypeDef sd_hspi;
             #define _SD_GPIO_CLK_ENABLE()   __HAL_RCC_GPIOB_CLK_ENABLE();\
                                             __HAL_RCC_GPIOA_CLK_ENABLE();\
                                             __HAL_RCC_GPIOC_CLK_ENABLE();\
-                                            __HAL_RCC_SPI2_CLK_ENABLE()
+                                            __HAL_RCC_SPI1_CLK_ENABLE()
     #endif
 
     #ifndef _SD_GPIO_CLK_DISABLE
             #define _SD_GPIO_CLK_DISABLE()  __HAL_RCC_GPIOB_CLK_DISABLE();\
                                             __HAL_RCC_GPIOC_CLK_DISABLE();\
-                                            __HAL_RCC_SPI2_CLK_DISABLE()
+                                            __HAL_RCC_SPI1_CLK_DISABLE()
     #endif
 
     #endif

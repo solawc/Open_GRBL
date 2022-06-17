@@ -15,7 +15,7 @@
     #define HAS_TS24_CFG
 #endif
 
-// #define SDSUPPORT
+#define SDSUPPORT
 #ifdef SDSUPPORT
     #define HAS_SDCARD
 #endif

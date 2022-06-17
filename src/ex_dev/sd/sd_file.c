@@ -1,10 +1,11 @@
 #include "sd_file.h"
 
 FIL fil;
+FATFS fs;
 
 void sd_init(void) {
 
-    FATFS fs;
+    // FATFS fs;
     
     FRESULT fs_res;
 
@@ -20,6 +21,9 @@ void sd_init(void) {
     }else{
         hal_sd.is_has_sd = 0; 
     }
+
+    sd_state_check();
+    get_fafts_info();
 }
 
 void sd_state_check(void) {
@@ -36,7 +40,7 @@ void sd_state_check(void) {
 
 bool sd_mount(void) {
 
-    FATFS fs;
+    
     FRESULT fs_res;
     fs_res = f_mount(&fs,"1:",1);
     if(fs_res == FR_OK) return true;
@@ -49,6 +53,29 @@ char *sd_read_line() {
     char *line = 0;
 
     return line;
+}
+
+void get_fafts_info( void )
+{
+    FATFS *pfs = &fs;
+
+    DWORD fre_clust, fre_size, tot_size;
+    
+    uint8_t result = f_getfree( "1:", &fre_clust, &pfs );
+    
+    if( result == FR_OK )
+    {
+        tot_size = (pfs->n_fatent - 2) * pfs->csize/2; // 总容量    单位Kbyte
+        fre_size = fre_clust * pfs->csize/2;           // 可用容量  单位Kbyte
+
+        hal_sd.sd_all_size = tot_size/1024;
+        hal_sd.sd_free_size = fre_size/1024;
+        printf("SDCard Size: %lu MB\r\n", hal_sd.sd_all_size );
+        printf("SDFree Size: %lu MB\r\n", hal_sd.sd_free_size );
+  }
+    else{
+        printf("Can't check SDcard:%d\r\n", result );
+    }
 }
 
 
