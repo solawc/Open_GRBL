@@ -4,6 +4,7 @@
 hal_uart_t rb_serial_rx;
 
 UART_HandleTypeDef laser_uart;
+UART_HandleTypeDef tft_uart;
 
 DMA_HandleTypeDef dma_tx;
 DMA_HandleTypeDef dma_rx;
@@ -40,7 +41,9 @@ void hal_uart_dma_rx_config(void) {
 }
 #endif
 
-
+/************************************************************
+ * 			For Serial UART
+ * *********************************************************/
 void hal_uart_gpio_init(void) {
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -102,9 +105,7 @@ void hal_uart_irq_set(void) {
 }
 
 void hal_laser_uart_irq_enable(void) { __HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE); }
-
 void hal_laser_uart_irq_disable(void) { __HAL_UART_DISABLE_IT(&laser_uart, UART_IT_RXNE); }
-
 void hal_uart_sendbyte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 1000); }
 
 uint8_t hal_uart_read_dr(void) { 
@@ -171,12 +172,24 @@ void LASER_UART_IRQHANDLER() {
 #endif
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{	
-	// if(huart == &laser_uart) {
-	// 	HAL_UART_Transmit(&laser_uart,laser_dma_rx_buf, 5, 0xFFFF);
-	// }
+/************************************************************
+ * 			For LCD TFT UART
+ * *********************************************************/
+static void tft_lcd_uart_pins_init() {
+
+
 }
+
+
+void tft_lcd_uart_init() {
+
+	tft_lcd_uart_pins_init();
+
+}
+
+
+
+
 
 void serial_rb_init(hal_uart_t *rb) {
 	rb->head = 0;

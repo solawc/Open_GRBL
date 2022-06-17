@@ -15,7 +15,12 @@
     #define HAS_TS24_CFG
 #endif
 
-// #define SDSUPPORT
+#define LCD_TFT_SUPPORT
+#ifdef LCD_TFT_SUPPORT
+    #define HAS_LCD_TFT_CFG
+#endif
+
+#define SDSUPPORT
 #ifdef SDSUPPORT
     #define HAS_SDCARD
 #endif

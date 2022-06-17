@@ -1,9 +1,6 @@
 #include "tft_lcd_dev.h"
 
 dev_lcd_t tft;
-dev_spi_t tft_spi;
-spi_setting_t tft_spi_set;
-
 SPI_HandleTypeDef lcd_hspi;         // g0 use spi3
 
 static void hal_tft_spi_init(void) {
@@ -50,14 +47,9 @@ static void hal_tft_spi_init(void) {
     GPIO_Init.Pin = LCD_RS_PIN;
     HAL_GPIO_Init(LCD_RS_PORT, &GPIO_Init);
 #endif
-    tft_spi_set.is_use_irq = false;
-    tft_spi_set.spi_num = SPI_3;
-    tft_spi_set.spi_speed = 2;
-    tft_spi_set.spi_mode_set = spi_mode_0;
-    tft_spi_set.spi_date_size = size_8bit_date;
-    tft_spi_set.spi_trans_mode = master_full_trans;
-    tft_spi_set.spi_frist_bit = trans_msb_mode;
-    hal_spi_begin(&tft_spi, &tft_spi_set);
+
+    spi_for_tft_init();
+
 }
 
 static void lcd_delay_ms(uint32_t ms) {
@@ -73,7 +65,8 @@ static void hal_tft_trans_disable() {
 }
 
 static uint8_t hal_tft_write_8(uint8_t data) {
-    return hal_spi_transfer_revice_byte(&tft_spi, data);
+    // return hal_spi_transfer_revice_byte(&tft_spi, data);
+    return 0;
 }
 
 // static uint16_t hal_tft_write_16(uint16_t data) {
@@ -98,12 +91,10 @@ static void hal_tft_write_data_8(uint8_t data) {
     hal_tft_trans_disable();
 }
 
-static void hal_set_16_mode(spi_date_size_t data_size) {
-    if(data_size == size_8bit_date)
-        tft_spi_set.spi_date_size = size_8bit_date;
-    else 
-        tft_spi_set.spi_date_size = size_16bit_date;
-    hal_spi_begin(&tft_spi, &tft_spi_set);
+static void hal_set_16_mode(uint8_t data_size) {
+
+    if(data_size == 0) {}
+    else {}
 }
 
 static void hal_tft_write_data_16(uint16_t data) {
@@ -240,7 +231,7 @@ void dev_lcd_init(void) {
     tft.tft_lcd_display_off = hal_tft_display_off;
 
     printf("[debug]enter lcd init\n");
-    tft.tft_lcd_init();
+    // tft.tft_lcd_init();
     printf("[debug]enter lcd init finish\n");
     printf("[debug]enter lcd config\n");
     hal_tft_display_config();
@@ -275,13 +266,13 @@ void dev_lcd_draw_fill(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2, uint32_t
 
     dev_lcd_set_window(x1,y1,x2,y2);      //设置光标位置
 
-    tft.tft_lcd_enable();
+    // tft.tft_lcd_enable();
 
     DATA_MODE_SET();
     hal_tft_trans_enable();
-    hal_set_16_mode(size_16bit_date);
+    hal_set_16_mode(1);
     for(x=0; x<y; x++)  { hal_tft_write_data_16(color); }
-    hal_set_16_mode(size_8bit_date);
+    hal_set_16_mode(0);
     hal_tft_trans_disable();
     tft.tft_lcd_disable(); 
 }

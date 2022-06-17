@@ -15,6 +15,7 @@
 #elif defined(STM32G0B0xx)
     #include "stm32g0xx_hal.h"
     #include "grbl/HAL/STM32/bsp_g0b0ce/hal_g0b0_system.h"
+    #include "grbl/HAL/Pins/pins_mks_dlc_lg0.h"
 #elif defined(STM32F407xx)
     #include "stm32f4xx_hal.h"
     #include "grbl/HAL/STM32/bsp_f407ve/hal_f407_system.h"
@@ -61,7 +62,19 @@
 #define SYSTEM_UART()       hal_uart_init()
 #define SYSTEM_LASER()      hal_pwm_init()
 #define SYSTEM_FLASH()      w25qxx_init()
-// #define SYSTEM_LCD()        dev_lcd_init()
+
+
+#if defined(LCD_MKS_TS35) || defined(LCD_MKS_TS24) 
+#define SYSTEM_LCD()        dev_lcd_init()
+#else 
+#define SYSTEM_LCD()
+#endif
+
+#if defined(SDSUPPORT)
+#define SYSTEM_SDCARD()     sd_init()
+#else 
+#define SYSTEM_SDCARD()
+#endif
 
 void _delay_ms(uint32_t tick);
 void _delay_us(uint32_t tick);

@@ -1,8 +1,5 @@
 #include "hal_w25qxx.h"
 
-dev_spi_t dev_w25qxx_spi;
-spi_setting_t dev_w25qxx_spi_set;
-spi_setting_t dev_sdcard_set;
 
 NFLASH_t sFlash;
 
@@ -32,7 +29,7 @@ static void hal_w25qxx_spi_gpio_init(void)
 }
 
 void hal_w25qxx_dma_init(void) {
-    hal_spi_dma_init(&w25qxx_dma);
+
 }
 
 void hal_w25qxx_spi_init(void)
@@ -44,15 +41,7 @@ void hal_w25qxx_spi_init(void)
 
     if(sFlash.flash_mode == sFLAHS_SPI_MODE) {
         hal_w25qxx_spi_gpio_init();
-
-        dev_w25qxx_spi_set.is_use_irq = false;
-        dev_w25qxx_spi_set.spi_num = W25QXX_SPI_NUM;
-        dev_w25qxx_spi_set.spi_speed = 8;
-        dev_w25qxx_spi_set.spi_mode_set = spi_mode_0;
-        dev_w25qxx_spi_set.spi_date_size = size_8bit_date;
-        dev_w25qxx_spi_set.spi_trans_mode = master_full_trans;
-        dev_w25qxx_spi_set.spi_frist_bit = trans_msb_mode;
-        hal_spi_begin(&dev_w25qxx_spi, &dev_w25qxx_spi_set);
+        spi_for_w25qxx_init();
     }else {
 
     }    
@@ -60,7 +49,7 @@ void hal_w25qxx_spi_init(void)
 
 bool is_write_had_finish(void)
 {
-  if (__HAL_SPI_GET_FLAG(&dev_w25qxx_spi.hal_spi, SPI_FLAG_TXE) == RESET)
+  if (__HAL_SPI_GET_FLAG(&w25qxx_spi, SPI_FLAG_TXE) == RESET)
   {
     return true;
   }
@@ -72,7 +61,7 @@ bool is_write_had_finish(void)
 
 bool is_read_had_finish(void)
 {
-    if (__HAL_SPI_GET_FLAG(&dev_w25qxx_spi.hal_spi, SPI_FLAG_RXNE) == RESET)
+    if (__HAL_SPI_GET_FLAG(&w25qxx_spi, SPI_FLAG_RXNE) == RESET)
     {
         return true;
     }
@@ -94,36 +83,29 @@ void w25qxx_disable(void)
 
 uint8_t w25qxx_write_read_8(uint8_t byte)
 {
-  return hal_spi_transfer_revice_byte(&dev_w25qxx_spi, byte);
+  return w25qxx_spi_read_write(byte);
 }
 
 uint16_t w25qxx_write_read_16(uint16_t byte)
-{
-  return hal_spi_transfer_revice_byte(&dev_w25qxx_spi, byte);
+{ 
+  uint8_t spibuff[2];
+  uint16_t c = byte;
+  spibuff[1] = c >> 8;
+  spibuff[0] = c;
+  return HAL_SPI_Transmit(&w25qxx_spi, spibuff, 2, 10);
 }
 
 /*--------------------------------------------------------------------------------------------*/
-
-uint16_t w25qxx_read_write_cb(dev_spi_t *dev, uint16_t data)
-{
-    uint16_t rdata = 0;
-    rdata = dev->dev_spi_read_write_byte(data);
-    return (uint8_t )rdata;
-}
-
 uint16_t w25qxx_read_write_byte(uint16_t wdata)
 {
-    return w25qxx_read_write_cb(&dev_w25qxx_spi, wdata);
+  return w25qxx_spi_read_write(wdata);
 }
 
 void w25qxx_init(void)
 {   
     uint32_t get_id_size = 0x00;
-    dev_w25qxx_spi.__spi_intrans = false;
-    dev_w25qxx_spi.is_use_dma = false;
-    dev_w25qxx_spi.dev_spi_init_cb = hal_w25qxx_spi_init;
-    dev_w25qxx_spi.dev_spi_read_write_byte = w25qxx_write_read_16;
-    hal_spi_register(&dev_w25qxx_spi);
+    
+    hal_w25qxx_spi_init();
 
     w25qxx_enter_flash_mode();
 
