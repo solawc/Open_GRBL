@@ -102,13 +102,13 @@ static void hal_motor_en_gpio_init(void) {
 #endif
 
 #ifdef STEP_Y_EN_PORT
-	GPIO_Init.Pin = STEP_X_EN_PIN;
-    HAL_GPIO_Init(STEP_X_EN_PORT, &GPIO_Init);
+	GPIO_Init.Pin = STEP_Y_EN_PIN;
+    HAL_GPIO_Init(STEP_Y_EN_PORT, &GPIO_Init);
 #endif
 
 #ifdef STEP_Z_EN_PORT
-	GPIO_Init.Pin = STEP_X_EN_PIN;
-    HAL_GPIO_Init(STEP_X_EN_PORT, &GPIO_Init);
+	GPIO_Init.Pin = STEP_Z_EN_PIN;
+    HAL_GPIO_Init(STEP_Z_EN_PORT, &GPIO_Init);
 #endif
 
 }
@@ -163,11 +163,35 @@ void hal_step_en_gpio_set(bool status) {
 	#ifdef STEP_EN_PORT
 		HAL_GPIO_WritePin(STEP_EN_PORT, STEP_EN_PIN, GPIO_PIN_SET); 
 	#endif
+
+	#ifdef STEP_X_EN_PORT
+		HAL_GPIO_WritePin(STEP_X_EN_PORT, STEP_X_EN_PIN, GPIO_PIN_SET); 
+	#endif
+
+	#ifdef STEP_Y_EN_PORT
+		HAL_GPIO_WritePin(STEP_Y_EN_PORT, STEP_Y_EN_PIN, GPIO_PIN_SET); 
+	#endif
+
+	#ifdef STEP_Z_EN_PORT
+		HAL_GPIO_WritePin(STEP_Z_EN_PORT, STEP_Z_EN_PIN, GPIO_PIN_SET); 
+	#endif 
 	}
 	else { 
 	#ifdef STEP_EN_PORT
 		HAL_GPIO_WritePin(STEP_EN_PORT, STEP_EN_PIN, GPIO_PIN_RESET); 
 	#endif
+
+	#ifdef STEP_X_EN_PORT
+		HAL_GPIO_WritePin(STEP_X_EN_PORT, STEP_X_EN_PIN, GPIO_PIN_RESET); 
+	#endif
+
+	#ifdef STEP_Y_EN_PORT
+		HAL_GPIO_WritePin(STEP_Y_EN_PORT, STEP_Y_EN_PIN, GPIO_PIN_RESET); 
+	#endif
+
+	#ifdef STEP_Z_EN_PORT
+		HAL_GPIO_WritePin(STEP_Z_EN_PORT, STEP_Z_EN_PIN, GPIO_PIN_RESET); 
+	#endif 
 	}
 }
 

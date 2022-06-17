@@ -7,21 +7,6 @@
 
 extern SPI_HandleTypeDef sd_hspi;
 
-
-#define BOARD_SD_SPI                SPI1
-#define BOARD_SD_SCK_PORT           GPIOA
-#define BOARD_SD_SCK_PIN            GPIO_PIN_5
-#define BOARD_SD_MISO_PORT          GPIOA
-#define BOARD_SD_MISO_PIN           GPIO_PIN_6
-#define BOARD_SD_MOSI_PORT          GPIOA
-#define BOARD_SD_MOSI_PIN           GPIO_PIN_7
-#define BOARD_SD_CS_PORT            GPIOA
-#define BOARD_SD_CS_PIN             GPIO_PIN_4
-#define BOARD_SD_DET_PORT           GPIOB
-#define BOARD_SD_DET_PIN            GPIO_PIN_0
-#define BOARD_SD_GPIO_AF            GPIO_AF0_SPI1
-
-
 #ifdef SD_USE_SPI
 
     #define SD_CARD_SPI             BOARD_SD_SPI

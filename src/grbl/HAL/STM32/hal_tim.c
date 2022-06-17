@@ -14,12 +14,12 @@ void hal_set_timer_init(void) {
 
     STEP_SET_TIM.Instance = SETP_SET_TIM; 
     STEP_SET_TIM.Init.Period = 1-1;     
-    STEP_SET_TIM.Init.Prescaler = 10-1;
+    STEP_SET_TIM.Init.Prescaler = 4-1;
     STEP_SET_TIM.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     STEP_SET_TIM.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&STEP_SET_TIM);
 
-    HAL_NVIC_SetPriority(SET_TIM_IRQn, 0, 1);       // 使定时器中断的优先级保持最高
+    HAL_NVIC_SetPriority(SET_TIM_IRQn, 0, 0);       // 使定时器中断的优先级保持最高
     HAL_NVIC_DisableIRQ(SET_TIM_IRQn);
     HAL_TIM_Base_Start_IT(&STEP_SET_TIM);
 
@@ -38,13 +38,13 @@ void hal_reset_timer_init(void) {
 
     RESET_TIM_CLK_ENABLED();
     STEP_RESET_TIM.Instance = SETP_RESET_TIM;
-    STEP_RESET_TIM.Init.Period = 1-1;     
+    STEP_RESET_TIM.Init.Period = 0;     
     STEP_RESET_TIM.Init.Prescaler = (F_CPU/1000000) -1; 
     STEP_RESET_TIM.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     STEP_RESET_TIM.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&STEP_RESET_TIM);
 
-    HAL_NVIC_SetPriority(RESET_TIM_IRQn, 0, 2);
+    HAL_NVIC_SetPriority(RESET_TIM_IRQn, 0, 0);
     HAL_NVIC_DisableIRQ(RESET_TIM_IRQn);
     HAL_TIM_Base_Start_IT(&STEP_RESET_TIM);
 }

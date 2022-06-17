@@ -46,40 +46,41 @@
 #define LASER_PIN                   GPIO_PIN_7
 #define LASER_PIN_CLK_ENABLE()      __HAL_RCC_GPIOB_CLK_ENABLE()
 
-#define LIMIT_X_PORT                GPIOB
-#define LIMIT_X_PIN                 GPIO_PIN_0
-#define LIMIT_Y_PORT                GPIOB
-#define LIMIT_Y_PIN                 GPIO_PIN_1
-// #define LIMIT_Z_PORT                GPIOB
-// #define LIMIT_Z_PIN                 GPIO_PIN_1
-#define LIMIT_IRQnHANDLE            EXTI0_1_IRQHandler
-#define LIMIT_IRQn                  EXTI0_1_IRQn
+#define LIMIT_X_PORT                BOARD_LIMIT_X_PORT // GPIOB
+#define LIMIT_X_PIN                 BOARD_LIMIT_X_PIN  // GPIO_PIN_0
+#define LIMIT_Y_PORT                BOARD_LIMIT_Y_PORT // GPIOB
+#define LIMIT_Y_PIN                 BOARD_LIMIT_Y_PIN  // GPIO_PIN_1
+// #define LIMIT_Z_PORT                BOARD_LIMIT_Z_PORT
+// #define LIMIT_Z_PIN                 BOARD_LIMIT_Z_PIN
 
-#define STEP_EN_PORT                GPIOC
-#define STEP_EN_PIN                 GPIO_PIN_15
+#define LIMIT_IRQnHANDLE            BOARD_LIMIT_IRQnHANDLER
+#define LIMIT_IRQn                  BOARD_LIMIT_IRQ
+
+// #define STEP_EN_PORT                BOARD_X_EN_PORT
+// #define STEP_EN_PIN                 BOARD_X_EN_PIN
 
 #ifndef STEP_EN_PORT
-#define STEP_X_EN_PORT           GPIOC           
-#define STEP_X_EN_PIN            GPIO_PIN_15
-#define STEP_Y_EN_PORT           GPIOC           
-#define STEP_Y_EN_PIN            GPIO_PIN_15
-#define STEP_Z_EN_PORT           GPIOC           
-#define STEP_Z_EN_PIN            GPIO_PIN_15
+#define STEP_X_EN_PORT              BOARD_X_EN_PORT      
+#define STEP_X_EN_PIN               BOARD_X_EN_PIN   
+#define STEP_Y_EN_PORT              BOARD_Y_EN_PORT      
+#define STEP_Y_EN_PIN               BOARD_Y_EN_PIN   
+// #define STEP_Z_EN_PORT              BOARD_Z_EN_PORT      
+// #define STEP_Z_EN_PIN               BOARD_Z_EN_PIN   
 #endif
 
-#define MOTOR_X_DIR_PORT            GPIOC
-#define MOTOR_X_DIR_PIN             GPIO_PIN_13
-#define MOTOR_Y_DIR_PORT            GPIOB
-#define MOTOR_Y_DIR_PIN             GPIO_PIN_8
-// #define MOTOR_Z_DIR_PORT            GPIOB
-// #define MOTOR_Z_DIR_PIN             GPIO_PIN_8
+#define MOTOR_X_DIR_PORT            BOARD_X_DIR_PORT
+#define MOTOR_X_DIR_PIN             BOARD_X_DIR_PIN 
+#define MOTOR_Y_DIR_PORT            BOARD_Y_DIR_PORT
+#define MOTOR_Y_DIR_PIN             BOARD_Y_DIR_PIN 
+// #define MOTOR_Z_DIR_PORT            BOARD_Z_DIR_PORT
+// #define MOTOR_Z_DIR_PIN             BOARD_Z_DIR_PIN
 
-#define MOTOR_X_AXIS_PORT           GPIOC
-#define MOTOR_X_AXIS_PIN            GPIO_PIN_14
-#define MOTOR_Y_AXIS_PORT           GPIOB
-#define MOTOR_Y_AXIS_PIN            GPIO_PIN_9
-// #define MOTOR_Z_AXIS_PORT           GPIOB
-// #define MOTOR_Z_AXIS_PIN            GPIO_PIN_9
+#define MOTOR_X_AXIS_PORT           BOARD_X_STEP_PORT 
+#define MOTOR_X_AXIS_PIN            BOARD_X_STEP_PIN  
+#define MOTOR_Y_AXIS_PORT           BOARD_Y_STEP_PORT 
+#define MOTOR_Y_AXIS_PIN            BOARD_Y_STEP_PIN  
+// #define MOTOR_Z_AXIS_PORT            BOARD_Z_STEP_PORT 
+// #define MOTOR_Z_AXIS_PIN             BOARD_Z_STEP_PIN  
 
 #define PROBE_PORT                  GPIOB
 #define PROBE_PIN                   GPIO_PIN_11

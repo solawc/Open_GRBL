@@ -15,6 +15,7 @@
 #elif defined(STM32G0B0xx)
     #include "stm32g0xx_hal.h"
     #include "grbl/HAL/STM32/bsp_g0b0ce/hal_g0b0_system.h"
+    #include "grbl/HAL/Pins/pins_mks_dlc_lg0.h"
 #elif defined(STM32F407xx)
     #include "stm32f4xx_hal.h"
     #include "grbl/HAL/STM32/bsp_f407ve/hal_f407_system.h"

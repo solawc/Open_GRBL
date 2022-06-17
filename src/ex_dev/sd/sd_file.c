@@ -47,14 +47,6 @@ bool sd_mount(void) {
     else return false;
 }
 
-
-char *sd_read_line() {
-
-    char *line = 0;
-
-    return line;
-}
-
 void get_fafts_info( void )
 {
     FATFS *pfs = &fs;
@@ -76,6 +68,13 @@ void get_fafts_info( void )
     else{
         printf("Can't check SDcard:%d\r\n", result );
     }
+}
+
+char *sd_read_line(void) {
+
+    char *line = 0;
+
+    return line;
 }
 
 

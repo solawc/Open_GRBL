@@ -40,18 +40,18 @@ extern NFLASH_t sFlash;
 #define W25QXX_PIN_AF               GPIO_AF5_SPI5
 #define W25QXX_SPEED                SPI_BAUDRATEPRESCALER_4
 #elif defined(STM32G0B0xx)
-#define W25QXX_SPI_NUM              SPI_2
-#define W25QXX_SPI_PORT             SPI2
-#define W25QXX_SPI_SCK_GPIO         GPIOB
-#define W25QXX_SPI_SCK_PIN          GPIO_PIN_13
-#define W25QXX_SPI_MISO_GPIO        GPIOB
-#define W25QXX_SPI_MISO_PIN         GPIO_PIN_14
-#define W25QXX_SPI_MOSI_GPIO        GPIOB
-#define W25QXX_SPI_MOSI_PIN         GPIO_PIN_15
-#define W25QXX_SPI_CS_GPIO          GPIOB
-#define W25QXX_SPI_CS_PIN           GPIO_PIN_12
-#define W25QXX_PIN_AF               GPIO_AF0_SPI2
-#define W25QXX_SPEED                SPI_BAUDRATEPRESCALER_4
+// #define W25QXX_SPI_NUM              SPI_2
+// #define W25QXX_SPI_PORT             SPI2
+// #define W25QXX_SPI_SCK_GPIO         GPIOB
+// #define W25QXX_SPI_SCK_PIN          GPIO_PIN_13
+// #define W25QXX_SPI_MISO_GPIO        GPIOB
+// #define W25QXX_SPI_MISO_PIN         GPIO_PIN_14
+// #define W25QXX_SPI_MOSI_GPIO        GPIOB
+// #define W25QXX_SPI_MOSI_PIN         GPIO_PIN_15
+// #define W25QXX_SPI_CS_GPIO          GPIOB
+// #define W25QXX_SPI_CS_PIN           GPIO_PIN_12
+// #define W25QXX_PIN_AF               GPIO_AF0_SPI2
+// #define W25QXX_SPEED                SPI_BAUDRATEPRESCALER_4
 #elif defined(STM32F407xx)
 #define W25QXX_SPI_NUM              SPI_2
 #define W25QXX_SPI_PORT             SPI2

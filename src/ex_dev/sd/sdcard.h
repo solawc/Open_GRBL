@@ -64,9 +64,7 @@
 #define MSD_PARAMETER_ERROR             0x40
 #define MSD_RESPONSE_FAILURE            0xFF
 
-typedef struct {
-
-                           
+typedef struct {                
     uint32_t sd_trans_speed;
     uint32_t sd_slow_speed;
 
