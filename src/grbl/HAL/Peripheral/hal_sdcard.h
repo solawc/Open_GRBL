@@ -3,8 +3,6 @@
 
 #include "../../../main.h"
 
-// #define SD_USE_SPI
-
 extern SPI_HandleTypeDef sd_hspi;
 
 #ifdef SD_USE_SPI
@@ -67,6 +65,9 @@ extern SPI_HandleTypeDef sd_hspi;
     #endif
 
     #endif
+
+#elif defined(SD_USE_SDIO)
+
 
 #endif
 

@@ -3,29 +3,9 @@
 
 #include "../../../main.h"
 
-
 #define UART_RB_BUFF_MAX                255
 #define UART_RB_BUFF_MIN                0
 
-// #ifndef UART_IRQn(uart) 
-// #define  __HAL_UART_CLK(uart)	        __HAL_RCC_##uart##_CLK_ENABLE()
-// #define  UART_IRQn(uart)                uart##_IRQn
-// #endif
-
-// #ifdef STM32F429xx
-// #define LaserUART		                USART1
-// #define LaserUART_IRQn                  UART_IRQn(USART1)
-// #define LASER_UART_CLK_ENABLE()          __HAL_UART_CLK(USART1)
-// #define LASER_UART_TX_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE();
-// #define LASER_UART_RX_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE();
-// #define LASER_UART_TX_PORT              GPIOA
-// #define LASER_UART_TX_PIN               GPIO_PIN_9
-// #define LASER_UART_RX_PORT              GPIOA
-// #define LASER_UART_RX_PIN               GPIO_PIN_10
-// #define LASER_UART_AF_MODE              GPIO_AF7_USART1
-// #define LASER_UART_IRQHANDLER           USART1_IRQHandler
-// #define LASER_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
-// #elif defined(STM32G0B0xx) 
 #define LaserUART		                BOARD_UART
 #define LaserUART_IRQn                  BOARD_UART_IRQ
 #define LASER_UART_CLK_ENABLE()         BOARD_UART_CLK_ENABLE()   
