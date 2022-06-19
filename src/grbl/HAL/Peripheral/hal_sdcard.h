@@ -3,7 +3,7 @@
 
 #include "../../../main.h"
 
-#define SD_USE_SPI
+// #define SD_USE_SPI
 
 extern SPI_HandleTypeDef sd_hspi;
 
