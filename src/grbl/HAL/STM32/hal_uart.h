@@ -18,6 +18,7 @@
 #define LASER_UART_AF_MODE              BOARD_UART_AF_MODE
 #define LASER_UART_IRQHANDLER           BOARD_UART_IRQnHANDLER
 #define LASER_UART_RX_FLAG              BOARD_UART_RX_FLAG
+
 // #elif defined(STM32F407xx) 
 // #define LaserUART		                USART3
 // #define LaserUART_IRQn                  UART_IRQn(USART3)

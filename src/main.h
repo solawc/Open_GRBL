@@ -54,6 +54,8 @@
 #define SYSTEM_INTI()       hal_f429_system_init()
 #elif defined(STM32G0B0xx)
 #define SYSTEM_INTI()       hal_g0b0_system_init()
+#elif defined(STM32G070xx)
+#define SYSTEM_INTI()       // hal_g070_system_init()
 #elif defined(STM32F407xx)
 #define SYSTEM_INTI()
 #endif
