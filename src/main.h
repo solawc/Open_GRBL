@@ -12,6 +12,7 @@
 #elif defined(STM32F429xx)
     #include "stm32f4xx_hal.h"
     #include "grbl/HAL/STM32/bsp_f429ig/hal_f429_system.h"
+    #include "grbl/HAL/Pins/pins_fireboard_f429.h"
 #elif defined(STM32G0B0xx)
     #include "stm32g0xx_hal.h"
     #include "grbl/HAL/STM32/bsp_g0b0ce/hal_g0b0_system.h"
@@ -26,8 +27,6 @@
 #include "task.h"
 #include "cmsis_os.h"
 #endif
-
-// #include "bsp_hal/grbl_hal.h"
 
 #include "grbl/HAL/grbl_hal.h"
 #include "grbl/HAL/grbl_config.h"

@@ -7,6 +7,7 @@ SPI_HandleTypeDef sd_hspi;
 
 static void sd_spi_pin_init(void) {
 
+#ifdef HAS_SDCARD
     GPIO_InitTypeDef SPI_GPIO_Init;
 
     _SD_GPIO_CLK_ENABLE();                          // Enable SPI and GPIO Clock
@@ -31,6 +32,7 @@ static void sd_spi_pin_init(void) {
     SPI_GPIO_Init.Pull = GPIO_NOPULL;
     SPI_GPIO_Init.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(SD_DET_PORT, &SPI_GPIO_Init);
+#endif
 }
 
 static void sd_spi_init(void) {
