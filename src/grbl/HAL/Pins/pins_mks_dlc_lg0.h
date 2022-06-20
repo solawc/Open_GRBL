@@ -31,12 +31,24 @@
 #define BOARD_Z_DIR_PORT                GPIOB          
 #define BOARD_Z_DIR_PIN                 GPIO_PIN_8
 
+/* Laser */
+#define BOARD_LASER_PORT                GPIOB
+#define BOARD_LASER_PIN                 GPIO_PIN_7
+#define BOARD_LASER_PIN_CLK_ENABLE      __HAL_RCC_GPIOB_CLK_ENABLE()
+
 /* Probe */
 #define BOARD_PROBE_PORT                GPIOB
 #define BOARD_PROBE_PIN                 GPIO_PIN_11
 
+/* FLOOD */
+#define BOARD_FLOOD_PORT                GPIOB
+#define BOARD_FLOOD_PIN                 GPIO_PIN_3
+
+/* MIST */
+#define BOARD_MIST_PORT                 GPIOB
+#define BOARD_MIST_PIN                  GPIO_PIN_3
+
 /* For W25qxx */
-#define W25QXX_SPI_NUM                  SPI_2
 #define W25QXX_SPI_PORT                 SPI2
 #define W25QXX_SPI_SCK_GPIO             GPIOB
 #define W25QXX_SPI_SCK_PIN              GPIO_PIN_13
@@ -50,7 +62,6 @@
 #define W25QXX_SPEED                    SPI_BAUDRATEPRESCALER_4
 
 /* For SDCard */
-#define SD_USE_SPI
 #define BOARD_SD_SPI                    SPI1
 #define BOARD_SD_SCK_PORT               GPIOA
 #define BOARD_SD_SCK_PIN                GPIO_PIN_5
