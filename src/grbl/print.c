@@ -28,6 +28,11 @@ void printString(const char *s)
     serial_write(*s++);
 }
 
+void printReturnInfo(const char *s) {
+
+    printString(s);
+}
+
 #ifdef AVRTARGET
 // Print a string stored in PGM-memory
 void printPgmString(const char *s)
