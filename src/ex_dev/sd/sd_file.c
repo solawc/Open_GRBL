@@ -12,7 +12,7 @@ void sd_init(void) {
     hal_sd_register();
 
     if(!hal_sd.sd_get_status()) {
-        fs_res = f_mount(&fs,"1:",1);
+        fs_res = f_mount(&fs,SD_FILE_PATH,1);
         if(fs_res == FR_OK){
             hal_sd.is_has_sd = 1;
         }else {
@@ -37,12 +37,9 @@ void sd_state_check(void) {
     }
 }
 
-
 bool sd_mount(void) {
-
-    
     FRESULT fs_res;
-    fs_res = f_mount(&fs,"1:",1);
+    fs_res = f_mount(&fs,SD_FILE_PATH,1);
     if(fs_res == FR_OK) return true;
     else return false;
 }
@@ -53,7 +50,7 @@ void get_fafts_info( void )
 
     DWORD fre_clust, fre_size, tot_size;
     
-    uint8_t result = f_getfree( "1:", &fre_clust, &pfs );
+    uint8_t result = f_getfree( SD_FILE_PATH, &fre_clust, &pfs );
     
     if( result == FR_OK )
     {
