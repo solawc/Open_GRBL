@@ -26,6 +26,8 @@ void sd_init(void) {
     get_fafts_info();
 
     sd_list();
+
+    sd_open_file(TEST_PATH_FILE);
 }
 
 void sd_state_check(void) {
@@ -75,13 +77,44 @@ void get_fafts_info( void )
     }
 }
 
+
+bool sd_open_file(char *path) {
+
+    FRESULT fr = FR_OK;
+
+    char buff[96];
+
+    fr = f_open(&fil, path, FA_READ);
+
+    if(fr != FR_OK) return false;
+
+    while(1) {  
+        f_gets(buff, 96, &fil);
+        printf("RB:%s", buff);
+        // HAL_Delay(100);
+    }
+    return true;
+}
+
+
 char *sd_read_line(void) {
 
     char *line = 0;
 
+    f_gets(line, FILE_CMD_LIMIT, &fil);
+
     return line;
 }
 
+
+
+/**************************************************
+ * 这里是为了实现读取文件中途可以实现中途停止，以弱定义
+ * 的形式来实现，可有可无；若需要这个功能，就重新定义实
+ * 体.
+ * ***********************************************/
+__WEAK bool sd_list_state = true;
+__WEAK bool sd_list_stop_cb() { return sd_list_state; }
 
 void sd_list() {
 
@@ -89,16 +122,17 @@ void sd_list() {
     FILINFO fileinfo;           // 获取文件信息
     uint8_t result = 0;
 
-    char fileName[512];
+    char fileName[255];
 
     result = f_opendir(&dir, SD_FILE_PATH);
 
     if(result == FR_OK) {
-
         while(f_readdir(&dir, &fileinfo)==FR_OK) {
+
+            if(!sd_list_stop_cb()) return;
+
             if(fileinfo.fattrib & AM_DIR)  {
                 if(fileinfo.fname[0]==0){ break; }
-                // printf("[DIR:%s]\n",(fileinfo.fname) );
                 sprintf(fileName, "[DIR:%s]\n", fileinfo.fname);
                 printReturnInfo(fileName);
             }
@@ -106,7 +140,6 @@ void sd_list() {
                 if(fileinfo.fname[0]==0){ break; }
                 sprintf(fileName, "[File:%s, Size:%ldk]\n", fileinfo.fname, (fileinfo.fsize/1024));
                 printReturnInfo(fileName);
-                // printf("[File:%s]\n",fileinfo.fname);
             }
         }
     }else {
