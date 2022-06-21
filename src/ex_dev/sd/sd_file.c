@@ -2,11 +2,11 @@
 
 FIL fil;
 FATFS fs;
+bool sd_ready_next = false;
+uint32_t sd_current_line_number;        
 
 void sd_init(void) {
 
-    // FATFS fs;
-    
     FRESULT fs_res;
 
     hal_sd_register();
@@ -26,8 +26,6 @@ void sd_init(void) {
     get_fafts_info();
 
     sd_list();
-
-    sd_open_file(TEST_PATH_FILE);
 }
 
 void sd_state_check(void) {
@@ -78,24 +76,49 @@ void get_fafts_info( void )
 }
 
 
-bool sd_open_file(char *path) {
+// bool sd_open_file(char *path) {
+
+//     FRESULT fr = FR_OK;
+
+//     char buff[96];
+
+//     char *flg = 0;
+
+//     fr = f_open(&fil, path, FA_READ);
+
+//     if(fr != FR_OK) return false;
+
+//     while(1) {  
+//         flg = f_gets(buff, 96, &fil);
+//         printf("RB:%s", buff);
+//         if(flg == 0) break;
+//     }
+//     return true;
+// }
+
+bool sd_open_file(const char *path) {
 
     FRESULT fr = FR_OK;
-
-    char buff[96];
-
     fr = f_open(&fil, path, FA_READ);
-
-    if(fr != FR_OK) return false;
-
-    while(1) {  
-        f_gets(buff, 96, &fil);
-        printf("RB:%s", buff);
-        // HAL_Delay(100);
-    }
-    return true;
+    if(fr == FR_OK) return true;
+    else return false;
 }
 
+bool sd_close_file() {
+
+    FRESULT fr = FR_OK;
+    fr = f_close(&fil);
+    if(fr == FR_OK) return true;
+    else return false; 
+}
+
+bool sd_set_file_pos(uint32_t pos) {
+
+    FRESULT fr = FR_OK;
+    fr = f_lseek(&fil, pos);
+    if(fr == FR_OK) return true;
+    else return false;
+}
 
 char *sd_read_line(void) {
 
@@ -104,6 +127,11 @@ char *sd_read_line(void) {
     f_gets(line, FILE_CMD_LIMIT, &fil);
 
     return line;
+}
+
+float sd_report_perc_complete() {
+
+    return f_tell(&fil)/fil.obj.objsize;
 }
 
 

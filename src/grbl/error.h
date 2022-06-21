@@ -1,7 +1,7 @@
 #ifndef __error_h
 #define __error_h
 
-typedef enum{
+typedef enum {
 
     OK = 0,
     EOL = 111,

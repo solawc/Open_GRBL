@@ -3,6 +3,9 @@
 
 #define USE_FREERTOS_RTOS
 
+// #define DEBUG_TEST
+
+
 #include "stdio.h"
 #include "stdlib.h"
 #include "stdbool.h"

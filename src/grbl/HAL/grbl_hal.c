@@ -33,6 +33,7 @@ void grbl_hw_init(void) {
 
     SYSTEM_UART();      // hal_uart_init();
 
+#ifndef DEBUG_TEST
     SYSTEM_LASER();     // hal_pwm_init();
 
     SYSTEM_FLASH();     // w25qxx_init();
@@ -40,4 +41,5 @@ void grbl_hw_init(void) {
     SYSTEM_SDCARD();    // sd_init()
     
     SYSTEM_LCD();       // dev_lcd_init();
+#endif
 }
