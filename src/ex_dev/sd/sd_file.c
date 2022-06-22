@@ -211,7 +211,7 @@ void sd_report_open_file(char *line) {
 
 }
 
-
+// LG0204
 void sd_report_mem(void) {
 
     char cmd_str[128];

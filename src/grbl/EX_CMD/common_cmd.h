@@ -5,6 +5,6 @@
 
 
 
-
+void report_lg0_cmd_list(void);
 
 #endif

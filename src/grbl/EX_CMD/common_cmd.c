@@ -47,6 +47,10 @@ uint8_t system_excute_lg0_cmd(char *line) {
     letter = atof(str_value);
 
     switch(letter) {
+      
+      case 100:
+        report_lg0_cmd_list();
+      break;
 
       case 200:
         sd_report_state();
@@ -68,4 +72,14 @@ uint8_t system_excute_lg0_cmd(char *line) {
     }
 
     return 0;  
+}
+
+void report_lg0_cmd_list(void) {
+
+    printf("/**********LG0 CMD List************/\n");
+    printf(" *LG0100(help)\n");
+    printf(" *LG0200(report sdcard state)\n");
+    printf(" *LG0201(report sdcard path, ex.[LG0201]1:)\n");
+    printf(" *LG0204(report sdcard memory\n");
+    printf("/****************end***************/\n");
 }
