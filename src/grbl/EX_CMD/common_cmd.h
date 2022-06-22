@@ -7,4 +7,6 @@
 
 void report_lg0_cmd_list(void);
 
+uint8_t system_excute_lg0_cmd(char *line);
+
 #endif

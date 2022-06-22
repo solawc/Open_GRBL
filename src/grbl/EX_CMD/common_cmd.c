@@ -75,7 +75,6 @@ uint8_t system_excute_lg0_cmd(char *line) {
 }
 
 void report_lg0_cmd_list(void) {
-
     printf("/**********LG0 CMD List************/\n");
     printf(" *LG0100(help)\n");
     printf(" *LG0200(report sdcard state)\n");

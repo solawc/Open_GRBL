@@ -51,8 +51,6 @@ bool sd_mount(void) {
 
 void get_fafts_info( void )
 {
-    // char inf_str[255];
-
     FATFS *pfs = &fs;
 
     DWORD fre_clust, fre_size, tot_size;
@@ -74,27 +72,6 @@ void get_fafts_info( void )
         printReturnInfo(CMD_SD_ERROR);
     }
 }
-
-
-// bool sd_open_file(char *path) {
-
-//     FRESULT fr = FR_OK;
-
-//     char buff[96];
-
-//     char *flg = 0;
-
-//     fr = f_open(&fil, path, FA_READ);
-
-//     if(fr != FR_OK) return false;
-
-//     while(1) {  
-//         flg = f_gets(buff, 96, &fil);
-//         printf("RB:%s", buff);
-//         if(flg == 0) break;
-//     }
-//     return true;
-// }
 
 bool sd_open_file(const char *path) {
 

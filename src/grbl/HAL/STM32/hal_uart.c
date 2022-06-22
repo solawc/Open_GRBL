@@ -185,6 +185,20 @@ uint8_t serial_rb_read(hal_uart_t *rb, uint8_t *data) {
 	}
 }
 
+uint16_t serial_rb_abailable(hal_uart_t *rb) {
+
+	uint8_t tmp_tail = rb->tail;		// 备份当前值，防止篡改
+	if(rb->head > tmp_tail) return (rb->head - tmp_tail);
+	return (tmp_tail - rb->head); 
+}
+
+uint16_t serial_rb_buff_count(hal_uart_t *rb) {
+
+	uint8_t tmp_tail = rb->tail;
+	if(rb->head >= tmp_tail) {return (rb->head - tmp_tail);}
+	return (UART_RB_BUFF_MAX - (tmp_tail - rb->head));
+} 
+
 
 
 
