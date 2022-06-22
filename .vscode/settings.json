@@ -37,7 +37,8 @@
         "hal_sdcard.h": "c",
         "cpu_stm32g0_map.h": "c",
         "sd_file.h": "c",
-        "pins_mks_dlc_lg0.h": "c"
+        "pins_mks_dlc_lg0.h": "c",
+        "common_cmd.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

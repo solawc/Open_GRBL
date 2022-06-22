@@ -21,12 +21,21 @@
 void sd_init(void);
 void sd_state_check(void);
 void get_fafts_info(void);
+bool get_sd_state(void);
 
 
-// test
-void sd_list();
+
+void sd_list(const char *path);
+bool sd_open_file(const char *path);
 
 char *sd_read_line(void);
-// bool sd_open_file(char *path);
-bool sd_open_file(const char *path);
+
+
+
+void sd_report_state(void);
+void sd_report_open_file(char *line);
+void sd_report_mem(void);
+
+
+
 #endif

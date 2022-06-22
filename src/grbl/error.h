@@ -8,6 +8,7 @@ typedef enum {
     Overflow = 11, 
     SystemGcLock = 9,
 
+    LG0CmdErr = 100,
 
 
 }ERROR_LIST_t;

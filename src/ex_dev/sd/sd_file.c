@@ -25,7 +25,7 @@ void sd_init(void) {
     sd_state_check();
     get_fafts_info();
 
-    sd_list();
+    // sd_list();
 }
 
 void sd_state_check(void) {
@@ -134,6 +134,12 @@ float sd_report_perc_complete() {
     return f_tell(&fil)/fil.obj.objsize;
 }
 
+bool get_sd_state(void) {
+
+    if(!hal_sd.sd_get_status()) return true;
+    else return false;
+}
+
 
 
 /**************************************************
@@ -144,15 +150,15 @@ float sd_report_perc_complete() {
 __WEAK bool sd_list_state = true;
 __WEAK bool sd_list_stop_cb() { return sd_list_state; }
 
-void sd_list() {
+void sd_list(const char *path) {
 
     DIR dir;                    // 文件夹信息
     FILINFO fileinfo;           // 获取文件信息
     uint8_t result = 0;
 
-    char fileName[255];
+    char fileName[1024];
 
-    result = f_opendir(&dir, SD_FILE_PATH);
+    result = f_opendir(&dir, path);
 
     if(result == FR_OK) {
         while(f_readdir(&dir, &fileinfo)==FR_OK) {
@@ -175,3 +181,43 @@ void sd_list() {
     }
 }
 
+/***************************************************
+ * 以下的函数作为Report相关返回
+ * ************************************************/
+
+// LG0200
+void sd_report_state(void) {
+    if(get_sd_state()) {
+        printReturnInfo(CMD_SD_OK);
+    }else{
+        printReturnInfo(CMD_SD_EMPTY);
+    }
+}
+
+
+// LG0201
+/**************************************************
+ * 当line被送进来时，它应该是一个完整的指令，例如：
+ * [LG0201]1:
+ * [LG0201]1:DIR/DIR/DIR...
+ * 因此需要对径路参数做提取
+ * ***********************************************/
+void sd_report_open_file(char *line) {
+
+    char *path = "1:";
+    
+
+    sd_list(path);
+
+}
+
+
+void sd_report_mem(void) {
+
+    char cmd_str[128];
+
+    sprintf(cmd_str, "SD_SIZE:%dMB|%dMB\n", hal_sd.sd_all_size, 
+                                          hal_sd.sd_free_size);
+
+    printReturnInfo(cmd_str);
+}

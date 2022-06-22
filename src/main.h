@@ -42,6 +42,8 @@
 #include "grbl/HAL/Peripheral/hal_sdcard.h"
 #include "grbl/HAL/Peripheral/hal_w25qxx.h"
 
+#include "grbl/EX_CMD/common_cmd.h"
+
 #include "ex_dev/lcd/tft_lcd_dev.h"
 #include "ex_dev/sd/sdcard.h"
 #include "ex_dev/sd/sd_file.h"

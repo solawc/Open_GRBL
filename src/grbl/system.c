@@ -122,26 +122,6 @@ void system_execute_startup(char *line)
   }
 }
 
-uint8_t system_excute_lg0_cmd(char *line) {
-
-    char* value;
-
-    if(*line++ == '[') {
-      value = strrchr(line, ']');
-      if(!value) {
-        return 0;
-      }
-      *value++ = '\0';
-      if(*value == '\0') {
-        value = NULL;
-      }
-    }
-
-    return 0;  
-}
-
-
-
 // Directs and executes one line of formatted input from protocol_process. While mostly
 // incoming streaming g-code blocks, this also executes Grbl internal commands, such as
 // settings, initiating the homing cycle, and toggling switch states. This differs from
