@@ -149,7 +149,7 @@ void sd_list(const char *path) {
             }
             else {   
                 if(fileinfo.fname[0]==0){ break; }
-                sprintf(fileName, "[File:%s, Size:%ldk]\n", fileinfo.fname, (fileinfo.fsize/1024));
+                sprintf(fileName, "[File:%s|SIZE:%ldk]\r\n", fileinfo.fname, (fileinfo.fsize/1024));
                 printReturnInfo(fileName);
             }
         }
@@ -183,9 +183,7 @@ void sd_report_open_file(char *line) {
 
     char *path = "1:";
     
-
     sd_list(path);
-
 }
 
 // LG0204
