@@ -19,21 +19,6 @@
 #define LASER_UART_IRQHANDLER           BOARD_UART_IRQnHANDLER
 #define LASER_UART_RX_FLAG              BOARD_UART_RX_FLAG
 
-// #elif defined(STM32F407xx) 
-// #define LaserUART		                USART3
-// #define LaserUART_IRQn                  UART_IRQn(USART3)
-// #define LASER_UART_CLK_ENABLE()         __HAL_UART_CLK(USART3)
-// #define LASER_UART_TX_CLK_ENABLE()      __HAL_RCC_GPIOB_CLK_ENABLE();
-// #define LASER_UART_RX_CLK_ENABLE()      __HAL_RCC_GPIOB_CLK_ENABLE();
-// #define LASER_UART_TX_PORT              GPIOB
-// #define LASER_UART_TX_PIN               GPIO_PIN_10
-// #define LASER_UART_RX_PORT              GPIOB
-// #define LASER_UART_RX_PIN               GPIO_PIN_11
-// #define LASER_UART_AF_MODE              GPIO_AF7_USART3
-// #define LASER_UART_IRQHANDLER           USART3_IRQHandler
-// #define LASER_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
-// #endif
-
 typedef struct {
     uint8_t head;
     uint8_t tail;
@@ -53,5 +38,7 @@ bool hal_is_uart_sr_txe(void);
 void serial_rb_init(hal_uart_t *rb);
 void serial_rb_write(hal_uart_t *rb, uint8_t data);
 uint8_t serial_rb_read(hal_uart_t *rb, uint8_t *data);
+uint16_t serial_rb_abailable(hal_uart_t *rb);
+uint16_t serial_rb_buff_count(hal_uart_t *rb);
 
 #endif

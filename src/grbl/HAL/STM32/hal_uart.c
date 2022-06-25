@@ -148,9 +148,7 @@ static void tft_lcd_uart_pins_init() {
 }
 
 void tft_lcd_uart_init() {
-
 	tft_lcd_uart_pins_init();
-
 }
 
 void serial_rb_init(hal_uart_t *rb) {

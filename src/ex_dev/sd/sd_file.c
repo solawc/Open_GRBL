@@ -193,8 +193,10 @@ void sd_report_mem(void) {
 
     char cmd_str[128];
 
-    sprintf(cmd_str, "SD_SIZE:%dMB|%dMB\n", hal_sd.sd_all_size, 
+    sprintf(cmd_str, "SD_SIZE:%ldMB|%ldMB\n", hal_sd.sd_all_size, 
                                           hal_sd.sd_free_size);
 
     printReturnInfo(cmd_str);
 }
+
+
