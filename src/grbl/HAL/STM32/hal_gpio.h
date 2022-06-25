@@ -13,8 +13,9 @@
 #define LIMIT_X_PIN         GPIO_PIN_4
 #define LIMIT_Y_PORT        GPIOD
 #define LIMIT_Y_PIN         GPIO_PIN_11
-#define LIMIT_Z_PORT        GPIOD
-#define LIMIT_Z_PIN         GPIO_PIN_12
+// #define LIMIT_Z_PORT        GPIOD
+// #define LIMIT_Z_PIN         GPIO_PIN_12
+#define LIMIT_IRQnHANDLE    EXTI0_IRQHandler
 
 #define LIMIT_IRQnHANDLE            EXTI0_IRQHandler
 #define LIMIT_IRQn                  EXTI0_IRQn
@@ -26,24 +27,32 @@
 #define MOTOR_X_DIR_PIN     GPIO_PIN_5
 #define MOTOR_Y_DIR_PORT    GPIOI
 #define MOTOR_Y_DIR_PIN     GPIO_PIN_6
-#define MOTOR_Z_DIR_PORT    GPIOI
-#define MOTOR_Z_DIR_PIN     GPIO_PIN_7
+// #define MOTOR_Z_DIR_PORT    GPIOI
+// #define MOTOR_Z_DIR_PIN     GPIO_PIN_7
 
 #define MOTOR_X_AXIS_PORT   GPIOA
 #define MOTOR_X_AXIS_PIN    GPIO_PIN_4
 #define MOTOR_Y_AXIS_PORT   GPIOA
 #define MOTOR_Y_AXIS_PIN    GPIO_PIN_6
-#define MOTOR_Z_AXIS_PORT   GPIOA
-#define MOTOR_Z_AXIS_PIN    GPIO_PIN_8
+// #define MOTOR_Z_AXIS_PORT   GPIOA
+// #define MOTOR_Z_AXIS_PIN    GPIO_PIN_8
 
 #define PROBE_PORT                  GPIOB
 #define PROBE_PIN                   GPIO_PIN_11
 
+/* 液体冷却 */
+#define FLOOD_PORT                  BOARD_FLOOD_PORT
+#define FLOOD_PIN                   BOARD_FLOOD_PIN
+
+/*空气冷却*/    
+#define MIST_PORT                   BOARD_MIST_PORT
+#define MIST_PIN                    BOARD_MIST_PIN      
+
 #elif defined(STM32G0B0xx)
 
-#define LASER_PORT                  GPIOB
-#define LASER_PIN                   GPIO_PIN_7
-#define LASER_PIN_CLK_ENABLE()      __HAL_RCC_GPIOB_CLK_ENABLE()
+#define LASER_PORT                  BOARD_LASER_PORT
+#define LASER_PIN                   BOARD_LASER_PIN
+#define LASER_PIN_CLK_ENABLE()      BOARD_LASER_PIN_CLK_ENABLE
 
 #define LIMIT_X_PORT                BOARD_LIMIT_X_PORT // GPIOB
 #define LIMIT_X_PIN                 BOARD_LIMIT_X_PIN  // GPIO_PIN_0
@@ -83,6 +92,14 @@
 
 #define PROBE_PORT                  GPIOB
 #define PROBE_PIN                   GPIO_PIN_11
+
+/* 液体冷却 */
+#define FLOOD_PORT                  GPIOB
+#define FLOOD_PIN                   GPIO_PIN_3
+
+/*空气冷却*/    
+#define MIST_PORT                   GPIOB
+#define MIST_PIN                    GPIO_PIN_3   
 
 #elif defined(STM32F407xx)
 #define LASER_PORT                  GPIOE
@@ -136,5 +153,11 @@ uint8_t hal_get_moter_axis_gpio_mask(uint8_t axis);
 
 void hal_probe_gpio_init(void);
 uint8_t hal_probe_gpio_read(void);
+
+void hal_coolant_pin_init(void);
+void set_coolant_flood(bool status);
+void set_coolant_mist(bool status);
+uint8_t get_coolant_flood(void);
+uint8_t get_coolant_mist(void);
 
 #endif

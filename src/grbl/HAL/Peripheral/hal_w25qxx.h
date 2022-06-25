@@ -26,34 +26,22 @@ typedef struct{
 }NFLASH_t;
 extern NFLASH_t sFlash;
 
-#ifdef STM32F429xx
-// #define W25QXX_SPI_PORT             SPI5
-// #define W25QXX_SPI_SCK_GPIO         GPIOF
-// #define W25QXX_SPI_SCK_PIN          GPIO_PIN_7
-// #define W25QXX_SPI_MISO_GPIO        GPIOF
-// #define W25QXX_SPI_MISO_PIN         GPIO_PIN_8
-// #define W25QXX_SPI_MOSI_GPIO        GPIOF
-// #define W25QXX_SPI_MOSI_PIN         GPIO_PIN_9
-// #define W25QXX_SPI_CS_GPIO          GPIOF
-// #define W25QXX_SPI_CS_PIN           GPIO_PIN_6
-// #define W25QXX_PIN_AF               GPIO_AF5_SPI5
-// #define W25QXX_SPEED                SPI_BAUDRATEPRESCALER_4
-#elif defined(STM32G0B0xx)
 
-#elif defined(STM32F407xx)
-#define W25QXX_SPI_NUM              SPI_2
-#define W25QXX_SPI_PORT             SPI2
-#define W25QXX_SPI_SCK_GPIO         GPIOB
-#define W25QXX_SPI_SCK_PIN          GPIO_PIN_13
-#define W25QXX_SPI_MISO_GPIO        GPIOC
-#define W25QXX_SPI_MISO_PIN         GPIO_PIN_2
-#define W25QXX_SPI_MOSI_GPIO        GPIOC
-#define W25QXX_SPI_MOSI_PIN         GPIO_PIN_3
-#define W25QXX_SPI_CS_GPIO          GPIOB
-#define W25QXX_SPI_CS_PIN           GPIO_PIN_12
-#define W25QXX_PIN_AF               GPIO_AF5_SPI2
-#define W25QXX_SPEED                SPI_BAUDRATEPRESCALER_4
-#endif
+
+// (STM32F407xx)
+// #define W25QXX_SPI_NUM              SPI_2
+// #define W25QXX_SPI_PORT             SPI2
+// #define W25QXX_SPI_SCK_GPIO         GPIOB
+// #define W25QXX_SPI_SCK_PIN          GPIO_PIN_13
+// #define W25QXX_SPI_MISO_GPIO        GPIOC
+// #define W25QXX_SPI_MISO_PIN         GPIO_PIN_2
+// #define W25QXX_SPI_MOSI_GPIO        GPIOC
+// #define W25QXX_SPI_MOSI_PIN         GPIO_PIN_3
+// #define W25QXX_SPI_CS_GPIO          GPIOB
+// #define W25QXX_SPI_CS_PIN           GPIO_PIN_12
+// #define W25QXX_PIN_AF               GPIO_AF5_SPI2
+// #define W25QXX_SPEED                SPI_BAUDRATEPRESCALER_4
+
 
 // Flash cmd
 #define W25X_WriteEnable		        0x06 

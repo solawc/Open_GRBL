@@ -79,15 +79,21 @@ ERROR_LIST_t execute_line(char* line) {
         return OK;
     }
 
-    // Grbl '$' or WebUI '[ESPxxx]' system command
-    if (line[0] == '$' || line[0] == '[') {
+    // Grbl '$' or WebUI '[LG0xxx]' system command
+    // if (line[0] == '$' || line[0] == '[') {
+    if (line[0] == '$') {
         return system_execute_line(line);
+    }
+
+    if(line[0] == '[') {
+      return system_excute_lg0_cmd(line);
     }
 
     // Everything else is gcode. Block if in alarm or jog mode.
     if (sys.state == STATE_ALARM || sys.state == STATE_JOG) {
         return SystemGcLock;
     }
+
     return gc_execute_line(line);
 }
 

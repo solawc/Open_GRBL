@@ -159,7 +159,6 @@ int memcpy_from_eeprom_with_checksum(char *destination, unsigned int source, uns
   for(; size > 0; size--) { 
     data = eeprom_get_char(source++);
     // checksum = (checksum << 1) || (checksum >> 7);
-
 	checksum =  checksum << 1;
 	checksum |= checksum >> 7;
     checksum += data;    

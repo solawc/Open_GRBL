@@ -120,6 +120,7 @@ void hal_sd_register(void) {
 
     hal_sd.sd_init();
 }
+#elif defined(SD_USE_SDIO)
 
 
 #endif

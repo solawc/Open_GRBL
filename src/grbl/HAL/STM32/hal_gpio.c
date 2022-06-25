@@ -250,6 +250,66 @@ uint8_t hal_get_moter_axis_gpio_mask(uint8_t axis) {
 }
 
 
+void hal_coolant_pin_init(void) {
+
+	GPIO_InitTypeDef GPIO_Init; 
+
+	GPIO_Init.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_Init.Pull = GPIO_NOPULL;
+	GPIO_Init.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+
+#ifdef FLOOD_PORT
+	GPIO_Init.Pin = FLOOD_PIN;
+    HAL_GPIO_Init(FLOOD_PORT, &GPIO_Init);
+#endif
+	GPIO_Init.Pin = MIST_PIN;
+    HAL_GPIO_Init(MIST_PORT, &GPIO_Init);
+}
+
+
+void set_coolant_flood(bool status) {
+#ifdef FLOOD_PORT
+	if(status){
+		HAL_GPIO_WritePin(FLOOD_PORT, FLOOD_PIN, GPIO_PIN_SET);
+	}else{
+		HAL_GPIO_WritePin(FLOOD_PORT, FLOOD_PIN, GPIO_PIN_RESET);
+	}
+#endif
+} 
+
+void set_coolant_mist(bool status) {
+	if(status){
+		HAL_GPIO_WritePin(MIST_PORT, MIST_PIN, GPIO_PIN_SET);
+	}else{
+		HAL_GPIO_WritePin(MIST_PORT, MIST_PIN, GPIO_PIN_RESET);
+	}
+} 
+
+
+uint8_t get_coolant_flood(void) {
+#ifdef FLOOD_PORT
+	uint32_t odr;
+
+	odr = FLOOD_PORT->ODR;
+
+	return (odr & FLOOD_PIN);
+#else 
+	return 0;
+#endif
+}
+
+
+uint8_t get_coolant_mist(void) {
+
+	uint32_t odr;
+
+	odr = MIST_PORT->ODR;
+
+	return (odr & MIST_PIN);
+}
+
+
+
 
 
 

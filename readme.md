@@ -4,13 +4,15 @@
 
 ![Grbl Logo 250px](https://user-images.githubusercontent.com/42537573/131384819-1b6f93d4-67df-4933-aaee-5ba4f4d7ff07.png)
 
-## 描述：
+## Describe：
 
-该项目主要是出于个人兴趣，将原生的GRBL的源码，移植到STM32的MCU上，移植的源码的地址：https://github.com/gnea/grbl
+This project is transplanted from the original grbl to STM32 or other MCU. At present, it runs well on stm32g0; FreeRTOS is added on the original basis, which can expand more functions and make the actual engraving machine /cnc more perfect.
 
-## 测试过的MCU
+Grbl original address：https://github.com/gnea/grbl
 
-测试方法是在保持工程结构不改变的前提下，只修改了底层接口，其余地方不改变，
+## MCU Support
+
+The operation mode is to modify Hal without changing the operation logic
 
 |    内核    |   MCU型号   |
 | :--------: | :---------: |
@@ -19,11 +21,9 @@
 | @Cortex-M3 | STM32F103VE |
 | @Cortex-M4 | STM32F429IG |
 
-目前Vscode+PlatformIO的环境已经搭建完成，抛弃了Keil的环境，Keil环境的代码将会移植到PIO中执行。
+## Configuration parameter
 
-## 参数配置
-
-参数与标准GRBL一致
+And standard grbl
 
 | $0   | Step pulse time                 | 10       | microseconds | Sets time length per step. Minimum 3usec.                    |
 | ---- | ------------------------------- | -------- | ------------ | ------------------------------------------------------------ |
@@ -61,8 +61,8 @@
 | $131 | Y-axis maximum travel           | 200.000  | millimeters  | Maximum Y-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances. |
 | $132 | Z-axis maximum travel           | 200.000  | millimeters  | Maximum Z-axis travel distance from homing switch. Determines valid machine space for soft-limits and homing search distances. |
 
-## 编译环境
+## Compilation environment
 
-- 编译器使用：Vscode+PlatformIO
-- 下载和调试工具使用：Jlink/DAPlink(OpenOCD)
+- Vscode+PlatformIO
+- Download tools：Jlink/DAPlink(OpenOCD)
 

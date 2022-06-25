@@ -30,6 +30,13 @@ int main() {
 
   grbl_report_mcu_info();
 
+#ifdef DEBUG_TEST
+  while(1) {
+    
+
+  }
+#endif
+
 #if defined(USE_FREERTOS_RTOS)
   xTaskCreate(enter_grbl_task, "grbl task", 1024, NULL, 1, &grbl_task_handler);
 #else 

@@ -20,7 +20,7 @@
     #define HAS_LCD_TFT_CFG
 #endif
 
-// #define SDSUPPORT
+#define SDSUPPORT
 #ifdef SDSUPPORT
     #define HAS_SDCARD
 #endif
