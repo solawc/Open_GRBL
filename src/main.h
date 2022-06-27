@@ -76,7 +76,7 @@
 #define SYSTEM_LCD()
 #endif
 
-#if defined(SDSUPPORT)
+#if defined(HAS_SDCARD)
 #define SYSTEM_SDCARD()     sd_init()
 #else 
 #define SYSTEM_SDCARD()

@@ -16,13 +16,15 @@ uint8_t sd_wait_ready(void)
 
 void SD_DisSelect(void)
 {
-	hal_sd_disable();
+	// hal_sd_disable();
+	hal_sd.sd_trans_disable();
  	hal_sd.sd_trans_receive_data(0xff);//提供额外的8个时钟
 }
 
 uint8_t SD_Select(void)
 {
-	hal_sd_enable();
+	// hal_sd_enable();
+	hal_sd.sd_trans_enable();
 	if(sd_wait_ready()==0)return 0;//等待成功
 	SD_DisSelect();
 	return 1;//等待失败
@@ -182,7 +184,8 @@ uint8_t SD_Initialize(void)
     uint8_t buf[4];  
 	uint16_t i;
 
-    hal_sd_init();      // 初始化为低速模式
+    // hal_sd_init();      // 初始化为低速模式
+	hal_sd.sd_init();
 
  	for( i= 0; i < 10; i++) hal_sd.sd_trans_receive_data(0XFF);//发送最少74个脉冲
 

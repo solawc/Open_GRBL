@@ -37,6 +37,14 @@
 #define BOARD_PROBE_PORT                GPIOB
 #define BOARD_PROBE_PIN                 GPIO_PIN_11
 
+/* FLOOD */
+#define BOARD_FLOOD_PORT                GPIOB
+#define BOARD_FLOOD_PIN                 GPIO_PIN_3
+
+/* MIST */
+#define BOARD_MIST_PORT                 GPIOB
+#define BOARD_MIST_PIN                  GPIO_PIN_3
+
 /* For W25qxx */
 #define W25QXX_SPI_PORT                 SPI5
 #define W25QXX_SPI_SCK_GPIO             GPIOF
