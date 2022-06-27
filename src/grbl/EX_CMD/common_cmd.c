@@ -68,7 +68,6 @@ uint8_t system_excute_lg0_cmd(char *line) {
       default:
         printReturnInfo("No this LG0 CMD\n");
       break;
-      
     }
 
     return 0;  

@@ -23,6 +23,7 @@ typedef struct{
     uint32_t flash_size;                
     uint32_t flash_delay_time;
     uint8_t  flash_mode;
+    uint8_t  flash_state;               // check if flash can't read, use for FATFS
 }NFLASH_t;
 extern NFLASH_t sFlash;
 

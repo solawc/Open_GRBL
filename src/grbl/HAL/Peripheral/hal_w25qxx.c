@@ -121,6 +121,9 @@ void w25qxx_init(void)
       case sFLASH_ID_256: sFlash.flash_size = (258 / 8) *1024; break;
       default: sFlash.flash_size = 0; break;
     }
+
+    if(sFlash.flash_size != 0) { sFlash.flash_state = 1; }
+    else { sFlash.flash_state = 0; }
 }
 
 uint32_t w25qxx_read_id(void)
