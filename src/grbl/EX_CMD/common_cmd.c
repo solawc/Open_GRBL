@@ -60,10 +60,21 @@ uint8_t system_excute_lg0_cmd(char *line) {
        sd_report_open_file(line);
       break;
 
+      case 202: 
+
+      break;
+
+
+      case 203 :
+
+      break;
+
 
       case 204:
         sd_report_mem();
       break;
+
+
 
       default:
         printReturnInfo("No this LG0 CMD\n");
@@ -78,6 +89,8 @@ void report_lg0_cmd_list(void) {
     printf(" *LG0100(help)\n");
     printf(" *LG0200(report sdcard state)\n");
     printf(" *LG0201(report sdcard path, ex.[LG0201]1:)\n");
+    printf(" *LG0202(report sdcard path, ex.[LG0201]1:)\n");
+    printf(" *LG0203(report sdcard path, ex.[LG0201]1:)\n");
     printf(" *LG0204(report sdcard memory\n");
     printf("/****************end***************/\n");
 }

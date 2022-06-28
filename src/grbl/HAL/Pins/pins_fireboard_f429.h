@@ -45,6 +45,11 @@
 #define BOARD_MIST_PORT                 GPIOB
 #define BOARD_MIST_PIN                  GPIO_PIN_3
 
+/* FLAME */
+#define BOARD_FLAME_PORT
+#define BOARD_FLAME_PIN
+
+
 /* For W25qxx */
 #define W25QXX_SPI_PORT                 SPI5
 #define W25QXX_SPI_SCK_GPIO             GPIOF
