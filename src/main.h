@@ -31,6 +31,8 @@
 #include "cmsis_os.h"
 #endif
 
+#include "grbl/CommonMarco.h"
+
 #include "grbl/HAL/grbl_hal.h"
 #include "grbl/HAL/grbl_config.h"
 #include "grbl/HAL/STM32/hal_gpio.h"
@@ -52,7 +54,7 @@
 
 #include "grbl/grbl.h"
 
-// Fatfs 
+// For Fatfs 
 #include "ff.h"
 
 #ifdef STM32F429xx
