@@ -471,8 +471,7 @@ void set_timer_irq_handler(void)   // set timer
       return; // Nothing to do but exit.
     }
   }
-
-
+  
   // Check probing state.
   if (sys_probe_state == PROBE_ACTIVE) { probe_state_monitor(); }
 

@@ -27,23 +27,6 @@ typedef struct{
 }NFLASH_t;
 extern NFLASH_t sFlash;
 
-
-
-// (STM32F407xx)
-// #define W25QXX_SPI_NUM              SPI_2
-// #define W25QXX_SPI_PORT             SPI2
-// #define W25QXX_SPI_SCK_GPIO         GPIOB
-// #define W25QXX_SPI_SCK_PIN          GPIO_PIN_13
-// #define W25QXX_SPI_MISO_GPIO        GPIOC
-// #define W25QXX_SPI_MISO_PIN         GPIO_PIN_2
-// #define W25QXX_SPI_MOSI_GPIO        GPIOC
-// #define W25QXX_SPI_MOSI_PIN         GPIO_PIN_3
-// #define W25QXX_SPI_CS_GPIO          GPIOB
-// #define W25QXX_SPI_CS_PIN           GPIO_PIN_12
-// #define W25QXX_PIN_AF               GPIO_AF5_SPI2
-// #define W25QXX_SPEED                SPI_BAUDRATEPRESCALER_4
-
-
 // Flash cmd
 #define W25X_WriteEnable		        0x06 
 #define W25X_WriteDisable		        0x04 
@@ -71,8 +54,8 @@ extern NFLASH_t sFlash;
 #define WIP_Flag                        0x01  /* Write In Progress (WIP) flag */
 #define Dummy_Byte                      0xFF
 
-
 void hal_w25qxx_spi_init(void);
+
 void w25qxx_init(void);
 uint32_t w25qxx_read_id(void);
 uint16_t w25qxx_read_write_byte(uint16_t wdata);

@@ -1,9 +1,8 @@
 #include "hal_w25qxx.h"
-
-
+ 
 NFLASH_t sFlash;
 
-static void hal_w25qxx_spi_gpio_init(void)
+static void w25qxx_spi_gpio_init(void)
 {
     GPIO_InitTypeDef GPIO_Init = {0};
 
@@ -26,10 +25,16 @@ static void hal_w25qxx_spi_gpio_init(void)
     GPIO_Init.Speed = GPIO_SPEED_FREQ_MEDIUM;
     GPIO_Init.Pin = W25QXX_SPI_CS_PIN;
     HAL_GPIO_Init(W25QXX_SPI_CS_GPIO, &GPIO_Init);
+} 
+
+static void w25qxx_enable(void)
+{
+  HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_RESET);
 }
 
-void hal_w25qxx_dma_init(void) {
-
+static void w25qxx_disable(void)
+{
+  HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_SET);
 }
 
 void hal_w25qxx_spi_init(void)
@@ -40,7 +45,7 @@ void hal_w25qxx_spi_init(void)
     sFlash.flash_size = 0;
 
     if(sFlash.flash_mode == sFLAHS_SPI_MODE) {
-        hal_w25qxx_spi_gpio_init();
+        w25qxx_spi_gpio_init();
         spi_for_w25qxx_init();
     }else {
 
@@ -71,15 +76,7 @@ bool is_read_had_finish(void)
     }
 }
 
-void w25qxx_enable(void)
-{
-  HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_RESET);
-}
 
-void w25qxx_disable(void)
-{
-  HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_SET);
-}
 
 uint8_t w25qxx_write_read_8(uint8_t byte)
 {
