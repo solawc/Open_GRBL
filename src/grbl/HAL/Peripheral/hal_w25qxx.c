@@ -54,29 +54,14 @@ void hal_w25qxx_spi_init(void)
 
 bool is_write_had_finish(void)
 {
-  if (__HAL_SPI_GET_FLAG(&w25qxx_spi, SPI_FLAG_TXE) == RESET)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  if (__HAL_SPI_GET_FLAG(&w25qxx_spi, SPI_FLAG_TXE) == RESET) { return true; }
+  else { return false; }
 }
 
-bool is_read_had_finish(void)
-{
-    if (__HAL_SPI_GET_FLAG(&w25qxx_spi, SPI_FLAG_RXNE) == RESET)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+bool is_read_had_finish(void) {
+  if (__HAL_SPI_GET_FLAG(&w25qxx_spi, SPI_FLAG_RXNE) == RESET) { return true; }
+  else { return false;}
 }
-
-
 
 uint8_t w25qxx_write_read_8(uint8_t byte)
 {
@@ -111,11 +96,11 @@ void w25qxx_init(void)
     get_id_size = sFlash.flash_id & 0x00ffff;
 
     switch(get_id_size) {
-      case sFLASH_ID_X16: sFlash.flash_size = (16 / 8) *1024; break;
-      case sFLASH_ID_16: sFlash.flash_size = (16 / 8) *1024; break;
-      case sFLASH_ID_64: sFlash.flash_size = (64 / 8) *1024; break;
-      case sFLASH_ID_128: sFlash.flash_size = (128 / 8) *1024; break;
-      case sFLASH_ID_256: sFlash.flash_size = (258 / 8) *1024; break;
+      case sFLASH_ID_X16: sFlash.flash_size   = (16  / 8) *1024; break;
+      case sFLASH_ID_16: sFlash.flash_size    = (16  / 8) *1024; break;
+      case sFLASH_ID_64: sFlash.flash_size    = (64  / 8) *1024; break;
+      case sFLASH_ID_128: sFlash.flash_size   = (128 / 8) *1024; break;
+      case sFLASH_ID_256: sFlash.flash_size   = (258 / 8) *1024; break;
       default: sFlash.flash_size = 0; break;
     }
 
