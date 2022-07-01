@@ -32,6 +32,7 @@
 #endif
 
 #include "grbl/CommonMarco.h"
+#include "grbl/grbl_main.h"
 
 #include "grbl/HAL/grbl_hal.h"
 #include "grbl/HAL/grbl_config.h"
@@ -86,11 +87,5 @@
 
 void _delay_ms(uint32_t tick);
 void _delay_us(uint32_t tick);
-
-#if defined(USE_FREERTOS_RTOS)
-void enter_grbl_task(void *parg);
-#else
-void enter_grbl_task(void);
-#endif
 
 #endif
