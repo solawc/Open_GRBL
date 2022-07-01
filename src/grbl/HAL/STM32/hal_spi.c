@@ -5,6 +5,40 @@
  * ****************************************************************************/
 SPI_HandleTypeDef w25qxx_spi;
 SPI_HandleTypeDef tft_spi;
+NFLASH_t sFlash;
+
+void w25qxx_spi_cs_enabel(void) {
+    HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_RESET);
+}
+
+void w25qxx_spi_cs_disable(void) {
+    HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_SET);
+}
+
+void w25qxx_spi_gpio_init(void)
+{
+    GPIO_InitTypeDef GPIO_Init = {0};
+
+    GPIO_Init.Alternate = W25QXX_PIN_AF;
+    GPIO_Init.Mode = GPIO_MODE_AF_PP;
+    GPIO_Init.Pull = GPIO_NOPULL;
+    GPIO_Init.Speed = GPIO_SPEED_FREQ_MEDIUM;
+
+    GPIO_Init.Pin = W25QXX_SPI_SCK_PIN;
+    HAL_GPIO_Init(W25QXX_SPI_SCK_GPIO, &GPIO_Init);
+
+    GPIO_Init.Pin = W25QXX_SPI_MISO_PIN;
+    HAL_GPIO_Init(W25QXX_SPI_MISO_GPIO, &GPIO_Init);
+
+    GPIO_Init.Pin = W25QXX_SPI_MOSI_PIN;
+    HAL_GPIO_Init(W25QXX_SPI_MOSI_GPIO, &GPIO_Init);
+
+    GPIO_Init.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_Init.Pull = GPIO_PULLUP;
+    GPIO_Init.Speed = GPIO_SPEED_FREQ_MEDIUM;
+    GPIO_Init.Pin = W25QXX_SPI_CS_PIN;
+    HAL_GPIO_Init(W25QXX_SPI_CS_GPIO, &GPIO_Init);
+} 
 
 void spi_for_w25qxx_init(void) {
 
@@ -34,6 +68,25 @@ uint8_t w25qxx_spi_read_write(uint8_t data) {
     HAL_SPI_TransmitReceive(&w25qxx_spi, &data, &rdata, 1, 10);
     return rdata;
 }
+
+bool w25qxx_is_trans_finish() {
+
+    return true;
+}
+
+void w25qxx_spi_regiest() {
+    sFlash.flash_mode = sFLAHS_SPI_MODE;
+    sFlash.flash_delay_time = 10;   
+    sFlash.flash_id = 0;
+    sFlash.flash_size = 0;
+    sFlash.w25qxx_spi_init = spi_for_w25qxx_init;
+    sFlash.w25qxx_spi_gpio_init = w25qxx_spi_gpio_init;
+    sFlash.w25qxx_spi_read_write_byte = w25qxx_spi_read_write;
+    sFlash.w25qxx_is_trans_finish = w25qxx_is_trans_finish;
+    sFlash.w25qxx_disable_trans = w25qxx_spi_cs_disable;
+    sFlash.w25qxx_enable_trans = w25qxx_spi_cs_enabel;
+}
+
 
 /*******************************************************************************
  *                              TFT SPI Init

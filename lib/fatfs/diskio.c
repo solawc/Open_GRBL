@@ -76,7 +76,7 @@ DSTATUS disk_initialize (
 
 		case DEV_FLASH :
 			// result = 
-			w25qxx_init();
+			w25qxx_init(&sFlash);
 
 			if(sFlash.flash_state == 1) {
 				stat = RES_OK;
@@ -119,7 +119,7 @@ DRESULT disk_read (
 		break;
 
 		case DEV_FLASH :
-			w25qxx_buffer_read(buff, sector, count);
+			w25qxx_buffer_read(&sFlash, buff, sector, count);
 			return RES_OK;
 		break;
 
@@ -157,7 +157,7 @@ DRESULT disk_write (
 		break;
 
 		case DEV_FLASH :
-			w25qxx_buffer_write((uint8_t*)buff, sector, count);
+			w25qxx_buffer_write(&sFlash, (uint8_t*)buff, sector, count);
 			return RES_OK;
 		break;
 	}
