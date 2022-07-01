@@ -92,6 +92,7 @@ bool sd_close_file() {
     FRESULT fr = FR_OK;
     fr = f_close(&fil);
     if(fr == FR_OK) {
+        sd_state = SD_STATE_IDLE;
         sd_ready_next = false;
         return true;
     }

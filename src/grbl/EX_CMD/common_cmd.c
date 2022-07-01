@@ -66,7 +66,7 @@ uint8_t system_excute_lg0_cmd(char *line) {
 
 
       case 203 :
-
+        sd_close_file();
       break;
 
 
