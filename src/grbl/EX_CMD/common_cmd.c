@@ -61,7 +61,7 @@ uint8_t system_excute_lg0_cmd(char *line) {
       break;
 
       case 202: 
-
+        sd_open_file("1:pic1.nc");
       break;
 
 

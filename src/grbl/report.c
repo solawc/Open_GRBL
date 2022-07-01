@@ -115,12 +115,15 @@ static void report_util_float_setting(uint8_t n, float val, uint8_t n_decimal) {
 void report_status_message(uint8_t status_code)
 {
   switch(status_code) {
-    case STATUS_OK: // STATUS_OK
-      printPgmString(PSTR("ok\r\n")); break;
-#ifdef HAS_SDCARD
+    case STATUS_OK:
 
+      if(sd_state == SD_STATE_BUSY) {
+        sd_ready_next = true;
+      } else {
+        printPgmString(PSTR("ok\r\n")); 
+      }
 
-#endif
+    break;
 
     default:
       printPgmString(PSTR("error:"));
