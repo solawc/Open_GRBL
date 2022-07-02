@@ -16,9 +16,10 @@
 // #define DEV_RAM		0	/* Example: Map Ramdisk to physical drive 0 */
 #define DEV_MMC		1	/* Example: Map MMC/SD card to physical drive 1 */
 // #define DEV_USB		2	/* Example: Map USB MSD to physical drive 2 */
+#define DEV_FLASH		0	/* for SPI Flash driver 0 */
 
-#define SD_BLOCKSIZE 512
-#define FLASH_SECTOR_SIZE 	512
+#define SD_BLOCKSIZE			512
+#define FLASH_SECTOR_SIZE 		4096// 512
 
 /*-----------------------------------------------------------------------*/
 /* Get Drive Status                                                      */
@@ -30,29 +31,18 @@ DSTATUS disk_status (
 {
 	DSTATUS stat = STA_NOINIT;
 	switch (pdrv) {
-	// case DEV_RAM :
-	
-	// 	result = RAM_disk_status();
 
-	// 	// translate the reslut code here
+		case DEV_MMC :
+			// 这里需要重新做检测，但应该是一种更确保的、而不是单纯的随意读写
+			stat = RES_OK;
+			return stat;
+		break;
 
-	// 	return stat;
+		case DEV_FLASH:
+			stat = RES_OK;
+			return stat;
+		break;
 
-	case DEV_MMC :
-		// result = MMC_disk_status();
-
-		// translate the reslut code here
-		stat = RES_OK;
-		
-		return stat;
-
-	// case DEV_USB :
-
-	// 	result = USB_disk_status();
-
-	// 	// translate the reslut code here
-
-	// 	return stat;
 	}
 	return STA_NOINIT;
 }
@@ -70,34 +60,32 @@ DSTATUS disk_initialize (
 	DSTATUS stat;
 	int result = 0;
 	switch (pdrv) {
-	// case DEV_RAM :
-	// 	result = RAM_disk_initialize();
 
-	// 	// translate the reslut code here
+		case DEV_MMC :
+			result = SD_Initialize();	//SD卡初始化 
 
-	// 	return stat;
+			// translate the reslut code here
+			if (result == 0)
+			{	
+				stat = RES_OK;
+			}else {
+				stat = RES_ERROR;
+			}
+			return stat;
+		break;
 
-	case DEV_MMC :
-		// result = MMC_disk_initialize();
+		case DEV_FLASH :
+			// result = 
+			w25qxx_init(&sFlash);
 
-		result = SD_Initialize();	//SD卡初始化 
+			if(sFlash.flash_state == 1) {
+				stat = RES_OK;
+			}else {
+				stat = RES_ERROR;
+			}
+			return stat;
+		break;
 
-		// translate the reslut code here
-		if (result == 0)
-		{	
-			stat = RES_OK;
-		}else {
-			stat = RES_ERROR;
-		}
-		return stat;
-
-	break;
-	// case DEV_USB :
-	// 	result = USB_disk_initialize();
-
-	// 	// translate the reslut code here
-
-	// 	return stat;
 	}
 	return STA_NOINIT;
 }
@@ -117,39 +105,24 @@ DRESULT disk_read (
 {
 	DRESULT res;
 	switch (pdrv) {
-	// case DEV_RAM :
-	// 	// translate the arguments here
 
-	// 	result = RAM_disk_read(buff, sector, count);
+		case DEV_MMC :
+			res = SD_ReadDisk(buff, sector, count);
+			while(res)//读出错
+			{
+				SD_Initialize();	//重新初始化SD卡
+				res = SD_ReadDisk(buff, sector, count);	
+			}
+			// translate the reslut code here
+			if(res == 0x00) return RES_OK;
+			else return RES_ERROR;
+		break;
 
-	// 	// translate the reslut code here
+		case DEV_FLASH :
+			w25qxx_buffer_read(&sFlash, buff, sector, count);
+			return RES_OK;
+		break;
 
-	// 	return res;
-
-	case DEV_MMC :
-		// translate the arguments here
-
-		// result = MMC_disk_read(buff, sector, count);
-
-		res = SD_ReadDisk(buff, sector, count);
-		while(res)//读出错
-		{
-			SD_Initialize();	//重新初始化SD卡
-			res = SD_ReadDisk(buff,sector,count);	
-		}
-		// translate the reslut code here
-		if(res == 0x00) return RES_OK;
-		else return RES_ERROR;
-	break;
-
-	// case DEV_USB :
-	// 	// translate the arguments here
-
-	// 	result = USB_disk_read(buff, sector, count);
-
-	// 	// translate the reslut code here
-
-	// 	return res;
 	}
 
 	return RES_PARERR;
@@ -172,35 +145,21 @@ DRESULT disk_write (
 {
 	DRESULT res;
 	switch (pdrv) {
-	// case DEV_RAM :
-	// 	// translate the arguments here
 
-	// 	result = RAM_disk_write(buff, sector, count);
+		case DEV_MMC :
+			res= SD_WriteDisk((uint8_t*)buff,sector,count);
+			while(res)//写出错
+			{
+				SD_Initialize();	//重新初始化SD卡
+				res = SD_WriteDisk((uint8_t*)buff,sector,count);	
+			}
+			return res;
+		break;
 
-	// 	// translate the reslut code here
-
-	// 	return res;
-
-	case DEV_MMC :
-		// translate the arguments here
-
-		res= SD_WriteDisk((uint8_t*)buff,sector,count);
-		while(res)//写出错
-		{
-			SD_Initialize();	//重新初始化SD卡
-			res = SD_WriteDisk((uint8_t*)buff,sector,count);	
-		}
-		// translate the reslut code here
-		return res;
-
-	// case DEV_USB :
-	// 	// translate the arguments here
-
-	// 	result = USB_disk_write(buff, sector, count);
-
-	// 	// translate the reslut code here
-
-	// 	return res;
+		case DEV_FLASH :
+			w25qxx_buffer_write(&sFlash, (uint8_t*)buff, sector, count);
+			return RES_OK;
+		break;
 	}
 
 	return RES_PARERR;
@@ -221,45 +180,61 @@ DRESULT disk_ioctl (
 {
 	DRESULT res;
 	switch (pdrv) {
-	// case DEV_RAM :
 
-	// 	// Process of the command for the RAM drive
+		case DEV_MMC :
 
-	// 	return res;
+			// Process of the command for the MMC/SD card
 
-	case DEV_MMC :
+			switch(cmd) {
 
-		// Process of the command for the MMC/SD card
-
-		switch(cmd) {
-
-			case CTRL_SYNC: res = RES_OK; break;
-			case GET_SECTOR_SIZE:
-				*(DWORD*)buff = 512; 
-				res = RES_OK;
-			break;
-
-			case GET_BLOCK_SIZE:
-				*(WORD*)buff = 8;
-				res = RES_OK;
+				case CTRL_SYNC: res = RES_OK; break;
+				case GET_SECTOR_SIZE:
+					*(DWORD*)buff = SD_BLOCKSIZE; 
+					res = RES_OK;
 				break;
 
-			case GET_SECTOR_COUNT:
-				*(DWORD*)buff = SD_GetSectorCount();
-				res = RES_OK;
+				case GET_BLOCK_SIZE:
+					*(WORD*)buff = 8;
+					res = RES_OK;
 				break;
-			
-			default:
-				res = RES_PARERR;
+
+				case GET_SECTOR_COUNT:
+					*(DWORD*)buff = SD_GetSectorCount();
+					res = RES_OK;
 				break;
-		}
-		return res;
+				
+				default:
+					res = RES_PARERR;
+					break;
+			}
+			return res;
+		break;
 
-	// case DEV_USB :
 
-	// 	// Process of the command the USB drive
+		case DEV_FLASH :
 
-	// 	return res;
+			switch(cmd) {
+
+				case CTRL_SYNC: res = RES_OK; break;
+
+				case GET_SECTOR_SIZE:
+					*(DWORD*)buff = FLASH_SECTOR_SIZE; 
+					res = RES_OK;
+				break;
+
+				case GET_BLOCK_SIZE:
+					*(WORD*)buff = 1;
+					res = RES_OK;
+				break;
+
+				case GET_SECTOR_COUNT:
+					*(DWORD*)buff = 4096; // SD_GetSectorCount();
+					res = RES_OK;
+				break;
+			}
+
+		break;
+
 	}
 
 	return RES_PARERR;

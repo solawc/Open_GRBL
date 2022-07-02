@@ -141,9 +141,26 @@ void protocol_main_loop()
 
   uint8_t c;
 
+  sd_close_file();
+
   for (;;) {
 
     char *get_line;
+
+    /********************************************************
+     * SD卡读取打印
+     * *****************************************************/
+    if(sd_ready_next) {
+      char fileLine[255];
+      if(sd_read_line(fileLine)) {
+        sd_ready_next = false;
+        // printReturnInfo(fileLine);
+        report_status_message(execute_line(fileLine));
+      }else {
+        sd_close_file();
+        printReturnInfo("SD Print Finish\n");
+      }
+    }
 
     // Process one line of incoming serial data, as the data becomes available. Performs an
     // initial filtering by removing spaces and comments and capitalizing all letters.

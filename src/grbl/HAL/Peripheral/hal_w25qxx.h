@@ -18,30 +18,24 @@
 #define SPI_FLASH_PerWritePageSize      256
 
 typedef struct{
+
     uint32_t flash_id;                  // Flash ID
     uint32_t flash_man;                 // Flash Man
     uint32_t flash_size;                
     uint32_t flash_delay_time;
     uint8_t  flash_mode;
+    uint8_t  flash_state;               // check if flash can't read, use for FATFS
+
+    /* Base Func */
+    void (*w25qxx_spi_gpio_init)(void);           // 初始化GPIO的函数，包含GPIO复用
+    void (*w25qxx_spi_init)(void);                // 初始化SPI外设
+    uint8_t (*w25qxx_spi_read_write_byte)(uint8_t );   // SPI读写函数
+    bool (*w25qxx_is_trans_finish)(void);         // 判断是否传输完成
+    void (*w25qxx_enable_trans)(void);    
+    void (*w25qxx_disable_trans)(void);
+
 }NFLASH_t;
 extern NFLASH_t sFlash;
-
-
-
-// (STM32F407xx)
-// #define W25QXX_SPI_NUM              SPI_2
-// #define W25QXX_SPI_PORT             SPI2
-// #define W25QXX_SPI_SCK_GPIO         GPIOB
-// #define W25QXX_SPI_SCK_PIN          GPIO_PIN_13
-// #define W25QXX_SPI_MISO_GPIO        GPIOC
-// #define W25QXX_SPI_MISO_PIN         GPIO_PIN_2
-// #define W25QXX_SPI_MOSI_GPIO        GPIOC
-// #define W25QXX_SPI_MOSI_PIN         GPIO_PIN_3
-// #define W25QXX_SPI_CS_GPIO          GPIOB
-// #define W25QXX_SPI_CS_PIN           GPIO_PIN_12
-// #define W25QXX_PIN_AF               GPIO_AF5_SPI2
-// #define W25QXX_SPEED                SPI_BAUDRATEPRESCALER_4
-
 
 // Flash cmd
 #define W25X_WriteEnable		        0x06 
@@ -70,11 +64,12 @@ extern NFLASH_t sFlash;
 #define WIP_Flag                        0x01  /* Write In Progress (WIP) flag */
 #define Dummy_Byte                      0xFF
 
+void hal_w25qxx_spi_init(NFLASH_t *nFlash);
+__WEAK void hal_w25qxx_spi_reg(NFLASH_t *nFlash);
 
-void hal_w25qxx_spi_init(void);
-void w25qxx_init(void);
-uint32_t w25qxx_read_id(void);
-uint16_t w25qxx_read_write_byte(uint16_t wdata);
+void w25qxx_init(NFLASH_t *nFlash);
+uint32_t w25qxx_read_id(NFLASH_t *nFlash);
+uint16_t w25qxx_read_write_byte(NFLASH_t *nFlash, uint16_t wdata);
 void w25qxx_read_buff(uint8_t *pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead);
 void w15qxx_write_page(uint8_t *pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite);
 void w25qxx_write_no_check(uint8_t *pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite);
@@ -82,10 +77,13 @@ void w25qxx_erase_chip(void);
 void w25qxx_erase_sector(uint32_t Dst_Addr);
 void w25qxx_write_buff(uint8_t* pBuffer,uint32_t WriteAddr,uint16_t NumByteToWrite);
 
-void w25qxx_enter_flash_mode(void);
-void w25qxx_sector_erase(uint32_t SectorAddr);
-void w25qxx_bulk_erase(void);
-void w25qxx_buffer_write(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite);
-void w25qxx_buffer_read(uint8_t* pBuffer, uint32_t ReadAddr, uint32_t NumByteToRead);
+void w25qxx_enter_flash_mode(NFLASH_t *nFlash);
+void w25qxx_sector_erase(NFLASH_t *nFlash, uint32_t SectorAddr);
+void w25qxx_bulk_erase(NFLASH_t *nFlash);
+void w25qxx_buffer_write(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite);
+void w25qxx_buffer_read(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, uint32_t NumByteToRead);
+
+void w25qxx_spi_regiest();
+
 
 #endif

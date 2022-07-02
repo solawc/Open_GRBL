@@ -31,6 +31,9 @@
 #include "cmsis_os.h"
 #endif
 
+#include "grbl/CommonMarco.h"
+#include "grbl/grbl_main.h"
+
 #include "grbl/HAL/grbl_hal.h"
 #include "grbl/HAL/grbl_config.h"
 #include "grbl/HAL/STM32/hal_gpio.h"
@@ -52,7 +55,7 @@
 
 #include "grbl/grbl.h"
 
-// Fatfs 
+// For Fatfs 
 #include "ff.h"
 
 #ifdef STM32F429xx
@@ -67,7 +70,7 @@
 
 #define SYSTEM_UART()       hal_uart_init()
 #define SYSTEM_LASER()      hal_pwm_init()
-#define SYSTEM_FLASH()      w25qxx_init()
+#define SYSTEM_FLASH()      w25qxx_spi_regiest(); w25qxx_init(&sFlash)
 
 
 #if defined(LCD_MKS_TS35) || defined(LCD_MKS_TS24) 
@@ -76,7 +79,7 @@
 #define SYSTEM_LCD()
 #endif
 
-#if defined(SDSUPPORT)
+#if defined(HAS_SDCARD)
 #define SYSTEM_SDCARD()     sd_init()
 #else 
 #define SYSTEM_SDCARD()
@@ -84,11 +87,5 @@
 
 void _delay_ms(uint32_t tick);
 void _delay_us(uint32_t tick);
-
-#if defined(USE_FREERTOS_RTOS)
-void enter_grbl_task(void *parg);
-#else
-void enter_grbl_task(void);
-#endif
 
 #endif

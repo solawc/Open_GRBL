@@ -1,9 +1,10 @@
 #include "sd_file.h"
 
-FIL fil;
-FATFS fs;
-bool sd_ready_next = false;
-uint32_t sd_current_line_number;        
+FIL             fil;                        
+FATFS           fs;
+bool            sd_ready_next = false;      // Grbl has processed a line and is waiting for another 
+uint32_t        sd_current_line_number;     // stores the most recent line number read from the SD       
+sd_state_t      sd_state;
 
 void sd_init(void) {
 
@@ -24,15 +25,16 @@ void sd_init(void) {
 
     sd_state_check();
     get_fafts_info();
-
-    // sd_list();
 }
 
 void sd_state_check(void) {
 
     /* 确保SD是插入稳定的 */
     if(!hal_sd.sd_get_status()) {
-        if(hal_sd.is_has_sd == 1) printReturnInfo(CMD_SD_OK);
+        if(hal_sd.is_has_sd == 1) {
+            sd_state = SD_STATE_IDLE;
+            printReturnInfo(CMD_SD_OK);
+        } 
         else { 
             printReturnInfo(CMD_SD_ERROR); 
             hal_sd.is_has_sd = 0;
@@ -77,7 +79,11 @@ bool sd_open_file(const char *path) {
 
     FRESULT fr = FR_OK;
     fr = f_open(&fil, path, FA_READ);
-    if(fr == FR_OK) return true;
+    if(fr == FR_OK) {
+        sd_ready_next = false;
+        sd_state = SD_STATE_BUSY;
+        return true;
+    }
     else return false;
 }
 
@@ -85,7 +91,11 @@ bool sd_close_file() {
 
     FRESULT fr = FR_OK;
     fr = f_close(&fil);
-    if(fr == FR_OK) return true;
+    if(fr == FR_OK) {
+        sd_state = SD_STATE_IDLE;
+        sd_ready_next = false;
+        return true;
+    }
     else return false; 
 }
 
@@ -97,13 +107,14 @@ bool sd_set_file_pos(uint32_t pos) {
     else return false;
 }
 
-char *sd_read_line(void) {
+bool sd_read_line(char *line) {
 
-    char *line = 0;
+    if(f_gets(line, FILE_CMD_LIMIT, &fil) != 0 ) {
 
-    f_gets(line, FILE_CMD_LIMIT, &fil);
-
-    return line;
+        return true;
+    }else {
+        return false;
+    }
 }
 
 float sd_report_perc_complete() {
@@ -149,7 +160,7 @@ void sd_list(const char *path) {
             }
             else {   
                 if(fileinfo.fname[0]==0){ break; }
-                sprintf(fileName, "[File:%s, Size:%ldk]\n", fileinfo.fname, (fileinfo.fsize/1024));
+                sprintf(fileName, "[File:%s|SIZE:%ldk]\r\n", fileinfo.fname, (fileinfo.fsize/1024));
                 printReturnInfo(fileName);
             }
         }
@@ -183,9 +194,7 @@ void sd_report_open_file(char *line) {
 
     char *path = "1:";
     
-
     sd_list(path);
-
 }
 
 // LG0204

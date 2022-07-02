@@ -353,31 +353,11 @@ void set_timer_irq_handler(void)   // set timer
 {
   if (busy) { return; } // The busy-flag is used to avoid reentering this interrupt
 
-#if defined(CPU_MAP_ATMEGA328P)
-  // Set the direction pins a couple of nanoseconds before we step the steppers // 优先设置电机方向
-  DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | (st.dir_outbits & DIRECTION_MASK);
-  #ifdef ENABLE_DUAL_AXIS
-    DIRECTION_PORT_DUAL = (DIRECTION_PORT_DUAL & ~DIRECTION_MASK_DUAL) | (st.dir_outbits_dual & DIRECTION_MASK_DUAL);
-  #endif
-#elif defined(CPU_STM32)
+  // Set the direction pins a couple of nanoseconds before we step the steppers 
   uint8_t temp_dir = (st.dir_outbits);
   hal_set_dir_gpio_status(temp_dir);
-#endif
 
   // Then pulse the stepping pins // 设置脉冲引脚
-#if defined(CPU_MAP_ATMEGA328P)
-  #ifdef STEP_PULSE_DELAY
-    st.step_bits = (STEP_PORT & ~STEP_MASK) | st.step_outbits; // Store out_bits to prevent overwriting.
-    #ifdef ENABLE_DUAL_AXIS
-      st.step_bits_dual = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | st.step_outbits_dual;
-    #endif
-  #else  // Normal operation
-    STEP_PORT = (STEP_PORT & ~STEP_MASK) | st.step_outbits;
-    #ifdef ENABLE_DUAL_AXIS
-      STEP_PORT_DUAL = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | st.step_outbits_dual;
-    #endif
-  #endif
-#elif defined(CPU_STM32)
   #ifdef STEP_PULSE_DELAY
     st.step_bits = (STEP_PORT & ~STEP_MASK) | st.step_outbits; // Store out_bits to prevent overwriting.
     #ifdef ENABLE_DUAL_AXIS
@@ -389,8 +369,6 @@ void set_timer_irq_handler(void)   // set timer
       // STEP_PORT_DUAL = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | st.step_outbits_dual;
     #endif
   #endif
-
-#endif
 
   // Enable step pulse reset timer so that The Stepper Port Reset Interrupt can reset the signal after
   // exactly settings.pulse_microseconds microseconds, independent of the main Timer1 prescaler.
@@ -471,8 +449,7 @@ void set_timer_irq_handler(void)   // set timer
       return; // Nothing to do but exit.
     }
   }
-
-
+  
   // Check probing state.
   if (sys_probe_state == PROBE_ACTIVE) { probe_state_monitor(); }
 

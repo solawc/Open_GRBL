@@ -235,7 +235,6 @@ void hal_set_step_gpio_status(uint8_t mask) {
 	#endif
 }
 
-
 uint8_t hal_get_moter_dir_gpio_mask(uint8_t axis) {
 	if(axis == X_AXIS) return 0x01;
 	else if(axis == Y_AXIS)	return 0x02;
@@ -289,15 +288,12 @@ void set_coolant_mist(bool status) {
 uint8_t get_coolant_flood(void) {
 #ifdef FLOOD_PORT
 	uint32_t odr;
-
 	odr = FLOOD_PORT->ODR;
-
 	return (odr & FLOOD_PIN);
 #else 
 	return 0;
 #endif
 }
-
 
 uint8_t get_coolant_mist(void) {
 
