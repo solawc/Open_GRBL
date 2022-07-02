@@ -5,7 +5,7 @@
 
 // #define USR_MY_RINGBUFFER
 
-#define UART_RB_BUFF_MAX                1024
+#define UART_RB_BUFF_MAX                255
 #define UART_RB_BUFF_MIN                0
 
 #define LaserUART		                BOARD_UART
@@ -42,5 +42,6 @@ void serial_rb_write(hal_uart_t *rb, uint8_t data);
 uint8_t serial_rb_read(hal_uart_t *rb, uint8_t *data);
 uint16_t serial_rb_abailable(hal_uart_t *rb);
 uint16_t serial_rb_buff_count(hal_uart_t *rb);
+void serial_rb_reset(hal_uart_t *rb);
 
 #endif

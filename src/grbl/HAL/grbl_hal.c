@@ -25,6 +25,8 @@ void grbl_hw_info_get(void) {
     grbl_hw_get.step_tim_clk = HAL_RCC_GetHCLKFreq();
 }
 
+
+
 void grbl_hw_init(void) {
 
     HAL_Init();
@@ -41,5 +43,32 @@ void grbl_hw_init(void) {
     SYSTEM_SDCARD();    // sd_init()
     
     SYSTEM_LCD();       // dev_lcd_init();
+
+    if(w25qxx_fs_init()) {
+        printf("W25QXX FS Succeeds\n");
+    }
+
+    // FRESULT fs_res;
+
+    // fs_res = f_mount(&wfs,"0:",1);
+    // BYTE work[FF_MAX_SS];
+
+    // if(fs_res == FR_NO_FILESYSTEM) {
+    //     printf("rebuild fatfs\n");
+    //     fs_res = f_mkfs("0:", NULL, work, sizeof(work));
+    //     if(fs_res != FR_OK) {
+    //         printf("W25qxx fatfs fail\n");
+    //     }else {
+    //         printf("W25qxx fatfs succeed\n");
+    //     }
+    // }
+
+    // if(fs_res == FR_OK){
+    //     printf("W25qxx fatfs succeed\n");
+    // }else {
+    //     printf("W25qxx fatfs fail\n");
+    // }
+
+
 #endif
 }

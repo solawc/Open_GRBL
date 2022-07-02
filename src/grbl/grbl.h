@@ -58,6 +58,8 @@
 #include "jog.h"
 #include "error.h"
 
+#include "../main.h"
+
 #ifdef STM32F4
   #include "HAL/STM32/bsp_f429ig/cpu_stm32f4_map.h"
 #elif defined(STM32G0xx)

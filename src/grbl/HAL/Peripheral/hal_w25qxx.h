@@ -3,6 +3,13 @@
 
 #include "../../../main.h"
 
+#define USE_FATFS
+#ifdef USE_FATFS
+#define W25QXX_FS_PATH              "0:"
+
+#endif
+
+
 // Flash choose
 // EF
 #define  sFLASH_ID_X16  0x3015        //W25X16  
@@ -85,5 +92,9 @@ void w25qxx_buffer_read(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, u
 
 void w25qxx_spi_regiest();
 
+#ifdef USE_FATFS
+bool w25qxx_fs_init(void);
+void get_w25qxx_fafts_info(void);
+#endif
 
 #endif

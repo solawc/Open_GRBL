@@ -19,7 +19,10 @@
 #define DEV_FLASH		0	/* for SPI Flash driver 0 */
 
 #define SD_BLOCKSIZE			512
-#define FLASH_SECTOR_SIZE 		4096// 512
+#define FLASH_SECTOR_SIZE 		512
+
+uint16_t FLASH_SECTOR_COUNT = 	2048*16;
+#define FALSH_BLOCK_SIZE		8
 
 /*-----------------------------------------------------------------------*/
 /* Get Drive Status                                                      */
@@ -83,6 +86,8 @@ DSTATUS disk_initialize (
 			}else {
 				stat = RES_ERROR;
 			}
+
+			FLASH_SECTOR_COUNT = 2048*16;
 			return stat;
 		break;
 
@@ -119,7 +124,14 @@ DRESULT disk_read (
 		break;
 
 		case DEV_FLASH :
-			w25qxx_buffer_read(&sFlash, buff, sector, count);
+			// w25qxx_buffer_read(&sFlash, buff, sector, count);
+			for(; count>0; count--) {
+
+				w25qxx_buffer_read(&sFlash, buff, sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
+				sector++;
+				buff += FLASH_SECTOR_SIZE;
+			}
+
 			return RES_OK;
 		break;
 
@@ -157,7 +169,15 @@ DRESULT disk_write (
 		break;
 
 		case DEV_FLASH :
-			w25qxx_buffer_write(&sFlash, (uint8_t*)buff, sector, count);
+			// w25qxx_buffer_write(&sFlash, (uint8_t*)buff, sector, count);
+
+			for (; count>0; count--) {
+
+				w25qxx_buffer_write(&sFlash, (uint8_t*)buff, sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
+				sector++;
+				buff += FLASH_SECTOR_SIZE;
+			}
+
 			return RES_OK;
 		break;
 	}
@@ -223,16 +243,16 @@ DRESULT disk_ioctl (
 				break;
 
 				case GET_BLOCK_SIZE:
-					*(WORD*)buff = 1;
+					*(WORD*)buff = 8;
 					res = RES_OK;
 				break;
 
 				case GET_SECTOR_COUNT:
-					*(DWORD*)buff = 4096; // SD_GetSectorCount();
+					*(DWORD*)buff = FLASH_SECTOR_SIZE; // SD_GetSectorCount();
 					res = RES_OK;
 				break;
 			}
-
+			return res;
 		break;
 
 	}

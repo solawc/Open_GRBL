@@ -212,6 +212,14 @@ uint16_t serial_rb_buff_count(hal_uart_t *rb) {
 	return (UART_RB_BUFF_MAX - (tmp_tail - rb->head));
 } 
 
+/************************************************************
+ * Reset ringbuffer
+ * *********************************************************/
+void serial_rb_reset(hal_uart_t *rb) {
+
+	rb->tail = rb->head;
+}
+
 
 
 
