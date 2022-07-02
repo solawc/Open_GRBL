@@ -2,7 +2,7 @@
 ![Build Status](https://img.shields.io/badge/build-GRBL--1.1h-green)
 ![Build Status](https://img.shields.io/badge/platform-vscode--PlatformIO-yellowgreen)
 
-![OpenGRBL](F:\sola_github\myProject\Open_GRBL\doc\OpenGRBL.png)
+![OpenGRBL](https://github.com/solawc/Open_GRBL/blob/main/doc/OpenGRBL.png)
 
 ## Describe：
 
