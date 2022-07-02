@@ -230,14 +230,9 @@ void dev_lcd_init(void) {
     tft.tft_lcd_display_on = hal_tft_display_on;
     tft.tft_lcd_display_off = hal_tft_display_off;
 
-    printf("[debug]enter lcd init\n");
     // tft.tft_lcd_init();
-    printf("[debug]enter lcd init finish\n");
-    printf("[debug]enter lcd config\n");
     hal_tft_display_config();
-    printf("[debug]enter lcd config finish\n");
     HAL_GPIO_WritePin(LCD_EN_PORT, LCD_EN_PIN, GPIO_PIN_SET);
-
     dev_lcd_draw_fill(0, 0, 240, 320, 0x1010);
 }
 

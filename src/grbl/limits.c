@@ -424,8 +424,6 @@ void limits_go_home(uint8_t cycle_mask)
 
         sys.homing_axis_lock = axislock;
 
-        // printf("sys.homing_axis_lock:%d\n", sys.homing_axis_lock);
-
         #ifdef ENABLE_DUAL_AXIS
           if (sys.homing_axis_lock_dual) { // NOTE: Only true when homing dual axis.
             if (limit_state & (1 << N_AXIS)) { 

@@ -44,7 +44,7 @@
 // NOTE: Current settings are set to overdrive the ISR to no more than 16kHz, balancing CPU overhead
 // and timer accuracy.  Do not alter these settings unless you know what you are doing.
 #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
-  #define STP_TIMER     F_CPU/4
+  #define STP_TIMER     F_CPU / 4
 	#define MAX_AMASS_LEVEL 3
 	// AMASS_LEVEL0: Normal operation. No AMASS. No upper cutoff frequency. Starts at LEVEL1 cutoff frequency.
 	// #define AMASS_LEVEL1 (F_CPU/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
@@ -1130,15 +1130,12 @@ void st_prep_buffer()
     #endif
   #elif defined(CPU_STM32)
   // Compute CPU cycles per step for the prepped segment.
-    // uint32_t cycles = (uint32_t)ceilf( (TICKS_PER_MICROSECOND * 1000000 * 60.0f) * inv_rate); // (cycles/step)
-    // 
+    // uint32_t cycles = (uint32_t)ceilf( (STP_TIMER * 60.0f) * inv_rate); // (cycles/step)
     uint32_t cycles = (uint32_t)ceil( (STP_TIMER * 60.0f) * inv_rate); // (cycles/step)
     
     #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
       // Compute step timing and multi-axis smoothing level.
       // NOTE: AMASS overdrives the timer with each level, so only one prescalar is required.
-
-      // printf("get clcles:%d\n", cycles);
 
       if (cycles < AMASS_LEVEL1) { prep_segment->amass_level = 0; }
       else {

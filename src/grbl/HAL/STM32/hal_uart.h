@@ -3,7 +3,9 @@
 
 #include "../../../main.h"
 
-#define UART_RB_BUFF_MAX                255
+// #define USR_MY_RINGBUFFER
+
+#define UART_RB_BUFF_MAX                1024
 #define UART_RB_BUFF_MIN                0
 
 #define LaserUART		                BOARD_UART
@@ -22,7 +24,7 @@
 typedef struct {
     uint8_t head;
     uint8_t tail;
-    uint8_t buffer[255];
+    uint8_t buffer[UART_RB_BUFF_MAX];
 }hal_uart_t;
 extern hal_uart_t rb_serial_rx;
 

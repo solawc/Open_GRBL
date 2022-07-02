@@ -151,11 +151,17 @@ void tft_lcd_uart_init() {
 	tft_lcd_uart_pins_init();
 }
 
+/*************************************************************
+ * A ringbuffer init
+ * **********************************************************/
 void serial_rb_init(hal_uart_t *rb) {
 	rb->head = 0;
 	rb->tail = 0;
 }
 
+/*************************************************************
+ * write a data to ringbuffer
+ * **********************************************************/
 void serial_rb_write(hal_uart_t *rb, uint8_t data) {
 
 	uint8_t next = rb->head + 1;
@@ -168,6 +174,9 @@ void serial_rb_write(hal_uart_t *rb, uint8_t data) {
 	}
 }
 
+/*************************************************************
+ * read a data from ringbuffer
+ * **********************************************************/
 uint8_t serial_rb_read(hal_uart_t *rb, uint8_t *data) {
 
 	uint8_t tail = rb->tail;
@@ -183,13 +192,19 @@ uint8_t serial_rb_read(hal_uart_t *rb, uint8_t *data) {
 	}
 }
 
+/*************************************************************
+ * if ringbuffer abailable
+ * **********************************************************/
 uint16_t serial_rb_abailable(hal_uart_t *rb) {
 
-	uint8_t tmp_tail = rb->tail;		// 备份当前值，防止篡改
+	uint8_t tmp_tail = rb->tail;								// 备份当前值，防止篡改
 	if(rb->head > tmp_tail) return (rb->head - tmp_tail);
 	return (tmp_tail - rb->head); 
 }
 
+/*************************************************************
+ * get ringbuffer count
+ * **********************************************************/
 uint16_t serial_rb_buff_count(hal_uart_t *rb) {
 
 	uint8_t tmp_tail = rb->tail;
