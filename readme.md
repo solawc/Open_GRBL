@@ -2,7 +2,7 @@
 ![Build Status](https://img.shields.io/badge/build-GRBL--1.1h-green)
 ![Build Status](https://img.shields.io/badge/platform-vscode--PlatformIO-yellowgreen)
 
-![Grbl Logo 250px](https://user-images.githubusercontent.com/42537573/131384819-1b6f93d4-67df-4933-aaee-5ba4f4d7ff07.png)
+![OpenGRBL](https://github.com/solawc/Open_GRBL/blob/main/doc/OpenGRBL.png)
 
 ## Describe：
 
