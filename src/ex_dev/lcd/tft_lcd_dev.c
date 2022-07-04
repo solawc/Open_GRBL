@@ -231,7 +231,7 @@ void dev_lcd_init(void) {
     tft.tft_lcd_display_off = hal_tft_display_off;
     tft.tft_lcd_delay_ms = lcd_delay_ms;
 
-    // tft.tft_lcd_init();
+    tft.tft_lcd_init();
     hal_tft_display_config();
     HAL_GPIO_WritePin(LCD_EN_PORT, LCD_EN_PIN, GPIO_PIN_SET);
     dev_lcd_draw_fill(0, 0, 240, 320, 0x1010);
@@ -262,15 +262,11 @@ void dev_lcd_draw_fill(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2, uint32_t
 
     dev_lcd_set_window(x1,y1,x2,y2);      //设置光标位置
 
-    // tft.tft_lcd_enable();
-
     DATA_MODE_SET();
-    // hal_tft_trans_enable();
     tft.tft_lcd_disable();
     hal_set_16_mode(1);
     for(x=0; x<y; x++) { hal_tft_write_data_16(color); }
     hal_set_16_mode(0);
-    // hal_tft_trans_disable();
     tft.tft_lcd_disable(); 
 }
 
