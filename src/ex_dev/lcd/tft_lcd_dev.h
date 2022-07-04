@@ -68,6 +68,8 @@ typedef struct {
 
     uint32_t lcd_id;
 
+    void (*tft_lcd_delay_ms)(uint32_t );
+
     void (*tft_lcd_init)(void);
     void (*tft_lcd_config)(void);
     void (*tft_lcd_touch_init)(void);

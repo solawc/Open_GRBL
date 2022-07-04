@@ -112,112 +112,112 @@ static void hal_tft_display_off(void) {
 
 static void hal_tft_display_config(void) {
 
-    hal_tft_write_cmd_8(0X11);   // Sleep out
-    lcd_delay_ms(120);
-    hal_tft_write_cmd_8(0X13);    // Normal display mode on
+    tft.tft_lcd_write_cmd(0X11);   // Sleep out
+    tft.tft_lcd_delay_ms(120);
+    tft.tft_lcd_write_cmd(0X13);    // Normal display mode on
 
-    hal_tft_write_cmd_8(0X36);
-    hal_tft_write_data_8(0x08);
+    tft.tft_lcd_write_cmd(0X36);
+    tft.tft_lcd_write_data(0x08);
 
     // JLX240 display datasheet
-    hal_tft_write_cmd_8(0xB6);
-    hal_tft_write_data_8(0x0A);
-    hal_tft_write_data_8(0x82);
+    tft.tft_lcd_write_cmd(0xB6);
+    tft.tft_lcd_write_data(0x0A);
+    tft.tft_lcd_write_data(0x82);
 
-    hal_tft_write_cmd_8(0xB0);
-    hal_tft_write_data_8(0x00);
-    hal_tft_write_data_8(0xE0); // 5 to 6 bit conversion: r0 = r5, b0 = b5
+    tft.tft_lcd_write_cmd(0xB0);
+    tft.tft_lcd_write_data(0x00);
+    tft.tft_lcd_write_data(0xE0); // 5 to 6 bit conversion: r0 = r5, b0 = b5
 
         
-    hal_tft_write_cmd_8(0x3A);
-    hal_tft_write_data_8(0x55);
-    lcd_delay_ms(10);
+    tft.tft_lcd_write_cmd(0x3A);
+    tft.tft_lcd_write_data(0x55);
+    tft.tft_lcd_delay_ms(10);
 
     //--------------------------------ST7789V Frame rate setting----------------------------------//
-    hal_tft_write_cmd_8(0xB2);
-    hal_tft_write_data_8(0x0c);
-    hal_tft_write_data_8(0x0c);
-    hal_tft_write_data_8(0x00);
-    hal_tft_write_data_8(0x33);
-    hal_tft_write_data_8(0x33);
+    tft.tft_lcd_write_cmd(0xB2);
+    tft.tft_lcd_write_data(0x0c);
+    tft.tft_lcd_write_data(0x0c);
+    tft.tft_lcd_write_data(0x00);
+    tft.tft_lcd_write_data(0x33);
+    tft.tft_lcd_write_data(0x33);
 
-    hal_tft_write_cmd_8(0xB7);      // Voltages: VGH / VGL
-    hal_tft_write_data_8(0x35);
+    tft.tft_lcd_write_cmd(0xB7);      // Voltages: VGH / VGL
+    tft.tft_lcd_write_data(0x35);
 
     //---------------------------------ST7789V Power setting--------------------------------------//
-    hal_tft_write_cmd_8(0xBB);
-    hal_tft_write_data_8(0x28);		// JLX240 display datasheet
+    tft.tft_lcd_write_cmd(0xBB);
+    tft.tft_lcd_write_data(0x28);		// JLX240 display datasheet
 
-    hal_tft_write_cmd_8(0xC0);
-    hal_tft_write_data_8(0x0C);
+    tft.tft_lcd_write_cmd(0xC0);
+    tft.tft_lcd_write_data(0x0C);
 
-    hal_tft_write_cmd_8(0xC2);
-    hal_tft_write_data_8(0x01);
-    hal_tft_write_data_8(0xFF);
+    tft.tft_lcd_write_cmd(0xC2);
+    tft.tft_lcd_write_data(0x01);
+    tft.tft_lcd_write_data(0xFF);
 
-    hal_tft_write_cmd_8(0xC3);       // voltage VRHS
-    hal_tft_write_data_8(0x10);
+    tft.tft_lcd_write_cmd(0xC3);       // voltage VRHS
+    tft.tft_lcd_write_data(0x10);
 
-    hal_tft_write_cmd_8(0xC4);
-    hal_tft_write_data_8(0x20);
+    tft.tft_lcd_write_cmd(0xC4);
+    tft.tft_lcd_write_data(0x20);
 
-    hal_tft_write_cmd_8(0xC6);
-    hal_tft_write_data_8(0x0f);
+    tft.tft_lcd_write_cmd(0xC6);
+    tft.tft_lcd_write_data(0x0f);
 
-    hal_tft_write_cmd_8(0xD0);
-    hal_tft_write_data_8(0xa4);
-    hal_tft_write_data_8(0xa1);
+    tft.tft_lcd_write_cmd(0xD0);
+    tft.tft_lcd_write_data(0xa4);
+    tft.tft_lcd_write_data(0xa1);
 
     //--------------------------------ST7789V gamma setting---------------------------------------//
-    hal_tft_write_cmd_8(0xE0);
-    hal_tft_write_data_8(0xd0);
-    hal_tft_write_data_8(0x00);
-    hal_tft_write_data_8(0x02);
-    hal_tft_write_data_8(0x07);
-    hal_tft_write_data_8(0x0a);
-    hal_tft_write_data_8(0x28);
-    hal_tft_write_data_8(0x32);
-    hal_tft_write_data_8(0x44);
-    hal_tft_write_data_8(0x42);
-    hal_tft_write_data_8(0x06);
-    hal_tft_write_data_8(0x0e);
-    hal_tft_write_data_8(0x12);
-    hal_tft_write_data_8(0x14);
-    hal_tft_write_data_8(0x17);
+    tft.tft_lcd_write_cmd(0xE0);
+    tft.tft_lcd_write_data(0xd0);
+    tft.tft_lcd_write_data(0x00);
+    tft.tft_lcd_write_data(0x02);
+    tft.tft_lcd_write_data(0x07);
+    tft.tft_lcd_write_data(0x0a);
+    tft.tft_lcd_write_data(0x28);
+    tft.tft_lcd_write_data(0x32);
+    tft.tft_lcd_write_data(0x44);
+    tft.tft_lcd_write_data(0x42);
+    tft.tft_lcd_write_data(0x06);
+    tft.tft_lcd_write_data(0x0e);
+    tft.tft_lcd_write_data(0x12);
+    tft.tft_lcd_write_data(0x14);
+    tft.tft_lcd_write_data(0x17);
 
-    hal_tft_write_cmd_8(0xE1);
-    hal_tft_write_data_8(0xd0);
-    hal_tft_write_data_8(0x00);
-    hal_tft_write_data_8(0x02);
-    hal_tft_write_data_8(0x07);
-    hal_tft_write_data_8(0x0a);
-    hal_tft_write_data_8(0x28);
-    hal_tft_write_data_8(0x31);
-    hal_tft_write_data_8(0x54);
-    hal_tft_write_data_8(0x47);
-    hal_tft_write_data_8(0x0e);
-    hal_tft_write_data_8(0x1c);
-    hal_tft_write_data_8(0x17);
-    hal_tft_write_data_8(0x1b);
-    hal_tft_write_data_8(0x1e);
+    tft.tft_lcd_write_cmd(0xE1);
+    tft.tft_lcd_write_data(0xd0);
+    tft.tft_lcd_write_data(0x00);
+    tft.tft_lcd_write_data(0x02);
+    tft.tft_lcd_write_data(0x07);
+    tft.tft_lcd_write_data(0x0a);
+    tft.tft_lcd_write_data(0x28);
+    tft.tft_lcd_write_data(0x31);
+    tft.tft_lcd_write_data(0x54);
+    tft.tft_lcd_write_data(0x47);
+    tft.tft_lcd_write_data(0x0e);
+    tft.tft_lcd_write_data(0x1c);
+    tft.tft_lcd_write_data(0x17);
+    tft.tft_lcd_write_data(0x1b);
+    tft.tft_lcd_write_data(0x1e);
 
-    hal_tft_write_cmd_8(0x21);
+    tft.tft_lcd_write_cmd(0x21);
 
-    hal_tft_write_cmd_8(0x2A);    // Column address set
-    hal_tft_write_data_8(0x00);
-    hal_tft_write_data_8(0x00);
-    hal_tft_write_data_8(0x00);
-    hal_tft_write_data_8(0x3F); // hal_tft_write_data_8(0xE5);    // 239
+    tft.tft_lcd_write_cmd(0x2A);    // Column address set
+    tft.tft_lcd_write_data(0x00);
+    tft.tft_lcd_write_data(0x00);
+    tft.tft_lcd_write_data(0x00);
+    tft.tft_lcd_write_data(0x3F); // tft.tft_lcd_write_data(0xE5);    // 239
 
-    hal_tft_write_cmd_8(0x2B);    // Row address set
-    hal_tft_write_data_8(0x00);
-    hal_tft_write_data_8(0x00);
-    hal_tft_write_data_8(0x01);
-    hal_tft_write_data_8(0xE5); // hal_tft_write_data_8(0x3F);    // 319
+    tft.tft_lcd_write_cmd(0x2B);    // Row address set
+    tft.tft_lcd_write_data(0x00);
+    tft.tft_lcd_write_data(0x00);
+    tft.tft_lcd_write_data(0x01);
+    tft.tft_lcd_write_data(0xE5); // tft.tft_lcd_write_data(0x3F);    // 319
 
-    lcd_delay_ms(120);
-    hal_tft_write_cmd_8(0x29);    //Display on
-    lcd_delay_ms(120);
+    tft.tft_lcd_delay_ms(120);
+    tft.tft_lcd_write_cmd(0x29);    //Display on
+    tft.tft_lcd_delay_ms(120);
 }
 
 void dev_lcd_init(void) {
@@ -229,6 +229,7 @@ void dev_lcd_init(void) {
     tft.tft_lcd_write_data = hal_tft_write_data_8;
     tft.tft_lcd_display_on = hal_tft_display_on;
     tft.tft_lcd_display_off = hal_tft_display_off;
+    tft.tft_lcd_delay_ms = lcd_delay_ms;
 
     // tft.tft_lcd_init();
     hal_tft_display_config();
@@ -264,11 +265,12 @@ void dev_lcd_draw_fill(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2, uint32_t
     // tft.tft_lcd_enable();
 
     DATA_MODE_SET();
-    hal_tft_trans_enable();
+    // hal_tft_trans_enable();
+    tft.tft_lcd_disable();
     hal_set_16_mode(1);
-    for(x=0; x<y; x++)  { hal_tft_write_data_16(color); }
+    for(x=0; x<y; x++) { hal_tft_write_data_16(color); }
     hal_set_16_mode(0);
-    hal_tft_trans_disable();
+    // hal_tft_trans_disable();
     tft.tft_lcd_disable(); 
 }
 
