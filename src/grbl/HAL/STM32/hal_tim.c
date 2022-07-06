@@ -49,6 +49,26 @@ void hal_reset_timer_init(void) {
     HAL_TIM_Base_Start_IT(&STEP_RESET_TIM);
 }
 
+void hal_base_timer_init(void) {
+
+    hal_set_timer_init();
+    hal_reset_timer_init();
+}
+
+void hal_reset_timer_begin(void) {
+    hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
+    // hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time - 1);
+    hal_tim_generateEvent_update(&STEP_RESET_TIMER);
+    hal_tim_clear_flag_update(&STEP_RESET_TIMER);
+}
+
+void hal_set_timer_begin(void) {
+    // hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
+    hal_tim_generateEvent_update(&STEP_SET_TIMER);
+    hal_set_timer_irq_enable();
+}
+
+
 void hal_set_timer_irq_enable(void) {
     HAL_NVIC_EnableIRQ(SET_TIM_IRQn);
 }

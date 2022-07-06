@@ -13,12 +13,14 @@ typedef struct {
     void (*reset_timer_irq_disable)(void);
     void (*set_timer_begin)(void);
     void (*reset_timer_begin)(void);
+    void (*set_timer_reload)(uint32_t);
+    void (*reset_timer_reload)(uint32_t);
 
     /**************Spindle Pwm***************/
     void (*spindle_pwm_init)(void);
     void (*spindle_pwm_set)(uint32_t);
     uint32_t (*spindle_pwm_get)(void);
-
+    
 }mid_timer_t;
 
 

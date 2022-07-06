@@ -78,6 +78,9 @@ extern hal_tim_t hal_step_tim;
 
 void hal_set_timer_init(void);
 void hal_reset_timer_init(void);
+void hal_base_timer_init(void);
+void hal_reset_timer_begin(void);
+void hal_set_timer_begin(void);
 void hal_set_timer_irq_enable(void);
 void hal_set_timer_irq_disable(void);
 void hal_reset_timer_irq_enable(void);
