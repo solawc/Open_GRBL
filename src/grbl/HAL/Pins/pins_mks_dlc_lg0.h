@@ -1,6 +1,8 @@
 #ifndef __pins_mks_dlc_lg0_h
 #define __pins_mks_dlc_lg0_h
 
+#include "pins_def.h"
+
 /* For Limit */
 #define BOARD_LIMIT_X_PORT              GPIOD
 #define BOARD_LIMIT_X_PIN               GPIO_PIN_3

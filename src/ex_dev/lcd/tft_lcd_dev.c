@@ -232,6 +232,7 @@ void dev_lcd_init(void) {
     tft.tft_lcd_delay_ms = lcd_delay_ms;
 
     tft.tft_lcd_init();
+    
     hal_tft_display_config();
     HAL_GPIO_WritePin(LCD_EN_PORT, LCD_EN_PIN, GPIO_PIN_SET);
     dev_lcd_draw_fill(0, 0, 240, 320, 0x1010);

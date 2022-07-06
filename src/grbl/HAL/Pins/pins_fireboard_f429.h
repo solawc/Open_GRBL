@@ -1,7 +1,7 @@
 #ifndef __pins_fireboard_f429_h
 #define __pins_fireboard_f429_h
 
-
+#include "pins_def.h"
 
 /* For Limit */
 #define BOARD_LIMIT_X_PORT              GPIOD
