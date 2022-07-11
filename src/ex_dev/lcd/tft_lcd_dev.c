@@ -1,7 +1,11 @@
 #include "tft_lcd_dev.h"
 
+
+#ifdef LCD_TFT_SUPPORT
+
 dev_lcd_t tft;
 SPI_HandleTypeDef lcd_hspi;         // g0 use spi3
+
 
 static void hal_tft_spi_init(void) {
 
@@ -271,7 +275,7 @@ void dev_lcd_draw_fill(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2, uint32_t
     tft.tft_lcd_disable(); 
 }
 
-
+#endif
 
 
 

@@ -90,13 +90,13 @@ bool hal_is_uart_sr_txe(void) {
 #ifdef STM32F429xx
 	return (__HAL_UART_GET_FLAG(&laser_uart, USART_FLAG_TXE));
 #elif defined(STM32G0B0xx)
-	return (__HAL_UART_GET_FLAG(&laser_uart, USART_FLAG_TXE)); 
+	return (__HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_TC)); 
 #endif
 }
 
-// use printf , but no suggest!!
 /*
- * C标准库的重定向, 该方法适用于使用Keil/IAR等这类型的编译器，如果使用GCC/G++等编译链工具进行编译，请使用_write(int fd, char *ptr, int len)	
+ * C标准库的重定向, 该方法适用于使用Keil/IAR等这类型的编译器，如果使用GCC/G++等编译链工具进行编译，
+ * 请使用_write(int fd, char *ptr, int len)	
  * 进行重定向，否则会出现串口无法打印的情况
 */
 #ifdef __CC_ARM
@@ -121,7 +121,7 @@ void LASER_UART_IRQHANDLER() {
 #if defined(USE_FREERTOS_RTOS)
 	uint32_t ulReturn;
 #endif
-	uint16_t data;
+	__IO uint16_t data;
 
 #if defined(USE_FREERTOS_RTOS)
 	ulReturn = taskENTER_CRITICAL_FROM_ISR();
@@ -197,7 +197,7 @@ uint8_t serial_rb_read(hal_uart_t *rb, uint8_t *data) {
  * **********************************************************/
 uint16_t serial_rb_abailable(hal_uart_t *rb) {
 
-	uint8_t tmp_tail = rb->tail;								// 备份当前值，防止篡改
+	uint8_t tmp_tail = rb->tail;						
 	if(rb->head > tmp_tail) return (rb->head - tmp_tail);
 	return (tmp_tail - rb->head); 
 }

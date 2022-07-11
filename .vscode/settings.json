@@ -41,7 +41,9 @@
         "common_cmd.h": "c",
         "grbl_main.h": "c",
         "commonmarco.h": "c",
-        "mid_timer.h": "c"
+        "mid_timer.h": "c",
+        "hal_nucleo_g070rb.h": "c",
+        "pins_def.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

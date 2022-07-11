@@ -3,7 +3,7 @@
 
 #include "../../../main.h"
 
-// #define USR_MY_RINGBUFFER
+#define USR_MY_RINGBUFFER
 
 #define UART_RB_BUFF_MAX                255
 #define UART_RB_BUFF_MIN                0

@@ -13,7 +13,7 @@ void hal_set_timer_init(void) {
     SET_TIM_CLK_ENABLED();   
 
     STEP_SET_TIM.Instance = SETP_SET_TIM; 
-    STEP_SET_TIM.Init.Period = 0;// 1-1;     
+    STEP_SET_TIM.Init.Period = 0;
     STEP_SET_TIM.Init.Prescaler = 4-1;
     STEP_SET_TIM.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     STEP_SET_TIM.Init.CounterMode = TIM_COUNTERMODE_UP;

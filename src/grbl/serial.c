@@ -317,6 +317,7 @@ void laser_uart_rx_handler(__IO uint8_t data) {
         // Throw away any unfound extended-ASCII character by not passing it to the serial buffer.
       } 
       else { // Write character to buffer
+      
 #ifndef USR_MY_RINGBUFFER
         next_head = serial_rx_buffer_head + 1;
         if (next_head == RX_RING_BUFFER) { next_head = 0; }

@@ -1,5 +1,5 @@
-#ifndef __cpu_stm32g0_map_h
-#define __cpu_stm32g0_map_h
+#ifndef __cpu_nucleo_g070rb_map_h
+#define __cpu_nucleo_g070rb_map_h
 
 #include "../../grbl/grbl.h"
 
@@ -32,10 +32,11 @@
  * **********************************************************************/
 #define SPINDLE_PWM_FREQUENCY       1000                   
 #define SPINDLE_PWM_MAX_VALUE       (1000000 / SPINDLE_PWM_FREQUENCY)
+
 #ifndef SPINDLE_PWM_MIN_VALUE
-  #define SPINDLE_PWM_MIN_VALUE       1   // Must be greater than zero.
-  #define SPINDLE_PWM_OFF_VALUE       0
-  #define SPINDLE_PWM_RANGE           (SPINDLE_PWM_MAX_VALUE-SPINDLE_PWM_MIN_VALUE)
+    #define SPINDLE_PWM_MIN_VALUE       1   // Must be greater than zero.
+    #define SPINDLE_PWM_OFF_VALUE       0
+    #define SPINDLE_PWM_RANGE           (SPINDLE_PWM_MAX_VALUE-SPINDLE_PWM_MIN_VALUE)
 #endif
 
 
