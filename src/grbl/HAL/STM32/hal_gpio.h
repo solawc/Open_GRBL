@@ -3,53 +3,6 @@
 
 #include "../../../main.h"
 
-// limits
-#ifdef STM32F429xx
-#define LASER_PORT                  GPIOB
-#define LASER_PIN                   GPIO_PIN_7
-#define LASER_PIN_CLK_ENABLE()      __HAL_RCC_GPIOH_CLK_ENABLE()
-
-#define LIMIT_X_PORT        GPIOD
-#define LIMIT_X_PIN         GPIO_PIN_4
-#define LIMIT_Y_PORT        GPIOD
-#define LIMIT_Y_PIN         GPIO_PIN_11
-// #define LIMIT_Z_PORT        GPIOD
-// #define LIMIT_Z_PIN         GPIO_PIN_12
-#define LIMIT_IRQnHANDLE    EXTI0_IRQHandler
-
-#define LIMIT_IRQnHANDLE            EXTI0_IRQHandler
-#define LIMIT_IRQn                  EXTI0_IRQn
-
-#define STEP_EN_PORT        GPIOI
-#define STEP_EN_PIN         GPIO_PIN_8
-
-#define MOTOR_X_DIR_PORT    GPIOI
-#define MOTOR_X_DIR_PIN     GPIO_PIN_5
-#define MOTOR_Y_DIR_PORT    GPIOI
-#define MOTOR_Y_DIR_PIN     GPIO_PIN_6
-// #define MOTOR_Z_DIR_PORT    GPIOI
-// #define MOTOR_Z_DIR_PIN     GPIO_PIN_7
-
-#define MOTOR_X_AXIS_PORT   GPIOA
-#define MOTOR_X_AXIS_PIN    GPIO_PIN_4
-#define MOTOR_Y_AXIS_PORT   GPIOA
-#define MOTOR_Y_AXIS_PIN    GPIO_PIN_6
-// #define MOTOR_Z_AXIS_PORT   GPIOA
-// #define MOTOR_Z_AXIS_PIN    GPIO_PIN_8
-
-#define PROBE_PORT                  GPIOB
-#define PROBE_PIN                   GPIO_PIN_11
-
-/* 液体冷却 */
-#define FLOOD_PORT                  BOARD_FLOOD_PORT
-#define FLOOD_PIN                   BOARD_FLOOD_PIN
-
-/*空气冷却*/    
-#define MIST_PORT                   BOARD_MIST_PORT
-#define MIST_PIN                    BOARD_MIST_PIN      
-
-#elif defined(STM32G0B0xx)
-
 #define LASER_PORT                  BOARD_LASER_PORT
 #define LASER_PIN                   BOARD_LASER_PIN
 #define LASER_PIN_CLK_ENABLE()      BOARD_LASER_PIN_CLK_ENABLE
@@ -101,42 +54,6 @@
 #define MIST_PORT                   GPIOB
 #define MIST_PIN                    GPIO_PIN_3   
 
-#elif defined(STM32F407xx)
-#define LASER_PORT                  GPIOE
-#define LASER_PIN                   GPIO_PIN_5
-#define LASER_PIN_CLK_ENABLE()      __HAL_RCC_GPIOE_CLK_ENABLE()
-
-#define LIMIT_X_PORT        GPIOA
-#define LIMIT_X_PIN         GPIO_PIN_15
-#define LIMIT_Y_PORT        GPIOD
-#define LIMIT_Y_PIN         GPIO_PIN_2
-#define LIMIT_Z_PORT        GPIOC
-#define LIMIT_Z_PIN         GPIO_PIN_8
-
-#define LIMIT_IRQnHANDLE            EXTI0_IRQHandler
-#define LIMIT_IRQn                  EXTI0_IRQn
-
-#define STEP_EN_PORT                GPIOE
-#define STEP_EN_PIN                 GPIO_PIN_4
-
-#define MOTOR_X_DIR_PORT            GPIOE
-#define MOTOR_X_DIR_PIN             GPIO_PIN_2
-#define MOTOR_Y_DIR_PORT            GPIOB
-#define MOTOR_Y_DIR_PIN             GPIO_PIN_9
-#define MOTOR_Z_DIR_PORT            GPIOB
-#define MOTOR_Z_DIR_PIN             GPIO_PIN_4
-
-#define MOTOR_X_AXIS_PORT           GPIOE
-#define MOTOR_X_AXIS_PIN            GPIO_PIN_3
-#define MOTOR_Y_AXIS_PORT           GPIOE
-#define MOTOR_Y_AXIS_PIN            GPIO_PIN_0
-#define MOTOR_Z_AXIS_PORT           GPIOB
-#define MOTOR_Z_AXIS_PIN            GPIO_PIN_5
-
-#define PROBE_PORT                  GPIOA
-#define PROBE_PIN                   GPIO_PIN_8
-
-#endif
 
 void hal_limit_gpio_init(void);
 void hal_limit_gpio_irq_enable(void);

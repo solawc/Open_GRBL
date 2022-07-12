@@ -116,7 +116,7 @@ static void laser_pin_config() {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
     __HAL_RCC_GPIOB_CLK_ENABLE();
-    __HAL_RCC_TIM4_CLK_ENABLE();
+    __HAL_RCC_TIM1_CLK_ENABLE();
 
     GPIO_InitStruct.Pin = GPIO_PIN_7;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;

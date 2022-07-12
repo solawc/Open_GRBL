@@ -34,6 +34,8 @@
 
 #ifdef STM32G070xx
     #include "stm32g0xx_hal.h"
+    #include "grbl/HAL/STM32/bsp_nucleo_g070rb/hal_nucleo_g070rb.h"
+    #include "grbl/HAL/Pins/pins_nucleo_g070rb.h"
 #elif defined(STM32F429xx)
     #include "stm32f4xx_hal.h"
     #include "grbl/HAL/STM32/bsp_f429ig/hal_f429_system.h"
