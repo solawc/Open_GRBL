@@ -115,15 +115,15 @@ static void laser_pin_config() {
 
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-    __HAL_RCC_GPIOB_CLK_ENABLE();
-    __HAL_RCC_TIM1_CLK_ENABLE();
+    LASER_OUT_PIN_CLK();
+    LASER_OUT_CLK();
 
-    GPIO_InitStruct.Pin = GPIO_PIN_7;
+    GPIO_InitStruct.Pin = LASER_OUT_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = LASER_PIN_AF;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+    HAL_GPIO_Init(LASER_OUT_PORT, &GPIO_InitStruct);
 }
 
 void hal_pwm_init() {
@@ -158,7 +158,7 @@ void hal_pwm_init() {
     sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
     sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
     sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-    if (HAL_TIM_OC_ConfigChannel(&LASER_TIM, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
+    if (HAL_TIM_OC_ConfigChannel(&LASER_TIM, &sConfigOC, LASER_TIM_CH) != HAL_OK)
     {
         Error_Handler();
     }
@@ -173,16 +173,16 @@ void hal_pwm_init() {
     // {
     //     Error_Handler();
     // }
-    HAL_TIM_PWM_Start(&LASER_TIM, TIM_CHANNEL_2);
+    HAL_TIM_PWM_Start(&LASER_TIM, LASER_TIM_CH);
 }
 
 void hal_pwm_set(uint32_t duty) {
-    __HAL_TIM_SetCompare(&LASER_TIM, TIM_CHANNEL_2, duty);
+    __HAL_TIM_SetCompare(&LASER_TIM, LASER_TIM_CH, duty);
 }
 
 uint32_t hal_pwm_ccr_get(void) {
     
-    return __HAL_TIM_GetCompare(&LASER_TIM, TIM_CHANNEL_2);
+    return __HAL_TIM_GetCompare(&LASER_TIM, LASER_TIM_CH);
 }
 
 

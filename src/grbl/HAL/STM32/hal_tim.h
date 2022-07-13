@@ -23,6 +23,10 @@ typedef TIM_HandleTypeDef timer_def;
 #define LASER_TIM_PORT              TIM1
 #define LASER_TIM_CH                TIM_CHANNEL_2
 #define LASER_PIN_AF                GPIO_AF1_TIM1
+#define LASER_OUT_PORT              GPIOB
+#define LASER_OUT_PIN               GPIO_PIN_6
+#define LASER_OUT_CLK()             __HAL_RCC_TIM4_CLK_ENABLE()
+#define LASER_OUT_PIN_CLK()         __HAL_RCC_GPIOB_CLK_ENABLE()
 #elif defined(STM32G0B0xx)
 #define SETP_SET_TIM                TIM6
 #define SETP_RESET_TIM              TIM7
@@ -35,8 +39,12 @@ typedef TIM_HandleTypeDef timer_def;
 #define STEP_SET_HANDLER            TIM6_IRQHandler
 #define STEP_RESET_HANDLER          TIM7_IRQHandler
 #define LASER_TIM_PORT              TIM4
-#define LASER_TIM_CH                TIM_CHANNEL_2
+#define LASER_TIM_CH                TIM_CHANNEL_1
 #define LASER_PIN_AF                GPIO_AF9_TIM4
+#define LASER_OUT_PORT              GPIOB
+#define LASER_OUT_PIN               GPIO_PIN_6
+#define LASER_OUT_CLK()             __HAL_RCC_TIM4_CLK_ENABLE()
+#define LASER_OUT_PIN_CLK()         __HAL_RCC_GPIOB_CLK_ENABLE()
 #elif defined(STM32G070xx)
 #define SETP_SET_TIM                TIM6
 #define SETP_RESET_TIM              TIM7
@@ -51,6 +59,10 @@ typedef TIM_HandleTypeDef timer_def;
 #define LASER_TIM_PORT              TIM1
 #define LASER_TIM_CH                TIM_CHANNEL_2
 #define LASER_PIN_AF                GPIO_AF1_TIM1
+#define LASER_OUT_PORT              GPIOB
+#define LASER_OUT_PIN               GPIO_PIN_6
+#define LASER_OUT_CLK()             __HAL_RCC_TIM4_CLK_ENABLE()
+#define LASER_OUT_PIN_CLK()         __HAL_RCC_GPIOB_CLK_ENABLE()
 #elif defined(STM32F407xx)
 #define SETP_SET_TIM                TIM3
 #define SETP_RESET_TIM              TIM4
@@ -65,6 +77,10 @@ typedef TIM_HandleTypeDef timer_def;
 #define LASER_TIM_PORT              TIM1
 #define LASER_TIM_CH                TIM_CHANNEL_2
 #define LASER_PIN_AF                GPIO_AF1_TIM1
+#define LASER_OUT_PORT              GPIOB
+#define LASER_OUT_PIN               GPIO_PIN_6
+#define LASER_OUT_CLK()             __HAL_RCC_TIM4_CLK_ENABLE()
+#define LASER_OUT_PIN_CLK()         __HAL_RCC_GPIOB_CLK_ENABLE()
 #endif
 
 typedef struct  
