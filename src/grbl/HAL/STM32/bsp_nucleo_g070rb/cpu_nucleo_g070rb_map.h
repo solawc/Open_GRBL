@@ -4,10 +4,10 @@
 #include "../../grbl/grbl.h"
 
   // Define step pulse output pins. NOTE: All step bit pins must be on the same port.
-#define X_STEP_BIT      0  
-#define Y_STEP_BIT      1  
-#define Z_STEP_BIT      2
-#define STEP_MASK       ((1<<X_STEP_BIT)|(1<<Y_STEP_BIT)|(1<<Z_STEP_BIT)) // All step bits
+#define X_STEP_BIT        0  
+#define Y_STEP_BIT        1  
+#define Z_STEP_BIT        2
+#define STEP_MASK         ((1<<X_STEP_BIT)|(1<<Y_STEP_BIT)|(1<<Z_STEP_BIT)) // All step bits
 
   // Define step direction output pins. NOTE: All direction pins must be on the same port.
 #define X_DIRECTION_BIT   0 
@@ -24,14 +24,14 @@
 #define X_LIMIT_BIT       0  
 #define Y_LIMIT_BIT       1  
 #define Z_LIMIT_BIT       2  
-#define LIMIT_MASK       ((1<<X_LIMIT_BIT)|(1<<Y_LIMIT_BIT)|(1<<Z_LIMIT_BIT)) // All limit bits
+#define LIMIT_MASK        ((1<<X_LIMIT_BIT)|(1<<Y_LIMIT_BIT)|(1<<Z_LIMIT_BIT)) // All limit bits
 
 
 /*************************************************************************
  * Allow laser output 0-10000Hz
  * **********************************************************************/
-#define SPINDLE_PWM_FREQUENCY       1000                   
-#define SPINDLE_PWM_MAX_VALUE       (1000000 / SPINDLE_PWM_FREQUENCY)
+#define SPINDLE_PWM_FREQUENCY           1000                   
+#define SPINDLE_PWM_MAX_VALUE           (1000000 / SPINDLE_PWM_FREQUENCY)
 
 #ifndef SPINDLE_PWM_MIN_VALUE
     #define SPINDLE_PWM_MIN_VALUE       1   // Must be greater than zero.
