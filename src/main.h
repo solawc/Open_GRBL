@@ -94,7 +94,12 @@
 
 #define SYSTEM_UART()       hal_uart_init()
 #define SYSTEM_LASER()      hal_pwm_init()
+
+#ifdef HAS_W25Qxx 
 #define SYSTEM_FLASH()      w25qxx_spi_regiest(); w25qxx_init(&sFlash)
+#else 
+#define SYSTEM_FLASH()
+#endif
 
 
 #if defined(LCD_MKS_TS35) || defined(LCD_MKS_TS24) 

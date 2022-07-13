@@ -1,6 +1,8 @@
 #ifndef __hal_w25qxx_h__
 #define __hal_w25qxx_h__
 
+#ifdef HAS_W25Qxx
+
 #include "../../../main.h"
 
 #define USE_FATFS
@@ -95,6 +97,8 @@ void w25qxx_spi_regiest();
 #ifdef USE_FATFS
 bool w25qxx_fs_init(void);
 void get_w25qxx_fafts_info(void);
+#endif
+
 #endif
 
 #endif

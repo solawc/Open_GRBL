@@ -1,5 +1,7 @@
 #include "hal_w25qxx.h"
  
+#ifdef HAS_W25Qxx
+
 static void w25qxx_enable(NFLASH_t *nFlash)
 {
   nFlash->w25qxx_enable_trans();
@@ -405,6 +407,8 @@ bool w25qxx_f_open() {
 
   return true;
 }
+
+#endif
 
 #endif
 

@@ -3,6 +3,7 @@
 /*******************************************************************************
  *                              W25QXX SPI Init
  * ****************************************************************************/
+#ifdef HAS_W25Qxx
 SPI_HandleTypeDef w25qxx_spi;
 SPI_HandleTypeDef tft_spi;
 NFLASH_t sFlash;
@@ -86,7 +87,7 @@ void w25qxx_spi_regiest() {
     sFlash.w25qxx_disable_trans = w25qxx_spi_cs_disable;
     sFlash.w25qxx_enable_trans = w25qxx_spi_cs_enabel;
 }
-
+#endif
 
 /*******************************************************************************
  *                              TFT SPI Init

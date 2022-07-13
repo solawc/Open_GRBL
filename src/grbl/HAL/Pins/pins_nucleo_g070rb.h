@@ -51,19 +51,6 @@
 #define BOARD_MIST_PORT                 GPIOB
 #define BOARD_MIST_PIN                  GPIO_PIN_3
 
-/* For W25qxx */
-#define W25QXX_SPI_PORT                 SPI2
-#define W25QXX_SPI_SCK_GPIO             GPIOB
-#define W25QXX_SPI_SCK_PIN              GPIO_PIN_13
-#define W25QXX_SPI_MISO_GPIO            GPIOB
-#define W25QXX_SPI_MISO_PIN             GPIO_PIN_14
-#define W25QXX_SPI_MOSI_GPIO            GPIOB
-#define W25QXX_SPI_MOSI_PIN             GPIO_PIN_15
-#define W25QXX_SPI_CS_GPIO              GPIOB
-#define W25QXX_SPI_CS_PIN               GPIO_PIN_12
-#define W25QXX_PIN_AF                   GPIO_AF0_SPI2
-#define W25QXX_SPEED                    SPI_BAUDRATEPRESCALER_4
-
 /* For SDCard */
 #define SD_USE_SPI
 #define BOARD_SD_SPI                    SPI1

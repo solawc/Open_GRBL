@@ -78,6 +78,7 @@ DSTATUS disk_initialize (
 		break;
 
 		case DEV_FLASH :
+#ifdef HAS_W25Qxx
 			// result = 
 			w25qxx_init(&sFlash);
 
@@ -88,7 +89,9 @@ DSTATUS disk_initialize (
 			}
 
 			FLASH_SECTOR_COUNT = 2048*16;
+
 			return stat;
+#endif
 		break;
 
 	}
@@ -124,6 +127,7 @@ DRESULT disk_read (
 		break;
 
 		case DEV_FLASH :
+#ifdef HAS_W25Qxx
 			// w25qxx_buffer_read(&sFlash, buff, sector, count);
 			for(; count>0; count--) {
 
@@ -131,7 +135,7 @@ DRESULT disk_read (
 				sector++;
 				buff += FLASH_SECTOR_SIZE;
 			}
-
+#endif
 			return RES_OK;
 		break;
 
@@ -170,14 +174,14 @@ DRESULT disk_write (
 
 		case DEV_FLASH :
 			// w25qxx_buffer_write(&sFlash, (uint8_t*)buff, sector, count);
-
+#ifdef HAS_W25Qxx
 			for (; count>0; count--) {
 
 				w25qxx_buffer_write(&sFlash, (uint8_t*)buff, sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
 				sector++;
 				buff += FLASH_SECTOR_SIZE;
 			}
-
+#endif
 			return RES_OK;
 		break;
 	}
