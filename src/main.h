@@ -27,27 +27,32 @@
 
 // #define DEBUG_TEST
 
-
 #include "stdio.h"
 #include "stdlib.h"
 #include "stdbool.h"
 
-#ifdef STM32G070xx
-    #include "stm32g0xx_hal.h"
-    #include "grbl/HAL/STM32/bsp_nucleo_g070rb/hal_nucleo_g070rb.h"
-    #include "grbl/HAL/Pins/pins_nucleo_g070rb.h"
-#elif defined(STM32F429xx)
-    #include "stm32f4xx_hal.h"
-    #include "grbl/HAL/STM32/bsp_f429ig/hal_f429_system.h"
-    #include "grbl/HAL/Pins/pins_fireboard_f429.h"
-#elif defined(STM32G0B0xx)
-    #include "stm32g0xx_hal.h"
+#include "grbl/HAL/grbl_mb.h"
+
+#if MB_BOARD==BOARD_DLC_LG0
     #include "grbl/HAL/STM32/bsp_g0b0ce/hal_g0b0_system.h"
     #include "grbl/HAL/Pins/pins_mks_dlc_lg0.h"
-#elif defined(STM32F407xx)
-    #include "stm32f4xx_hal.h"
-    #include "grbl/HAL/STM32/bsp_f407ve/hal_f407_system.h"
+#elif MB_BOARD==BOARD_DLC_LG0_V2
+    #include "grbl/HAL/STM32/bsp_g0b0ce/hal_g0b0_system.h"
+    #include "grbl/HAL/Pins/pins_mks_dlc_lg0.h"
+#elif MB_BOARD==BOARD_LASER_V1_0_BOX
+    #include "grbl/HAL/STM32/bsp_g0b0ce/hal_g0b0_system.h"
+    #include "grbl/HAL/Pins/pins_mks_dlc_lg0.h"
+#elif MB_BOARD==BOARD_LASER_BOX_4AXIS
+    #include "grbl/HAL/STM32/bsp_nucleo_g070rb/hal_nucleo_g070rb.h"
+    #include "grbl/HAL/Pins/pins_nucleo_g070rb.h"
+#elif MB_BOARD==BOARD_NUCLEO_G070RB
+    #include "grbl/HAL/STM32/bsp_nucleo_g070rb/hal_nucleo_g070rb.h"
+    #include "grbl/HAL/Pins/pins_nucleo_g070rb.h"
+#elif MB_BOARD==BOARD_FIRE_BOARD_F429
+    #include "grbl/HAL/STM32/bsp_f429ig/hal_f429_system.h"
+    #include "grbl/HAL/Pins/pins_fireboard_f429.h"
 #endif
+
 
 #if defined(USE_FREERTOS_RTOS)
 #include "FreeRTOS.h"
@@ -82,16 +87,6 @@
 // For Fatfs 
 #include "ff.h"
 
-#ifdef STM32F429xx
-#define SYSTEM_INTI()       hal_f429_system_init()
-#elif defined(STM32G0B0xx)
-#define SYSTEM_INTI()       hal_g0b0_system_init()
-#elif defined(STM32G070xx)
-#define SYSTEM_INTI()       // hal_g070_system_init()
-#elif defined(STM32F407xx)
-#define SYSTEM_INTI()
-#endif
-
 #define SYSTEM_UART()       hal_uart_init()
 #define SYSTEM_LASER()      hal_pwm_init()
 
@@ -100,7 +95,6 @@
 #else 
 #define SYSTEM_FLASH()
 #endif
-
 
 #if defined(LCD_MKS_TS35) || defined(LCD_MKS_TS24) 
 #define SYSTEM_LCD()        dev_lcd_init()
