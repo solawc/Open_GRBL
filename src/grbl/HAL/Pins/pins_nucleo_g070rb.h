@@ -3,7 +3,6 @@
 
 #include "pins_def.h"
 
-
 /* For Limit */
 #define BOARD_LIMIT_X_PORT              GPIOD
 #define BOARD_LIMIT_X_PIN               GPIO_PIN_3
@@ -82,7 +81,5 @@
 #define BOARD_UART_RX_PIN               GPIO_PIN_3
 #define BOARD_UART_AF_MODE              GPIO_AF1_USART2
 #define BOARD_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
-
-
 
 #endif
