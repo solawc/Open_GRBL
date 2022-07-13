@@ -45,7 +45,8 @@
         "hal_nucleo_g070rb.h": "c",
         "pins_def.h": "c",
         "pins_nucleo_g070rb.h": "c",
-        "pins_fireboard_f429.h": "c"
+        "pins_fireboard_f429.h": "c",
+        "grbl_mb.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

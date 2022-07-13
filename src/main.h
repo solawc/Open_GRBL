@@ -65,6 +65,7 @@
 
 #include "grbl/HAL/grbl_hal.h"
 #include "grbl/HAL/grbl_config.h"
+
 #include "grbl/HAL/STM32/hal_gpio.h"
 #include "grbl/HAL/STM32/hal_uart.h"
 #include "grbl/HAL/STM32/hal_tim.h"

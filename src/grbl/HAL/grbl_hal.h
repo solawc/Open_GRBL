@@ -31,6 +31,7 @@
 #include "grbl_mb.h"
 
 /***************************************************
+ *                  MCU Platform
  * Here we mainly describe the relevant 
  * information of MCU model
  * ************************************************/
