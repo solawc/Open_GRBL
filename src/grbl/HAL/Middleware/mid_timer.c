@@ -15,6 +15,4 @@ void dev_timer_init() {
     dev_timer.spindle_pwm_init = hal_pwm_init;
     dev_timer.spindle_pwm_set = hal_pwm_set;
     dev_timer.spindle_pwm_get = hal_pwm_ccr_get;
-
-
 }

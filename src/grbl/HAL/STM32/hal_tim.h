@@ -61,7 +61,7 @@ typedef TIM_HandleTypeDef timer_def;
 #define LASER_PIN_AF                GPIO_AF1_TIM1
 #define LASER_OUT_PORT              GPIOB
 #define LASER_OUT_PIN               GPIO_PIN_6
-#define LASER_OUT_CLK()             __HAL_RCC_TIM4_CLK_ENABLE()
+#define LASER_OUT_CLK()             __HAL_RCC_TIM1_CLK_ENABLE()
 #define LASER_OUT_PIN_CLK()         __HAL_RCC_GPIOB_CLK_ENABLE()
 #elif defined(STM32F407xx)
 #define SETP_SET_TIM                TIM3
