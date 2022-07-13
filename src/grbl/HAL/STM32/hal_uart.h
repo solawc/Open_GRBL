@@ -28,6 +28,34 @@ typedef struct {
 }hal_uart_t;
 extern hal_uart_t rb_serial_rx;
 
+
+#define UART_DMA_MAX_BUFF               12192        // dma接收buff使用1K数据,127条数据缓存
+typedef struct {
+
+    bool uart_dma_busy;
+
+    uint8_t dma_i_buff[UART_DMA_MAX_BUFF];
+    
+    uint32_t dma_count;
+
+    uint32_t buff_len;
+    
+    DMA_HandleTypeDef hdma_rx;
+
+}hal_uart_dma_t;
+
+
+
+
+
+
+
+
+
+
+
+
+
 void hal_uart_gpio_init(void);
 void hal_uart_init(void);
 void hal_uart_irq_set(void);

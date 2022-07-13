@@ -11,6 +11,14 @@ DMA_HandleTypeDef dma_rx;
 
 uint8_t laser_dma_rx_buf[5];
 
+// #define DATA_MAX 1024
+// uint16_t UART3_RX_NUM = 0;
+// uint8_t UART3_RX_BUFFER[DATA_MAX];
+hal_uart_dma_t hal_uart_dma;
+
+
+static void uart2_dma_init();
+static void uart_dma_settings();
 
 /************************************************************
  * 			For Serial UART
@@ -32,6 +40,8 @@ void hal_uart_gpio_init(void) {
 }
 
 void hal_uart_init(void) {
+
+	uart2_dma_init();
 
 	hal_uart_gpio_init();
     laser_uart.Instance = LaserUART;
@@ -62,7 +72,13 @@ void hal_uart_init(void) {
 	}
 #endif
 
+	uart_dma_settings();
+
 	hal_uart_irq_set();
+
+	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_IDLE);
+
+	HAL_UART_Receive_DMA(&laser_uart, hal_uart_dma.dma_i_buff, UART_DMA_MAX_BUFF);
 }
 
 void hal_uart_irq_set(void) {
@@ -115,21 +131,90 @@ int _write(int fd, char *ptr, int len)
 #endif
 
 
+
+/************************************************************
+ * 			For UART DMA Settings
+ * *********************************************************/
+
+
+static void uart2_dma_init() {
+
+	__HAL_RCC_DMA1_CLK_ENABLE();
+
+	HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+}
+
+static void uart_dma_settings() {
+
+	/* USART2 DMA Init */
+    /* USART2_RX Init */
+	
+    hal_uart_dma.hdma_rx.Instance = DMA1_Channel1;
+    hal_uart_dma.hdma_rx.Init.Request = DMA_REQUEST_USART2_RX;
+    hal_uart_dma.hdma_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    hal_uart_dma.hdma_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+    hal_uart_dma.hdma_rx.Init.MemInc = DMA_MINC_ENABLE;
+    hal_uart_dma.hdma_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hal_uart_dma.hdma_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    hal_uart_dma.hdma_rx.Init.Mode = DMA_CIRCULAR;
+    hal_uart_dma.hdma_rx.Init.Priority = DMA_PRIORITY_MEDIUM;
+    if (HAL_DMA_Init(&hal_uart_dma.hdma_rx) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(&laser_uart, hdmarx, hal_uart_dma.hdma_rx);
+}
+
+
+void DMA1_Channel1_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
+
+  /* USER CODE END DMA1_Channel1_IRQn 0 */
+  HAL_DMA_IRQHandler(&hal_uart_dma.hdma_rx);
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel1_IRQn 1 */
+}
+
+
 // Serial UART ISR Handler
 void LASER_UART_IRQHANDLER() {
 
 #if defined(USE_FREERTOS_RTOS)
 	uint32_t ulReturn;
 #endif
-	__IO uint16_t data;
+	// __IO uint16_t data;
 
 #if defined(USE_FREERTOS_RTOS)
 	ulReturn = taskENTER_CRITICAL_FROM_ISR();
 #endif
 
-	if(LASER_UART_RX_FLAG) {
-		data = hal_uart_read_dr();
-		laser_uart_rx_handler(data);
+	// if(LASER_UART_RX_FLAG) {
+	// 	data = hal_uart_read_dr();
+	// 	laser_uart_rx_handler(data);
+	// }
+
+	uint8_t temp1,temp2 = 0;
+
+	temp1 = __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_IDLE);
+	temp2 = __HAL_UART_GET_IT_SOURCE(&laser_uart, UART_IT_IDLE);
+
+	if((temp1 != RESET)&&(temp2 != RESET))
+	{
+		__HAL_UART_CLEAR_IDLEFLAG(&laser_uart);										//清除中断标志位
+		__HAL_DMA_DISABLE(&hal_uart_dma.hdma_rx);									//失能DMA_UART3_RX	
+		hal_uart_dma.dma_count = (UART_DMA_MAX_BUFF) - hal_uart_dma.hdma_rx.Instance->CNDTR;	//获取DMA搬运的数据
+		hal_uart_dma.hdma_rx.Instance->CNDTR = UART_DMA_MAX_BUFF;					//设置DMA_UART3_RX接收大小为DATA_MAX，即重新等待接收。
+		/*  
+			
+			这里需要处理接收的数据
+		*/
+		HAL_UART_Transmit(&laser_uart,hal_uart_dma.dma_i_buff,(hal_uart_dma.dma_count),10);
+
+		__HAL_DMA_ENABLE(&hal_uart_dma.hdma_rx);							//使能DMA_UART_RX
 	}
 
 	HAL_UART_IRQHandler(&laser_uart);
@@ -138,6 +223,7 @@ void LASER_UART_IRQHANDLER() {
 	taskEXIT_CRITICAL_FROM_ISR( ulReturn );
 #endif
 }
+
 
 /************************************************************
  * 			For LCD TFT UART

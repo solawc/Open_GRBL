@@ -162,17 +162,7 @@ void hal_pwm_init() {
     {
         Error_Handler();
     }
-    // sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
-    // sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
-    // sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
-    // sBreakDeadTimeConfig.DeadTime = 0;
-    // sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
-    // sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
-    // sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
-    // if (HAL_TIMEx_ConfigBreakDeadTime(&LASER_TIM, &sBreakDeadTimeConfig) != HAL_OK)
-    // {
-    //     Error_Handler();
-    // }
+
     HAL_TIM_PWM_Start(&LASER_TIM, LASER_TIM_CH);
 }
 
