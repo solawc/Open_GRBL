@@ -23,7 +23,7 @@
 
 // Grbl versioning system
 #define GRBL_VERSION "1.4h"
-#define GRBL_VERSION_BUILD "20220701"
+#define GRBL_VERSION_BUILD "20220713"
 
 // Define standard libraries used by Grbl.
 #include <math.h>
@@ -32,7 +32,6 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
-// #include "grbl_main.h"
 #include "main.h"
 // Define the Grbl system include files. NOTE: Do not alter organization.
 #include "config.h"
@@ -57,6 +56,8 @@
 #include "stepper.h"
 #include "jog.h"
 #include "error.h"
+
+#include "../main.h"
 
 #ifdef STM32F4
   #include "HAL/STM32/bsp_f429ig/cpu_stm32f4_map.h"

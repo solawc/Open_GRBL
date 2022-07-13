@@ -23,6 +23,9 @@
 #elif defined(STM32G0B0xx)
 #define EEPROM_START_ADDR           ((uint32_t)0x0807F800)  
 #define EEPROM_END_ADDR             ((uint32_t)0x080407FF)
+#elif defined(STM32G070xx)
+#define EEPROM_START_ADDR           ((uint32_t)0x0807F800)  
+#define EEPROM_END_ADDR             ((uint32_t)0x080407FF)
 #elif defined(STM32F407xx)
 #define EEPROM_START_ADDR           ADDR_FLASH_SECTOR_7  
 #define EEPROM_END_ADDR             ((uint32_t)0x080407FF)

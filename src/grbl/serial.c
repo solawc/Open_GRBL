@@ -122,28 +122,40 @@ void laser_uart_tx_handler() {
 // Fetches the first byte in the serial read buffer. Called by main program.
 uint8_t serial_read()
 {
-  // uint8_t tail = serial_rx_buffer_tail; // Temporary serial_rx_buffer_tail (to optimize for volatile)
+
+#ifndef USR_MY_RINGBUFFER
+  uint8_t tail = serial_rx_buffer_tail; // Temporary serial_rx_buffer_tail (to optimize for volatile)
   
-  // if (serial_rx_buffer_head == tail) {
-  //   return SERIAL_NO_DATA;
-  // } else {
-  //   uint8_t data = serial_rx_buffer[tail];
+  if (serial_rx_buffer_head == tail) {
+    return SERIAL_NO_DATA;
+  } else {
+    uint8_t data = serial_rx_buffer[tail];
 
-  //   tail++;
-  //   if (tail == RX_RING_BUFFER) { tail = 0; }
-  //   serial_rx_buffer_tail = tail;
+    tail++;
+    if (tail == RX_RING_BUFFER) { tail = 0; }
+    serial_rx_buffer_tail = tail;
 
-  //   return data;
-  // }
+    return data;
+  }
+#else 
+
+#ifdef USE_FREERTOS_RTOS
+  taskENTER_CRITICAL();
+#endif
 
   uint8_t data;
   uint8_t flag;
   flag = serial_rb_read(&rb_serial_rx, &data);
 
+#ifdef USE_FREERTOS_RTOS
+  taskEXIT_CRITICAL();
+#endif
+
   if(flag == 0) return SERIAL_NO_DATA;
   else {
     return data;
   }
+#endif
 }
 
 #if defined(CPU_MAP_ATMEGA328P)
@@ -260,9 +272,10 @@ bool protocol_rt_command_run(char data) {
 }
 
 void laser_uart_rx_handler(__IO uint8_t data) { 
+#ifndef USR_MY_RINGBUFFER
+  uint8_t next_head;
+#endif
 
-  // uint8_t next_head;
-  
   // Pick off realtime command characters directly from the serial stream. These characters are
   // not passed into the main buffer, but these set system state flag bits for realtime execution.
   switch (data) {
@@ -304,18 +317,19 @@ void laser_uart_rx_handler(__IO uint8_t data) {
         // Throw away any unfound extended-ASCII character by not passing it to the serial buffer.
       } 
       else { // Write character to buffer
-        // next_head = serial_rx_buffer_head + 1;
-        // if (next_head == RX_RING_BUFFER) { next_head = 0; }
+      
+#ifndef USR_MY_RINGBUFFER
+        next_head = serial_rx_buffer_head + 1;
+        if (next_head == RX_RING_BUFFER) { next_head = 0; }
 
-        // // Write data to buffer unless it is full.
-        // if (next_head != serial_rx_buffer_tail) {
-        //   serial_rx_buffer[serial_rx_buffer_head] = data;
-        //   serial_rx_buffer_head = next_head;
-        // }
-
+        // Write data to buffer unless it is full.
+        if (next_head != serial_rx_buffer_tail) {
+          serial_rx_buffer[serial_rx_buffer_head] = data;
+          serial_rx_buffer_head = next_head;
+        }
+#else
         serial_rb_write(&rb_serial_rx, data);
-
-        // client_write(CLIENT_SERIAL, data);
+#endif
       }
   }
 }

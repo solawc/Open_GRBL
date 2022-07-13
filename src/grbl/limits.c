@@ -52,29 +52,6 @@ const int DEBOUNCE_PERIOD = 32;
 
 void limits_init()
 {
-#if defined(CPU_MAP_ATMEGA328P)
-  LIMIT_DDR &= ~(LIMIT_MASK); // Set as input pins
-
-  #ifdef DISABLE_LIMIT_PIN_PULL_UP
-    LIMIT_PORT &= ~(LIMIT_MASK); // Normal low operation. Requires external pull-down.
-  #else
-    LIMIT_PORT |= (LIMIT_MASK);  // Enable internal pull-up resistors. Normal high operation.
-  #endif
-
-  if (bit_istrue(settings.flags,BITFLAG_HARD_LIMIT_ENABLE)) {
-    LIMIT_PCMSK |= LIMIT_MASK; // Enable specific pins of the Pin Change Interrupt
-    PCICR |= (1 << LIMIT_INT); // Enable Pin Change Interrupt
-  } else {
-    limits_disable();
-  }
-
-  #ifdef ENABLE_SOFTWARE_DEBOUNCE
-    MCUSR &= ~(1<<WDRF);
-    WDTCSR |= (1<<WDCE) | (1<<WDE);
-    WDTCSR = (1<<WDP0); // Set time-out at ~32msec.
-  #endif
-#elif defined(CPU_STM32)
-
   hal_limit_gpio_init();
   
   if (bit_istrue(settings.flags,BITFLAG_HARD_LIMIT_ENABLE)) {
@@ -93,8 +70,6 @@ void limits_init()
                 5,  // priority
                 &limit_task_handler);
   }
-#endif
-
 #endif
 }
 
@@ -423,8 +398,6 @@ void limits_go_home(uint8_t cycle_mask)
         }
 
         sys.homing_axis_lock = axislock;
-
-        // printf("sys.homing_axis_lock:%d\n", sys.homing_axis_lock);
 
         #ifdef ENABLE_DUAL_AXIS
           if (sys.homing_axis_lock_dual) { // NOTE: Only true when homing dual axis.

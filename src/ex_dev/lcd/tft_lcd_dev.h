@@ -3,7 +3,9 @@
 
 #include "../../main.h"
 
-#ifdef STM32F429xx
+
+#ifdef LCD_TFT_SUPPORT
+
 #define LCD_MOSI_PORT       GPIOB
 #define LCD_MOSI_PIN        GPIO_PIN_5
 #define LCD_MISO_PORT       GPIOB
@@ -21,39 +23,6 @@
 #define LCD_TP_CS_PORT      GPIOD
 #define LCD_TP_CS_PIN       GPIO_PIN_0
 #define LCD_PIN_AF          GPIO_AF5_SPI3
-#elif defined(STM32G0B0xx)
-#define LCD_MOSI_PORT       GPIOB
-#define LCD_MOSI_PIN        GPIO_PIN_5      // spi mosi
-#define LCD_MISO_PORT       GPIOB
-#define LCD_MISO_PIN        GPIO_PIN_4      // spi miso
-#define LCD_SCK_PORT        GPIOB
-#define LCD_SCK_PIN         GPIO_PIN_3      // spi sck
-#define LCD_CS_PORT         GPIOC
-#define LCD_CS_PIN          GPIO_PIN_7      // lcd cs
-#define LCD_EN_PORT         GPIOA
-#define LCD_EN_PIN          GPIO_PIN_15     // lcd en
-#define LCD_DC_PORT         GPIOC
-#define LCD_DC_PIN          GPIO_PIN_6      // lcd dc (lcd 命令/数据选择引脚)
-#define LCD_TP_CS_PORT      GPIOA
-#define LCD_TP_CS_PIN       GPIO_PIN_11     // 触摸片选
-#define LCD_PIN_AF          GPIO_AF9_SPI3
-#elif defined(STM32F407xx)
-#define LCD_MOSI_PORT       GPIOA
-#define LCD_MOSI_PIN        GPIO_PIN_7      // spi mosi
-#define LCD_MISO_PORT       GPIOA
-#define LCD_MISO_PIN        GPIO_PIN_6      // spi miso
-#define LCD_SCK_PORT        GPIOA
-#define LCD_SCK_PIN         GPIO_PIN_5      // spi sck
-#define LCD_CS_PORT         GPIOC
-#define LCD_CS_PIN          GPIO_PIN_7      // lcd cs
-#define LCD_EN_PORT         GPIOA
-#define LCD_EN_PIN          GPIO_PIN_15     // lcd en
-#define LCD_DC_PORT         GPIOC
-#define LCD_DC_PIN          GPIO_PIN_6      // lcd dc (lcd 命令/数据选择引脚)
-#define LCD_TP_CS_PORT      GPIOA
-#define LCD_TP_CS_PIN       GPIO_PIN_11     // 触摸片选
-#define LCD_PIN_AF          GPIO_AF5_SPI1
-#endif
 
 #define CMD_MODE_SET()      HAL_GPIO_WritePin(LCD_DC_PORT, LCD_DC_PIN, GPIO_PIN_RESET)
 #define DATA_MODE_SET()     HAL_GPIO_WritePin(LCD_DC_PORT, LCD_DC_PIN, GPIO_PIN_SET)
@@ -67,6 +36,8 @@ typedef enum {
 typedef struct {
 
     uint32_t lcd_id;
+
+    void (*tft_lcd_delay_ms)(uint32_t );
 
     void (*tft_lcd_init)(void);
     void (*tft_lcd_config)(void);
@@ -93,5 +64,7 @@ typedef struct {
 
 void dev_lcd_init(void);
 void dev_lcd_draw_fill(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2, uint32_t color);
+
+#endif
 
 #endif /* __tft_lcd_dev_h */

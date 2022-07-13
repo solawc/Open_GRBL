@@ -1,5 +1,7 @@
 #include "hal_w25qxx.h"
  
+#ifdef HAS_W25Qxx
+
 static void w25qxx_enable(NFLASH_t *nFlash)
 {
   nFlash->w25qxx_enable_trans();
@@ -350,5 +352,64 @@ void w25qxx_buffer_read(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, _
   w25qxx_disable(nFlash);
 }
 
+
+#ifdef USE_FATFS
+
+FATFS           wfs;
+
+bool w25qxx_fs_init(void) {
+
+  FRESULT fs_res;
+  BYTE work[FF_MAX_SS];
+
+  fs_res = f_mount(&wfs, W25QXX_FS_PATH, 1);
+
+  if(fs_res == FR_NO_FILESYSTEM) {
+        fs_res = f_mkfs("0:", NULL, work, sizeof(work));
+        if(fs_res == FR_OK) { 
+          fs_res = f_mount(&wfs, W25QXX_FS_PATH, 1);
+          if(fs_res != FR_OK) { 
+            printf("W25QXX fs fail\n");
+            return false;
+          }
+          get_w25qxx_fafts_info();
+          return true; 
+        }
+        else { return false; }
+  }else if(fs_res == FR_OK) {
+    return true;
+  }else {
+    return false;
+  }
+}
+
+void get_w25qxx_fafts_info(void) {
+
+  FATFS *pfs = &wfs;
+
+  DWORD fre_clust, fre_size, tot_size;
+  
+  uint8_t result = f_getfree( W25QXX_FS_PATH, &fre_clust, &pfs );
+  
+  if( result == FR_OK )
+  {
+      tot_size = (pfs->n_fatent - 2) * pfs->csize/2; // 总容量    单位Kbyte
+      fre_size = fre_clust * pfs->csize/2;           // 可用容量  单位Kbyte
+      printf("w25qxx total size:%ld\n", tot_size/1024);
+      printf("w25qxx free size:%ld\n", fre_size/1024);
+  }
+  else{
+  }
+}
+
+
+bool w25qxx_f_open() {
+
+  return true;
+}
+
+#endif
+
+#endif
 
 

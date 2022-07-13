@@ -116,13 +116,15 @@ void report_status_message(uint8_t status_code)
 {
   switch(status_code) {
     case STATUS_OK:
-
+#ifdef SDSUPPORT
       if(sd_state == SD_STATE_BUSY) {
         sd_ready_next = true;
       } else {
         printPgmString(PSTR("ok\r\n")); 
       }
-
+#else 
+  printPgmString(PSTR("ok\r\n")); 
+#endif
     break;
 
     default:
@@ -460,7 +462,9 @@ void report_build_info(char *line)
   serial_write(',');
   print_uint8_base10(BLOCK_BUFFER_SIZE-1);
   serial_write(',');
-  print_uint8_base10(RX_BUFFER_SIZE);
+  // print_uint8_base10(RX_BUFFER_SIZE);
+
+  print_uint32_base10(RX_BUFFER_SIZE);
 
   report_util_feedback_line_feed();
 }

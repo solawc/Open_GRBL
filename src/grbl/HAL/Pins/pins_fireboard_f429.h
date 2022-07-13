@@ -1,7 +1,7 @@
 #ifndef __pins_fireboard_f429_h
 #define __pins_fireboard_f429_h
 
-
+#include "pins_def.h"
 
 /* For Limit */
 #define BOARD_LIMIT_X_PORT              GPIOD
@@ -46,9 +46,8 @@
 #define BOARD_MIST_PIN                  GPIO_PIN_3
 
 /* FLAME */
-#define BOARD_FLAME_PORT
-#define BOARD_FLAME_PIN
-
+// #define BOARD_FLAME_PORT                
+// #define BOARD_FLAME_PIN
 
 /* For W25qxx */
 #define W25QXX_SPI_PORT                 SPI5
@@ -65,7 +64,6 @@
 
 /* For SDCard */
 #define SD_USE_SDIO
-
 
 /* For Serial UART */
 #define  __HAL_UART_CLK(uart)	        __HAL_RCC_##uart##_CLK_ENABLE()
