@@ -160,7 +160,7 @@ void sd_list(const char *path) {
             }
             else {   
                 if(fileinfo.fname[0]==0){ break; }
-                sprintf(fileName, "[File:%s|SIZE:%ldk]\r\n", fileinfo.fname, (fileinfo.fsize/1024));
+                sprintf(fileName, "[File:%s|SIZE:%ldk]\r\n", fileinfo.fname, (fileinfo.fsize / 1024));
                 printReturnInfo(fileName);
             }
         }

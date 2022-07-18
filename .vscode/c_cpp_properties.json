@@ -145,7 +145,7 @@
                 ]
             },
             "defines": [
-                "PLATFORMIO=60100",
+                "PLATFORMIO=60101",
                 "STM32G0xx",
                 "STM32G0B0xx",
                 "MB_BOARD=1001",
