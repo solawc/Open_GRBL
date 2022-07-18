@@ -61,7 +61,7 @@
 #define W25QXX_SPI_CS_GPIO              GPIOB
 #define W25QXX_SPI_CS_PIN               GPIO_PIN_12
 #define W25QXX_PIN_AF                   GPIO_AF0_SPI2
-#define W25QXX_SPEED                    SPI_BAUDRATEPRESCALER_4
+#define W25QXX_SPEED                    SPI_BAUDRATEPRESCALER_2
 
 /* For SDCard */
 #define SD_USE_SPI

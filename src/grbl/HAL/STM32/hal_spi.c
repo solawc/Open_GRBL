@@ -47,8 +47,8 @@ void spi_for_w25qxx_init(void) {
 
     w25qxx_spi.Instance = W25QXX_SPI_PORT;
     w25qxx_spi.Init.BaudRatePrescaler = W25QXX_SPEED;
-    w25qxx_spi.Init.CLKPhase = SPI_PHASE_1EDGE;
-    w25qxx_spi.Init.CLKPolarity = SPI_POLARITY_LOW;
+    w25qxx_spi.Init.CLKPhase = SPI_PHASE_2EDGE;
+    w25qxx_spi.Init.CLKPolarity = SPI_POLARITY_HIGH;
     w25qxx_spi.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
     w25qxx_spi.Init.CRCPolynomial = 7;
     w25qxx_spi.Init.DataSize = SPI_DATASIZE_8BIT;
@@ -65,8 +65,14 @@ void spi_for_w25qxx_init(void) {
 }
 
 uint8_t w25qxx_spi_read_write(uint8_t data) {
+    HAL_StatusTypeDef status = HAL_ERROR;
     uint8_t rdata = 0;    
-    HAL_SPI_TransmitReceive(&w25qxx_spi, &data, &rdata, 1, 10);
+    status = HAL_SPI_TransmitReceive(&w25qxx_spi, &data, &rdata, 1, 10);
+    if(status != HAL_OK) {
+
+        while(1);
+    }
+    
     return rdata;
 }
 

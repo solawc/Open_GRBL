@@ -9,7 +9,6 @@
 
 #include "ff.h"			/* Obtains integer types */
 #include "diskio.h"		/* Declarations of disk functions */
-// #include "../../src/external_device/SD/sdcard.h"
 #include "../../src/ex_dev/sd/sdcard.h"
 
 /* Definitions of physical drive number for each drive */
@@ -21,7 +20,7 @@
 #define SD_BLOCKSIZE			512
 #define FLASH_SECTOR_SIZE 		512
 
-uint16_t FLASH_SECTOR_COUNT = 	2048*16;
+uint16_t FLASH_SECTOR_COUNT = 	9832;
 #define FALSH_BLOCK_SIZE		8
 
 /*-----------------------------------------------------------------------*/
@@ -88,7 +87,8 @@ DSTATUS disk_initialize (
 				stat = RES_ERROR;
 			}
 
-			FLASH_SECTOR_COUNT = 2048*16;
+		// 设置Flash容量
+			FLASH_SECTOR_COUNT = 2048*8;
 
 			return stat;
 #endif
@@ -128,9 +128,7 @@ DRESULT disk_read (
 
 		case DEV_FLASH :
 #ifdef HAS_W25Qxx
-			// w25qxx_buffer_read(&sFlash, buff, sector, count);
 			for(; count>0; count--) {
-
 				w25qxx_buffer_read(&sFlash, buff, sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
 				sector++;
 				buff += FLASH_SECTOR_SIZE;
@@ -176,7 +174,7 @@ DRESULT disk_write (
 			// w25qxx_buffer_write(&sFlash, (uint8_t*)buff, sector, count);
 #ifdef HAS_W25Qxx
 			for (; count>0; count--) {
-
+				w25qxx_sector_erase(&sFlash, sector*FLASH_SECTOR_SIZE);
 				w25qxx_buffer_write(&sFlash, (uint8_t*)buff, sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
 				sector++;
 				buff += FLASH_SECTOR_SIZE;
@@ -247,12 +245,12 @@ DRESULT disk_ioctl (
 				break;
 
 				case GET_BLOCK_SIZE:
-					*(WORD*)buff = 8;
+					*(WORD*)buff = FALSH_BLOCK_SIZE;
 					res = RES_OK;
 				break;
 
 				case GET_SECTOR_COUNT:
-					*(DWORD*)buff = FLASH_SECTOR_SIZE; // SD_GetSectorCount();
+					*(DWORD*)buff = FLASH_SECTOR_COUNT; // SD_GetSectorCount();
 					res = RES_OK;
 				break;
 			}

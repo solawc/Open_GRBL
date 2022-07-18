@@ -92,7 +92,9 @@
 #define SYSTEM_LASER()      hal_pwm_init()
 
 #ifdef HAS_W25Qxx 
-#define SYSTEM_FLASH()      w25qxx_spi_regiest(); w25qxx_init(&sFlash)
+#define SYSTEM_FLASH()      w25qxx_spi_regiest(); \
+                            w25qxx_init(&sFlash); \
+                            w25qxx_fs_init();
 #else 
 #define SYSTEM_FLASH()
 #endif

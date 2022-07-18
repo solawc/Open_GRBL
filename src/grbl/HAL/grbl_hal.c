@@ -40,7 +40,7 @@ void grbl_report_mcu_info(void) {
 #ifdef HAS_W25Qxx
     printf("*-Flash Info 0x%lx, flash_size = %ldMB\n", (uint32_t)sFlash.flash_id, (sFlash.flash_size / (uint32_t)1024));
 #endif
-    printf("*-BuildVersion%s:\n", GRBL_VERSION_BUILD);
+    printf("*-BuildVersion:%s\n", GRBL_VERSION_BUILD);
     printf("/*********************************************************/\r\n");
 }
 
@@ -61,13 +61,10 @@ void grbl_hw_init(void) {
     SYSTEM_LASER();     // hal_pwm_init();
 
     SYSTEM_FLASH();     // w25qxx_init();
-
+    
     SYSTEM_SDCARD();    // sd_init()
     
     SYSTEM_LCD();       // dev_lcd_init();
-
-    // if(w25qxx_fs_init()) {
-    //     printf("W25QXX FS Succeeds\n");
-    // }
+    
 #endif
 }
