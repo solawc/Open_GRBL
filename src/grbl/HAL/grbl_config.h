@@ -40,7 +40,7 @@
         #endif
     #endif
 
-    #define W25QXX_FLASH_SUPPORT
+    // #define W25QXX_FLASH_SUPPORT
     #ifdef W25QXX_FLASH_SUPPORT
         #define HAS_W25Qxx
     #endif
