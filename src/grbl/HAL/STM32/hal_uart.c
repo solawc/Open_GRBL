@@ -192,11 +192,6 @@ void LASER_UART_IRQHANDLER() {
 	ulReturn = taskENTER_CRITICAL_FROM_ISR();
 #endif
 
-	// if(LASER_UART_RX_FLAG) {
-	// 	data = hal_uart_read_dr();
-	// 	laser_uart_rx_handler(data);
-	// }
-
 	uint8_t temp1,temp2 = 0;
 
 	temp1 = __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_IDLE);
@@ -208,11 +203,15 @@ void LASER_UART_IRQHANDLER() {
 		__HAL_DMA_DISABLE(&hal_uart_dma.hdma_rx);									//失能DMA_UART3_RX	
 		hal_uart_dma.dma_count = (UART_DMA_MAX_BUFF) - hal_uart_dma.hdma_rx.Instance->CNDTR;	//获取DMA搬运的数据
 		hal_uart_dma.hdma_rx.Instance->CNDTR = UART_DMA_MAX_BUFF;					//设置DMA_UART3_RX接收大小为DATA_MAX，即重新等待接收。
+		
 		/*  
-			
 			这里需要处理接收的数据
 		*/
-		HAL_UART_Transmit(&laser_uart,hal_uart_dma.dma_i_buff,(hal_uart_dma.dma_count),10);
+		// HAL_UART_Transmit(&laser_uart,hal_uart_dma.dma_i_buff,(hal_uart_dma.dma_count),10);
+
+		for (int i=0; i<hal_uart_dma.dma_count; i++) {
+			serial_rb_write(&rb_serial_rx, hal_uart_dma.dma_i_buff[i]);
+		}
 
 		__HAL_DMA_ENABLE(&hal_uart_dma.hdma_rx);							//使能DMA_UART_RX
 	}
@@ -229,8 +228,7 @@ void LASER_UART_IRQHANDLER() {
  * 			For LCD TFT UART
  * *********************************************************/
 static void tft_lcd_uart_pins_init() {
-
-
+	
 }
 
 void tft_lcd_uart_init() {

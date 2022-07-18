@@ -140,7 +140,6 @@ void protocol_main_loop()
   // ---------------------------------------------------------------------------------
 
   uint8_t c;
-
   sd_close_file();
 
   for (;;) {
@@ -166,13 +165,20 @@ void protocol_main_loop()
     // initial filtering by removing spaces and comments and capitalizing all letters.
     while((c = serial_read()) != SERIAL_NO_DATA) {
 
+      // if(protocol_rt_command(c)) break;
+      // if(protocol_rt_command_run(c)) break;
+
+      if(protocol_rt_command(c) || protocol_rt_command_run(c)) {
+        protocol_execute_realtime(); 
+        break;
+      }
+
       ERROR_LIST_t err = add_char_to_line(c);
 
       switch(err) {
         case OK:  break;
         
         case EOL: 
-        
           protocol_execute_realtime();                            // Runtime command check point.
 
           if (sys.abort) { return; }                              // Bail to calling function upon system abort

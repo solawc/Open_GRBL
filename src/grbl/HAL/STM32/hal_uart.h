@@ -44,18 +44,6 @@ typedef struct {
 
 }hal_uart_dma_t;
 
-
-
-
-
-
-
-
-
-
-
-
-
 void hal_uart_gpio_init(void);
 void hal_uart_init(void);
 void hal_uart_irq_set(void);
