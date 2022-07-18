@@ -24,9 +24,9 @@
 
 int main() {
 
-  grbl_hw_init();
+  grblHwInit();
 
-  client_init();
+  clientInit();
 
 #ifdef STM32G0B0xx
   // here must wait for some time, beacuse STM32G0B0CE have no XTAL
@@ -34,17 +34,10 @@ int main() {
 #endif
 
   // report MCU info and you can check
-  grbl_report_mcu_info();
+  grblReprotMcuInfo();
 
-#ifdef DEBUG_TEST
-  while(1) {}
-#endif
-
-#if defined(USE_FREERTOS_RTOS)
-  xTaskCreate(enter_grbl_task, "grbl task", 1024, NULL, 1, &grbl_task_handler);
-#else 
-  enter_grbl_task();
-#endif
+  // Begin GRBL Task
+  grblTaskInit();
 
 #if defined(USE_FREERTOS_RTOS)
   osKernelStart();

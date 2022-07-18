@@ -24,9 +24,9 @@
 
 grbl_hw_t grbl_hw_get;
 
-void grbl_report_mcu_info(void) {
+void grblReprotMcuInfo(void) {
 
-    grbl_hw_info_get();
+    grblHwInfoGet();
 
     printf("/*********************************************************/\r\n");
     printf("*-\\    |    /\n");
@@ -44,12 +44,12 @@ void grbl_report_mcu_info(void) {
     printf("/*********************************************************/\r\n");
 }
 
-void grbl_hw_info_get(void) {
+void grblHwInfoGet(void) {
     grbl_hw_get.mcu_clk         = HAL_RCC_GetHCLKFreq();
     grbl_hw_get.step_tim_clk    = HAL_RCC_GetHCLKFreq();
 }
 
-void grbl_hw_init(void) {
+void grblHwInit(void) {
 
     HAL_Init();
 
@@ -57,18 +57,11 @@ void grbl_hw_init(void) {
 
     SYSTEM_UART();      // hal_uart_init();
 
-#ifndef DEBUG_TEST
     SYSTEM_LASER();     // hal_pwm_init();
 
     SYSTEM_FLASH();     // w25qxx_init();
-
-    // w25qxx_fatfs_test();
-
-    // while(1);
     
     SYSTEM_SDCARD();    // sd_init()
     
     SYSTEM_LCD();       // dev_lcd_init();
-    
-#endif
 }

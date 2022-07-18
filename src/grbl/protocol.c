@@ -141,12 +141,15 @@ void protocol_main_loop()
 
   uint8_t c;
 
+#ifdef HAS_SDCARD
   sd_close_file();
+#endif
 
   for (;;) {
 
     char *get_line;
 
+#ifdef HAS_SDCARD
     /********************************************************
      * SD卡读取打印
      * *****************************************************/
@@ -161,6 +164,7 @@ void protocol_main_loop()
         printReturnInfo("SD Print Finish\n");
       }
     }
+#endif
 
     // Process one line of incoming serial data, as the data becomes available. Performs an
     // initial filtering by removing spaces and comments and capitalizing all letters.
@@ -169,6 +173,7 @@ void protocol_main_loop()
       ERROR_LIST_t err = add_char_to_line(c);
 
       switch(err) {
+        
         case OK:  break;
         
         case EOL: 
@@ -189,7 +194,9 @@ void protocol_main_loop()
 
         break;
 
-        case Overflow: over_flow_run(); break;                    // report overflow, and reset buff 
+        case Overflow: 
+            over_flow_run();                                      // report overflow, and reset buff 
+        break;                    
 
         default:
         break;

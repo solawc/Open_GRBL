@@ -19,8 +19,8 @@ typedef struct {
 }client_buff_t;
 
 
-void client_init(void);
-bool client_write(uint8_t client, uint8_t wdata);
-bool client_read(uint8_t client, uint8_t *rdata);
+void clientInit(void);
+bool clientWrite(uint8_t client, uint8_t wdata);
+bool clientRead(uint8_t client, uint8_t *rdata);
 
 #endif

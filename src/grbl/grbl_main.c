@@ -89,3 +89,18 @@ void enter_grbl_task(void) {
         protocol_main_loop();
     }	
 }
+
+void grblTaskInit(void) {
+
+#if defined(USE_FREERTOS_RTOS)
+  xTaskCreate(enter_grbl_task, 
+              "grbl task", 
+              1024, 
+              NULL, 
+              1, 
+              &grbl_task_handler
+              );
+#else 
+  enter_grbl_task();
+#endif
+}

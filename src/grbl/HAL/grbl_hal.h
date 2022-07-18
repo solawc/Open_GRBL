@@ -60,9 +60,9 @@ typedef struct {
 }grbl_hw_t;
 
 
-void grbl_report_mcu_info(void);
-void grbl_hw_info_get(void);
-void grbl_hw_init(void);
+void grblReprotMcuInfo(void);
+void grblHwInfoGet(void);
+void grblHwInit(void);
 
 #endif
 
