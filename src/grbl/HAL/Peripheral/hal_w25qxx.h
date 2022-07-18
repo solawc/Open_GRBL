@@ -92,6 +92,7 @@
     void w25qxx_buffer_write(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite);
     void w25qxx_buffer_read(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, uint32_t NumByteToRead);
     void w25qxx_test();
+    void w25qxx_fatfs_test();
 
     __WEAK void hal_w25qxx_spi_reg(NFLASH_t *nFlash);
 

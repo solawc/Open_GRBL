@@ -61,6 +61,10 @@ void grbl_hw_init(void) {
     SYSTEM_LASER();     // hal_pwm_init();
 
     SYSTEM_FLASH();     // w25qxx_init();
+
+    // w25qxx_fatfs_test();
+
+    // while(1);
     
     SYSTEM_SDCARD();    // sd_init()
     
