@@ -247,6 +247,8 @@ void st_wake_up()
       st.step_pulse_time = (settings.fpulse_microseconds);
     #elif defined(STM32G0B0xx)
       st.step_pulse_time = (settings.pulse_microseconds);
+    #else 
+      st.step_pulse_time = (settings.pulse_microseconds);
     #endif
 #endif
 #endif

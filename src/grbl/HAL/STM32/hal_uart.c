@@ -81,6 +81,10 @@ uint8_t hal_uart_read_dr(void) {
 	return laser_uart.Instance->RDR;
 #endif
 
+#ifdef STM32G070xx
+	return laser_uart.Instance->RDR;
+#endif
+
 #ifdef STM32F429xx
 	return laser_uart.Instance->DR;
 #endif

@@ -198,6 +198,8 @@ void report_grbl_settings() {
   report_util_uint8_setting(0,settings.fpulse_microseconds);
 #elif defined(STM32G0B0xx)
   report_util_uint8_setting(0,settings.pulse_microseconds);
+#else 
+  report_util_uint8_setting(0,settings.pulse_microseconds);
 #endif
   report_util_uint8_setting(1,settings.stepper_idle_lock_time);
   report_util_uint8_setting(2,settings.step_invert_mask);
