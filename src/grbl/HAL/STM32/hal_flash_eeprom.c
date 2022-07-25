@@ -137,6 +137,11 @@ void hal_flash_write_buff(uint32_t addr ,uint32_t *buff, uint32_t num) {
                 FlashEraseInit.TypeErase = FLASH_TYPEERASE_PAGES;
                 FlashEraseInit.Page = 383;
                 FlashEraseInit.NbPages = 1;
+#elif defined(STM32G070xx)
+                FlashEraseInit.Banks = FLASH_BANK_1;
+                FlashEraseInit.TypeErase = FLASH_TYPEERASE_PAGES;
+                FlashEraseInit.Page = 63;
+                FlashEraseInit.NbPages = 1;
 #endif
                 if(HAL_FLASHEx_Erase(&FlashEraseInit,&SectorError)!=HAL_OK) 
 				{
@@ -167,6 +172,15 @@ void hal_flash_write_buff(uint32_t addr ,uint32_t *buff, uint32_t num) {
 			buff++;
 
 #elif defined(STM32G0B0xx)
+            status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, addr, *(uint64_t*)buff);
+
+			if(status != HAL_OK)//写入数据
+			{   
+				break;	//写入异常
+			}
+			addr += 8;
+			buff += 2;
+#elif defined(STM32G070xx)
             status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, addr, *(uint64_t*)buff);
 
 			if(status != HAL_OK)//写入数据

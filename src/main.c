@@ -59,5 +59,5 @@ void _delay_ms(uint32_t tick) {
 void _delay_us(uint32_t tick) {
   while(tick--) {
 	  __NOP();
-  }
+}
 }
