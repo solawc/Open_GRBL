@@ -37,7 +37,6 @@ void system_init()
 #endif
 }
 
-
 // Returns control pin state as a uint8 bitfield. Each bit indicates the input pin state, where
 // triggered is 1 and not triggered is 0. Invert mask is applied. Bitfield organization is
 // defined by the CONTROL_PIN_INDEX in the header file.

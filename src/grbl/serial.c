@@ -69,10 +69,8 @@ uint8_t serial_get_tx_buffer_count()
 void serial_init()
 {
   // init befor HAL_Init();
-
   serial_rb_init(&rb_serial_rx);
-  
-  // defaults to 8-bit, no parity, 1 stop bit
+  serial_rb_init(&rb_serial_tx);
 }
 
 // Writes one byte to the TX serial buffer. Called by main program.

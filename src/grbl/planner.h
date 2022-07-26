@@ -28,13 +28,13 @@
   #ifdef USE_LINE_NUMBERS
     #define BLOCK_BUFFER_SIZE 15
   #else
-    #define BLOCK_BUFFER_SIZE 32
+    #define BLOCK_BUFFER_SIZE 64// 32
   #endif
 #endif
 
 // Returned status message from planner.
-#define PLAN_OK true
-#define PLAN_EMPTY_BLOCK false
+#define PLAN_OK                       true
+#define PLAN_EMPTY_BLOCK              false
 
 // Define planner data condition flags. Used to denote running conditions of a block.
 #define PL_COND_FLAG_RAPID_MOTION      bit(0)
@@ -48,7 +48,6 @@
 #define PL_COND_MOTION_MASK    (PL_COND_FLAG_RAPID_MOTION|PL_COND_FLAG_SYSTEM_MOTION|PL_COND_FLAG_NO_FEED_OVERRIDE)
 #define PL_COND_SPINDLE_MASK   (PL_COND_FLAG_SPINDLE_CW|PL_COND_FLAG_SPINDLE_CCW)
 #define PL_COND_ACCESSORY_MASK (PL_COND_FLAG_SPINDLE_CW|PL_COND_FLAG_SPINDLE_CCW|PL_COND_FLAG_COOLANT_FLOOD|PL_COND_FLAG_COOLANT_MIST)
-
 
 // This struct stores a linear movement of a g-code block motion with its critical "nominal" values
 // are as specified in the source g-code.

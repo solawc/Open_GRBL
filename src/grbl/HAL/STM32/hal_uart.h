@@ -27,6 +27,7 @@ typedef struct {
     uint8_t buffer[UART_RB_BUFF_MAX];
 }hal_uart_t;
 extern hal_uart_t rb_serial_rx;
+extern hal_uart_t rb_serial_tx;
 
 void hal_uart_gpio_init(void);
 void hal_uart_init(void);

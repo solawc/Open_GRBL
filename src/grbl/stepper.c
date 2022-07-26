@@ -240,23 +240,14 @@ void st_wake_up()
     OCR0A = -(((settings.pulse_microseconds)*TICKS_PER_MICROSECOND) >> 3);
   #else // Normal operation
     // Set step pulse time. Ad hoc computation from oscilloscope. Uses two's complement.
-#if defined(CPU_MAP_ATMEGA328P)
-    st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
-#elif defined(CPU_STM32)
-    #ifdef STM32F429xx
+    #ifdef USE_MCU_FPU
       st.step_pulse_time = (settings.fpulse_microseconds);
-    #elif defined(STM32G0B0xx)
-      st.step_pulse_time = (settings.pulse_microseconds);
     #else 
       st.step_pulse_time = (settings.pulse_microseconds);
     #endif
 #endif
-#endif
 
   // Enable Stepper Driver Interrupt
-#if defined(CPU_MAP_ATMEGA328P)
-  TIMSK1 |= (1<<OCIE1A);
-#elif defined(CPU_STM32)
   hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
   hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time - 1);
   hal_tim_generateEvent_update(&STEP_RESET_TIMER);
@@ -265,7 +256,6 @@ void st_wake_up()
   hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
   hal_tim_generateEvent_update(&STEP_SET_TIMER);
   hal_set_timer_irq_enable();
-#endif
 }
 
 
@@ -273,12 +263,8 @@ void st_wake_up()
 void st_go_idle()
 {
   // Disable Stepper Driver Interrupt. Allow Stepper Port Reset Interrupt to finish, if active.
-#if defined(CPU_MAP_ATMEGA328P)
-  TIMSK1 &= ~(1<<OCIE1A); // Disable Timer1 interrupt
-  TCCR1B = (TCCR1B & ~((1<<CS12) | (1<<CS11))) | (1<<CS10); // Reset clock to no prescaling.
-#elif defined(CPU_STM32)
   hal_set_timer_irq_disable();
-#endif
+
   busy = false;
   // Set stepper driver idle state, disabled or enabled, depending on settings and circumstances.
   bool pin_state = false; // Keep enabled.
