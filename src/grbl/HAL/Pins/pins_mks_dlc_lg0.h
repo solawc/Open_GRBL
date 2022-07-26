@@ -98,10 +98,10 @@
 /* For timer use */
 #define BOARD_SETP_SET_TIM              TIM6
 #define BOARD_SETP_RESET_TIM            TIM7
-#define BOARD_STEP_SET_TIMER            TIM6_IRQn
-#define BOARD_STEP_RESET_TIMER          TIM7_IRQn
-#define BOARD_SET_TIM_IRQn              STEP_SET_TIM
-#define BOARD_RESET_TIM_IRQn            STEP_RESET_TIM
+#define BOARD_STEP_SET_TIMER            STEP_SET_TIM
+#define BOARD_STEP_RESET_TIMER          STEP_RESET_TIM
+#define BOARD_SET_TIM_IRQn              TIM6_IRQn
+#define BOARD_RESET_TIM_IRQn            TIM7_IRQn
 #define BOARD_SET_TIM_CLK_ENABLED()     __HAL_RCC_TIM6_CLK_ENABLE();
 #define BOARD_RESET_TIM_CLK_ENABLED()   __HAL_RCC_TIM7_CLK_ENABLE();
 #define BOARD_STEP_SET_HANDLER          TIM6_IRQHandler
