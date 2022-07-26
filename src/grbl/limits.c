@@ -76,12 +76,7 @@ void limits_init()
 // Disables hard limits.
 void limits_disable()
 {
-#if defined(CPU_MAP_ATMEGA328P)
-  LIMIT_PCMSK &= ~LIMIT_MASK;  // Disable specific pins of the Pin Change Interrupt
-  PCICR &= ~(1 << LIMIT_INT);  // Disable Pin Change Interrupt
- #elif defined(CPU_STM32)
   hal_limit_gpio_irq_disable();
-#endif
 }
 
 
@@ -91,36 +86,11 @@ void limits_disable()
 uint8_t limits_get_state()
 {
   uint8_t limit_state = 0;
-#if defined(CPU_MAP_ATMEGA328P)
-  uint8_t pin = (LIMIT_PIN & LIMIT_MASK);
-  #ifdef INVERT_LIMIT_PIN_MASK
-    pin ^= INVERT_LIMIT_PIN_MASK;
-  #endif
-  if (bit_isfalse(settings.flags,BITFLAG_INVERT_LIMIT_PINS)) { pin ^= LIMIT_MASK; }
-  if (pin) {
-    uint8_t idx;
-    for (idx=0; idx<N_AXIS; idx++) {
-      if (pin & get_limit_pin_mask(idx)) { limit_state |= (1 << idx); }
-    }
-    #ifdef ENABLE_DUAL_AXIS
-      if (pin & (1<<DUAL_LIMIT_BIT)) { limit_state |= (1 << N_AXIS); }
-    #endif
-  }
-#elif defined(CPU_STM32)
-  // uint8_t idx;
-
-  // uint8_t pin = 0xff;
-
-  // if (bit_isfalse(settings.flags,BITFLAG_INVERT_LIMIT_PINS)) { pin ^= LIMIT_MASK; }
 
   limit_state = hal_get_all_limits_status(bit_isfalse(settings.flags,BITFLAG_INVERT_LIMIT_PINS));
 
   if (bit_isfalse(settings.flags,BITFLAG_INVERT_LIMIT_PINS)) { limit_state ^= LIMIT_MASK; }
 
-  // for (idx=0; idx<N_AXIS; idx++) {
-  //   if (pin & get_limit_pin_mask(idx)) { limit_state |= (1 << idx); }
-  // }
-#endif
   return(limit_state);
 }
 
@@ -160,49 +130,6 @@ void limit_isr_handler_cb(void) {
   }
 }
 
-
-#if defined(CPU_MAP_ATMEGA328P)
-  #ifndef ENABLE_SOFTWARE_DEBOUNCE
-    ISR(LIMIT_INT_vect) // DEFAULT: Limit pin change interrupt process.
-    {
-      // Ignore limit switches if already in an alarm state or in-process of executing an alarm.
-      // When in the alarm state, Grbl should have been reset or will force a reset, so any pending
-      // moves in the planner and serial buffers are all cleared and newly sent blocks will be
-      // locked out until a homing cycle or a kill lock command. Allows the user to disable the hard
-      // limit setting if their limits are constantly triggering after a reset and move their axes.
-      if (sys.state != STATE_ALARM) {
-        if (!(sys_rt_exec_alarm)) {
-          #ifdef HARD_LIMIT_FORCE_STATE_CHECK
-            // Check limit pin state.
-            if (limits_get_state()) {
-              mc_reset(); // Initiate system kill.
-              system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
-            }
-          #else
-            mc_reset(); // Initiate system kill.
-            system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
-          #endif
-        }
-      }
-    }
-  #else // OPTIONAL: Software debounce limit pin routine.
-    // Upon limit pin change, enable watchdog timer to create a short delay. 
-    ISR(LIMIT_INT_vect) { if (!(WDTCSR & (1<<WDIE))) { WDTCSR |= (1<<WDIE); } }
-    ISR(WDT_vect) // Watchdog timer ISR
-    {
-      WDTCSR &= ~(1<<WDIE); // Disable watchdog timer. 
-      if (sys.state != STATE_ALARM) {  // Ignore if already in alarm state. 
-        if (!(sys_rt_exec_alarm)) {
-          // Check limit pin state. 
-          if (limits_get_state()) {
-            mc_reset(); // Initiate system kill.
-            system_set_exec_alarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
-          }
-        }  
-      }
-    }
-#endif
-#elif defined(CPU_STM32)
   void LIMIT_IRQnHANDLE(void) {
  
     if(__HAL_GPIO_EXTI_GET_IT(LIMIT_X_PIN) != RESET) {
@@ -213,24 +140,24 @@ void limit_isr_handler_cb(void) {
       __HAL_GPIO_EXTI_CLEAR_IT(LIMIT_Y_PIN);
     }
 
-#ifdef LIMIT_Z_PIN
+  #ifdef LIMIT_Z_PIN
     if(__HAL_GPIO_EXTI_GET_IT(LIMIT_Z_PIN) != RESET) {
         __HAL_GPIO_EXTI_CLEAR_IT(LIMIT_Z_PIN);
     }
-#endif
+  #endif
     limit_isr_handler_cb();
   }
 
-#if defined(USE_FREERTOS_RTOS)
+  #if defined(USE_FREERTOS_RTOS)
   void limit_check_task(void *parg) {
     while(1) {
       int evt;
       uint8_t pinStatus;
       xQueueReceive(limit_sw_queue, &evt, portMAX_DELAY);
       vTaskDelay(DEBOUNCE_PERIOD / portTICK_PERIOD_MS);
-#ifdef ENABLE_SOFTWARE_DEBOUNCE
+  #ifdef ENABLE_SOFTWARE_DEBOUNCE
       vTaskDelay(DEBOUNCE_PERIOD / portTICK_PERIOD_MS);    // delay a while
-#endif
+  #endif
       pinStatus = limits_get_state();
       if(pinStatus) {
         mc_reset();
@@ -238,8 +165,6 @@ void limit_isr_handler_cb(void) {
       }
     }
   }
-#endif
-
 #endif
 
 
@@ -456,13 +381,8 @@ void limits_go_home(uint8_t cycle_mask)
       } while ((STEP_MASK & axislock) || (sys.homing_axis_lock_dual));
       #else
       } while (
-#if defined(CPU_MAP_ATMEGA328P)
-      STEP_MASK & axislock
-#elif defined(CPU_STM32)
-	// STEP_MASK & axislock
-  axislock & 0x7
-#endif
-	);
+      axislock & 0x7
+	  );
     #endif
 
     st_reset(); // Immediately force kill steppers and reset step segment buffer.

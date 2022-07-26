@@ -28,18 +28,8 @@ uint8_t probe_invert_mask;
 // Probe pin initialization routine.
 void probe_init()
 {
-#if defined(CPU_MAP_ATMEGA328P)
-  PROBE_DDR &= ~(PROBE_MASK); // Configure as input pins
-  #ifdef DISABLE_PROBE_PIN_PULL_UP
-    PROBE_PORT &= ~(PROBE_MASK); // Normal low operation. Requires external pull-down.
-  #else
-    PROBE_PORT |= PROBE_MASK;    // Enable internal pull-up resistors. Normal high operation.
-  #endif
-  probe_configure_invert_mask(false); // Initialize invert mask.
-#elif defined(CPU_STM32)
   hal_probe_gpio_init();
   probe_configure_invert_mask(false);
-#endif
 }
 
 
@@ -48,31 +38,19 @@ void probe_init()
 // and the probing cycle modes for toward-workpiece/away-from-workpiece.
 void probe_configure_invert_mask(uint8_t is_probe_away)
 {
-#if defined(CPU_MAP_ATMEGA328P)
-  probe_invert_mask = 0; // Initialize as zero.
-  if (bit_isfalse(settings.flags,BITFLAG_INVERT_PROBE_PIN)) { probe_invert_mask ^= PROBE_MASK; }
-  if (is_probe_away) { probe_invert_mask ^= PROBE_MASK; }
-#elif defined(CPU_STM32)
   probe_invert_mask = 0; // Initialize as zero.
   // if (bit_isfalse(settings.flags, BITFLAG_INVERT_PROBE_PIN)) { probe_invert_mask ^= PROBE_MASK; }
   // if (is_probe_away) { probe_invert_mask ^= PROBE_MASK; }
   if(bit_isfalse(settings.flags, BITFLAG_INVERT_PROBE_PIN)) {probe_invert_mask = 1;}
   else {probe_invert_mask = 0;}
-    
-#endif
 }
 
 
 // Returns the probe pin state. Triggered = true. Called by gcode parser and probe state monitor.
 uint8_t probe_get_state() { 
-    
-#if defined(CPU_MAP_ATMEGA328P)
-return((PROBE_PIN & PROBE_MASK) ^ probe_invert_mask); 
-#elif defined(CPU_STM32)
-    // return hal_probe_gpio_read();
-    if(probe_invert_mask && hal_probe_gpio_read()) return 0;
-    else { return 1;}
-#endif
+  // return hal_probe_gpio_read();
+  if(probe_invert_mask && hal_probe_gpio_read()) return 0;
+  else { return 1;}
 }
 
 
