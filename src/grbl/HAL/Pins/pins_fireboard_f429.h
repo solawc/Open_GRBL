@@ -3,6 +3,8 @@
 
 #include "pins_def.h"
 
+#define USE_MCU_FPU
+
 /* For Limit */
 #define BOARD_LIMIT_X_PORT              GPIOD
 #define BOARD_LIMIT_X_PIN               GPIO_PIN_4
@@ -82,7 +84,24 @@
 #define BOARD_UART_AF_MODE              GPIO_AF7_USART1
 #define BOARD_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
 
-
+/* For timer use */
+#define BOARD_SETP_SET_TIM              TIM3
+#define BOARD_SETP_RESET_TIM            TIM4
+#define BOARD_STEP_SET_TIMER            STEP_SET_TIM
+#define BOARD_STEP_RESET_TIMER          STEP_RESET_TIM
+#define BOARD_SET_TIM_IRQn              TIM3_IRQn
+#define BOARD_RESET_TIM_IRQn            TIM4_IRQn
+#define BOARD_SET_TIM_CLK_ENABLED()     __HAL_RCC_TIM3_CLK_ENABLE()
+#define BOARD_RESET_TIM_CLK_ENABLED()   __HAL_RCC_TIM4_CLK_ENABLE()
+#define BOARD_STEP_SET_HANDLER          TIM3_IRQHandler
+#define BOARD_STEP_RESET_HANDLER        TIM4_IRQHandler
+#define BOARD_LASER_TIM_PORT            TIM1
+#define BOARD_LASER_TIM_CH              TIM_CHANNEL_2
+#define BOARD_LASER_PIN_AF              GPIO_AF1_TIM1
+#define BOARD_LASER_OUT_PORT            GPIOB
+#define BOARD_LASER_OUT_PIN             GPIO_PIN_6
+#define BOARD_LASER_OUT_CLK()           __HAL_RCC_TIM4_CLK_ENABLE()
+#define BOARD_LASER_OUT_PIN_CLK()       __HAL_RCC_GPIOB_CLK_ENABLE()
 
 
 

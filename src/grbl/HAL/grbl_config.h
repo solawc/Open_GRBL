@@ -59,6 +59,4 @@
     #ifdef USE_LVGL_UI
         #define HAS_LVGL_UI
     #endif
-
-
 #endif 

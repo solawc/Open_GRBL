@@ -20,15 +20,19 @@
 #ifdef STM32F429xx
 #define EEPROM_START_ADDR           ADDR_FLASH_SECTOR_11  // 80D FC00  ADDR_FLASH_SECTOR_11
 #define EEPROM_END_ADDR             ((uint32_t)0x080fffff)
+#define FLASH_WRITE_SECTORS_WORD
 #elif defined(STM32G0B0xx)
 #define EEPROM_START_ADDR           ((uint32_t)0x0807F800)  
 #define EEPROM_END_ADDR             ((uint32_t)0x080407FF)
+#define FLASH_WRITE_PAGE_DOUBLEWORD
 #elif defined(STM32G070xx)
 #define EEPROM_START_ADDR           ((uint32_t)0x0801F800)  
 #define EEPROM_END_ADDR             ((uint32_t)0x0801FFFF)
+#define FLASH_WRITE_PAGE_DOUBLEWORD
 #elif defined(STM32F407xx)
 #define EEPROM_START_ADDR           ADDR_FLASH_SECTOR_7  
 #define EEPROM_END_ADDR             ((uint32_t)0x080407FF)
+#define FLASH_WRITE_SECTORS_WORD
 #endif
 
 //FLASH起始地址

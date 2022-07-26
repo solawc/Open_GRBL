@@ -58,6 +58,7 @@
 #include "error.h"
 
 #include "../main.h"
+#include "HAL/grbl_config.h"
 
 #ifdef STM32F4
   #include "HAL/STM32/bsp_f429ig/cpu_stm32f4_map.h"

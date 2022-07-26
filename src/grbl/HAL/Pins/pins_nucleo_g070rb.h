@@ -82,4 +82,23 @@
 #define BOARD_UART_AF_MODE              GPIO_AF1_USART2
 #define BOARD_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
 
+/* For timer use */
+#define BOARD_SETP_SET_TIM              TIM6
+#define BOARD_SETP_RESET_TIM            TIM7
+#define BOARD_STEP_SET_TIMER            TIM6_IRQn
+#define BOARD_STEP_RESET_TIMER          TIM7_IRQn
+#define BOARD_SET_TIM_IRQn              STEP_SET_TIM
+#define BOARD_RESET_TIM_IRQn            STEP_RESET_TIM
+#define BOARD_SET_TIM_CLK_ENABLED()     __HAL_RCC_TIM6_CLK_ENABLE();
+#define BOARD_RESET_TIM_CLK_ENABLED()   __HAL_RCC_TIM7_CLK_ENABLE();
+#define BOARD_STEP_SET_HANDLER          TIM6_IRQHandler
+#define BOARD_STEP_RESET_HANDLER        TIM7_IRQHandler
+#define BOARD_LASER_TIM_PORT            TIM1
+#define BOARD_LASER_TIM_CH              TIM_CHANNEL_2
+#define BOARD_LASER_PIN_AF              GPIO_AF1_TIM1
+#define BOARD_LASER_OUT_PORT            GPIOB
+#define BOARD_LASER_OUT_PIN             GPIO_PIN_6
+#define BOARD_LASER_OUT_CLK()           __HAL_RCC_TIM1_CLK_ENABLE()
+#define BOARD_LASER_OUT_PIN_CLK()       __HAL_RCC_GPIOB_CLK_ENABLE()
+
 #endif

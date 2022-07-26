@@ -9,79 +9,23 @@ typedef TIM_HandleTypeDef timer_def;
 #define STEP_RESET_TIM      hal_step_tim.step_reset
 #define LASER_TIM           hal_step_tim.laser
 
-#ifdef STM32F429xx
-#define SETP_SET_TIM                TIM3
-#define SETP_RESET_TIM              TIM4
-#define STEP_SET_TIMER              STEP_SET_TIM
-#define STEP_RESET_TIMER            STEP_RESET_TIM
-#define SET_TIM_IRQn                TIM3_IRQn
-#define RESET_TIM_IRQn              TIM4_IRQn
-#define SET_TIM_CLK_ENABLED()       __HAL_RCC_TIM3_CLK_ENABLE()
-#define RESET_TIM_CLK_ENABLED()     __HAL_RCC_TIM4_CLK_ENABLE()
-#define STEP_SET_HANDLER            TIM3_IRQHandler
-#define STEP_RESET_HANDLER          TIM4_IRQHandler
-#define LASER_TIM_PORT              TIM1
-#define LASER_TIM_CH                TIM_CHANNEL_2
-#define LASER_PIN_AF                GPIO_AF1_TIM1
-#define LASER_OUT_PORT              GPIOB
-#define LASER_OUT_PIN               GPIO_PIN_6
-#define LASER_OUT_CLK()             __HAL_RCC_TIM4_CLK_ENABLE()
-#define LASER_OUT_PIN_CLK()         __HAL_RCC_GPIOB_CLK_ENABLE()
-#elif defined(STM32G0B0xx)
-#define SETP_SET_TIM                TIM6
-#define SETP_RESET_TIM              TIM7
-#define SET_TIM_IRQn                TIM6_IRQn
-#define RESET_TIM_IRQn              TIM7_IRQn
-#define STEP_SET_TIMER              STEP_SET_TIM
-#define STEP_RESET_TIMER            STEP_RESET_TIM
-#define SET_TIM_CLK_ENABLED()       __HAL_RCC_TIM6_CLK_ENABLE();
-#define RESET_TIM_CLK_ENABLED()     __HAL_RCC_TIM7_CLK_ENABLE();
-#define STEP_SET_HANDLER            TIM6_IRQHandler
-#define STEP_RESET_HANDLER          TIM7_IRQHandler
-#define LASER_TIM_PORT              TIM4
-#define LASER_TIM_CH                TIM_CHANNEL_1
-#define LASER_PIN_AF                GPIO_AF9_TIM4
-#define LASER_OUT_PORT              GPIOB
-#define LASER_OUT_PIN               GPIO_PIN_6
-#define LASER_OUT_CLK()             __HAL_RCC_TIM4_CLK_ENABLE()
-#define LASER_OUT_PIN_CLK()         __HAL_RCC_GPIOB_CLK_ENABLE()
-#elif defined(STM32G070xx)
-#define SETP_SET_TIM                TIM6
-#define SETP_RESET_TIM              TIM7
-#define SET_TIM_IRQn                TIM6_IRQn
-#define RESET_TIM_IRQn              TIM7_IRQn
-#define STEP_SET_TIMER              STEP_SET_TIM
-#define STEP_RESET_TIMER            STEP_RESET_TIM
-#define SET_TIM_CLK_ENABLED()       __HAL_RCC_TIM6_CLK_ENABLE();
-#define RESET_TIM_CLK_ENABLED()     __HAL_RCC_TIM7_CLK_ENABLE();
-#define STEP_SET_HANDLER            TIM6_IRQHandler
-#define STEP_RESET_HANDLER          TIM7_IRQHandler
-#define LASER_TIM_PORT              TIM1
-#define LASER_TIM_CH                TIM_CHANNEL_2
-#define LASER_PIN_AF                GPIO_AF1_TIM1
-#define LASER_OUT_PORT              GPIOB
-#define LASER_OUT_PIN               GPIO_PIN_6
-#define LASER_OUT_CLK()             __HAL_RCC_TIM1_CLK_ENABLE()
-#define LASER_OUT_PIN_CLK()         __HAL_RCC_GPIOB_CLK_ENABLE()
-#elif defined(STM32F407xx)
-#define SETP_SET_TIM                TIM3
-#define SETP_RESET_TIM              TIM4
-#define SET_TIM_IRQn                TIM3_IRQn
-#define RESET_TIM_IRQn              TIM4_IRQn
-#define STEP_SET_TIMER              STEP_SET_TIM
-#define STEP_RESET_TIMER            STEP_RESET_TIM
-#define SET_TIM_CLK_ENABLED()       __HAL_RCC_TIM3_CLK_ENABLE();
-#define RESET_TIM_CLK_ENABLED()     __HAL_RCC_TIM4_CLK_ENABLE();
-#define STEP_SET_HANDLER            TIM3_IRQHandler
-#define STEP_RESET_HANDLER          TIM4_IRQHandler
-#define LASER_TIM_PORT              TIM1
-#define LASER_TIM_CH                TIM_CHANNEL_2
-#define LASER_PIN_AF                GPIO_AF1_TIM1
-#define LASER_OUT_PORT              GPIOB
-#define LASER_OUT_PIN               GPIO_PIN_6
-#define LASER_OUT_CLK()             __HAL_RCC_TIM4_CLK_ENABLE()
-#define LASER_OUT_PIN_CLK()         __HAL_RCC_GPIOB_CLK_ENABLE()
-#endif
+#define SETP_SET_TIM                BOARD_SETP_SET_TIM            
+#define SETP_RESET_TIM              BOARD_SETP_RESET_TIM          
+#define STEP_SET_TIMER              BOARD_STEP_SET_TIMER          
+#define STEP_RESET_TIMER            BOARD_STEP_RESET_TIMER        
+#define SET_TIM_IRQn                BOARD_SET_TIM_IRQn            
+#define RESET_TIM_IRQn              BOARD_RESET_TIM_IRQn          
+#define SET_TIM_CLK_ENABLED()       BOARD_SET_TIM_CLK_ENABLED()   
+#define RESET_TIM_CLK_ENABLED()     BOARD_RESET_TIM_CLK_ENABLED() 
+#define STEP_SET_HANDLER            BOARD_STEP_SET_HANDLER        
+#define STEP_RESET_HANDLER          BOARD_STEP_RESET_HANDLER      
+#define LASER_TIM_PORT              BOARD_LASER_TIM_PORT          
+#define LASER_TIM_CH                BOARD_LASER_TIM_CH            
+#define LASER_PIN_AF                BOARD_LASER_PIN_AF            
+#define LASER_OUT_PORT              BOARD_LASER_OUT_PORT          
+#define LASER_OUT_PIN               BOARD_LASER_OUT_PIN           
+#define LASER_OUT_CLK()             BOARD_LASER_OUT_CLK()         
+#define LASER_OUT_PIN_CLK()         BOARD_LASER_OUT_PIN_CLK()     
 
 typedef struct  
 {
