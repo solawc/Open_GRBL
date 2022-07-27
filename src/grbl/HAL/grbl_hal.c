@@ -55,13 +55,15 @@ void grblHwInit(void) {
 
     SYSTEM_INTI();
 
-    SYSTEM_UART();      // hal_uart_init();
+    SYSTEM_UART();      
 
-    SYSTEM_LASER();     // hal_pwm_init();
+    SYSTEM_LASER();     
 
-    SYSTEM_FLASH();     // w25qxx_init();
+    SYSTEM_FLASH();     
     
-    SYSTEM_SDCARD();    // sd_init()
+    SYSTEM_SDCARD();    
     
-    SYSTEM_LCD();       // dev_lcd_init();
+    SYSTEM_LCD();       
+
+    SYSTEM_WDG();
 }

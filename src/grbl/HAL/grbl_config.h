@@ -59,4 +59,11 @@
     #ifdef USE_LVGL_UI
         #define HAS_LVGL_UI
     #endif
+
+
+    // #define USE_WDG
+    #ifdef USE_WDG
+        #define HAS_WDG
+    #endif
+
 #endif 

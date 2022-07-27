@@ -71,6 +71,7 @@
 #include "grbl/HAL/STM32/hal_tim.h"
 #include "grbl/HAL/STM32/hal_flash_eeprom.h"
 #include "grbl/HAL/STM32/hal_spi.h"
+#include "grbl/HAL/STM32/hal_wdg.h"
 
 #include "grbl/HAL/Peripheral/hal_sdcard.h"
 #include "grbl/HAL/Peripheral/hal_w25qxx.h"
@@ -90,6 +91,12 @@
 
 #define SYSTEM_UART()       hal_uart_init()
 #define SYSTEM_LASER()      hal_pwm_init()
+
+#ifdef HAS_WDG
+#define SYSTEM_WDG()        hal_wdg_init()
+#else 
+#define SYSTEM_WDG()
+#endif
 
 #ifdef HAS_W25Qxx 
 #define SYSTEM_FLASH()      w25qxx_spi_regiest(); \
