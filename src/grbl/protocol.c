@@ -170,6 +170,7 @@ void protocol_main_loop()
 
       if(protocol_rt_command(c) || protocol_rt_command_run(c)) {
         protocol_execute_realtime(); 
+        if (sys.abort) { return; } 
         break;
       }
 
@@ -179,9 +180,9 @@ void protocol_main_loop()
         case OK:  break;
         
         case EOL: 
-          protocol_execute_realtime();                            // Runtime command check point.
+          // protocol_execute_realtime();                            // Runtime command check point.
 
-          if (sys.abort) { return; }                              // Bail to calling function upon system abort
+          // if (sys.abort) { return; }                              // Bail to calling function upon system abort
           
           get_line = client_lines[CLIENT_SERIAL].buffer;
 
