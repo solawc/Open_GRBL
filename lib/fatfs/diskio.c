@@ -12,10 +12,10 @@
 #include "../../src/ex_dev/sd/sdcard.h"
 
 /* Definitions of physical drive number for each drive */
-// #define DEV_RAM		0	/* Example: Map Ramdisk to physical drive 0 */
-#define DEV_MMC		1	/* Example: Map MMC/SD card to physical drive 1 */
-// #define DEV_USB		2	/* Example: Map USB MSD to physical drive 2 */
-#define DEV_FLASH		0	/* for SPI Flash driver 0 */
+#define DEV_FLASH		0	/* for SPI Flash driver 0 	*/
+#define DEV_MMC			1	/* for SD Card driver 1 	*/
+// #define DEV_USB		2	/* for USB driver  2 		*/
+
 
 #define SD_BLOCKSIZE			512
 #define FLASH_SECTOR_SIZE 		512
@@ -250,7 +250,7 @@ DRESULT disk_ioctl (
 				break;
 
 				case GET_SECTOR_COUNT:
-					*(DWORD*)buff = FLASH_SECTOR_COUNT; // SD_GetSectorCount();
+					*(DWORD*)buff = FLASH_SECTOR_COUNT;
 					res = RES_OK;
 				break;
 			}

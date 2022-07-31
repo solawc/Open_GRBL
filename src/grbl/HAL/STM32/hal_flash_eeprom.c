@@ -70,29 +70,30 @@ uint32_t hal_falsh_eeprom_read(uint32_t addr) {
 
 uint8_t hal_get_flash_sector(uint32_t addr) {
 #ifdef STM32F429xx
-    if(addr<ADDR_FLASH_SECTOR_1)return FLASH_SECTOR_0;
-    else if(addr<ADDR_FLASH_SECTOR_2)return FLASH_SECTOR_1;
-    else if(addr<ADDR_FLASH_SECTOR_3)return FLASH_SECTOR_2;
-    else if(addr<ADDR_FLASH_SECTOR_4)return FLASH_SECTOR_3;
-    else if(addr<ADDR_FLASH_SECTOR_5)return FLASH_SECTOR_4;
-    else if(addr<ADDR_FLASH_SECTOR_6)return FLASH_SECTOR_5;
-    else if(addr<ADDR_FLASH_SECTOR_7)return FLASH_SECTOR_6;
-    else if(addr<ADDR_FLASH_SECTOR_8)return FLASH_SECTOR_7;
-    else if(addr<ADDR_FLASH_SECTOR_9)return FLASH_SECTOR_8;
-    else if(addr<ADDR_FLASH_SECTOR_10)return FLASH_SECTOR_9;
-    else if(addr<ADDR_FLASH_SECTOR_11)return FLASH_SECTOR_10;
-    else if(addr<ADDR_FLASH_SECTOR_12)return FLASH_SECTOR_11;
-    else if(addr<ADDR_FLASH_SECTOR_13)return FLASH_SECTOR_12;
-    else if(addr<ADDR_FLASH_SECTOR_14)return FLASH_SECTOR_13;
-    else if(addr<ADDR_FLASH_SECTOR_15)return FLASH_SECTOR_14;
-    else if(addr<ADDR_FLASH_SECTOR_16)return FLASH_SECTOR_15;
-    else if(addr<ADDR_FLASH_SECTOR_17)return FLASH_SECTOR_16;
-    else if(addr<ADDR_FLASH_SECTOR_18)return FLASH_SECTOR_17;
-    else if(addr<ADDR_FLASH_SECTOR_19)return FLASH_SECTOR_18;
-    else if(addr<ADDR_FLASH_SECTOR_20)return FLASH_SECTOR_19;
-    else if(addr<ADDR_FLASH_SECTOR_21)return FLASH_SECTOR_20;
-    else if(addr<ADDR_FLASH_SECTOR_22)return FLASH_SECTOR_21;
-    else if(addr<ADDR_FLASH_SECTOR_23)return FLASH_SECTOR_22;
+    if(addr<ADDR_FLASH_SECTOR_0)return FLASH_SECTOR_0;
+    else if(addr<ADDR_FLASH_SECTOR_1)return FLASH_SECTOR_1;
+    else if(addr<ADDR_FLASH_SECTOR_2)return FLASH_SECTOR_2;
+    else if(addr<ADDR_FLASH_SECTOR_3)return FLASH_SECTOR_3;
+    else if(addr<ADDR_FLASH_SECTOR_4)return FLASH_SECTOR_4;
+    else if(addr<ADDR_FLASH_SECTOR_5)return FLASH_SECTOR_5;
+    else if(addr<ADDR_FLASH_SECTOR_6)return FLASH_SECTOR_6;
+    else if(addr<ADDR_FLASH_SECTOR_7)return FLASH_SECTOR_7;
+    else if(addr<ADDR_FLASH_SECTOR_8)return FLASH_SECTOR_8;
+    else if(addr<ADDR_FLASH_SECTOR_9)return FLASH_SECTOR_9;
+    else if(addr<ADDR_FLASH_SECTOR_10)return FLASH_SECTOR_10;
+    else if(addr<ADDR_FLASH_SECTOR_11)return FLASH_SECTOR_11;
+    else if(addr<ADDR_FLASH_SECTOR_12)return FLASH_SECTOR_12;
+    else if(addr<ADDR_FLASH_SECTOR_13)return FLASH_SECTOR_13;
+    else if(addr<ADDR_FLASH_SECTOR_14)return FLASH_SECTOR_14;
+    else if(addr<ADDR_FLASH_SECTOR_15)return FLASH_SECTOR_15;
+    else if(addr<ADDR_FLASH_SECTOR_16)return FLASH_SECTOR_16;
+    else if(addr<ADDR_FLASH_SECTOR_17)return FLASH_SECTOR_17;
+    else if(addr<ADDR_FLASH_SECTOR_18)return FLASH_SECTOR_18;
+    else if(addr<ADDR_FLASH_SECTOR_19)return FLASH_SECTOR_19;
+    else if(addr<ADDR_FLASH_SECTOR_20)return FLASH_SECTOR_20;
+    else if(addr<ADDR_FLASH_SECTOR_21)return FLASH_SECTOR_21;
+    else if(addr<ADDR_FLASH_SECTOR_22)return FLASH_SECTOR_22;
+    else if(addr<ADDR_FLASH_SECTOR_23)return FLASH_SECTOR_23;
     return FLASH_SECTOR_23;
 #else 
     return 0;
