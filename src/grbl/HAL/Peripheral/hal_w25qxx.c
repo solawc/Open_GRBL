@@ -378,6 +378,7 @@ void w25qxx_test() {
 
 
 #ifdef USE_FATFS
+FIL             wfil;
 FATFS           wfs;
 
 bool w25qxx_fs_init(void) {
@@ -419,8 +420,8 @@ void get_w25qxx_fafts_info(void) {
   {
       tot_size = (pfs->n_fatent - 2) * pfs->csize/2; // 总容量    单位Kbyte
       fre_size = fre_clust * pfs->csize/2;           // 可用容量  单位Kbyte
-      printf("w25qxx total size:%ldMB\n", tot_size);
-      printf("w25qxx free size:%ldMB\n", fre_size);
+      printf("w25qxx total size:%.2fMB\n", (float)tot_size/(float)1024);
+      printf("w25qxx free size:%.2fMB\n", (float)fre_size/(float)1024);
   }
   else{
     printf("NorFlash Error\n");
@@ -430,20 +431,20 @@ void get_w25qxx_fafts_info(void) {
 
 void w25qxx_fatfs_test() {
 
-  FRESULT fr = FR_OK;
-  UINT br, bw;
+  // FRESULT fr = FR_OK;
+  UINT br = 0, bw = 0;
 
-  UINT btr, br1;
+  UINT btr = 0, br1 = 0;
 
   char test_buff[128];
 
-  fr = f_open(&wfs, W25QXX_FS_PATH, 1);
+  f_open(&wfil, W25QXX_FS_PATH, 1);
 
   printf("wait write file...\n");
-  f_write(&wfs, "nihao", br, &bw);
+  f_write(&wfil, "nihao", br, &bw);
 
   printf("wait read file...\n");
-  f_read(&wfs, test_buff, btr, &br1); 
+  f_read(&wfil, test_buff, btr, &br1); 
   printf("readfile:%s\n", test_buff);
 }
 

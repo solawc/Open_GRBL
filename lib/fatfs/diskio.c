@@ -18,9 +18,9 @@
 
 
 #define SD_BLOCKSIZE			512
-#define FLASH_SECTOR_SIZE 		512
+#define FLASH_SECTOR_SIZE 		4096
 
-uint16_t FLASH_SECTOR_COUNT = 	9832;
+uint32_t FLASH_SECTOR_COUNT = 	9832;
 #define FALSH_BLOCK_SIZE		8
 
 /*-----------------------------------------------------------------------*/
@@ -87,8 +87,8 @@ DSTATUS disk_initialize (
 				stat = RES_ERROR;
 			}
 
-		// 设置Flash容量
-			FLASH_SECTOR_COUNT = 2048*8;
+			// 设置Flash容量
+			FLASH_SECTOR_COUNT = 2048*32;
 
 			return stat;
 #endif

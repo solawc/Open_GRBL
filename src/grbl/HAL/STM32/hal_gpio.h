@@ -11,8 +11,12 @@
 #define LIMIT_X_PIN                 BOARD_LIMIT_X_PIN  // GPIO_PIN_0
 #define LIMIT_Y_PORT                BOARD_LIMIT_Y_PORT // GPIOB
 #define LIMIT_Y_PIN                 BOARD_LIMIT_Y_PIN  // GPIO_PIN_1
-// #define LIMIT_Z_PORT                BOARD_LIMIT_Z_PORT
-// #define LIMIT_Z_PIN                 BOARD_LIMIT_Z_PIN
+#ifdef BOARD_LIMIT_Z_PORT
+#define LIMIT_Z_PORT                BOARD_LIMIT_Z_PORT
+#endif // BOARD_LIMIT_Z_PORT
+#ifdef BOARD_LIMIT_Z_PIN
+#define LIMIT_Z_PIN                 BOARD_LIMIT_Z_PIN
+#endif // BOARD_LIMIT_Z_PIN
 
 #define LIMIT_IRQnHANDLE            BOARD_LIMIT_IRQnHANDLER
 #define LIMIT_IRQn                  BOARD_LIMIT_IRQ
@@ -25,23 +29,35 @@
 #define STEP_X_EN_PIN               BOARD_X_EN_PIN   
 #define STEP_Y_EN_PORT              BOARD_Y_EN_PORT      
 #define STEP_Y_EN_PIN               BOARD_Y_EN_PIN   
-// #define STEP_Z_EN_PORT              BOARD_Z_EN_PORT      
-// #define STEP_Z_EN_PIN               BOARD_Z_EN_PIN   
+#ifdef BOARD_Z_EN_PORT
+#define STEP_Z_EN_PORT              BOARD_Z_EN_PORT    
+#endif  // BOARD_Z_EN_PORT
+#ifdef BOARD_Z_EN_PIN
+#define STEP_Z_EN_PIN               BOARD_Z_EN_PIN  
+#endif  // BOARD_Z_EN_PIN
 #endif
 
 #define MOTOR_X_DIR_PORT            BOARD_X_DIR_PORT
 #define MOTOR_X_DIR_PIN             BOARD_X_DIR_PIN 
 #define MOTOR_Y_DIR_PORT            BOARD_Y_DIR_PORT
 #define MOTOR_Y_DIR_PIN             BOARD_Y_DIR_PIN 
-// #define MOTOR_Z_DIR_PORT            BOARD_Z_DIR_PORT
-// #define MOTOR_Z_DIR_PIN             BOARD_Z_DIR_PIN
+#ifdef BOARD_Z_DIR_PORT
+#define MOTOR_Z_DIR_PORT            BOARD_Z_DIR_PORT
+#endif 
+#ifdef BOARD_Z_DIR_PIN
+#define MOTOR_Z_DIR_PIN             BOARD_Z_DIR_PIN
+#endif
 
 #define MOTOR_X_AXIS_PORT           BOARD_X_STEP_PORT 
 #define MOTOR_X_AXIS_PIN            BOARD_X_STEP_PIN  
 #define MOTOR_Y_AXIS_PORT           BOARD_Y_STEP_PORT 
 #define MOTOR_Y_AXIS_PIN            BOARD_Y_STEP_PIN  
-// #define MOTOR_Z_AXIS_PORT            BOARD_Z_STEP_PORT 
-// #define MOTOR_Z_AXIS_PIN             BOARD_Z_STEP_PIN  
+#ifdef BOARD_Z_STEP_PORT
+#define MOTOR_Z_AXIS_PORT            BOARD_Z_STEP_PORT 
+#endif 
+#ifdef BOARD_Z_STEP_PIN
+#define MOTOR_Z_AXIS_PIN             BOARD_Z_STEP_PIN  
+#endif 
 
 #define PROBE_PORT                  GPIOB
 #define PROBE_PIN                   GPIO_PIN_11
