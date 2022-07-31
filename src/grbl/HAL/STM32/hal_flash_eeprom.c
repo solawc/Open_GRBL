@@ -7,7 +7,6 @@ FLASH_EraseInitTypeDef eeprom_flash;
 
 
 #ifdef USE_EEPROM_IC
-
 void hal_eeprom_i2c_init(void) {
     hal_i2c1_init();
 }
@@ -93,7 +92,7 @@ uint8_t hal_get_flash_sector(uint32_t addr) {
     else if(addr<ADDR_FLASH_SECTOR_20)return FLASH_SECTOR_20;
     else if(addr<ADDR_FLASH_SECTOR_21)return FLASH_SECTOR_21;
     else if(addr<ADDR_FLASH_SECTOR_22)return FLASH_SECTOR_22;
-    else if(addr<ADDR_FLASH_SECTOR_23)return FLASH_SECTOR_23;
+    else if(addr<ADDR_FLASH_SECTOR_23)return FLASH_SECTOR_23; 
     return FLASH_SECTOR_23;
 #else 
     return 0;
