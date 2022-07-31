@@ -5,8 +5,6 @@
 
 extern SPI_HandleTypeDef w25qxx_spi;
 
-
-
 void spi_for_w25qxx_init(void);
 
 uint8_t w25qxx_spi_read_write(uint8_t data);

@@ -5,9 +5,9 @@
 
 typedef TIM_HandleTypeDef timer_def;
 
-#define STEP_SET_TIM        hal_step_tim.step_set
-#define STEP_RESET_TIM      hal_step_tim.step_reset
-#define LASER_TIM           hal_step_tim.laser
+#define STEP_SET_TIM                hal_step_tim.step_set
+#define STEP_RESET_TIM              hal_step_tim.step_reset
+#define LASER_TIM                   hal_step_tim.laser
 
 #define SETP_SET_TIM                BOARD_SETP_SET_TIM            
 #define SETP_RESET_TIM              BOARD_SETP_RESET_TIM          

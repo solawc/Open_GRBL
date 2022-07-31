@@ -40,12 +40,11 @@
         #endif
     #endif
 
-    // #define W25QXX_FLASH_SUPPORT
+    #define W25QXX_FLASH_SUPPORT
     #ifdef W25QXX_FLASH_SUPPORT
         #define HAS_W25Qxx
     #endif
-
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
     // #define SDSUPPORT
     #ifdef SDSUPPORT
         #define HAS_SDCARD

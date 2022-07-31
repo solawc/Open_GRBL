@@ -63,6 +63,7 @@
 #define W25QXX_SPI_CS_PIN               GPIO_PIN_6
 #define W25QXX_PIN_AF                   GPIO_AF5_SPI5
 #define W25QXX_SPEED                    SPI_BAUDRATEPRESCALER_4
+#define W25QXX_SPI_CLK_ENABLE()         __HAL_RCC_SPI5_CLK_ENABLE()
 
 /* For SDCard */
 #define SD_USE_SDIO

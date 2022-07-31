@@ -52,11 +52,11 @@ void w25qxx_init(NFLASH_t *nFlash)
   sFlash.addr_size = 16;
 
   switch(get_id_size) {
-    case sFLASH_ID_X16: sFlash.flash_size   = (16  / 8) *1024; break;
-    case sFLASH_ID_16:  sFlash.flash_size    = (16  / 8) *1024; break;
-    case sFLASH_ID_64:  sFlash.flash_size    = (64  / 8) *1024; break;
-    case sFLASH_ID_128: sFlash.flash_size   = (128 / 8) *1024; 
-                        sFlash.addr_size = 24;
+    case sFLASH_ID_X16: sFlash.flash_size = (16  / 8) *1024; break;
+    case sFLASH_ID_16:  sFlash.flash_size = (16  / 8) *1024; break;
+    case sFLASH_ID_64:  sFlash.flash_size = (64  / 8) *1024; break;
+    case sFLASH_ID_128: sFlash.flash_size = (128 / 8) *1024; 
+                        sFlash.addr_size  = 24;
                         break;
     case sFLASH_ID_256: sFlash.flash_size   = (258 / 8) *1024; 
                         sFlash.addr_size = 24;

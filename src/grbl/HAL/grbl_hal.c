@@ -49,9 +49,7 @@ void grblHwInfoGet(void) {
     grbl_hw_get.step_tim_clk    = HAL_RCC_GetHCLKFreq();
 }
 
-void grblHwInit(void) {
-
-    HAL_Init();
+void systemInit() {
 
     SYSTEM_INTI();
 
@@ -66,4 +64,11 @@ void grblHwInit(void) {
     SYSTEM_LCD();       
 
     SYSTEM_WDG();
+}
+
+void grblHwInit(void) {
+
+    HAL_Init();
+
+    systemInit();
 }
