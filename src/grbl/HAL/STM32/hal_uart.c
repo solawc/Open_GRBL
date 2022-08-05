@@ -135,6 +135,7 @@ void LASER_UART_IRQHANDLER() {
 #endif
 
 	if(LASER_UART_RX_FLAG) {
+		taskENTER_CRITICAL();
 		data = hal_uart_read_dr();
 		laser_uart_rx_handler(data);
 	}
