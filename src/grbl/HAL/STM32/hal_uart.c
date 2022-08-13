@@ -170,13 +170,7 @@ static void uart_dma_settings() {
 
 void DMA1_Channel1_IRQHandler(void)
 {
-  /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
-
-  /* USER CODE END DMA1_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hal_uart_dma.hdma_rx);
-  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
-
-  /* USER CODE END DMA1_Channel1_IRQn 1 */
 }
 
 
@@ -199,10 +193,10 @@ void LASER_UART_IRQHANDLER() {
 
 	if((temp1 != RESET)&&(temp2 != RESET))
 	{
-		__HAL_UART_CLEAR_IDLEFLAG(&laser_uart);										//清除中断标志位
-		__HAL_DMA_DISABLE(&hal_uart_dma.hdma_rx);									//失能DMA_UART3_RX	
+		__HAL_UART_CLEAR_IDLEFLAG(&laser_uart);													//清除中断标志位
+		__HAL_DMA_DISABLE(&hal_uart_dma.hdma_rx);												//失能DMA_UART3_RX	
 		hal_uart_dma.dma_count = (UART_DMA_MAX_BUFF) - hal_uart_dma.hdma_rx.Instance->CNDTR;	//获取DMA搬运的数据
-		hal_uart_dma.hdma_rx.Instance->CNDTR = UART_DMA_MAX_BUFF;					//设置DMA_UART3_RX接收大小为DATA_MAX，即重新等待接收。
+		hal_uart_dma.hdma_rx.Instance->CNDTR = UART_DMA_MAX_BUFF;								//设置DMA_UART3_RX接收大小为DATA_MAX，即重新等待接收。
 		
 		/*  
 			这里需要处理接收的数据
@@ -213,7 +207,7 @@ void LASER_UART_IRQHANDLER() {
 			serial_rb_write(&rb_serial_rx, hal_uart_dma.dma_i_buff[i]);
 		}
 
-		__HAL_DMA_ENABLE(&hal_uart_dma.hdma_rx);							//使能DMA_UART_RX
+		__HAL_DMA_ENABLE(&hal_uart_dma.hdma_rx);							// 使能DMA_UART_RX
 	}
 
 	HAL_UART_IRQHandler(&laser_uart);
@@ -222,7 +216,6 @@ void LASER_UART_IRQHANDLER() {
 	taskEXIT_CRITICAL_FROM_ISR( ulReturn );
 #endif
 }
-
 
 /************************************************************
  * 			For LCD TFT UART
