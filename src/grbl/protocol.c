@@ -78,6 +78,13 @@ ERROR_LIST_t execute_line(char* line) {
     if (line[0] == 0) {
         return OK;
     }
+    
+    /**
+     * I don't think the gcode only S0 is right, so I delete it.
+     */
+    if (line[0] == 'S') {
+      if(line[0] == '0') return OK;
+    }
 
     // Grbl '$' or WebUI '[LG0xxx]' system command
     // if (line[0] == '$' || line[0] == '[') {
@@ -187,7 +194,6 @@ void protocol_main_loop()
 #ifdef REPORT_ECHO_RAW_LINE_RECEIVED
                         report_echo_line_received(line, client);
 #endif  
-
         report_status_message(execute_line(get_line));
 
         empty_line(CLIENT_SERIAL);
