@@ -246,7 +246,7 @@ uint8_t settings_store_global_setting(uint8_t parameter, float value) {
     }
   } else {
     // Store non-axis Grbl settings
-    uint8_t int_value = trunc(value);
+    uint8_t int_value = (uint8_t)truncf(value);
     switch(parameter) {
       case 0:
         if (int_value < 3) { return(STATUS_SETTING_STEP_PULSE_MIN); }

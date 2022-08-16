@@ -1,14 +1,10 @@
 #include "hal_uart.h"
 
-
 hal_uart_t rb_serial_rx;
 hal_uart_t rb_serial_tx;
 
 UART_HandleTypeDef laser_uart;
 UART_HandleTypeDef tft_uart;
-
-DMA_HandleTypeDef dma_tx;
-DMA_HandleTypeDef dma_rx;
 
 uint8_t laser_dma_rx_buf[5];
 

@@ -119,8 +119,8 @@ void collapseGCode(char* line) {
 uint8_t gc_execute_line(char *line)
 {
   /* -------------------------------------------------------------------------------------
-    STEP 0: Remvoe space and make a-z to A-Z
-  */
+    STEP 0: Remvoe space and make a-z to A-Z. */
+  
   collapseGCode(line);
 
   /* -------------------------------------------------------------------------------------
@@ -167,8 +167,11 @@ uint8_t gc_execute_line(char *line)
   uint8_t char_counter;
   char letter;
   float value;
-  uint8_t int_value = 0;
-  uint16_t mantissa = 0;
+  // uint8_t int_value = 0;
+  uint32_t int_value = 0;
+  // uint16_t mantissa = 0;
+  uint_fast16_t mantissa = 0;
+  
   if (gc_parser_flags & GC_PARSER_JOG_MOTION) { char_counter = 3; } // Start parsing after `$J=`
   else { char_counter = 0; }
 
@@ -187,8 +190,8 @@ uint8_t gc_execute_line(char *line)
     // a good enough comprimise and catch most all non-integer errors. To make it compliant,
     // we would simply need to change the mantissa to int16, but this add compiled flash space.
     // Maybe update this later.
-    int_value = trunc(value);
-    mantissa =  round(100*(value - int_value)); // Compute mantissa for Gxx.x commands.
+    int_value = (uint32_t)truncf(value);
+    mantissa =  (uint_fast16_t)roundf(100 * (value - int_value)); // Compute mantissa for Gxx.x commands.
     // NOTE: Rounding must be used to catch small floating point errors.
 
     // Check if the g-code word is supported or errors due to modal group violations or has
@@ -258,7 +261,7 @@ uint8_t gc_execute_line(char *line)
             word_bit = MODAL_GROUP_G6;
             gc_block.modal.units = 21 - int_value;
             break;
-          case 40:
+          case 40: 
             word_bit = MODAL_GROUP_G7;
             // NOTE: Not required since cutter radius compensation is always disabled. Only here
             // to support G40 commands that often appear in g-code program headers to setup defaults.
@@ -364,7 +367,7 @@ uint8_t gc_execute_line(char *line)
           case 'J': word_bit = WORD_J; gc_block.values.ijk[Y_AXIS] = value; ijk_words |= (1<<Y_AXIS); break;
           case 'K': word_bit = WORD_K; gc_block.values.ijk[Z_AXIS] = value; ijk_words |= (1<<Z_AXIS); break;
           case 'L': word_bit = WORD_L; gc_block.values.l = int_value; break;
-          case 'N': word_bit = WORD_N; gc_block.values.n = trunc(value); break;
+          case 'N': word_bit = WORD_N; gc_block.values.n = (int32_t)truncf(value); break; // trunc(value); break;
           case 'P': word_bit = WORD_P; gc_block.values.p = value; break;
           // NOTE: For certain commands, P value must be an integer, but none of these commands are supported.
           // case 'Q': // Not supported
@@ -584,7 +587,7 @@ uint8_t gc_execute_line(char *line)
       // [G10 L20 Errors]: P must be 0 to nCoordSys(max 9). Axis words missing.
       if (!axis_words) { FAIL(STATUS_GCODE_NO_AXIS_WORDS) }; // [No axis words]
       if (bit_isfalse(value_words,((1<<WORD_P)|(1<<WORD_L)))) { FAIL(STATUS_GCODE_VALUE_WORD_MISSING); } // [P/L word missing]
-      coord_select = trunc(gc_block.values.p); // Convert p value to int.
+      coord_select = (uint8_t)truncf(gc_block.values.p); // Convert p value to int.
       if (coord_select > N_COORDINATE_SYSTEM) { FAIL(STATUS_GCODE_UNSUPPORTED_COORD_SYS); } // [Greater than N sys]
       if (gc_block.values.l != 20) {
         if (gc_block.values.l == 2) {

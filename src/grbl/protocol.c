@@ -83,15 +83,17 @@ ERROR_LIST_t execute_line(char* line) {
      * I don't think the gcode only S0 is right, so I delete it.
      */
     if (line[0] == 'S') {
-      if(line[0] == '0') return OK;
+      if(line[1] == '0') {
+        return OK;
+      }
     }
 
-    // Grbl '$' or WebUI '[LG0xxx]' system command
     // if (line[0] == '$' || line[0] == '[') {
     if (line[0] == '$') {
         return system_execute_line(line);
     }
 
+    // commond for g0, (and I want to remove)
     if(line[0] == '[') {
       return system_excute_lg0_cmd(line);
     }

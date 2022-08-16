@@ -104,20 +104,4 @@
 #define BOARD_LASER_OUT_CLK()           __HAL_RCC_TIM4_CLK_ENABLE()
 #define BOARD_LASER_OUT_PIN_CLK()       __HAL_RCC_GPIOB_CLK_ENABLE()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #endif
