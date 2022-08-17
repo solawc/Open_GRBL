@@ -24,7 +24,6 @@
 // Inverts the probe pin state depending on user settings and probing cycle mode.
 uint8_t probe_invert_mask;
 
-
 // Probe pin initialization routine.
 void probe_init()
 {
@@ -39,8 +38,6 @@ void probe_init()
 void probe_configure_invert_mask(uint8_t is_probe_away)
 {
   probe_invert_mask = 0; // Initialize as zero.
-  // if (bit_isfalse(settings.flags, BITFLAG_INVERT_PROBE_PIN)) { probe_invert_mask ^= PROBE_MASK; }
-  // if (is_probe_away) { probe_invert_mask ^= PROBE_MASK; }
   if(bit_isfalse(settings.flags, BITFLAG_INVERT_PROBE_PIN)) {probe_invert_mask = 1;}
   else {probe_invert_mask = 0;}
 }

@@ -122,16 +122,6 @@
 #define SPINDLE_STOP_OVR_RESTORE        bit(2)
 #define SPINDLE_STOP_OVR_RESTORE_CYCLE  bit(3)
 
-
-typedef enum{
-
-  LG0_EVENT_NONE,
-  LG0_EVENT_NUM,        // 查询[LG0XXX]中XXX的编号
-  LG0_EVENT_PARG,       // 查询[LG0XXX]YYYY中Y的参数
-
-}lg0_cmd_event_t;
-
-
 // Define global system variables
 typedef struct {
   uint8_t state;               // Tracks the current system state of Grbl.

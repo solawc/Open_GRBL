@@ -144,7 +144,7 @@ void spindle_stop()
     {
       uint16_t pwm_value;
 
-		  rpm *= (0.010*sys.spindle_speed_ovr); // Scale by spindle speed override value.
+		  rpm *= (0.010 * sys.spindle_speed_ovr); // Scale by spindle speed override value.
       // Calculate PWM register value based on rpm max/min settings and programmed rpm.
       if ((settings.rpm_min >= settings.rpm_max) || (rpm >= settings.rpm_max)) {
         // No PWM range possible. Set simple on/off spindle control pin state.

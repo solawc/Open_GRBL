@@ -66,19 +66,14 @@ void BspUartIrqSet(void) {
 
 void BspUartSendByte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 1000); }
 
-uint8_t hal_uart_read_dr(void) { 
-
-#ifdef STM32G0B0xx
-	return laser_uart.Instance->RDR;
+#ifdef RDR
+#define USAR_READ_REG			RDR
+#else 
+#define USAR_READ_REG			DR
 #endif
 
-#ifdef STM32G070xx
-	return laser_uart.Instance->RDR;
-#endif
-
-#ifdef STM32F429xx
-	return laser_uart.Instance->DR;
-#endif
+uint8_t BspUartReadData(void) { 
+	return laser_uart.Instance->USAR_READ_REG;
 }
 
 bool BspUartTcFlag(void) { 
@@ -119,8 +114,7 @@ void LASER_UART_IRQHANDLER() {
 #endif
 
 	if(LASER_UART_RX_FLAG) {
-		taskENTER_CRITICAL();
-		data = hal_uart_read_dr();
+		data = BspUartReadData();
 		laser_uart_rx_handler(data);
 	}
 

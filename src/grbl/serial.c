@@ -90,28 +90,10 @@ void serial_write(uint8_t data) {
 }
 
 // Data Register Empty Interrupt handler
-#if defined(CPU_MAP_ATMEGA328P)
-ISR(SERIAL_UDRE)
-{
-  uint8_t tail = serial_tx_buffer_tail; // Temporary serial_tx_buffer_tail (to optimize for volatile)
-
-  // Send a byte from the buffer
-  UDR0 = serial_tx_buffer[tail];
-
-  // Update tail position
-  tail++;
-  if (tail == TX_RING_BUFFER) { tail = 0; }
-
-  serial_tx_buffer_tail = tail;
-
-  // Turn off Data Register Empty Interrupt to stop tx-streaming if this concludes the transfer
-  if (tail == serial_tx_buffer_head) { UCSR0B &= ~(1 << UDRIE0); }
-}
-#elif defined(CPU_STM32)
 void laser_uart_tx_handler() {
-
+  // TODO
 }
-#endif
+
 
 // Fetches the first byte in the serial read buffer. Called by main program.
 uint8_t serial_read()
@@ -179,15 +161,13 @@ void laser_uart_rx_handler(__IO uint8_t data) {
         // Throw away any unfound extended-ASCII character by not passing it to the serial buffer.
       } 
       else { 
-
         // Write character to buffer
         serial_rb_write(&rb_serial_rx, data);
       }
   }
 }
  
-void serial_reset_read_buffer()
-{
+void serial_reset_read_buffer() {
   serial_rb_reset(&rb_serial_rx);
 }
 
