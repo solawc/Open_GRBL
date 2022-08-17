@@ -193,14 +193,6 @@ void report_grbl_help() {
 // NOTE: The numbering scheme here must correlate to storing in settings.c
 void report_grbl_settings() {
   // Print Grbl settings.
-// #ifdef STM32F429xx
-//   report_util_uint8_setting(0,settings.fpulse_microseconds);
-// #elif defined(STM32G0B0xx)
-//   report_util_uint8_setting(0,settings.pulse_microseconds);
-// #else 
-//   report_util_uint8_setting(0,settings.pulse_microseconds);
-// #endif
-
   #ifdef USE_MCU_FPU
     report_util_uint8_setting(0,settings.fpulse_microseconds);
   #else 

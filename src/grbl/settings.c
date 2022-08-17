@@ -66,23 +66,11 @@ void write_global_settings()
 // Method to restore EEPROM-saved Grbl global settings back to defaults.
 void settings_restore(uint8_t restore_flag) {
   if (restore_flag & SETTINGS_RESTORE_DEFAULTS) {    
-#if defined(CPU_MAP_ATMEGA328P)
-    settings = defaults;
-#elif defined(CPU_STM32)
-  // #ifdef STM32F429xx
-  //   settings.fpulse_microseconds = (float)DEFAULT_STEP_PULSE_MICROSECONDS;
-  // #elif defined(STM32G0B0xx)
-  //   settings.pulse_microseconds = DEFAULT_STEP_PULSE_MICROSECONDS;
-  // #else 
-  //   settings.pulse_microseconds = DEFAULT_STEP_PULSE_MICROSECONDS;
-  // #endif
     #ifdef USE_MCU_FPU
       settings.fpulse_microseconds = (float)DEFAULT_STEP_PULSE_MICROSECONDS;
     #else 
       settings.pulse_microseconds = DEFAULT_STEP_PULSE_MICROSECONDS;
     #endif
-
-
     settings.stepper_idle_lock_time = DEFAULT_STEPPER_IDLE_LOCK_TIME;
     settings.step_invert_mask = DEFAULT_STEPPING_INVERT_MASK;
     settings.dir_invert_mask = DEFAULT_DIRECTION_INVERT_MASK;
@@ -121,9 +109,7 @@ void settings_restore(uint8_t restore_flag) {
     settings.max_travel[X_AXIS] = (-DEFAULT_X_MAX_TRAVEL);
     settings.max_travel[Y_AXIS] = (-DEFAULT_Y_MAX_TRAVEL);
     settings.max_travel[Z_AXIS] = (-DEFAULT_Z_MAX_TRAVEL);
-
     settings.flame_state = DEFAULT_FLAME_STATE;
-#endif
     write_global_settings();
   }
 
@@ -349,7 +335,7 @@ uint8_t get_step_pin_mask(uint8_t axis_idx)
   if ( axis_idx == Y_AXIS ) { return((1<<Y_STEP_BIT)); }
   return((1<<Z_STEP_BIT));
 #elif defined(CPU_STM32)
-  return hal_get_moter_axis_gpio_mask(axis_idx);
+  return dev_gpio.motor_get_step_mask(axis_idx);
 #endif
 }
 
@@ -368,7 +354,7 @@ uint8_t get_direction_pin_mask(uint8_t axis_idx)
   if ( axis_idx == Y_AXIS ) { return((1<<Y_DIRECTION_BIT)); }
   return((1<<Z_DIRECTION_BIT));
 #elif defined(CPU_STM32)
-  return hal_get_moter_dir_gpio_mask(axis_idx);
+  return dev_gpio.motor_get_dir_mask(axis_idx);
 #endif
 }
 
@@ -381,6 +367,6 @@ uint8_t get_limit_pin_mask(uint8_t axis_idx)
   if ( axis_idx == Y_AXIS ) { return((1<<Y_LIMIT_BIT)); }
   return((1<<Z_LIMIT_BIT));
 #elif defined(CPU_STM32)
-  return hal_limits_get_gpio_status(axis_idx);
+  return dev_gpio.limit_get_mask(axis_idx);
 #endif
 }

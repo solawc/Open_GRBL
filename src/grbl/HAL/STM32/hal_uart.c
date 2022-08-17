@@ -6,13 +6,10 @@ hal_uart_t rb_serial_tx;
 UART_HandleTypeDef laser_uart;
 UART_HandleTypeDef tft_uart;
 
-uint8_t laser_dma_rx_buf[5];
-
-
 /************************************************************
  * 			For Serial UART
  * *********************************************************/
-void hal_uart_gpio_init(void) {
+void BspUartGpioInit(void) {
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -28,11 +25,11 @@ void hal_uart_gpio_init(void) {
     HAL_GPIO_Init(LASER_UART_TX_PORT, &GPIO_InitStruct);
 }
 
-void hal_uart_init(void) {
+void BspUartInit(void) {
 
-	hal_uart_gpio_init();
+	BspUartGpioInit();
     laser_uart.Instance = LaserUART;
-	laser_uart.Init.BaudRate = 115200;
+	laser_uart.Init.BaudRate = BAUD_RATE;
 	laser_uart.Init.WordLength = UART_WORDLENGTH_8B;
 	laser_uart.Init.StopBits = UART_STOPBITS_1;
 	laser_uart.Init.Parity = UART_PARITY_NONE;
@@ -58,19 +55,16 @@ void hal_uart_init(void) {
 		Error_Handler();
 	}
 #endif
-
-	hal_uart_irq_set();
+	BspUartIrqSet();
 }
 
-void hal_uart_irq_set(void) {
+void BspUartIrqSet(void) {
 	HAL_NVIC_SetPriority(LaserUART_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(LaserUART_IRQn);
 	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE);
 }
 
-void hal_laser_uart_irq_enable(void) { __HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE); }
-void hal_laser_uart_irq_disable(void) { __HAL_UART_DISABLE_IT(&laser_uart, UART_IT_RXNE); }
-void hal_uart_sendbyte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 1000); }
+void BspUartSendByte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 1000); }
 
 uint8_t hal_uart_read_dr(void) { 
 
@@ -87,14 +81,8 @@ uint8_t hal_uart_read_dr(void) {
 #endif
 }
 
-bool hal_is_uart_sr_txe(void) { 
-#ifdef STM32F429xx
-	return (__HAL_UART_GET_FLAG(&laser_uart, USART_FLAG_TXE));
-#elif defined(STM32G0B0xx)
-	return (__HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_TC)); 
-#elif defined(STM32G070xx)
-	return (__HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_TC)); 
-#endif
+bool BspUartTcFlag(void) { 
+	return (__HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_TC));
 }
 
 /*

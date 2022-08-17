@@ -28,7 +28,7 @@ uint8_t probe_invert_mask;
 // Probe pin initialization routine.
 void probe_init()
 {
-  hal_probe_gpio_init();
+  dev_gpio.probe_gpio_init();
   probe_configure_invert_mask(false);
 }
 
@@ -48,8 +48,7 @@ void probe_configure_invert_mask(uint8_t is_probe_away)
 
 // Returns the probe pin state. Triggered = true. Called by gcode parser and probe state monitor.
 uint8_t probe_get_state() { 
-  // return hal_probe_gpio_read();
-  if(probe_invert_mask && hal_probe_gpio_read()) return 0;
+  if(probe_invert_mask && dev_gpio.probe_gpio_read()) return 0;
   else { return 1;}
 }
 

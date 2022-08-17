@@ -2,7 +2,7 @@
 
 mid_timer_t dev_timer;
 
-void dev_timer_init() {
+void DevTimerInit(void) {
     
     dev_timer.stepper_timer_init = hal_base_timer_init;
     dev_timer.reset_timer_begin = hal_reset_timer_begin;

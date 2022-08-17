@@ -76,6 +76,9 @@
 #include "grbl/HAL/Peripheral/hal_sdcard.h"
 #include "grbl/HAL/Peripheral/hal_w25qxx.h"
 
+#include "grbl/HAL/Middleware/mid_gpio.h"
+#include "grbl/HAL/Middleware/mid_timer.h"
+
 #include "grbl/EX_CMD/common_cmd.h"
 
 #include "ex_dev/lcd/tft_lcd_dev.h"
@@ -89,7 +92,7 @@
 // For Fatfs 
 #include "ff.h"
 
-#define SYSTEM_UART()       hal_uart_init()
+#define SYSTEM_UART()       BspUartInit()
 #define SYSTEM_LASER()      hal_pwm_init()
 
 #ifdef HAS_WDG

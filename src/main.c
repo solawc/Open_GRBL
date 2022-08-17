@@ -26,7 +26,7 @@ int main() {
 
   grblHwInit();
 
-  clientInit();
+  clientInit(); // TODO
 
 #ifdef STM32G0B0xx
   // here must wait for some time, beacuse STM32G0B0CE have no XTAL

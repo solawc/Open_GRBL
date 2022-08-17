@@ -32,10 +32,10 @@ typedef struct {
     uint8_t (*coolant_get_mist)(void);
 
 }mid_gpio_t;
+extern mid_gpio_t dev_gpio;
 
 
 
-
-
+void DevGpioInit(void);
 
 #endif

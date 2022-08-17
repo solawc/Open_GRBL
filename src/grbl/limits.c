@@ -52,10 +52,10 @@ const int DEBOUNCE_PERIOD = 32;
 
 void limits_init()
 {
-  hal_limit_gpio_init();
+  dev_gpio.limit_gpio_init();
   
   if (bit_istrue(settings.flags,BITFLAG_HARD_LIMIT_ENABLE)) {
-    hal_limit_gpio_irq_enable();
+    dev_gpio.limit_irq_enable();
   } else {
     limits_disable();
   }
@@ -76,7 +76,7 @@ void limits_init()
 // Disables hard limits.
 void limits_disable()
 {
-  hal_limit_gpio_irq_disable();
+  dev_gpio.limit_irq_disable();
 }
 
 
@@ -87,7 +87,7 @@ uint8_t limits_get_state()
 {
   uint8_t limit_state = 0;
 
-  limit_state = hal_get_all_limits_status(bit_isfalse(settings.flags,BITFLAG_INVERT_LIMIT_PINS));
+  limit_state = dev_gpio.limit_get_state(bit_isfalse(settings.flags,BITFLAG_INVERT_LIMIT_PINS));
 
   if (bit_isfalse(settings.flags,BITFLAG_INVERT_LIMIT_PINS)) { limit_state ^= LIMIT_MASK; }
 

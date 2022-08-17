@@ -227,8 +227,8 @@ static st_prep_t prep;
 void st_wake_up()
 {
   // Enable stepper drivers.
-  if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE))  { hal_step_en_gpio_set(true); }
-  else { hal_step_en_gpio_set(false); }
+  if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE))  { dev_gpio.motor_set_en(true); }
+  else { dev_gpio.motor_set_en(false); }
   // Initialize stepper output bits to ensure first ISR call does not step.
   st.step_outbits = step_port_invert_mask;
 
@@ -279,8 +279,8 @@ void st_go_idle()
     if (pin_state) { STEPPERS_DISABLE_PORT |= (1<<STEPPERS_DISABLE_BIT); }
     else { STEPPERS_DISABLE_PORT &= ~(1<<STEPPERS_DISABLE_BIT); }
 #elif defined(CPU_STM32)
-  if (pin_state) { hal_step_en_gpio_set(true); }
-    else { hal_step_en_gpio_set(false); }
+  if (pin_state) { dev_gpio.motor_set_en(true); }
+    else { dev_gpio.motor_set_en(false); }
 #endif
 }
 
@@ -343,7 +343,7 @@ void set_timer_irq_handler(void)   // set timer
 
   // Set the direction pins a couple of nanoseconds before we step the steppers 
   uint8_t temp_dir = (st.dir_outbits);
-  hal_set_dir_gpio_status(temp_dir);
+  dev_gpio.motor_set_dir(temp_dir);
 
   // Then pulse the stepping pins // 设置脉冲引脚
   #ifdef STEP_PULSE_DELAY
@@ -352,7 +352,7 @@ void set_timer_irq_handler(void)   // set timer
       st.step_bits_dual = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | st.step_outbits_dual;
     #endif
   #else  // Normal operation
-    hal_set_step_gpio_status(st.step_outbits);
+    dev_gpio.motor_set_step(st.step_outbits);
     #ifdef ENABLE_DUAL_AXIS
       // STEP_PORT_DUAL = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | st.step_outbits_dual;
     #endif
@@ -544,7 +544,7 @@ void delayss( ) {
 }
 
 void reset_timer_irq_handler(void) {   // reset timer
-  hal_set_step_gpio_status(step_port_invert_mask);
+  dev_gpio.motor_set_step(step_port_invert_mask);
   hal_reset_timer_irq_disable();
 } 
 #endif
@@ -651,7 +651,7 @@ void stepper_init()
     TIMSK0 |= (1<<OCIE0A); // Enable Timer0 Compare Match A interrupt
   #endif
 #elif defined(CPU_STM32)
-  hal_motor_gpio_init();
+  dev_gpio.motor_gpio_init();
   hal_set_timer_init();
   hal_reset_timer_init();
 #endif

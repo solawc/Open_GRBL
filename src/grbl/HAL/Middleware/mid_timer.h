@@ -22,9 +22,8 @@ typedef struct {
     uint32_t (*spindle_pwm_get)(void);
     
 }mid_timer_t;
+mid_timer_t dev_timer;
 
-
-
-
+void DevTimerInit(void);
 
 #endif

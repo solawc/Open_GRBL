@@ -29,31 +29,37 @@
 #define config_h
 #include "grbl.h" // For Arduino IDE compatibility.
 
-// Define if use freeRTOS
-// #define USE_RTOS_FREERTOS
-// #define USR_RTOS_RTTHREAD      // Need add into project
-
 // Define CPU pin map and default settings.
 // NOTE: OEMs can avoid the need to maintain/update the defaults.h and cpu_map.h files and use only
 // one configuration file by placing their specific defaults and pin map at the bottom of this file.
 // If doing so, simply comment out these two defines and see instructions below.
 #define DEFAULTS_GENERIC
 
-// #define CPU_MAP_STM32F1
-// #define CPU_MAP_STM32F4
-#define CPU_MAP_STM32G0
-// #define CPU_MAP_STM32H7
+#define CPU_STM32
 
 
-#if defined(CPU_MAP_STM32F1) || defined(CPU_MAP_STM32F4)  || \
-    defined(CPU_MAP_STM32H7) || defined(CPU_MAP_STM32H7)  || \
-    defined(CPU_MAP_STM32G0)
-  #define CPU_STM32
+/** 
+ * 串口波特率设置
+ * 多数的测试是在115200的波特率下测试的，在使用1.5m的USB线，并且连续打印
+ * 一周的时间，毫无异常。其它波特率也尝试过，但是没有经历过老化的时间，如果
+ * 不是很高的追求，建议使用默认的115200
+*/
+enum {
+  BAUD_RATE_4800 = 4800,
+  BAUD_RATE_9600 = 9600,
+  BAUD_RATE_19200 = 19200,
+  BAUD_RATE_38400 = 38400,
+  BAUD_RATE_57600 = 57600,
+  BAUD_RATE_115200 = 115200,
+  BAUD_RATE_230400 = 230400,
+  BAUD_RATE_460800 = 460800,
+  BAUD_RATE_921600 = 921600,
+};
+
+#ifndef BAUD_RATE
+#define DEFAULT_BAUD  BAUD_RATE_115200
+#define BAUD_RATE     DEFAULT_BAUD
 #endif
-
-// Serial baud rate
-// #define BAUD_RATE 230400
-#define BAUD_RATE 115200
 
 // Define realtime command special characters. These characters are 'picked-off' directly from the
 // serial read data stream and are not passed to the grbl line execution parser. Select characters

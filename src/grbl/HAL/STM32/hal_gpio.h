@@ -71,18 +71,18 @@
 #define MIST_PIN                    GPIO_PIN_3   
 
 
-void hal_limit_gpio_init(void);
-void hal_limit_gpio_irq_enable(void);
-void hal_limit_gpio_irq_disable(void);
-uint8_t hal_limits_get_gpio_status(uint8_t axis);
-uint8_t hal_get_all_limits_status(uint8_t bit_select);
+void BspLimitGpioInit(void);
+void BspLimitGpioIrqEnable(void);
+void BspLimitGpioIrqDisable(void);
+uint8_t BspLimitGetState(uint8_t axis);
+uint8_t BspLimitGetAllState(uint8_t bit_select);
 
-void hal_motor_gpio_init(void);
-void hal_set_dir_gpio_status(uint8_t mask);
-void hal_set_step_gpio_status(uint8_t mask);
-void hal_step_en_gpio_set(bool status);
-uint8_t hal_get_moter_dir_gpio_mask(uint8_t axis);
-uint8_t hal_get_moter_axis_gpio_mask(uint8_t axis);
+void BspStepGpioInit(void);
+void BspSetGpioDirState(uint8_t mask);
+void BspSetGpioStepState(uint8_t mask);
+void BspSetGpioStepEnable(bool status);
+uint8_t BspGetStepDirMask(uint8_t axis);
+uint8_t BspGetStepGpioMask(uint8_t axis);
 
 void hal_probe_gpio_init(void);
 uint8_t hal_probe_gpio_read(void);

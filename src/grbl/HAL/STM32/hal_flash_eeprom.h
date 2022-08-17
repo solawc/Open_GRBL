@@ -13,7 +13,6 @@
 #endif
 #endif
 
-// #define PAGE_SIZE                   0X400
 #define PAGE_SIZE                   0x400
 #define EEPROM_SIZE(str)            sizeof(str)/4+( ( sizeof(str) % 4 ) ? 1 : 0 )   
 

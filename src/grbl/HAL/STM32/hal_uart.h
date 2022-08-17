@@ -3,10 +3,7 @@
 
 #include "../../../main.h"
 
-#define USR_MY_RINGBUFFER
-
 #define UART_RB_BUFF_MAX                255
-#define UART_RB_BUFF_MIN                0
 
 #define LaserUART		                BOARD_UART
 #define LaserUART_IRQn                  BOARD_UART_IRQ
@@ -29,13 +26,11 @@ typedef struct {
 extern hal_uart_t rb_serial_rx;
 extern hal_uart_t rb_serial_tx;
 
-void hal_uart_gpio_init(void);
-void hal_uart_init(void);
-void hal_uart_irq_set(void);
-void hal_laser_uart_irq_enable(void);
-void hal_laser_uart_irq_disable(void);
-void hal_uart_sendbyte(uint8_t data);
-bool hal_is_uart_sr_txe(void);
+void BspUartGpioInit(void);
+void BspUartInit(void);
+void BspUartIrqSet(void);
+void BspUartSendByte(uint8_t data);
+bool BspUartTcFlag(void);
 
 // ringbuffer
 void serial_rb_init(hal_uart_t *rb);
