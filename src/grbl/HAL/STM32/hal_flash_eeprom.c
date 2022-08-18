@@ -24,7 +24,7 @@ void hal_i2c_eeprom_write_page(uint8_t *buff) {
 
 void BspEepromFlush(void) {
 
-    hal_flash_write_buff(EEPROM_START_ADDR, (uint32_t *)eeprom_buf, EEPROM_SIZE(eeprom_buf));
+    BspFlashWriteBuff(EEPROM_START_ADDR, (uint32_t *)eeprom_buf, EEPROM_SIZE(eeprom_buf));
 }
 
 void BspEepromInit(void) {
@@ -32,7 +32,7 @@ void BspEepromInit(void) {
     uint16_t    var = 0;
     uint8_t     *temp = eeprom_buf;
 
-    hal_flash_read_buf(EEPROM_START_ADDR, (uint32_t *)eeprom_buf, EEPROM_SIZE(eeprom_buf));
+    BspFlashReadBuff(EEPROM_START_ADDR, (uint32_t *)eeprom_buf, EEPROM_SIZE(eeprom_buf));
     
     if(eeprom_buf[0] != SETTINGS_VERSION) {
 
@@ -50,35 +50,8 @@ uint8_t BspEeepromGetChar(unsigned int addr) {
 }
 
 uint8_t hal_get_flash_sector(uint32_t addr) {
-#ifdef STM32F429xx
-    if(addr<ADDR_FLASH_SECTOR_0)return FLASH_SECTOR_0;
-    else if(addr<ADDR_FLASH_SECTOR_1)return FLASH_SECTOR_1;
-    else if(addr<ADDR_FLASH_SECTOR_2)return FLASH_SECTOR_2;
-    else if(addr<ADDR_FLASH_SECTOR_3)return FLASH_SECTOR_3;
-    else if(addr<ADDR_FLASH_SECTOR_4)return FLASH_SECTOR_4;
-    else if(addr<ADDR_FLASH_SECTOR_5)return FLASH_SECTOR_5;
-    else if(addr<ADDR_FLASH_SECTOR_6)return FLASH_SECTOR_6;
-    else if(addr<ADDR_FLASH_SECTOR_7)return FLASH_SECTOR_7;
-    else if(addr<ADDR_FLASH_SECTOR_8)return FLASH_SECTOR_8;
-    else if(addr<ADDR_FLASH_SECTOR_9)return FLASH_SECTOR_9;
-    else if(addr<ADDR_FLASH_SECTOR_10)return FLASH_SECTOR_10;
-    else if(addr<ADDR_FLASH_SECTOR_11)return FLASH_SECTOR_11;
-    else if(addr<ADDR_FLASH_SECTOR_12)return FLASH_SECTOR_12;
-    else if(addr<ADDR_FLASH_SECTOR_13)return FLASH_SECTOR_13;
-    else if(addr<ADDR_FLASH_SECTOR_14)return FLASH_SECTOR_14;
-    else if(addr<ADDR_FLASH_SECTOR_15)return FLASH_SECTOR_15;
-    else if(addr<ADDR_FLASH_SECTOR_16)return FLASH_SECTOR_16;
-    else if(addr<ADDR_FLASH_SECTOR_17)return FLASH_SECTOR_17;
-    else if(addr<ADDR_FLASH_SECTOR_18)return FLASH_SECTOR_18;
-    else if(addr<ADDR_FLASH_SECTOR_19)return FLASH_SECTOR_19;
-    else if(addr<ADDR_FLASH_SECTOR_20)return FLASH_SECTOR_20;
-    else if(addr<ADDR_FLASH_SECTOR_21)return FLASH_SECTOR_21;
-    else if(addr<ADDR_FLASH_SECTOR_22)return FLASH_SECTOR_22;
-    else if(addr<ADDR_FLASH_SECTOR_23)return FLASH_SECTOR_23; 
-    return FLASH_SECTOR_23;
-#else 
-    return 0;
-#endif
+
+    return BspGetEepromAddress(addr);
 }
 
 uint32_t STMFLASH_ReadWord(uint32_t faddr)
@@ -86,7 +59,7 @@ uint32_t STMFLASH_ReadWord(uint32_t faddr)
 	return *(volatile uint32_t *)faddr; 
 }
 
-void hal_flash_write_buff(uint32_t addr ,uint32_t *buff, uint32_t num) {
+void BspFlashWriteBuff(uint32_t addr ,uint32_t *buff, uint32_t num) {
 
     FLASH_EraseInitTypeDef FlashEraseInit;
 	HAL_StatusTypeDef FlashStatus=HAL_OK;
@@ -165,7 +138,7 @@ void hal_flash_write_buff(uint32_t addr ,uint32_t *buff, uint32_t num) {
 
 
 
-void hal_flash_read_buf(uint32_t addr, uint32_t *buff, uint32_t num)   	
+void BspFlashReadBuff(uint32_t addr, uint32_t *buff, uint32_t num)   	
 {
 	uint32_t i;
 	for(i=0;i<num;i++)

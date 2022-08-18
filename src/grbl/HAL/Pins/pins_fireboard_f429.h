@@ -113,6 +113,11 @@
 #define BOARD_LASER_OUT_CLK()           __HAL_RCC_TIM4_CLK_ENABLE()
 #define BOARD_LASER_OUT_PIN_CLK()       __HAL_RCC_GPIOB_CLK_ENABLE()
 
-#endif
+/* For EEPROM */
+#define EEPROM_START_ADDR               ADDR_FLASH_SECTOR_23  // 80D FC00  ADDR_FLASH_SECTOR_11
+#define EEPROM_END_ADDR                 ((uint32_t)0x080fffff)
+#define FLASH_WRITE_SECTORS_WORD
+
+#endif /* MB_BOARD */
 
 #endif
