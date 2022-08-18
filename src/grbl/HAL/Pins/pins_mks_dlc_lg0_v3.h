@@ -2,6 +2,8 @@
 #define __pins_mks_dlc_lg0_h
 
 #include "pins_def.h"
+#include "../grbl_mb.h"
+
 
 /* For Limit */
 #define BOARD_LIMIT_X_PORT              GPIOD

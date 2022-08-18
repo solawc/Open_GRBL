@@ -1,5 +1,5 @@
-#ifndef __hal_f429_system_h
-#define __hal_f429_system_h
+#ifndef __hal_FireBoard_system_h
+#define __hal_FireBoard_system_h
 
 #ifdef STM32F429xx
 #include "stm32f4xx_hal.h"

@@ -50,7 +50,8 @@
         "ff.h": "c",
         "hal_wdg.h": "c",
         "queue.h": "c",
-        "mid_gpio.h": "c"
+        "mid_gpio.h": "c",
+        "hal_fireboard_system.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

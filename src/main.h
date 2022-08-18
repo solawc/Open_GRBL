@@ -49,7 +49,7 @@
     #include "grbl/HAL/STM32/bsp_nucleo_g070rb/hal_nucleo_g070rb.h"
     #include "grbl/HAL/Pins/pins_nucleo_g070rb.h"
 #elif MB_BOARD==BOARD_FIRE_BOARD_F429
-    #include "grbl/HAL/STM32/bsp_f429ig/hal_f429_system.h"
+    #include "grbl/HAL/STM32/bsp_FireBoard_F429V2/hal_FireBoard_system.h"
     #include "grbl/HAL/Pins/pins_fireboard_f429.h"
 #endif
 
