@@ -22,21 +22,12 @@ void hal_i2c_eeprom_write_page(uint8_t *buff) {
 #endif
 
 
-void hal_flash_unlock(void) {
-    // HAL_FLASH_Unlock();
-}
-
-uint32_t hal_read_flash_word(uint32_t addr) {
-
-    return *(volatile uint32_t *)addr; 
-}
-
-void hal_eeprom_flush(void) {
+void BspEepromFlush(void) {
 
     hal_flash_write_buff(EEPROM_START_ADDR, (uint32_t *)eeprom_buf, EEPROM_SIZE(eeprom_buf));
 }
 
-void hal_eeprom_init(void) {
+void BspEepromInit(void) {
 
     uint16_t    var = 0;
     uint8_t     *temp = eeprom_buf;
@@ -54,17 +45,8 @@ void hal_eeprom_init(void) {
     }
 }
 
-uint8_t hal_eeprom_get_char(unsigned int addr) {
+uint8_t BspEeepromGetChar(unsigned int addr) {
     return eeprom_buf[addr];
-}
-
-void hal_eeprom_put_char(unsigned int addr, unsigned char new_value) {
-    eeprom_buf[addr] = new_value;
-}
-
-uint32_t hal_falsh_eeprom_read(uint32_t addr) {
-
-    return *(volatile uint32_t *)addr;
 }
 
 uint8_t hal_get_flash_sector(uint32_t addr) {
@@ -178,7 +160,6 @@ void hal_flash_write_buff(uint32_t addr ,uint32_t *buff, uint32_t num) {
 #endif
 		}  
 	}
-
 	HAL_FLASH_Lock();           //上锁
 }
 

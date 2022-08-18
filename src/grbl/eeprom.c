@@ -34,7 +34,7 @@
  */
 unsigned char eeprom_get_char( unsigned int addr )
 {
-    return hal_eeprom_get_char(addr);
+    return BspEeepromGetChar(addr);
 }
 
 /*! \brief  Write byte to EEPROM.
@@ -72,7 +72,7 @@ void memcpy_to_eeprom_with_checksum(unsigned int destination, char *source, unsi
     eeprom_put_char(destination++, *(source++)); 
   }
   eeprom_put_char(destination, checksum);
-  hal_eeprom_flush();
+  BspEepromFlush();
 }
 
 int memcpy_from_eeprom_with_checksum(char *destination, unsigned int source, unsigned int size) {

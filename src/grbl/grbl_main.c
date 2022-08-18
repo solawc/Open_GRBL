@@ -24,8 +24,7 @@ void enter_grbl_task(void *parg) {
 void enter_grbl_task(void) {
 #endif
 
-  hal_flash_unlock();
-	hal_eeprom_init();
+	BspEepromInit();
 
   // Initialize system upon power-up.
 	serial_init();   // Setup serial baud rate and interrupts
