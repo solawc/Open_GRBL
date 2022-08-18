@@ -60,7 +60,6 @@
 #include "cmsis_os.h"
 #endif
 
-#include "grbl/CommonMarco.h"
 #include "grbl/grbl_main.h"
 
 #include "grbl/HAL/grbl_hal.h"

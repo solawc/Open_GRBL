@@ -85,8 +85,9 @@ extern uint8_t eeprom_buf[PAGE_SIZE];
 
 void BspEepromInit(void);
 void BspEepromFlush(void);
+
 uint8_t BspEeepromGetChar(unsigned int addr);
-void hal_eeprom_put_char(unsigned int addr, unsigned char new_value);
+
 uint8_t hal_get_flash_sector(uint32_t addr);
 void hal_flash_write_buff(uint32_t addr ,uint32_t *buff, uint32_t num);
 void hal_flash_read_buf(uint32_t addr, uint32_t *buff, uint32_t num);
