@@ -93,11 +93,6 @@ ERROR_LIST_t execute_line(char* line) {
         return system_execute_line(line);
     }
 
-    // commond for g0, (and I want to remove)
-    if(line[0] == '[') {
-      return system_excute_lg0_cmd(line);
-    }
-
     // Everything else is gcode. Block if in alarm or jog mode.
     if (sys.state == STATE_ALARM || sys.state == STATE_JOG) {
         return SystemGcLock;

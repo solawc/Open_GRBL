@@ -78,8 +78,6 @@
 #include "grbl/HAL/Middleware/mid_gpio.h"
 #include "grbl/HAL/Middleware/mid_timer.h"
 
-#include "grbl/EX_CMD/common_cmd.h"
-
 #include "ex_dev/lcd/tft_lcd_dev.h"
 #include "ex_dev/sd/sdcard.h"
 #include "ex_dev/sd/sd_file.h"

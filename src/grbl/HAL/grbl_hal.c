@@ -74,7 +74,9 @@ void systemInit() {
  * 
  */
 void grblDeviceInit() {
-    DevGpioInit();          
+
+    DevGpioInit();     
+         
     DevTimerInit();
 }
 

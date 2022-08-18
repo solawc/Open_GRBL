@@ -2,8 +2,17 @@
 #define __pins_fireboard_f429_h
 
 #include "pins_def.h"
+#include "../grbl_mb.h"
 
+#if MB_BOARD == BOARD_FIRE_BOARD_F429
+
+/* Enable FPU */
 #define USE_MCU_FPU
+
+/* Board Info */
+#define MCU_INFI_NAME                   "STM32F429IG"
+#define MCU_INFO_FLASH                  "1024K"
+#define MCU_INFO_RAM                    "512K"
 
 /* For Limit */
 #define BOARD_LIMIT_X_PORT              GPIOD
@@ -103,5 +112,7 @@
 #define BOARD_LASER_OUT_PIN             GPIO_PIN_6
 #define BOARD_LASER_OUT_CLK()           __HAL_RCC_TIM4_CLK_ENABLE()
 #define BOARD_LASER_OUT_PIN_CLK()       __HAL_RCC_GPIOB_CLK_ENABLE()
+
+#endif
 
 #endif
