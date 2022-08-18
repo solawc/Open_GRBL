@@ -21,7 +21,6 @@
 
 #include "grbl.h"
 
-
 void printString(const char *s)
 {
   while (*s)

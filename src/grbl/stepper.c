@@ -44,7 +44,7 @@
 // NOTE: Current settings are set to overdrive the ISR to no more than 16kHz, balancing CPU overhead
 // and timer accuracy.  Do not alter these settings unless you know what you are doing.
 #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
-  #define STP_TIMER     F_CPU/4
+  #define STP_TIMER     F_CPU / 4
 	#define MAX_AMASS_LEVEL 3
 	// AMASS_LEVEL0: Normal operation. No AMASS. No upper cutoff frequency. Starts at LEVEL1 cutoff frequency.
 	// #define AMASS_LEVEL1 (F_CPU/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
@@ -227,8 +227,8 @@ static st_prep_t prep;
 void st_wake_up()
 {
   // Enable stepper drivers.
-  if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE))  { hal_step_en_gpio_set(true); }
-  else { hal_step_en_gpio_set(false); }
+  if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE))  { dev_gpio.motor_set_en(true); }
+  else { dev_gpio.motor_set_en(false); }
   // Initialize stepper output bits to ensure first ISR call does not step.
   st.step_outbits = step_port_invert_mask;
 
@@ -240,21 +240,14 @@ void st_wake_up()
     OCR0A = -(((settings.pulse_microseconds)*TICKS_PER_MICROSECOND) >> 3);
   #else // Normal operation
     // Set step pulse time. Ad hoc computation from oscilloscope. Uses two's complement.
-#if defined(CPU_MAP_ATMEGA328P)
-    st.step_pulse_time = -(((settings.pulse_microseconds-2)*TICKS_PER_MICROSECOND) >> 3);
-#elif defined(CPU_STM32)
-    #ifdef STM32F429xx
+    #ifdef USE_MCU_FPU
       st.step_pulse_time = (settings.fpulse_microseconds);
-    #elif defined(STM32G0B0xx)
+    #else 
       st.step_pulse_time = (settings.pulse_microseconds);
     #endif
 #endif
-#endif
 
   // Enable Stepper Driver Interrupt
-#if defined(CPU_MAP_ATMEGA328P)
-  TIMSK1 |= (1<<OCIE1A);
-#elif defined(CPU_STM32)
   hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
   hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time - 1);
   hal_tim_generateEvent_update(&STEP_RESET_TIMER);
@@ -263,7 +256,6 @@ void st_wake_up()
   hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
   hal_tim_generateEvent_update(&STEP_SET_TIMER);
   hal_set_timer_irq_enable();
-#endif
 }
 
 
@@ -271,12 +263,8 @@ void st_wake_up()
 void st_go_idle()
 {
   // Disable Stepper Driver Interrupt. Allow Stepper Port Reset Interrupt to finish, if active.
-#if defined(CPU_MAP_ATMEGA328P)
-  TIMSK1 &= ~(1<<OCIE1A); // Disable Timer1 interrupt
-  TCCR1B = (TCCR1B & ~((1<<CS12) | (1<<CS11))) | (1<<CS10); // Reset clock to no prescaling.
-#elif defined(CPU_STM32)
   hal_set_timer_irq_disable();
-#endif
+
   busy = false;
   // Set stepper driver idle state, disabled or enabled, depending on settings and circumstances.
   bool pin_state = false; // Keep enabled.
@@ -287,13 +275,8 @@ void st_go_idle()
     pin_state = true; // Override. Disable steppers.
   }
   if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE)) { pin_state = !pin_state; } // Apply pin invert.
-#if defined(CPU_MAP_ATMEGA328P)
-    if (pin_state) { STEPPERS_DISABLE_PORT |= (1<<STEPPERS_DISABLE_BIT); }
-    else { STEPPERS_DISABLE_PORT &= ~(1<<STEPPERS_DISABLE_BIT); }
-#elif defined(CPU_STM32)
-  if (pin_state) { hal_step_en_gpio_set(true); }
-    else { hal_step_en_gpio_set(false); }
-#endif
+  if (pin_state) { dev_gpio.motor_set_en(true); }
+    else { dev_gpio.motor_set_en(false); }
 }
 
 
@@ -345,17 +328,14 @@ void st_go_idle()
 // TODO: Replace direct updating of the int32 position counters in the ISR somehow. Perhaps use smaller
 // int8 variables and update position counters only when a segment completes. This can get complicated
 // with probing and homing cycles that require true real-time positions.
-#if defined(CPU_MAP_ATMEGA328P)
-ISR(TIMER1_COMPA_vect)
-#elif defined(CPU_STM32)
-void set_timer_irq_handler(void)   // set timer
-#endif
+// set timer
+void set_timer_irq_handler(void)   
 {
   if (busy) { return; } // The busy-flag is used to avoid reentering this interrupt
 
   // Set the direction pins a couple of nanoseconds before we step the steppers 
   uint8_t temp_dir = (st.dir_outbits);
-  hal_set_dir_gpio_status(temp_dir);
+  dev_gpio.motor_set_dir(temp_dir);
 
   // Then pulse the stepping pins // 设置脉冲引脚
   #ifdef STEP_PULSE_DELAY
@@ -364,7 +344,7 @@ void set_timer_irq_handler(void)   // set timer
       st.step_bits_dual = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | st.step_outbits_dual;
     #endif
   #else  // Normal operation
-    hal_set_step_gpio_status(st.step_outbits);
+    dev_gpio.motor_set_step(st.step_outbits);
     #ifdef ENABLE_DUAL_AXIS
       // STEP_PORT_DUAL = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | st.step_outbits_dual;
     #endif
@@ -372,22 +352,12 @@ void set_timer_irq_handler(void)   // set timer
 
   // Enable step pulse reset timer so that The Stepper Port Reset Interrupt can reset the signal after
   // exactly settings.pulse_microseconds microseconds, independent of the main Timer1 prescaler.
-#if defined(CPU_MAP_ATMEGA328P)
-  TCNT0 = st.step_pulse_time; // Reload Timer0 counter
-  TCCR0B = (1<<CS01); // Begin Timer0. Full speed, 1/8 prescaler
-#elif defined(CPU_STM32)
   hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
   hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time-1);
   hal_tim_clear_flag_update(&STEP_RESET_TIMER);
   hal_reset_timer_irq_enable();
-#endif
 
   busy = true;
-
-#if defined(CPU_MAP_ATMEGA328P)
-  sei(); // Re-enable interrupts to allow Stepper Port Reset Interrupt to fire on-time.
-         // NOTE: The remaining code in this ISR will finish before returning to main program.
-#endif
 
   // If there is no step segment, attempt to pop one from the stepper buffer
   if (st.exec_segment == NULL) {
@@ -396,7 +366,7 @@ void set_timer_irq_handler(void)   // set timer
       // Initialize new step segment and load number of steps to execute
       st.exec_segment = &segment_buffer[segment_buffer_tail];
 
-      hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
+      
       
       #ifndef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
         // With AMASS is disabled, set timer prescaler for segments with slow step frequencies (< 250Hz).
@@ -404,11 +374,9 @@ void set_timer_irq_handler(void)   // set timer
       #endif
 
       // Initialize step segment timing per step and load number of steps to execute.
-#if defined(CPU_MAP_ATMEGA328P)
-      OCR1A = st.exec_segment->cycles_per_tick;
-#elif defined(CPU_STM32)
-      
-#endif
+
+      hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
+
       st.step_count = st.exec_segment->n_step; // NOTE: Can sometimes be zero when moving slow.
       // If the new segment starts a new planner block, initialize stepper variables and counters.
       // NOTE: When the segment data index changes, this indicates a new planner block.
@@ -534,32 +502,11 @@ void set_timer_irq_handler(void)   // set timer
 // This interrupt is enabled by ISR_TIMER1_COMPAREA when it sets the motor port bits to execute
 // a step. This ISR resets the motor port after a short period (settings.pulse_microseconds)
 // completing one step cycle.
-#if defined(CPU_MAP_ATMEGA328P)
-ISR(TIMER0_OVF_vect)
-{
-  // Reset stepping pins (leave the direction pins)
-  STEP_PORT = (STEP_PORT & ~STEP_MASK) | (step_port_invert_mask & STEP_MASK);
-  #ifdef ENABLE_DUAL_AXIS
-    STEP_PORT_DUAL = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | (step_port_invert_mask_dual & STEP_MASK_DUAL);
-  #endif
-  TCCR0B = 0; // Disable Timer0 to prevent re-entering this interrupt when it's not needed.
-}
-#elif defined(CPU_STM32)
-
-void delayss( ) {
-  uint32_t a = 1000;
-  while(a) {
-
-    a--;
-  }
-
-}
 
 void reset_timer_irq_handler(void) {   // reset timer
-  hal_set_step_gpio_status(step_port_invert_mask);
+  dev_gpio.motor_set_step(step_port_invert_mask);
   hal_reset_timer_irq_disable();
 } 
-#endif
 
 #ifdef STEP_PULSE_DELAY
   // This interrupt is used only when STEP_PULSE_DELAY is enabled. Here, the step pulse is
@@ -615,58 +562,15 @@ void st_reset()
 
   st_generate_step_dir_invert_masks();
   st.dir_outbits = dir_port_invert_mask; // Initialize direction bits to default.
-
-  // Initialize step and direction port pins.
-#if defined(CPU_MAP_ATMEGA328P)
-  STEP_PORT = (STEP_PORT & ~STEP_MASK) | step_port_invert_mask;
-  DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | dir_port_invert_mask;
-#elif defined(CPU_STM32)
-
-#endif
-
-  #ifdef ENABLE_DUAL_AXIS
-    st.dir_outbits_dual = dir_port_invert_mask_dual;
-    STEP_PORT_DUAL = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | step_port_invert_mask_dual;
-    DIRECTION_PORT_DUAL = (DIRECTION_PORT_DUAL & ~DIRECTION_MASK_DUAL) | dir_port_invert_mask_dual;
-  #endif
 }
 
 
 // Initialize and start the stepper motor subsystem
 void stepper_init()
 {
-#if defined(CPU_MAP_ATMEGA328P)
-  // Configure step and direction interface pins
-  STEP_DDR |= STEP_MASK;
-  STEPPERS_DISABLE_DDR |= 1<<STEPPERS_DISABLE_BIT;
-  DIRECTION_DDR |= DIRECTION_MASK;
-  
-  #ifdef ENABLE_DUAL_AXIS
-    STEP_DDR_DUAL |= STEP_MASK_DUAL;
-    DIRECTION_DDR_DUAL |= DIRECTION_MASK_DUAL;
-  #endif
-
-  // Configure Timer 1: Stepper Driver Interrupt
-  TCCR1B &= ~(1<<WGM13); // waveform generation = 0100 = CTC
-  TCCR1B |=  (1<<WGM12);
-  TCCR1A &= ~((1<<WGM11) | (1<<WGM10));
-  TCCR1A &= ~((1<<COM1A1) | (1<<COM1A0) | (1<<COM1B1) | (1<<COM1B0)); // Disconnect OC1 output
-  // TCCR1B = (TCCR1B & ~((1<<CS12) | (1<<CS11))) | (1<<CS10); // Set in st_go_idle().
-  // TIMSK1 &= ~(1<<OCIE1A);  // Set in st_go_idle().
-
-  // Configure Timer 0: Stepper Port Reset Interrupt
-  TIMSK0 &= ~((1<<OCIE0B) | (1<<OCIE0A) | (1<<TOIE0)); // Disconnect OC0 outputs and OVF interrupt.
-  TCCR0A = 0; // Normal operation
-  TCCR0B = 0; // Disable Timer0 until needed
-  TIMSK0 |= (1<<TOIE0); // Enable Timer0 overflow interrupt
-  #ifdef STEP_PULSE_DELAY
-    TIMSK0 |= (1<<OCIE0A); // Enable Timer0 Compare Match A interrupt
-  #endif
-#elif defined(CPU_STM32)
-  hal_motor_gpio_init();
+  dev_gpio.motor_gpio_init();
   hal_set_timer_init();
   hal_reset_timer_init();
-#endif
 }
 
 // Called by planner_recalculate() when the executing block is updated by the new plan.
@@ -1040,11 +944,7 @@ void st_prep_buffer()
           prep.current_spindle_pwm = spindle_compute_pwm_value(rpm);
         } else { 
           sys.spindle_speed = 0.0;
-        #if defined(CPU_MAP_ATMEGA328P)
-          prep.current_spindle_pwm = SPINDLE_PWM_OFF_VALUE;
-        #elif defined(CPU_STM32)
-          prep.current_spindle_pwm = 0;
-        #endif
+          prep.current_spindle_pwm = 0; // SPINDLE_PWM_OFF_VALUE
         }
         bit_false(sys.step_control,STEP_CONTROL_UPDATE_SPINDLE_PWM);
       }
@@ -1094,52 +994,15 @@ void st_prep_buffer()
     // outputs the exact acceleration and velocity profiles as computed by the planner.
     dt += prep.dt_remainder; // Apply previous segment partial step execute time
     float inv_rate = dt / (last_n_steps_remaining - step_dist_remaining); // Compute adjusted step rate inverse
-  #if defined(CPU_MAP_ATMEGA328P)
-    // Compute CPU cycles per step for the prepped segment.
-    uint32_t cycles = ceil( (TICKS_PER_MICROSECOND*1000000*60)*inv_rate ); // (cycles/step)
 
-    #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
-      // Compute step timing and multi-axis smoothing level.
-      // NOTE: AMASS overdrives the timer with each level, so only one prescalar is required.
-      if (cycles < AMASS_LEVEL1) { prep_segment->amass_level = 0; }
-      else {
-        if (cycles < AMASS_LEVEL2) { prep_segment->amass_level = 1; }
-        else if (cycles < AMASS_LEVEL3) { prep_segment->amass_level = 2; }
-        else { prep_segment->amass_level = 3; }
-        cycles >>= prep_segment->amass_level;
-        prep_segment->n_step <<= prep_segment->amass_level;
-      }
-      if (cycles < (1UL << 16)) { prep_segment->cycles_per_tick = cycles; } // < 65536 (4.1ms @ 16MHz)
-      else { prep_segment->cycles_per_tick = 0xffff; } // Just set the slowest speed possible.
-    #else
-      // Compute step timing and timer prescalar for normal step generation.
-      if (cycles < (1UL << 16)) { // < 65536  (4.1ms @ 16MHz)
-        prep_segment->prescaler = 1; // prescaler: 0
-        prep_segment->cycles_per_tick = cycles;
-      } else if (cycles < (1UL << 19)) { // < 524288 (32.8ms@16MHz)
-        prep_segment->prescaler = 2; // prescaler: 8
-        prep_segment->cycles_per_tick = cycles >> 3;
-      } else {
-        prep_segment->prescaler = 3; // prescaler: 64
-        if (cycles < (1UL << 22)) { // < 4194304 (262ms@16MHz)
-          prep_segment->cycles_per_tick =  cycles >> 6;
-        } else { // Just set the slowest speed possible. (Around 4 step/sec.)
-          prep_segment->cycles_per_tick = 0xffff;
-        }
-      }
-    #endif
-  #elif defined(CPU_STM32)
   // Compute CPU cycles per step for the prepped segment.
-    // uint32_t cycles = (uint32_t)ceilf( (TICKS_PER_MICROSECOND * 1000000 * 60.0f) * inv_rate); // (cycles/step)
-    // 
+    // uint32_t cycles = (uint32_t)ceilf( (STP_TIMER * 60.0f) * inv_rate); // (cycles/step)
     uint32_t cycles = (uint32_t)ceil( (STP_TIMER * 60.0f) * inv_rate); // (cycles/step)
     
     #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
       // Compute step timing and multi-axis smoothing level.
       // NOTE: AMASS overdrives the timer with each level, so only one prescalar is required.
 
-      // printf("get clcles:%d\n", cycles);
-
       if (cycles < AMASS_LEVEL1) { prep_segment->amass_level = 0; }
       else {
         if (cycles < AMASS_LEVEL2) { prep_segment->amass_level = 1; }
@@ -1167,7 +1030,7 @@ void st_prep_buffer()
         }
       }
     #endif
-  #endif
+    
     // Segment complete! Increment segment buffer indices, so stepper ISR can immediately execute it.
     segment_buffer_head = segment_next_head;
     if ( ++segment_next_head == SEGMENT_BUFFER_SIZE ) { segment_next_head = 0; }

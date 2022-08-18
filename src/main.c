@@ -1,10 +1,32 @@
+/*
+  main.c - rs274/ngc parser.
+  Part of Grbl
+
+  Copyright (c) 2011-2016 Sungeun K. Jeon for Gnea Research LLC
+  Copyright (c) 2009-2011 Simen Svale Skogsrud
+  Copyright (c) 2021-2022 sola
+
+  Grbl is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Grbl is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with Grbl.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "main.h"
 
 int main() {
 
-  grbl_hw_init();
+  grblHwInit();
 
-  client_init();
+  clientInit(); // TODO
 
 #ifdef STM32G0B0xx
   // here must wait for some time, beacuse STM32G0B0CE have no XTAL
@@ -12,17 +34,10 @@ int main() {
 #endif
 
   // report MCU info and you can check
-  grbl_report_mcu_info();
+  grblReprotMcuInfo();
 
-#ifdef DEBUG_TEST
-  while(1) {}
-#endif
-
-#if defined(USE_FREERTOS_RTOS)
-  xTaskCreate(enter_grbl_task, "grbl task", 1024, NULL, 1, &grbl_task_handler);
-#else 
-  enter_grbl_task();
-#endif
+  // Begin GRBL Task
+  grblTaskInit();
 
 #if defined(USE_FREERTOS_RTOS)
   osKernelStart();
@@ -42,5 +57,7 @@ void _delay_ms(uint32_t tick) {
 }
 
 void _delay_us(uint32_t tick) {
-	__NOP();
+  while(tick--) {
+	  __NOP();
+}
 }

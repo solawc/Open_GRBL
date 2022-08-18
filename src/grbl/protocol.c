@@ -78,15 +78,19 @@ ERROR_LIST_t execute_line(char* line) {
     if (line[0] == 0) {
         return OK;
     }
+    
+    /**
+     * I don't think the gcode only S0 is right, so I delete it.
+     */
+    if (line[0] == 'S') {
+      if(line[1] == '0') {
+        return OK;
+      }
+    }
 
-    // Grbl '$' or WebUI '[LG0xxx]' system command
     // if (line[0] == '$' || line[0] == '[') {
     if (line[0] == '$') {
         return system_execute_line(line);
-    }
-
-    if(line[0] == '[') {
-      return system_excute_lg0_cmd(line);
     }
 
     // Everything else is gcode. Block if in alarm or jog mode.
@@ -141,12 +145,15 @@ void protocol_main_loop()
 
   uint8_t c;
 
+#ifdef HAS_SDCARD
   sd_close_file();
+#endif
 
   for (;;) {
 
     char *get_line;
 
+#ifdef HAS_SDCARD
     /********************************************************
      * SD卡读取打印
      * *****************************************************/
@@ -161,6 +168,7 @@ void protocol_main_loop()
         printReturnInfo("SD Print Finish\n");
       }
     }
+#endif
 
     // Process one line of incoming serial data, as the data becomes available. Performs an
     // initial filtering by removing spaces and comments and capitalizing all letters.
@@ -169,6 +177,7 @@ void protocol_main_loop()
       ERROR_LIST_t err = add_char_to_line(c);
 
       switch(err) {
+        
         case OK:  break;
         
         case EOL: 
@@ -182,14 +191,15 @@ void protocol_main_loop()
 #ifdef REPORT_ECHO_RAW_LINE_RECEIVED
                         report_echo_line_received(line, client);
 #endif  
-
         report_status_message(execute_line(get_line));
 
         empty_line(CLIENT_SERIAL);
 
         break;
 
-        case Overflow: over_flow_run(); break;                    // report overflow, and reset buff 
+        case Overflow: 
+            over_flow_run();                                      // report overflow, and reset buff 
+        break;                    
 
         default:
         break;

@@ -24,8 +24,7 @@ void enter_grbl_task(void *parg) {
 void enter_grbl_task(void) {
 #endif
 
-  hal_flash_unlock();
-	hal_eeprom_init();
+	BspEepromInit();
 
   // Initialize system upon power-up.
 	serial_init();   // Setup serial baud rate and interrupts
@@ -88,4 +87,19 @@ void enter_grbl_task(void) {
         // Start Grbl main loop. Processes program inputs and executes them.
         protocol_main_loop();
     }	
+}
+
+void grblTaskInit(void) {
+
+#if defined(USE_FREERTOS_RTOS)
+  xTaskCreate(enter_grbl_task, 
+              "grbl task", 
+              1024, 
+              NULL, 
+              1, 
+              &grbl_task_handler
+              );
+#else 
+  enter_grbl_task();
+#endif
 }

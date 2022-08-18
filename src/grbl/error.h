@@ -9,8 +9,6 @@ typedef enum {
     SystemGcLock = 9,
 
     LG0CmdErr = 100,
-
-
 }ERROR_LIST_t;
 
 

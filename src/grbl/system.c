@@ -22,21 +22,9 @@
 
 
 void system_init()
-{
-#if defined(CPU_MAP_ATMEGA328P)
-  CONTROL_DDR &= ~(CONTROL_MASK); // Configure as input pins
-  #ifdef DISABLE_CONTROL_PIN_PULL_UP
-    CONTROL_PORT &= ~(CONTROL_MASK); // Normal low operation. Requires external pull-down.
-  #else
-    CONTROL_PORT |= CONTROL_MASK;   // Enable internal pull-up resistors. Normal high operation.
-  #endif
-  CONTROL_PCMSK |= CONTROL_MASK;  // Enable specific pins of the Pin Change Interrupt
-  PCICR |= (1 << CONTROL_INT);   // Enable Pin Change Interrupt
-#elif defined(CPU_STM32)
-
-#endif
+{ 
+  // TODO
 }
-
 
 // Returns control pin state as a uint8 bitfield. Each bit indicates the input pin state, where
 // triggered is 1 and not triggered is 0. Invert mask is applied. Bitfield organization is
@@ -69,30 +57,9 @@ uint8_t system_control_get_state()
 // only the realtime command execute variable to have the main program execute these when
 // its ready. This works exactly like the character-based realtime commands when picked off
 // directly from the incoming serial data stream.
-#if defined(CPU_MAP_ATMEGA328P)
-ISR(CONTROL_INT_vect)
-{
-  uint8_t pin = system_control_get_state();
-  if (pin) {
-    if (bit_istrue(pin,CONTROL_PIN_INDEX_RESET)) {
-      mc_reset();
-    }
-    if (bit_istrue(pin,CONTROL_PIN_INDEX_CYCLE_START)) {
-      bit_true(sys_rt_exec_state, EXEC_CYCLE_START);
-    }
-    #ifndef ENABLE_SAFETY_DOOR_INPUT_PIN
-      if (bit_istrue(pin,CONTROL_PIN_INDEX_FEED_HOLD)) {
-        bit_true(sys_rt_exec_state, EXEC_FEED_HOLD);
-    #else
-      if (bit_istrue(pin,CONTROL_PIN_INDEX_SAFETY_DOOR)) {
-        bit_true(sys_rt_exec_state, EXEC_SAFETY_DOOR);
-    #endif
-    }
-  }
-}
-#elif defined(CPU_STM32)
+// TODO
 
-#endif
+
 
 // Returns if safety door is ajar(T) or closed(F), based on pin state.
 uint8_t system_check_safety_door_ajar()
@@ -274,7 +241,7 @@ uint8_t system_execute_line(char *line)
             helper_var = gc_execute_line(line); // Set helper_var to returned status code.
             if (helper_var) { return(helper_var); }
             else {
-              helper_var = trunc(parameter); // Set helper_var to int value of parameter
+              helper_var = (uint8_t)truncf(parameter); // Set helper_var to int value of parameter
               settings_store_startup_line(helper_var,line);
             }
           } else { // Store global setting.
@@ -366,105 +333,49 @@ uint8_t system_check_travel_limits(float *target)
 
 // Special handlers for setting and clearing Grbl's real-time execution flags.
 void system_set_exec_state_flag(uint8_t mask) {
-#if defined(CPU_MAP_ATMEGA328P)
-  uint8_t sreg = SREG;
-  cli();
-  sys_rt_exec_state |= (mask);
-  SREG = sreg;
-#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_state |= (mask);
   __enable_irq();
-#endif
 }
 
 void system_clear_exec_state_flag(uint8_t mask) {
-#if defined(CPU_MAP_ATMEGA328P)
-  uint8_t sreg = SREG;
-  cli();
-  sys_rt_exec_state &= ~(mask);
-  SREG = sreg;
-#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_state &= ~(mask);
   __enable_irq();
-#endif
 }
 
 void system_set_exec_alarm(uint8_t code) {
-#if defined(CPU_MAP_ATMEGA328P)
-  uint8_t sreg = SREG;
-  cli();
-  sys_rt_exec_alarm = code;
-  SREG = sreg;
-#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_alarm |= (code);
   __enable_irq();
-#endif
 }
 
 void system_clear_exec_alarm() {
-#if defined(CPU_MAP_ATMEGA328P)
-  uint8_t sreg = SREG;
-  cli();
-  sys_rt_exec_alarm = 0;
-  SREG = sreg;
-#elif defined(CPU_STM32)
    __disable_irq();
   sys_rt_exec_alarm = 0;
   __enable_irq();
-#endif
 }
 
 void system_set_exec_motion_override_flag(uint8_t mask) {
-#if defined(CPU_MAP_ATMEGA328P)
-  uint8_t sreg = SREG;
-  cli();
-  sys_rt_exec_motion_override |= (mask);
-  SREG = sreg;
-#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_motion_override |= (mask);
   __enable_irq();
-#endif
 }
 
 void system_set_exec_accessory_override_flag(uint8_t mask) {
-#if defined(CPU_MAP_ATMEGA328P)
-  uint8_t sreg = SREG;
-  cli();
-  sys_rt_exec_accessory_override |= (mask);
-  SREG = sreg;
-#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_accessory_override |= (mask);
   __enable_irq();
-#endif
 }
 
 void system_clear_exec_motion_overrides() {
-#if defined(CPU_MAP_ATMEGA328P)
-  uint8_t sreg = SREG;
-  cli();
-  sys_rt_exec_motion_override = 0;
-  SREG = sreg;
-#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_motion_override = 0;
   __enable_irq();
-#endif
 }
 
 void system_clear_exec_accessory_overrides() {
-#if defined(CPU_MAP_ATMEGA328P)
-  uint8_t sreg = SREG;
-  cli();
-  sys_rt_exec_accessory_override = 0;
-  SREG = sreg;
-#elif defined(CPU_STM32)
   __disable_irq();
   sys_rt_exec_accessory_override = 0;
   __enable_irq();
-#endif
 }

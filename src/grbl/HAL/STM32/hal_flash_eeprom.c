@@ -7,7 +7,6 @@ FLASH_EraseInitTypeDef eeprom_flash;
 
 
 #ifdef USE_EEPROM_IC
-
 void hal_eeprom_i2c_init(void) {
     hal_i2c1_init();
 }
@@ -23,21 +22,12 @@ void hal_i2c_eeprom_write_page(uint8_t *buff) {
 #endif
 
 
-void hal_flash_unlock(void) {
-    // HAL_FLASH_Unlock();
-}
-
-uint32_t hal_read_flash_word(uint32_t addr) {
-
-    return *(volatile uint32_t *)addr; 
-}
-
-void hal_eeprom_flush(void) {
+void BspEepromFlush(void) {
 
     hal_flash_write_buff(EEPROM_START_ADDR, (uint32_t *)eeprom_buf, EEPROM_SIZE(eeprom_buf));
 }
 
-void hal_eeprom_init(void) {
+void BspEepromInit(void) {
 
     uint16_t    var = 0;
     uint8_t     *temp = eeprom_buf;
@@ -55,44 +45,36 @@ void hal_eeprom_init(void) {
     }
 }
 
-uint8_t hal_eeprom_get_char(unsigned int addr) {
+uint8_t BspEeepromGetChar(unsigned int addr) {
     return eeprom_buf[addr];
-}
-
-void hal_eeprom_put_char(unsigned int addr, unsigned char new_value) {
-    eeprom_buf[addr] = new_value;
-}
-
-uint32_t hal_falsh_eeprom_read(uint32_t addr) {
-
-    return *(volatile uint32_t *)addr;
 }
 
 uint8_t hal_get_flash_sector(uint32_t addr) {
 #ifdef STM32F429xx
-    if(addr<ADDR_FLASH_SECTOR_1)return FLASH_SECTOR_0;
-    else if(addr<ADDR_FLASH_SECTOR_2)return FLASH_SECTOR_1;
-    else if(addr<ADDR_FLASH_SECTOR_3)return FLASH_SECTOR_2;
-    else if(addr<ADDR_FLASH_SECTOR_4)return FLASH_SECTOR_3;
-    else if(addr<ADDR_FLASH_SECTOR_5)return FLASH_SECTOR_4;
-    else if(addr<ADDR_FLASH_SECTOR_6)return FLASH_SECTOR_5;
-    else if(addr<ADDR_FLASH_SECTOR_7)return FLASH_SECTOR_6;
-    else if(addr<ADDR_FLASH_SECTOR_8)return FLASH_SECTOR_7;
-    else if(addr<ADDR_FLASH_SECTOR_9)return FLASH_SECTOR_8;
-    else if(addr<ADDR_FLASH_SECTOR_10)return FLASH_SECTOR_9;
-    else if(addr<ADDR_FLASH_SECTOR_11)return FLASH_SECTOR_10;
-    else if(addr<ADDR_FLASH_SECTOR_12)return FLASH_SECTOR_11;
-    else if(addr<ADDR_FLASH_SECTOR_13)return FLASH_SECTOR_12;
-    else if(addr<ADDR_FLASH_SECTOR_14)return FLASH_SECTOR_13;
-    else if(addr<ADDR_FLASH_SECTOR_15)return FLASH_SECTOR_14;
-    else if(addr<ADDR_FLASH_SECTOR_16)return FLASH_SECTOR_15;
-    else if(addr<ADDR_FLASH_SECTOR_17)return FLASH_SECTOR_16;
-    else if(addr<ADDR_FLASH_SECTOR_18)return FLASH_SECTOR_17;
-    else if(addr<ADDR_FLASH_SECTOR_19)return FLASH_SECTOR_18;
-    else if(addr<ADDR_FLASH_SECTOR_20)return FLASH_SECTOR_19;
-    else if(addr<ADDR_FLASH_SECTOR_21)return FLASH_SECTOR_20;
-    else if(addr<ADDR_FLASH_SECTOR_22)return FLASH_SECTOR_21;
-    else if(addr<ADDR_FLASH_SECTOR_23)return FLASH_SECTOR_22;
+    if(addr<ADDR_FLASH_SECTOR_0)return FLASH_SECTOR_0;
+    else if(addr<ADDR_FLASH_SECTOR_1)return FLASH_SECTOR_1;
+    else if(addr<ADDR_FLASH_SECTOR_2)return FLASH_SECTOR_2;
+    else if(addr<ADDR_FLASH_SECTOR_3)return FLASH_SECTOR_3;
+    else if(addr<ADDR_FLASH_SECTOR_4)return FLASH_SECTOR_4;
+    else if(addr<ADDR_FLASH_SECTOR_5)return FLASH_SECTOR_5;
+    else if(addr<ADDR_FLASH_SECTOR_6)return FLASH_SECTOR_6;
+    else if(addr<ADDR_FLASH_SECTOR_7)return FLASH_SECTOR_7;
+    else if(addr<ADDR_FLASH_SECTOR_8)return FLASH_SECTOR_8;
+    else if(addr<ADDR_FLASH_SECTOR_9)return FLASH_SECTOR_9;
+    else if(addr<ADDR_FLASH_SECTOR_10)return FLASH_SECTOR_10;
+    else if(addr<ADDR_FLASH_SECTOR_11)return FLASH_SECTOR_11;
+    else if(addr<ADDR_FLASH_SECTOR_12)return FLASH_SECTOR_12;
+    else if(addr<ADDR_FLASH_SECTOR_13)return FLASH_SECTOR_13;
+    else if(addr<ADDR_FLASH_SECTOR_14)return FLASH_SECTOR_14;
+    else if(addr<ADDR_FLASH_SECTOR_15)return FLASH_SECTOR_15;
+    else if(addr<ADDR_FLASH_SECTOR_16)return FLASH_SECTOR_16;
+    else if(addr<ADDR_FLASH_SECTOR_17)return FLASH_SECTOR_17;
+    else if(addr<ADDR_FLASH_SECTOR_18)return FLASH_SECTOR_18;
+    else if(addr<ADDR_FLASH_SECTOR_19)return FLASH_SECTOR_19;
+    else if(addr<ADDR_FLASH_SECTOR_20)return FLASH_SECTOR_20;
+    else if(addr<ADDR_FLASH_SECTOR_21)return FLASH_SECTOR_21;
+    else if(addr<ADDR_FLASH_SECTOR_22)return FLASH_SECTOR_22;
+    else if(addr<ADDR_FLASH_SECTOR_23)return FLASH_SECTOR_23; 
     return FLASH_SECTOR_23;
 #else 
     return 0;
@@ -155,7 +137,7 @@ void hal_flash_write_buff(uint32_t addr ,uint32_t *buff, uint32_t num) {
 	{
 		 while(addr < endaddr)//写数据
 		 {
-#ifdef STM32F429xx
+#ifdef FLASH_WRITE_SECTORS_WORD
 
             status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, addr, *buff);
 
@@ -166,7 +148,7 @@ void hal_flash_write_buff(uint32_t addr ,uint32_t *buff, uint32_t num) {
 			addr+=4;
 			buff++;
 
-#elif defined(STM32G0B0xx)
+#elif defined(FLASH_WRITE_PAGE_DOUBLEWORD)
             status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, addr, *(uint64_t*)buff);
 
 			if(status != HAL_OK)//写入数据
@@ -178,7 +160,6 @@ void hal_flash_write_buff(uint32_t addr ,uint32_t *buff, uint32_t num) {
 #endif
 		}  
 	}
-
 	HAL_FLASH_Lock();           //上锁
 }
 

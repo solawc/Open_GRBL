@@ -5,7 +5,7 @@
  * int whitch exit line? you'd best make the pins in the same exit line! than 
  * you just need to use the same irq handle function to deal with the job.
 *******************************************************************************/
-void hal_limit_gpio_init(void) {
+void BspLimitGpioInit(void) {
 
 	GPIO_InitTypeDef GPIO_Init = {0};
 	GPIO_Init.Mode = GPIO_MODE_IT_RISING;
@@ -27,14 +27,14 @@ void hal_limit_gpio_init(void) {
 #endif
 }
 
-void hal_limit_gpio_irq_enable(void) {
+void BspLimitGpioIrqEnable(void) {
 
 	/* EXTI interrupt init*/
 	HAL_NVIC_SetPriority(LIMIT_IRQn, 0, 0);
 	HAL_NVIC_EnableIRQ(LIMIT_IRQn);
 }
 
-void hal_limit_gpio_irq_disable(void) {
+void BspLimitGpioIrqDisable(void) {
 
 	HAL_NVIC_DisableIRQ(LIMIT_IRQn);
 }
@@ -54,7 +54,7 @@ uint8_t hal_probe_gpio_read(void) {
 	return HAL_GPIO_ReadPin(PROBE_PORT, PROBE_PIN);
 }
 
-uint8_t hal_limits_get_gpio_status(uint8_t axis) {
+uint8_t BspLimitGetState(uint8_t axis) {
 #ifdef LIMIT_X_PIN
 	if(axis == X_AXIS) 			return HAL_GPIO_ReadPin(LIMIT_X_PORT, LIMIT_X_PIN);
 #ifdef LIMIT_Y_PIN
@@ -70,7 +70,7 @@ uint8_t hal_limits_get_gpio_status(uint8_t axis) {
 #endif
 }
 
-uint8_t hal_get_all_limits_status(uint8_t bit_select) {
+uint8_t BspLimitGetAllState(uint8_t bit_select) {
 
 	uint8_t limit_status = 0x00;
 	
@@ -152,13 +152,14 @@ static void hal_motor_axis_gpio_init(void) {
 }
 
 
-void hal_motor_gpio_init(void) {
+void BspStepGpioInit(void) {
 	hal_motor_en_gpio_init();
 	hal_motor_dir_gpio_init();
 	hal_motor_axis_gpio_init();
 }
 
-void hal_step_en_gpio_set(bool status) {
+
+void BspSetGpioStepEnable(bool status) {
 	if(status) { 
 	#ifdef STEP_EN_PORT
 		HAL_GPIO_WritePin(STEP_EN_PORT, STEP_EN_PIN, GPIO_PIN_SET); 
@@ -207,7 +208,7 @@ uint8_t hal_return_axix_gpio_status(uint8_t axis) {
 	return mask;
 }
 
-void hal_set_dir_gpio_status(uint8_t mask) {
+void BspSetGpioDirState(uint8_t mask) {
 
 	if(mask & 0x01) {HAL_GPIO_WritePin(MOTOR_X_DIR_PORT, MOTOR_X_DIR_PIN, GPIO_PIN_SET);}
 	else {HAL_GPIO_WritePin(MOTOR_X_DIR_PORT, MOTOR_X_DIR_PIN, GPIO_PIN_RESET);}
@@ -221,7 +222,8 @@ void hal_set_dir_gpio_status(uint8_t mask) {
 #endif
 }
 
-void hal_set_step_gpio_status(uint8_t mask) {
+
+void BspSetGpioStepState(uint8_t mask) {
 
 	if(mask & 0x01) {HAL_GPIO_WritePin(MOTOR_X_AXIS_PORT, MOTOR_X_AXIS_PIN, GPIO_PIN_SET);}
 	else {HAL_GPIO_WritePin(MOTOR_X_AXIS_PORT, MOTOR_X_AXIS_PIN, GPIO_PIN_RESET);}
@@ -235,13 +237,14 @@ void hal_set_step_gpio_status(uint8_t mask) {
 	#endif
 }
 
-uint8_t hal_get_moter_dir_gpio_mask(uint8_t axis) {
+
+uint8_t BspGetStepDirMask(uint8_t axis) {
 	if(axis == X_AXIS) return 0x01;
 	else if(axis == Y_AXIS)	return 0x02;
 	else return 0x04;
 }
 
-uint8_t hal_get_moter_axis_gpio_mask(uint8_t axis) {
+uint8_t BspGetStepGpioMask(uint8_t axis) {
 	
 	if(axis == X_AXIS) return 0x01;
 	else if(axis == Y_AXIS)	return 0x02;
@@ -252,7 +255,6 @@ uint8_t hal_get_moter_axis_gpio_mask(uint8_t axis) {
 void hal_coolant_pin_init(void) {
 
 	GPIO_InitTypeDef GPIO_Init; 
-
 	GPIO_Init.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_Init.Pull = GPIO_NOPULL;
 	GPIO_Init.Speed = GPIO_SPEED_FREQ_VERY_HIGH;

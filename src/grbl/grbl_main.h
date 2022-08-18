@@ -10,6 +10,7 @@
 
 #if defined(USE_FREERTOS_RTOS)
 void enter_grbl_task(void *parg);
+void grblTaskInit(void);
 #else
 void enter_grbl_task(void);
 #endif

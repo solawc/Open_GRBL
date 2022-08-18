@@ -39,7 +39,4 @@ void SysTick_Handler(void)
 #endif /* INCLUDE_xTaskGetSchedulerState */
 
 #endif
-  /* USER CODE BEGIN SysTick_IRQn 1 */
-
-  /* USER CODE END SysTick_IRQn 1 */
 }

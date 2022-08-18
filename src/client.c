@@ -2,7 +2,7 @@
 
 client_buff_t client_rb[CLIENT_MAX];
 
-void client_init(void) {
+void clientInit(void) {
 
     for(uint8_t i=0; i<CLIENT_MAX; i++) {
         client_rb[i].head = 0;
@@ -11,7 +11,7 @@ void client_init(void) {
     }
 }
 
-bool client_write(uint8_t client, uint8_t wdata) {
+bool clientWrite(uint8_t client, uint8_t wdata) {
 
     if(client_rb[client].len >= 255) return false;
 
@@ -24,7 +24,7 @@ bool client_write(uint8_t client, uint8_t wdata) {
     return true;
 }
 
-bool client_read(uint8_t client, uint8_t *rdata) {
+bool clientRead(uint8_t client, uint8_t *rdata) {
 
     if(client_rb[client].len == 0) return false;
 

@@ -3,6 +3,7 @@
 /*******************************************************************************
  *                              W25QXX SPI Init
  * ****************************************************************************/
+#ifdef HAS_W25Qxx
 SPI_HandleTypeDef w25qxx_spi;
 SPI_HandleTypeDef tft_spi;
 NFLASH_t sFlash;
@@ -42,12 +43,12 @@ void w25qxx_spi_gpio_init(void)
 
 void spi_for_w25qxx_init(void) {
 
-    __HAL_RCC_SPI2_CLK_ENABLE();
+    W25QXX_SPI_CLK_ENABLE();
 
     w25qxx_spi.Instance = W25QXX_SPI_PORT;
     w25qxx_spi.Init.BaudRatePrescaler = W25QXX_SPEED;
-    w25qxx_spi.Init.CLKPhase = SPI_PHASE_1EDGE;
-    w25qxx_spi.Init.CLKPolarity = SPI_POLARITY_LOW;
+    w25qxx_spi.Init.CLKPhase = SPI_PHASE_2EDGE;
+    w25qxx_spi.Init.CLKPolarity = SPI_POLARITY_HIGH;
     w25qxx_spi.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
     w25qxx_spi.Init.CRCPolynomial = 7;
     w25qxx_spi.Init.DataSize = SPI_DATASIZE_8BIT;
@@ -64,8 +65,16 @@ void spi_for_w25qxx_init(void) {
 }
 
 uint8_t w25qxx_spi_read_write(uint8_t data) {
+    HAL_StatusTypeDef status = HAL_ERROR;
+
     uint8_t rdata = 0;    
-    HAL_SPI_TransmitReceive(&w25qxx_spi, &data, &rdata, 1, 10);
+
+    status = HAL_SPI_TransmitReceive(&w25qxx_spi, &data, &rdata, 1, 10);
+
+    if(status != HAL_OK) {
+        while(1);
+    }
+    
     return rdata;
 }
 
@@ -86,7 +95,7 @@ void w25qxx_spi_regiest() {
     sFlash.w25qxx_disable_trans = w25qxx_spi_cs_disable;
     sFlash.w25qxx_enable_trans = w25qxx_spi_cs_enabel;
 }
-
+#endif
 
 /*******************************************************************************
  *                              TFT SPI Init

@@ -1,21 +1,15 @@
 #include "hal_uart.h"
 
-
 hal_uart_t rb_serial_rx;
+hal_uart_t rb_serial_tx;
 
 UART_HandleTypeDef laser_uart;
 UART_HandleTypeDef tft_uart;
 
-DMA_HandleTypeDef dma_tx;
-DMA_HandleTypeDef dma_rx;
-
-uint8_t laser_dma_rx_buf[5];
-
-
 /************************************************************
  * 			For Serial UART
  * *********************************************************/
-void hal_uart_gpio_init(void) {
+void BspUartGpioInit(void) {
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -31,11 +25,11 @@ void hal_uart_gpio_init(void) {
     HAL_GPIO_Init(LASER_UART_TX_PORT, &GPIO_InitStruct);
 }
 
-void hal_uart_init(void) {
+void BspUartInit(void) {
 
-	hal_uart_gpio_init();
+	BspUartGpioInit();
     laser_uart.Instance = LaserUART;
-	laser_uart.Init.BaudRate = 115200;
+	laser_uart.Init.BaudRate = BAUD_RATE;
 	laser_uart.Init.WordLength = UART_WORDLENGTH_8B;
 	laser_uart.Init.StopBits = UART_STOPBITS_1;
 	laser_uart.Init.Parity = UART_PARITY_NONE;
@@ -61,42 +55,34 @@ void hal_uart_init(void) {
 		Error_Handler();
 	}
 #endif
-
-	hal_uart_irq_set();
+	BspUartIrqSet();
 }
 
-void hal_uart_irq_set(void) {
+void BspUartIrqSet(void) {
 	HAL_NVIC_SetPriority(LaserUART_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(LaserUART_IRQn);
 	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE);
 }
 
-void hal_laser_uart_irq_enable(void) { __HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE); }
-void hal_laser_uart_irq_disable(void) { __HAL_UART_DISABLE_IT(&laser_uart, UART_IT_RXNE); }
-void hal_uart_sendbyte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 1000); }
+void BspUartSendByte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 1000); }
 
-uint8_t hal_uart_read_dr(void) { 
-
-#ifdef STM32G0B0xx
-	return laser_uart.Instance->RDR;
+#ifdef RDR
+#define USAR_READ_REG			RDR
+#else 
+#define USAR_READ_REG			DR
 #endif
 
-#ifdef STM32F429xx
-	return laser_uart.Instance->DR;
-#endif
+uint8_t BspUartReadData(void) { 
+	return laser_uart.Instance->USAR_READ_REG;
 }
 
-bool hal_is_uart_sr_txe(void) { 
-#ifdef STM32F429xx
-	return (__HAL_UART_GET_FLAG(&laser_uart, USART_FLAG_TXE));
-#elif defined(STM32G0B0xx)
-	return (__HAL_UART_GET_FLAG(&laser_uart, USART_FLAG_TXE)); 
-#endif
+bool BspUartTcFlag(void) { 
+	return (__HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_TC));
 }
 
-// use printf , but no suggest!!
 /*
- * C标准库的重定向, 该方法适用于使用Keil/IAR等这类型的编译器，如果使用GCC/G++等编译链工具进行编译，请使用_write(int fd, char *ptr, int len)	
+ * C标准库的重定向, 该方法适用于使用Keil/IAR等这类型的编译器，如果使用GCC/G++等编译链工具进行编译，
+ * 请使用_write(int fd, char *ptr, int len)	
  * 进行重定向，否则会出现串口无法打印的情况
 */
 #ifdef __CC_ARM
@@ -121,14 +107,14 @@ void LASER_UART_IRQHANDLER() {
 #if defined(USE_FREERTOS_RTOS)
 	uint32_t ulReturn;
 #endif
-	uint16_t data;
+	__IO uint16_t data;
 
 #if defined(USE_FREERTOS_RTOS)
 	ulReturn = taskENTER_CRITICAL_FROM_ISR();
 #endif
 
 	if(LASER_UART_RX_FLAG) {
-		data = hal_uart_read_dr();
+		data = BspUartReadData();
 		laser_uart_rx_handler(data);
 	}
 
@@ -151,11 +137,17 @@ void tft_lcd_uart_init() {
 	tft_lcd_uart_pins_init();
 }
 
+/*************************************************************
+ * A ringbuffer init
+ * **********************************************************/
 void serial_rb_init(hal_uart_t *rb) {
 	rb->head = 0;
 	rb->tail = 0;
 }
 
+/*************************************************************
+ * write a data to ringbuffer
+ * **********************************************************/
 void serial_rb_write(hal_uart_t *rb, uint8_t data) {
 
 	uint8_t next = rb->head + 1;
@@ -168,6 +160,9 @@ void serial_rb_write(hal_uart_t *rb, uint8_t data) {
 	}
 }
 
+/*************************************************************
+ * read a data from ringbuffer
+ * **********************************************************/
 uint8_t serial_rb_read(hal_uart_t *rb, uint8_t *data) {
 
 	uint8_t tail = rb->tail;
@@ -183,19 +178,30 @@ uint8_t serial_rb_read(hal_uart_t *rb, uint8_t *data) {
 	}
 }
 
+/*************************************************************
+ * if ringbuffer abailable
+ * **********************************************************/
 uint16_t serial_rb_abailable(hal_uart_t *rb) {
-
-	uint8_t tmp_tail = rb->tail;		// 备份当前值，防止篡改
+	uint8_t tmp_tail = rb->tail;						
 	if(rb->head > tmp_tail) return (rb->head - tmp_tail);
 	return (tmp_tail - rb->head); 
 }
 
+/*************************************************************
+ * get ringbuffer count
+ * **********************************************************/
 uint16_t serial_rb_buff_count(hal_uart_t *rb) {
-
 	uint8_t tmp_tail = rb->tail;
 	if(rb->head >= tmp_tail) {return (rb->head - tmp_tail);}
 	return (UART_RB_BUFF_MAX - (tmp_tail - rb->head));
 } 
+
+/************************************************************
+ * Reset ringbuffer
+ * *********************************************************/
+void serial_rb_reset(hal_uart_t *rb) {
+	rb->tail = rb->head;
+}
 
 
 

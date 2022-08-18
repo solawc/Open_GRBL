@@ -3,6 +3,7 @@
 
 #include "../../../main.h"
 
-
+void hal_wdg_init(void);
+void hal_feedWDG(void);
 
 #endif

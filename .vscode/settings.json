@@ -40,7 +40,18 @@
         "pins_mks_dlc_lg0.h": "c",
         "common_cmd.h": "c",
         "grbl_main.h": "c",
-        "commonmarco.h": "c"
+        "commonmarco.h": "c",
+        "mid_timer.h": "c",
+        "hal_nucleo_g070rb.h": "c",
+        "pins_def.h": "c",
+        "pins_nucleo_g070rb.h": "c",
+        "pins_fireboard_f429.h": "c",
+        "grbl_mb.h": "c",
+        "ff.h": "c",
+        "hal_wdg.h": "c",
+        "queue.h": "c",
+        "mid_gpio.h": "c",
+        "hal_fireboard_system.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

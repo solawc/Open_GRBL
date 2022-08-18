@@ -92,12 +92,12 @@ typedef struct {
   float max_travel[N_AXIS];
 
   // Remaining Grbl settings
-  // uint8_t pulse_microseconds;
-#ifdef STM32F429xx
-  float fpulse_microseconds;  // change for F4
-#elif defined(STM32G0B0xx)
-  uint8_t pulse_microseconds;
-#endif
+  #ifdef USE_MCU_FPU
+    float fpulse_microseconds;  // change for F4
+  #else
+    uint8_t pulse_microseconds;
+  #endif
+
   uint8_t step_invert_mask;
   uint8_t dir_invert_mask;
   uint8_t stepper_idle_lock_time; // If max value 255, steppers do not disable.

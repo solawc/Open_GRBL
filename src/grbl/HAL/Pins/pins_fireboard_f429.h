@@ -1,7 +1,18 @@
 #ifndef __pins_fireboard_f429_h
 #define __pins_fireboard_f429_h
 
+#include "pins_def.h"
+#include "../grbl_mb.h"
 
+#if MB_BOARD == BOARD_FIRE_BOARD_F429
+
+/* Enable FPU */
+#define USE_MCU_FPU
+
+/* Board Info */
+#define MCU_INFI_NAME                   "STM32F429IG"
+#define MCU_INFO_FLASH                  "1024K"
+#define MCU_INFO_RAM                    "512K"
 
 /* For Limit */
 #define BOARD_LIMIT_X_PORT              GPIOD
@@ -46,9 +57,8 @@
 #define BOARD_MIST_PIN                  GPIO_PIN_3
 
 /* FLAME */
-#define BOARD_FLAME_PORT
-#define BOARD_FLAME_PIN
-
+// #define BOARD_FLAME_PORT                
+// #define BOARD_FLAME_PIN
 
 /* For W25qxx */
 #define W25QXX_SPI_PORT                 SPI5
@@ -62,10 +72,10 @@
 #define W25QXX_SPI_CS_PIN               GPIO_PIN_6
 #define W25QXX_PIN_AF                   GPIO_AF5_SPI5
 #define W25QXX_SPEED                    SPI_BAUDRATEPRESCALER_4
+#define W25QXX_SPI_CLK_ENABLE()         __HAL_RCC_SPI5_CLK_ENABLE()
 
 /* For SDCard */
 #define SD_USE_SDIO
-
 
 /* For Serial UART */
 #define  __HAL_UART_CLK(uart)	        __HAL_RCC_##uart##_CLK_ENABLE()
@@ -84,22 +94,25 @@
 #define BOARD_UART_AF_MODE              GPIO_AF7_USART1
 #define BOARD_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
 
+/* For timer use */
+#define BOARD_SETP_SET_TIM              TIM3
+#define BOARD_SETP_RESET_TIM            TIM4
+#define BOARD_STEP_SET_TIMER            STEP_SET_TIM
+#define BOARD_STEP_RESET_TIMER          STEP_RESET_TIM
+#define BOARD_SET_TIM_IRQn              TIM3_IRQn
+#define BOARD_RESET_TIM_IRQn            TIM4_IRQn
+#define BOARD_SET_TIM_CLK_ENABLED()     __HAL_RCC_TIM3_CLK_ENABLE()
+#define BOARD_RESET_TIM_CLK_ENABLED()   __HAL_RCC_TIM4_CLK_ENABLE()
+#define BOARD_STEP_SET_HANDLER          TIM3_IRQHandler
+#define BOARD_STEP_RESET_HANDLER        TIM4_IRQHandler
+#define BOARD_LASER_TIM_PORT            TIM1
+#define BOARD_LASER_TIM_CH              TIM_CHANNEL_2
+#define BOARD_LASER_PIN_AF              GPIO_AF1_TIM1
+#define BOARD_LASER_OUT_PORT            GPIOB
+#define BOARD_LASER_OUT_PIN             GPIO_PIN_6
+#define BOARD_LASER_OUT_CLK()           __HAL_RCC_TIM4_CLK_ENABLE()
+#define BOARD_LASER_OUT_PIN_CLK()       __HAL_RCC_GPIOB_CLK_ENABLE()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#endif
 
 #endif

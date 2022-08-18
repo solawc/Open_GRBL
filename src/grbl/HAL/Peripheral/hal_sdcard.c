@@ -4,7 +4,6 @@
 
 SPI_HandleTypeDef sd_hspi;
 
-
 static void sd_spi_pin_init(void) {
 
 #ifdef HAS_SDCARD

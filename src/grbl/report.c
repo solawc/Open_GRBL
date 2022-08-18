@@ -28,7 +28,6 @@
 
 #include "grbl.h"
 
-
 // Internal report utilities to reduce flash with repetitive tasks turned into functions.
 void report_util_setting_prefix(uint8_t n) { serial_write('$'); print_uint8_base10(n); serial_write('='); }
 static void report_util_line_feed() { printPgmString(PSTR("\r\n")); }
@@ -116,13 +115,15 @@ void report_status_message(uint8_t status_code)
 {
   switch(status_code) {
     case STATUS_OK:
-
+#ifdef SDSUPPORT
       if(sd_state == SD_STATE_BUSY) {
         sd_ready_next = true;
       } else {
         printPgmString(PSTR("ok\r\n")); 
       }
-
+#else 
+  printPgmString(PSTR("ok\r\n")); 
+#endif
     break;
 
     default:
@@ -192,11 +193,12 @@ void report_grbl_help() {
 // NOTE: The numbering scheme here must correlate to storing in settings.c
 void report_grbl_settings() {
   // Print Grbl settings.
-#ifdef STM32F429xx
-  report_util_uint8_setting(0,settings.fpulse_microseconds);
-#elif defined(STM32G0B0xx)
-  report_util_uint8_setting(0,settings.pulse_microseconds);
-#endif
+  #ifdef USE_MCU_FPU
+    report_util_uint8_setting(0,settings.fpulse_microseconds);
+  #else 
+    report_util_uint8_setting(0,settings.pulse_microseconds); 
+  #endif
+
   report_util_uint8_setting(1,settings.stepper_idle_lock_time);
   report_util_uint8_setting(2,settings.step_invert_mask);
   report_util_uint8_setting(3,settings.dir_invert_mask);
@@ -460,7 +462,9 @@ void report_build_info(char *line)
   serial_write(',');
   print_uint8_base10(BLOCK_BUFFER_SIZE-1);
   serial_write(',');
-  print_uint8_base10(RX_BUFFER_SIZE);
+  // print_uint8_base10(RX_BUFFER_SIZE);
+
+  print_uint32_base10(RX_BUFFER_SIZE);
 
   report_util_feedback_line_feed();
 }

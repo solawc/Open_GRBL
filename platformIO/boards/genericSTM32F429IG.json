@@ -32,7 +32,8 @@
     "protocols": [
       "dfu",
       "jlink",
-      "serial"
+      "serial",
+      "cmsis-dap"
     ]
   },
   "url": "https://www.st.com/en/microcontrollers-microprocessors/stm32f429ig.html",

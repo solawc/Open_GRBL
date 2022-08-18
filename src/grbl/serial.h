@@ -24,7 +24,7 @@
 
 
 #ifndef RX_BUFFER_SIZE
-  #define RX_BUFFER_SIZE 255
+  #define RX_BUFFER_SIZE UART_RB_BUFF_MAX// 255
 #endif
 #ifndef TX_BUFFER_SIZE
   #ifdef USE_LINE_NUMBERS
@@ -58,11 +58,7 @@ uint8_t serial_get_rx_buffer_count();
 // NOTE: Not used except for debugging and ensuring no TX bottlenecks.
 uint8_t serial_get_tx_buffer_count();
 
+// 串口中断执行的函数
 void laser_uart_rx_handler(__IO uint8_t data);
-
-bool cmd_parse(uint8_t data);
-
-bool protocol_rt_command(char data);
-bool protocol_rt_command_run(char data);
 
 #endif
