@@ -53,7 +53,7 @@ void systemInit() {
 
     HAL_Init();
 
-    SYSTEM_INTI();
+    SYSTEM_INIT();
 
     SYSTEM_UART();      
 

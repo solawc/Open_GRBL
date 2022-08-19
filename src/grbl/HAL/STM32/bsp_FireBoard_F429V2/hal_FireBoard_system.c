@@ -1,5 +1,5 @@
 
-#ifdef STM32F429xx
+#ifdef BOARD_FireBoard_F429_INI
 #include "hal_FireBoard_system.h"
 #include "../hal_tim.h"
 
@@ -107,6 +107,5 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
 
 #endif

@@ -1,10 +1,9 @@
 #ifndef __hal_FireBoard_system_h
 #define __hal_FireBoard_system_h
 
-#ifdef STM32F429xx
+#ifdef BOARD_FireBoard_F429_INI
 #include "stm32f4xx_hal.h"
 #include "core_cm4.h"
-
 
 #define ADDR_FLASH_SECTOR_0     ((uint32_t)0x08000000) 	//扇区0起始地址, 16 Kbytes  
 #define ADDR_FLASH_SECTOR_1     ((uint32_t)0x08004000) 	//扇区1起始地址, 16 Kbytes  

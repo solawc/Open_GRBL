@@ -82,12 +82,12 @@ void BspFlashWriteBuff(uint32_t addr ,uint32_t *buff, uint32_t num) {
 		{
 			if(STMFLASH_ReadWord(addrx) != 0XFFFFFFFF)//有非0XFFFFFFFF的地方,要擦除这个扇区
 			{   
-#ifdef STM32F429xx
+#ifdef FLASH_WRITE_SECTORS_WORD
 				FlashEraseInit.TypeErase=FLASH_TYPEERASE_SECTORS;       //擦除类型，扇区擦除 
 				FlashEraseInit.Sector=hal_get_flash_sector(addrx);   //要擦除的扇区
 				FlashEraseInit.NbSectors=1;                             //一次只擦除一个扇区
 				FlashEraseInit.VoltageRange=FLASH_VOLTAGE_RANGE_3;      //电压范围，VCC=2.7~3.6V之间!!
-#elif defined(STM32G0B0xx)
+#else
                 FlashEraseInit.Banks = FLASH_BANK_2;
                 FlashEraseInit.TypeErase = FLASH_TYPEERASE_PAGES;
                 FlashEraseInit.Page = 383;

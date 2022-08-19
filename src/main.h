@@ -33,24 +33,15 @@
 
 #include "grbl/HAL/grbl_mb.h"
 
-#if MB_BOARD==BOARD_DLC_LG0
-    #include "grbl/HAL/STM32/bsp_g0b0ce/hal_g0b0_system.h"
-    #include "grbl/HAL/Pins/pins_mks_dlc_lg0.h"
-#elif MB_BOARD==BOARD_DLC_LG0_V2
-    #include "grbl/HAL/STM32/bsp_g0b0ce/hal_g0b0_system.h"
-    #include "grbl/HAL/Pins/pins_mks_dlc_lg0.h"
-#elif MB_BOARD==BOARD_LASER_V1_0_BOX
-    #include "grbl/HAL/STM32/bsp_g0b0ce/hal_g0b0_system.h"
-    #include "grbl/HAL/Pins/pins_mks_dlc_lg0.h"
-#elif MB_BOARD==BOARD_LASER_BOX_4AXIS
-    #include "grbl/HAL/STM32/bsp_nucleo_g070rb/hal_nucleo_g070rb.h"
-    #include "grbl/HAL/Pins/pins_nucleo_g070rb.h"
+#if MB_BOARD==BOARD_FIRE_BOARD_F429
+    #include "grbl/HAL/STM32/bsp_FireBoard_F429V2/hal_FireBoard_system.h"
+    #include "grbl/HAL/Pins/pins_fireboard_f429.h"
 #elif MB_BOARD==BOARD_NUCLEO_G070RB
     #include "grbl/HAL/STM32/bsp_nucleo_g070rb/hal_nucleo_g070rb.h"
     #include "grbl/HAL/Pins/pins_nucleo_g070rb.h"
-#elif MB_BOARD==BOARD_FIRE_BOARD_F429
-    #include "grbl/HAL/STM32/bsp_FireBoard_F429V2/hal_FireBoard_system.h"
-    #include "grbl/HAL/Pins/pins_fireboard_f429.h"
+#elif MB_BOARD==BOARD_MKS_DLC_LG0_V3
+    #include "grbl/HAL/STM32/bsp_mks_dlc_lg0_v3/bsp_mks_dlc_lg0_v3_system.h"
+    #include "grbl/HAL/Pins/pins_mks_dlc_lg0_v3.h"
 #endif
 
 
