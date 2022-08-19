@@ -30,26 +30,6 @@
 #include "grbl_config.h"
 #include "grbl_mb.h"
 
-/***************************************************
- *                  MCU Platform
- * Here we mainly describe the relevant 
- * information of MCU model
- * ************************************************/
-#ifdef STM32F429xx
-// #define MCU_INFI_NAME       "STM32F429IG"
-// #define MCU_INFO_FLASH      "1024K"
-// #define MCU_INFO_RAM        "512K"
-#elif defined(STM32G0B0xx) 
-// #define MCU_INFI_NAME       "STM32G0B0CE"
-// #define MCU_INFO_FLASH      "512K"
-// #define MCU_INFO_RAM        "144K"
-#elif defined(STM32G070xx)
-// #define MCU_INFI_NAME       "STM32G070RB"
-// #define MCU_INFO_FLASH      "512K"
-// #define MCU_INFO_RAM        "144K"
-#endif
-
-
 typedef struct {
     uint32_t mcu_clk;
     uint32_t step_tim_clk;   

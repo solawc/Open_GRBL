@@ -115,7 +115,7 @@ void report_status_message(uint8_t status_code)
 {
   switch(status_code) {
     case STATUS_OK:
-#ifdef SDSUPPORT
+#ifdef HAS_SDCARD
       if(sd_state == SD_STATE_BUSY) {
         sd_ready_next = true;
       } else {

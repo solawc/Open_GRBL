@@ -55,18 +55,18 @@
 #define BOARD_MIST_PIN                  GPIO_PIN_10
 
 /* For W25qxx */
-#define W25QXX_SPI_PORT                 SPI2
-#define W25QXX_SPI_SCK_GPIO             GPIOB
-#define W25QXX_SPI_SCK_PIN              GPIO_PIN_13
-#define W25QXX_SPI_MISO_GPIO            GPIOB
-#define W25QXX_SPI_MISO_PIN             GPIO_PIN_14
-#define W25QXX_SPI_MOSI_GPIO            GPIOB
-#define W25QXX_SPI_MOSI_PIN             GPIO_PIN_15
-#define W25QXX_SPI_CS_GPIO              GPIOB
-#define W25QXX_SPI_CS_PIN               GPIO_PIN_12
-#define W25QXX_PIN_AF                   GPIO_AF5_SPI2
+#define W25QXX_SPI_PORT                 SPI1
+#define W25QXX_SPI_SCK_GPIO             GPIOA
+#define W25QXX_SPI_SCK_PIN              GPIO_PIN_5
+#define W25QXX_SPI_MISO_GPIO            GPIOA
+#define W25QXX_SPI_MISO_PIN             GPIO_PIN_6
+#define W25QXX_SPI_MOSI_GPIO            GPIOA
+#define W25QXX_SPI_MOSI_PIN             GPIO_PIN_7
+#define W25QXX_SPI_CS_GPIO              GPIOA
+#define W25QXX_SPI_CS_PIN               GPIO_PIN_4
+#define W25QXX_PIN_AF                   GPIO_AF5_SPI1
 #define W25QXX_SPEED                    SPI_BAUDRATEPRESCALER_4
-#define W25QXX_SPI_CLK_ENABLE()         __HAL_RCC_SPI2_CLK_ENABLE()
+#define W25QXX_SPI_CLK_ENABLE()         __HAL_RCC_SPI1_CLK_ENABLE()
 
 /* For SDCard */
 #define SD_USE_SPI

@@ -5,9 +5,8 @@
 #include "../grbl_config.h"
 
 #ifdef HAS_W25Qxx
+
     #include "../../../main.h"
-
-
     #define USE_FATFS
     #ifdef USE_FATFS
     #define W25QXX_FS_PATH              "0:"
@@ -102,6 +101,6 @@
             void get_w25qxx_fafts_info(void);
         #endif /* USE_FATFS */
 
-    #endif /* HAS_W25Qxx */
+#endif /* HAS_W25Qxx */
 
 #endif /* __hal_w25qxx_h__ */
