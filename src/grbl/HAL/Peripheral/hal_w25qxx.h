@@ -9,9 +9,8 @@
     #include "../../../main.h"
     #define USE_FATFS
     #ifdef USE_FATFS
-    #define W25QXX_FS_PATH              "0:"
-
-    #endif
+        #define W25QXX_FS_PATH              "0:"
+    #endif /* USE_FATFS */
 
 
     // Flash choose
