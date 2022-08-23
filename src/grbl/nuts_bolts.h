@@ -25,7 +25,7 @@
 #define false 0
 #define true 1
 
-#define SOME_LARGE_VALUE 1.0E+38
+#define SOME_LARGE_VALUE 1.0E+38f
 
 // Axis array index values. Must start with 0 and be continuous.
 #define N_AXIS 3 // Number of axes
