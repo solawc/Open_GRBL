@@ -240,7 +240,7 @@ plan_block_t *plan_get_current_block()
 float plan_get_exec_block_exit_speed_sqr()
 {
   uint8_t block_index = plan_next_block_index(block_buffer_tail);
-  if (block_index == block_buffer_head) { return( 0.0 ); }
+  if (block_index == block_buffer_head) { return( 0.0f ); }
   return( block_buffer[block_index].entry_speed_sqr );
 }
 
@@ -258,9 +258,9 @@ uint8_t plan_check_full_buffer()
 float plan_compute_profile_nominal_speed(plan_block_t *block)
 {
   float nominal_speed = block->programmed_rate;
-  if (block->condition & PL_COND_FLAG_RAPID_MOTION) { nominal_speed *= (0.01*sys.r_override); }
+  if (block->condition & PL_COND_FLAG_RAPID_MOTION) { nominal_speed *= (0.01f * sys.r_override); }
   else {
-    if (!(block->condition & PL_COND_FLAG_NO_FEED_OVERRIDE)) { nominal_speed *= (0.01*sys.f_override); }
+    if (!(block->condition & PL_COND_FLAG_NO_FEED_OVERRIDE)) { nominal_speed *= (0.01f * sys.f_override); }
     if (nominal_speed > block->rapid_rate) { nominal_speed = block->rapid_rate; }
   }
   if (nominal_speed > MINIMUM_FEED_RATE) { return(nominal_speed); }
@@ -316,7 +316,9 @@ uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
   // Prepare and initialize new block. Copy relevant pl_data for block execution.
   plan_block_t *block = &block_buffer[block_buffer_head];
   memset(block,0,sizeof(plan_block_t)); // Zero all block values.
+
   block->condition = pl_data->condition;
+  
   #ifdef VARIABLE_SPINDLE
     block->spindle_speed = pl_data->spindle_speed;
   #endif
