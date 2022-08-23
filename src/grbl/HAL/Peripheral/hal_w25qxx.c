@@ -410,22 +410,22 @@ bool w25qxx_fs_init(void) {
 
 void get_w25qxx_fafts_info(void) {
 
-  FATFS *pfs = &wfs;
+  // FATFS *pfs = &wfs;
 
-  DWORD fre_clust, fre_size, tot_size;
+  // DWORD fre_clust, fre_size, tot_size;
   
-  uint8_t result = f_getfree( W25QXX_FS_PATH, &fre_clust, &pfs );
+  // uint8_t result = f_getfree( W25QXX_FS_PATH, &fre_clust, &pfs );
   
-  if( result == FR_OK )
-  {
-      tot_size = (pfs->n_fatent - 2) * pfs->csize/2; // 总容量    单位Kbyte
-      fre_size = fre_clust * pfs->csize/2;           // 可用容量  单位Kbyte
-      printf("w25qxx total size:%.2fMB\n", (float)tot_size/(float)1024);
-      printf("w25qxx free size:%.2fMB\n", (float)fre_size/(float)1024);
-  }
-  else{
-    printf("NorFlash Error\n");
-  }
+  // if( result == FR_OK )
+  // {
+  //     tot_size = (pfs->n_fatent - 2) * pfs->csize/2; // 总容量    单位Kbyte
+  //     fre_size = fre_clust * pfs->csize/2;           // 可用容量  单位Kbyte
+  //     printf("w25qxx total size:%.2fMB\n", (float)tot_size/(float)1024);
+  //     printf("w25qxx free size:%.2fMB\n", (float)fre_size/(float)1024);
+  // }
+  // else{
+  //   printf("NorFlash Error\n");
+  // }
 }
 
 

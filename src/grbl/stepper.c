@@ -255,7 +255,7 @@ void st_wake_up()
   
   hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
   hal_tim_generateEvent_update(&STEP_SET_TIMER);
-  hal_set_timer_irq_enable();
+  dev_timer.set_timer_irq_enable();
 }
 
 
@@ -263,7 +263,7 @@ void st_wake_up()
 void st_go_idle()
 {
   // Disable Stepper Driver Interrupt. Allow Stepper Port Reset Interrupt to finish, if active.
-  hal_set_timer_irq_disable();
+  dev_timer.set_timer_irq_disable();
 
   busy = false;
   // Set stepper driver idle state, disabled or enabled, depending on settings and circumstances.
@@ -355,7 +355,7 @@ void set_timer_irq_handler(void)
   hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
   hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time-1);
   hal_tim_clear_flag_update(&STEP_RESET_TIMER);
-  hal_reset_timer_irq_enable();
+  dev_timer.reset_timer_irq_enable();
 
   busy = true;
 

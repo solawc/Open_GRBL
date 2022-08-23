@@ -68,6 +68,7 @@
 
 #include "grbl/HAL/Middleware/mid_gpio.h"
 #include "grbl/HAL/Middleware/mid_timer.h"
+#include "grbl/HAL/Middleware/mid_nvs.h"
 
 #include "ex_dev/lcd/tft_lcd_dev.h"
 #include "ex_dev/sd/sdcard.h"
@@ -81,7 +82,6 @@
 #include "ff.h"
 
 #define SYSTEM_UART()       BspUartInit()
-#define SYSTEM_LASER()      hal_pwm_init()
 
 #ifdef HAS_WDG
 #define SYSTEM_WDG()        hal_wdg_init()

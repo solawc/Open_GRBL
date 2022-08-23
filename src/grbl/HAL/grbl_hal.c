@@ -57,8 +57,6 @@ void systemInit() {
 
     SYSTEM_UART();      
 
-    SYSTEM_LASER();     
-
     SYSTEM_FLASH();     
     
     SYSTEM_SDCARD();    
@@ -78,6 +76,8 @@ void grblDeviceInit() {
     DevGpioInit();     
          
     DevTimerInit();
+
+    DevNvsInit();
 }
 
 /** 
@@ -88,6 +88,4 @@ void grblHwInit(void) {
     systemInit();
 
     grblDeviceInit();
-
-    
 }

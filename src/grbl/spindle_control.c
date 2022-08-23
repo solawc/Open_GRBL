@@ -30,7 +30,7 @@
 void spindle_init()
 {
   pwm_gradient = 1000 / (settings.rpm_max - settings.rpm_min);
-  hal_pwm_init();
+  dev_timer.spindle_pwm_init();
   spindle_stop();
 }
 
@@ -46,15 +46,7 @@ uint8_t spindle_get_state()
         if (bit_istrue(SPINDLE_ENABLE_PORT,(1<<SPINDLE_ENABLE_BIT))) { return(SPINDLE_STATE_CW); }
       #endif
     #else
-      // if (SPINDLE_TCCRA_REGISTER & (1<<SPINDLE_COMB_BIT)) { // Check if PWM is enabled.
-      //   #ifdef ENABLE_DUAL_AXIS
-      //     return(SPINDLE_STATE_CW);
-      //   #else
-      //     if (SPINDLE_DIRECTION_PORT & (1<<SPINDLE_DIRECTION_BIT)) { return(SPINDLE_STATE_CCW); }
-      //     else { return(SPINDLE_STATE_CW); }
-      //   #endif
-      // }
-      if(hal_pwm_ccr_get() != 0) {
+      if(dev_timer.spindle_pwm_get() != 0) {
           return(SPINDLE_STATE_CW);
       }else{
           return(SPINDLE_STATE_CCW);
@@ -83,7 +75,7 @@ uint8_t spindle_get_state()
 // Called by spindle_init(), spindle_set_speed(), spindle_set_state(), and mc_reset().
 void spindle_stop()
 {
-	 hal_pwm_set(0);
+	 dev_timer.spindle_pwm_set(0);
 }
 
 #ifdef VARIABLE_SPINDLE
@@ -91,7 +83,7 @@ void spindle_stop()
   // and stepper ISR. Keep routine small and efficient.
   void spindle_set_speed(uint16_t pwm_value)
   {
-    hal_pwm_set(pwm_value);
+    dev_timer.spindle_pwm_set(pwm_value);
   }
 
   #ifdef ENABLE_PIECEWISE_LINEAR_SPINDLE

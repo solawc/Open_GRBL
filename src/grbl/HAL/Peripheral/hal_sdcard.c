@@ -114,7 +114,7 @@ void hal_sd_register(void) {
     hal_sd.sd_trans_disable = hal_sd_disable;
     hal_sd.sd_set_speed = hal_sd_set_speed;
     hal_sd.sd_get_status = hal_sd_det_read;
-    hal_sd.sd_trans_speed = SPI_BAUDRATEPRESCALER_2; // hal_sd_spi_speed_get(&sd_hspi);//  SPI_BAUDRATEPRESCALER_2;
+    hal_sd.sd_trans_speed = hal_sd_spi_speed_get(&sd_hspi); 
     hal_sd.sd_slow_speed = SPI_BAUDRATEPRESCALER_256;
 
     hal_sd.sd_init();

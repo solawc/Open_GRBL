@@ -67,10 +67,10 @@
         uint8_t  addr_size;
 
         /* Base Func */
-        void (*w25qxx_spi_gpio_init)(void);           // 初始化GPIO的函数，包含GPIO复用
-        void (*w25qxx_spi_init)(void);                // 初始化SPI外设
-        uint8_t (*w25qxx_spi_read_write_byte)(uint8_t );   // SPI读写函数
-        bool (*w25qxx_is_trans_finish)(void);         // 判断是否传输完成
+        void (*w25qxx_spi_gpio_init)(void);                     // 初始化GPIO的函数，包含GPIO复用
+        void (*w25qxx_spi_init)(void);                          // 初始化SPI外设
+        uint8_t (*w25qxx_spi_read_write_byte)(uint8_t );        // SPI读写函数
+        bool (*w25qxx_is_trans_finish)(void);                   // 判断是否传输完成
         void (*w25qxx_enable_trans)(void);    
         void (*w25qxx_disable_trans)(void);
 
@@ -95,11 +95,10 @@
 
     __WEAK void hal_w25qxx_spi_reg(NFLASH_t *nFlash);
 
-
-        #ifdef USE_FATFS
-            bool w25qxx_fs_init(void);
-            void get_w25qxx_fafts_info(void);
-        #endif /* USE_FATFS */
+    #ifdef USE_FATFS
+        bool w25qxx_fs_init(void);
+        void get_w25qxx_fafts_info(void);
+    #endif /* USE_FATFS */
 
 #endif /* HAS_W25Qxx */
 

@@ -53,7 +53,8 @@
         "mid_gpio.h": "c",
         "hal_fireboard_system.h": "c",
         "bsp_mks_dlc_lg0_v3_system.h": "c",
-        "pins_mks_dlc_lg0_v3.h": "c"
+        "pins_mks_dlc_lg0_v3.h": "c",
+        "mid_nvs.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
