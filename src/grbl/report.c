@@ -388,7 +388,9 @@ void report_execute_startup_message(char *line, uint8_t status_code)
 // Prints build info line
 void report_build_info(char *line)
 {
-  printPgmString(PSTR("[VER:" GRBL_VERSION "." GRBL_VERSION_BUILD ":"));
+  printPgmString(PSTR("[ORIGIN:China]\n"));
+  printPgmString(PSTR("[PRODUCER:OpenGRBL]\n"));
+  printPgmString(PSTR("[VER:" GRBL_VERSION "."  ":"));
   printString(line);
   report_util_feedback_line_feed();
   printPgmString(PSTR("[OPT:")); // Generate compile-time build option list

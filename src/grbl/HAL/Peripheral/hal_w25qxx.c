@@ -2,6 +2,8 @@
 
 #ifdef HAS_W25Qxx
 
+// bool flash_dma_mode = false;
+
 static void w25qxx_enable(NFLASH_t *nFlash)
 {
   nFlash->w25qxx_enable_trans();
@@ -33,7 +35,6 @@ uint16_t w25qxx_read_write_byte(NFLASH_t *nFlash, uint16_t wdata)
 { 
   return nFlash->w25qxx_spi_read_write_byte(wdata);
 }
-
 
 /*--------------------------------------------------------------------------------------------*/
 
@@ -129,12 +130,8 @@ void w25qxx_wait_busy(NFLASH_t *nFlash)
     do
     {
       FLASH_Status = w25qxx_read_write_byte(nFlash, Dummy_Byte);	 
-      if((SPITimeout--) == 0) 
-      {
-        return;
-      }
-    }
-    while ((FLASH_Status & WIP_Flag) == SET); 
+      if((SPITimeout--) == 0) { return; }
+    } while ((FLASH_Status & WIP_Flag) == 0x01); 
     w25qxx_disable(nFlash);
 }
 
@@ -167,15 +164,16 @@ void w25qxx_enter_flash_mode(NFLASH_t *nFlash)
 	}
 }
 
-void w25qxx_sector_erase(NFLASH_t *nFlash, uint32_t SectorAddr)
-{
+void w25qxx_sector_erase(NFLASH_t *nFlash, uint32_t SectorAddr) {
+
   w25qxx_write_enable(nFlash);
 
-  w25qxx_wait_busy(nFlash);
+  // w25qxx_wait_busy(nFlash);
   
   w25qxx_enable(nFlash);
 
   w25qxx_read_write_byte(nFlash, W25X_SectorErase);
+
   if(sFlash.addr_size == 24) {
     w25qxx_read_write_byte(nFlash, (SectorAddr & 0xFF000000) >> 24);
   }
@@ -191,11 +189,32 @@ void w25qxx_sector_erase(NFLASH_t *nFlash, uint32_t SectorAddr)
   w25qxx_wait_busy(nFlash);
 }
 
+void w25qxx_block_erase(NFLASH_t *nFlash, uint32_t BlockAddr) {
+
+  w25qxx_write_enable(nFlash);
+
+  w25qxx_enable(nFlash);
+
+  w25qxx_read_write_byte(nFlash, W25X_BlockErase);
+
+  if(sFlash.addr_size == 24) {
+    w25qxx_read_write_byte(nFlash, (BlockAddr & 0xFF000000) >> 24);
+  }
+
+  w25qxx_read_write_byte(nFlash, (BlockAddr & 0xFF0000) >> 16);
+
+  w25qxx_read_write_byte(nFlash, (BlockAddr & 0xFF00) >> 8);
+
+  w25qxx_read_write_byte(nFlash, BlockAddr & 0xFF);
+
+  w25qxx_disable(nFlash);
+
+  w25qxx_wait_busy(nFlash);
+}
+
 void w25qxx_chip_erase(NFLASH_t *nFlash)
 {
   w25qxx_write_enable(nFlash);
-
-  w25qxx_wait_busy(nFlash);
 
   w25qxx_enable(nFlash);
 
@@ -224,9 +243,8 @@ void w25qxx_page_write(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t WriteAddr, u
 
   w25qxx_read_write_byte(nFlash, WriteAddr & 0xFF);
   
-  if(NumByteToWrite > SPI_FLASH_PerWritePageSize)
-  {
-     NumByteToWrite = SPI_FLASH_PerWritePageSize;
+  if(NumByteToWrite > SPI_FLASH_PerWritePageSize) {
+    NumByteToWrite = SPI_FLASH_PerWritePageSize;
   }
 
   while (NumByteToWrite--)
@@ -250,46 +268,33 @@ void w25qxx_buffer_write(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t WriteAddr,
           temp = 0;
 	
   Addr = WriteAddr % SPI_FLASH_PageSize;
-	
   count = SPI_FLASH_PageSize - Addr;	
-
   NumOfPage =  NumByteToWrite / SPI_FLASH_PageSize;
-
   NumOfSingle = NumByteToWrite % SPI_FLASH_PageSize;
 
   if (Addr == 0) {
-    if (NumOfPage == 0) 
-    {
+    if (NumOfPage == 0) {
       w25qxx_page_write(nFlash, pBuffer, WriteAddr, NumByteToWrite);
     }
     else {
-
       while (NumOfPage--) {
         w25qxx_page_write(nFlash, pBuffer, WriteAddr, SPI_FLASH_PageSize);
         WriteAddr +=  SPI_FLASH_PageSize;
         pBuffer += SPI_FLASH_PageSize;
       }
-			
       w25qxx_page_write(nFlash, pBuffer, WriteAddr, NumOfSingle);
     }
   }
   else {
     if (NumOfPage == 0) {
-
-      if (NumOfSingle > count) 
-      {
+      if (NumOfSingle > count) {
         temp = NumOfSingle - count;
-
         w25qxx_page_write(nFlash, pBuffer, WriteAddr, count);
-
         WriteAddr +=  count;
-
         pBuffer += count;
-				
         w25qxx_page_write(nFlash, pBuffer, WriteAddr, temp);
       }
-      else 
-      {				
+      else {				
         w25qxx_page_write(nFlash, pBuffer, WriteAddr, NumByteToWrite);
       }
     }
@@ -299,19 +304,16 @@ void w25qxx_buffer_write(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t WriteAddr,
       NumOfSingle = NumByteToWrite % SPI_FLASH_PageSize;
 
       w25qxx_page_write(nFlash, pBuffer, WriteAddr, count);
-
       WriteAddr +=  count;
-
       pBuffer += count;
 
-      while (NumOfPage--)
-      {
+      while (NumOfPage--) {
         w25qxx_page_write(nFlash, pBuffer, WriteAddr, SPI_FLASH_PageSize);
         WriteAddr +=  SPI_FLASH_PageSize;
         pBuffer += SPI_FLASH_PageSize;
       }
-      if (NumOfSingle != 0)
-      {
+
+      if (NumOfSingle != 0) {
         w25qxx_page_write(nFlash, pBuffer, WriteAddr, NumOfSingle);
       }
     }
@@ -334,9 +336,14 @@ void w25qxx_buffer_read(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, _
 
   w25qxx_read_write_byte(nFlash, ReadAddr & 0xFF);
 
-  for(uint16_t i = 0; i < NumByteToRead; i++) {
-    pBuffer[i] = w25qxx_read_write_byte(nFlash, Dummy_Byte);
-  }
+  // if (NumByteToRead <= 32 || !flash_dma_mode) {
+    while (NumByteToRead--) { 
+      *pBuffer = w25qxx_read_write_byte(nFlash, Dummy_Byte);
+      pBuffer++;
+    }
+  // }
+  // else
+  //   spi_flash_Read(pBuffer, NumByteToRead);
 
   w25qxx_disable(nFlash);
 }
@@ -354,7 +361,7 @@ void w25qxx_buffer_read(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, _
 #define  FLASH_ReadAddress      FLASH_WriteAddress
 #define  FLASH_SectorToErase    FLASH_WriteAddress
 
-uint8_t Tx_Buffer[] = "abcd213213dcba";
+uint8_t Tx_Buffer[] = "123ABCabc";
 uint8_t Rx_Buffer[BufferSize];
 
 void w25qxx_test() {
@@ -410,22 +417,22 @@ bool w25qxx_fs_init(void) {
 
 void get_w25qxx_fafts_info(void) {
 
-  // FATFS *pfs = &wfs;
+  FATFS *pfs = &wfs;
 
-  // DWORD fre_clust, fre_size, tot_size;
+  DWORD fre_clust, fre_size, tot_size;
   
-  // uint8_t result = f_getfree( W25QXX_FS_PATH, &fre_clust, &pfs );
+  uint8_t result = f_getfree( W25QXX_FS_PATH, &fre_clust, &pfs );
   
-  // if( result == FR_OK )
-  // {
-  //     tot_size = (pfs->n_fatent - 2) * pfs->csize/2; // 总容量    单位Kbyte
-  //     fre_size = fre_clust * pfs->csize/2;           // 可用容量  单位Kbyte
-  //     printf("w25qxx total size:%.2fMB\n", (float)tot_size/(float)1024);
-  //     printf("w25qxx free size:%.2fMB\n", (float)fre_size/(float)1024);
-  // }
-  // else{
-  //   printf("NorFlash Error\n");
-  // }
+  if( result == FR_OK )
+  {
+      tot_size = (pfs->n_fatent - 2) * pfs->csize/2; // 总容量    单位Kbyte
+      fre_size = fre_clust * pfs->csize/2;           // 可用容量  单位Kbyte
+      printf("w25qxx total size:%.2fMB\n", (float)tot_size/(float)1024);
+      printf("w25qxx free size:%.2fMB\n", (float)fre_size/(float)1024);
+  }
+  else{
+    printf("NorFlash Error\n");
+  }
 }
 
 

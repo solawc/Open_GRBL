@@ -24,6 +24,7 @@
     #define sFLAHS_SPI_MODE                 0
     #define sFLASH_QSPI_MODE                1
 
+    #define SPI_FLASH_SectorSize            512
     #define SPI_FLASH_PageSize              256
     #define SPI_FLASH_PerWritePageSize      256
 
@@ -86,6 +87,7 @@
 
     void w25qxx_enter_flash_mode(NFLASH_t *nFlash);
     void w25qxx_sector_erase(NFLASH_t *nFlash, uint32_t SectorAddr);
+    void w25qxx_block_erase(NFLASH_t *nFlash, uint32_t BlockAddr);
     void w25qxx_chip_erase(NFLASH_t *nFlash);
     void w25qxx_buffer_write(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite);
     void w25qxx_buffer_read(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, uint32_t NumByteToRead);
