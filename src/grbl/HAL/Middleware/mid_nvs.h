@@ -7,7 +7,7 @@ typedef struct {
 
     void (*nvsInit)(void);
     void (*nvsFlush)(void);
-    uint8_t (*nvsGetChar)(unsigned char );
+    uint8_t (*nvsGetChar)(unsigned int );
 
 }mid_nvs_t;
 extern mid_nvs_t dev_nvs;

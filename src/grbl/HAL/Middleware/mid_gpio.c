@@ -4,7 +4,6 @@ mid_gpio_t dev_gpio;
 
 /* 通用GPIO初始化 */
 void DevGpioInit(void) {
-
     dev_gpio.limit_gpio_init = BspLimitGpioInit;
     dev_gpio.limit_irq_enable = BspLimitGpioIrqEnable;
     dev_gpio.limit_irq_disable = BspLimitGpioIrqDisable;

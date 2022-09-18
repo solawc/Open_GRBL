@@ -25,7 +25,7 @@
 int main() {
 
   grblHwInit();
-
+  
   clientInit(); // TODO
 
 #ifdef STM32G0B0xx

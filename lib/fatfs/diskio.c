@@ -79,7 +79,7 @@ DSTATUS disk_initialize (
 		case DEV_FLASH :
 #ifdef HAS_W25Qxx
 			// result = 
-			w25qxx_init(&sFlash);
+			w25qxxInit(&sFlash);
 
 			if(sFlash.flash_state == 1) {
 				stat = RES_OK;
@@ -129,7 +129,7 @@ DRESULT disk_read (
 		case DEV_FLASH :
 #ifdef HAS_W25Qxx
 			for(; count>0; count--) {
-				w25qxx_buffer_read(&sFlash, buff, sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
+				w25qxxBufferRead(&sFlash, buff, sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
 				sector++;
 				buff += FLASH_SECTOR_SIZE;
 			}
@@ -171,11 +171,11 @@ DRESULT disk_write (
 		break;
 
 		case DEV_FLASH :
-			// w25qxx_buffer_write(&sFlash, (uint8_t*)buff, sector, count);
+			// w25qxxBufferWrite(&sFlash, (uint8_t*)buff, sector, count);
 #ifdef HAS_W25Qxx
 			for (; count>0; count--) {
-				w25qxx_sector_erase(&sFlash, sector*FLASH_SECTOR_SIZE);
-				w25qxx_buffer_write(&sFlash, (uint8_t*)buff, sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
+				w25qxxSectorErase(&sFlash, sector*FLASH_SECTOR_SIZE);
+				w25qxxBufferWrite(&sFlash, (uint8_t*)buff, sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
 				sector++;
 				buff += FLASH_SECTOR_SIZE;
 			}

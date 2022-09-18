@@ -16,7 +16,7 @@ void w25qxx_spi_cs_disable(void) {
     HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_SET);
 }
 
-void w25qxx_spi_gpio_init(void)
+void w25qxxSpiGpioInit(void)
 {
     GPIO_InitTypeDef GPIO_Init = {0};
 
@@ -78,22 +78,22 @@ uint8_t w25qxx_spi_read_write(uint8_t data) {
     return rdata;
 }
 
-bool w25qxx_is_trans_finish() {
+bool w25qxxIsTransFinish() {
 
     return true;
 }
 
-void w25qxx_spi_regiest() {
+void w25qxxSpiRegiest() {
     sFlash.flash_mode = sFLAHS_SPI_MODE;
     sFlash.flash_delay_time = 10;   
     sFlash.flash_id = 0;
     sFlash.flash_size = 0;
-    sFlash.w25qxx_spi_init = spi_for_w25qxx_init;
-    sFlash.w25qxx_spi_gpio_init = w25qxx_spi_gpio_init;
-    sFlash.w25qxx_spi_read_write_byte = w25qxx_spi_read_write;
-    sFlash.w25qxx_is_trans_finish = w25qxx_is_trans_finish;
-    sFlash.w25qxx_disable_trans = w25qxx_spi_cs_disable;
-    sFlash.w25qxx_enable_trans = w25qxx_spi_cs_enabel;
+    sFlash.w25qxxSpiInit = spi_for_w25qxx_init;
+    sFlash.w25qxxSpiGpioInit = w25qxxSpiGpioInit;
+    sFlash.w25qxxSpiReadWriteByte = w25qxx_spi_read_write;
+    sFlash.w25qxxIsTransFinish = w25qxxIsTransFinish;
+    sFlash.w25qxxDisableTrans = w25qxx_spi_cs_disable;
+    sFlash.w25qxxEnableTrans = w25qxx_spi_cs_enabel;
 }
 #endif
 
