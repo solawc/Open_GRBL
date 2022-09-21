@@ -56,12 +56,13 @@
 #include "grbl/HAL/grbl_hal.h"
 #include "grbl/HAL/grbl_config.h"
 
-#include "grbl/HAL/STM32/hal_gpio.h"
+#include "grbl/HAL/STM32/bsp_gpio.h"
 #include "grbl/HAL/STM32/hal_uart.h"
 #include "grbl/HAL/STM32/hal_tim.h"
 #include "grbl/HAL/STM32/hal_flash_eeprom.h"
 #include "grbl/HAL/STM32/hal_spi.h"
 #include "grbl/HAL/STM32/hal_wdg.h"
+#include "grbl/HAL/STM32/bsp_ltdc.h"
 
 #include "grbl/HAL/Peripheral/hal_sdcard.h"
 #include "grbl/HAL/Peripheral/hal_w25qxx.h"

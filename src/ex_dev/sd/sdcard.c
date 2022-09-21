@@ -109,7 +109,7 @@ uint8_t SD_SendCmd_skyblue(uint8_t cmd, uint32_t arg, uint8_t crc)
 	do
 	{
 		r1 = hal_sd.sd_trans_receive_data(0xFF);
-	}while((r1&0X80) && Retry--);	 
+	}while((r1 & 0X80) && Retry--);	 
 	//返回状态值
     return r1;
 }
@@ -193,7 +193,7 @@ uint8_t SD_Initialize(void)
 
 	do
 	{
-		r1=SD_SendCmd_skyblue(CMD0,0,0x95);//进入IDLE状态
+		r1 = SD_SendCmd_skyblue(CMD0,0,0x95);//进入IDLE状态
 	}while((r1!=0X01) && retry--);
 
  	SD_Type=0;//默认无卡

@@ -1,5 +1,5 @@
 /*
-  main.c - rs274/ngc parser.
+  main.c
   Part of Grbl
 
   Copyright (c) 2011-2016 Sungeun K. Jeon for Gnea Research LLC

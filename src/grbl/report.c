@@ -388,8 +388,8 @@ void report_execute_startup_message(char *line, uint8_t status_code)
 // Prints build info line
 void report_build_info(char *line)
 {
-  printPgmString(PSTR("[ORIGIN:China]\n"));
-  printPgmString(PSTR("[PRODUCER:OpenGRBL]\n"));
+  printPgmString(PSTR("[ORIGIN:China]\r\n"));
+  printPgmString(PSTR("[PRODUCER:OpenGRBL]\r\n"));
   printPgmString(PSTR("[VER:" GRBL_VERSION "."  ":"));
   printString(line);
   report_util_feedback_line_feed();
@@ -464,10 +464,7 @@ void report_build_info(char *line)
   serial_write(',');
   print_uint8_base10(BLOCK_BUFFER_SIZE-1);
   serial_write(',');
-  // print_uint8_base10(RX_BUFFER_SIZE);
-
   print_uint32_base10(RX_BUFFER_SIZE);
-
   report_util_feedback_line_feed();
 }
 
@@ -554,9 +551,12 @@ void report_realtime_status()
   #ifdef REPORT_FIELD_BUFFER_STATE
     if (bit_istrue(settings.status_report_mask,BITFLAG_RT_STATUS_BUFFER_STATE)) {
       printPgmString(PSTR("|Bf:"));
-      print_uint8_base10(plan_get_block_buffer_available());
+      // print_uint8_base10(plan_get_block_buffer_available());
+      serial_sendf("%d", plan_get_block_buffer_available());
       serial_write(',');
-      print_uint8_base10(serial_get_rx_buffer_available());
+      serial_sendf("%d", serial_get_rx_buffer_available());
+      // print_uint8_base10(serial_get_rx_buffer_available());
+
     }
   #endif
 

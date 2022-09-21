@@ -19,8 +19,8 @@
 #define LASER_UART_RX_FLAG              BOARD_UART_RX_FLAG
 
 typedef struct {
-    uint8_t head;
-    uint8_t tail;
+    uint32_t head;
+    uint32_t tail;
     uint8_t buffer[UART_RB_BUFF_MAX];
 }hal_uart_t;
 extern hal_uart_t rb_serial_rx;

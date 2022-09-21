@@ -70,21 +70,21 @@ void BspFlashWriteBuff(uint32_t addr ,uint32_t *buff, uint32_t num) {
     
     if( addr <STM32_FLASH_BASE || addr % 4 ) return;	//非法地址
 
-    HAL_FLASH_Unlock();             //解锁	
+    HAL_FLASH_Unlock();             					//解锁	
 
-    addrx=addr;				//写入的起始地址
+    addrx=addr;											//写入的起始地址
 
-	endaddr = addr+num*4;	//写入的结束地
+	endaddr = addr+num*4;								//写入的结束地
  
     if(addrx < 0X1FFF0000)
 	{
-		while(addrx < endaddr)		//扫清一切障碍.(对非FFFFFFFF的地方,先擦除)
+		while(addrx < endaddr)							//扫清一切障碍.(对非FFFFFFFF的地方,先擦除)
 		{
-			if(STMFLASH_ReadWord(addrx) != 0XFFFFFFFF)//有非0XFFFFFFFF的地方,要擦除这个扇区
+			if(STMFLASH_ReadWord(addrx) != 0XFFFFFFFF)	//有非0XFFFFFFFF的地方,要擦除这个扇区
 			{   
 #ifdef FLASH_WRITE_SECTORS_WORD
 				FlashEraseInit.TypeErase=FLASH_TYPEERASE_SECTORS;       //擦除类型，扇区擦除 
-				FlashEraseInit.Sector=hal_get_flash_sector(addrx);   //要擦除的扇区
+				FlashEraseInit.Sector=hal_get_flash_sector(addrx);   	//要擦除的扇区
 				FlashEraseInit.NbSectors=1;                             //一次只擦除一个扇区
 				FlashEraseInit.VoltageRange=FLASH_VOLTAGE_RANGE_3;      //电压范围，VCC=2.7~3.6V之间!!
 #else
@@ -104,7 +104,7 @@ void BspFlashWriteBuff(uint32_t addr ,uint32_t *buff, uint32_t num) {
 				FLASH_WaitForLastOperation(FLASH_WAITETIME);                //等待上次操作完成
 		}
 	}
-	FlashStatus=FLASH_WaitForLastOperation(FLASH_WAITETIME);            //等待上次操作完成
+	FlashStatus=FLASH_WaitForLastOperation(FLASH_WAITETIME);            	//等待上次操作完成
 
 	if(FlashStatus==HAL_OK)
 	{
