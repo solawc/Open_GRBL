@@ -78,7 +78,6 @@ DSTATUS disk_initialize (
 
 		case DEV_FLASH :
 #ifdef HAS_W25Qxx
-			// result = 
 			w25qxxInit(&sFlash);
 
 			if(sFlash.flash_state == 1) {
@@ -86,9 +85,7 @@ DSTATUS disk_initialize (
 			}else {
 				stat = RES_ERROR;
 			}
-
-			// 设置Flash容量
-			FLASH_SECTOR_COUNT = 1024 * 2 * (sFlash.flash_size/1024);
+			FLASH_SECTOR_COUNT = 1024 * 2 * (sFlash.flash_size/1024); /* Setting Flash size */
 
 			return stat;
 #endif
@@ -246,7 +243,7 @@ DRESULT disk_ioctl (
 				break;
 
 				case GET_BLOCK_SIZE:
-					*(WORD*)buff = FALSH_BLOCK_SIZE;
+					*(WORD*)buff = 1; // FALSH_BLOCK_SIZE;
 					res = RES_OK;
 				break;
 

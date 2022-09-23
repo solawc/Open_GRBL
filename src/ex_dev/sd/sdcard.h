@@ -75,6 +75,7 @@ typedef struct {
     uint32_t sd_all_size;                           /* SD卡总容量 */
     uint32_t sd_free_size;                          /* SD卡剩余容量 */
 
+    /* For spi */
     uint8_t (*sd_get_status)(void);
     uint8_t (*sd_trans_receive_data)(uint8_t );
     void    (*sd_set_speed)(uint32_t );

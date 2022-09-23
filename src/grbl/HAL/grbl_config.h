@@ -27,7 +27,7 @@
      * Here is config st_grbl if want to enable fetura
      * ****************************************************/
 
-    // #define LCD_TFT_SUPPORT
+    #define LCD_TFT_SUPPORT
     #ifdef LCD_TFT_SUPPORT
         // #define LCD_MKS_TS35
         #ifdef LCD_MKS_TS35
@@ -38,6 +38,16 @@
         #ifdef LCD_MKS_TS24
             #define HAS_TS24_CFG
         #endif
+
+        #define LCD_RGB_5_INC
+        #ifdef LCD_RGB_5_INC
+            #define USE_SDRAM
+            #ifdef USE_SDRAM
+                #define HAS_SDRAM
+            #endif
+            #define HAS_LCD_RGB_5_INC
+        #endif
+
     #endif
 
     #define W25QXX_FLASH_SUPPORT
