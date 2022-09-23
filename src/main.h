@@ -75,6 +75,9 @@
 #include "ex_dev/sd/sdcard.h"
 #include "ex_dev/sd/sd_file.h"
 
+#include "ui/lv_port/lv_disp_port.h"
+
+
 #include "client.h"
 
 #include "grbl/grbl.h"

@@ -18,9 +18,9 @@
 
 
 #define SD_BLOCKSIZE			512
-#define FLASH_SECTOR_SIZE 		4096
+#define FLASH_SECTOR_SIZE 		512
 
-uint32_t FLASH_SECTOR_COUNT = 	9832;
+uint32_t FLASH_SECTOR_COUNT = 	1024*2*32;
 #define FALSH_BLOCK_SIZE		8
 
 /*-----------------------------------------------------------------------*/
@@ -88,7 +88,7 @@ DSTATUS disk_initialize (
 			}
 
 			// 设置Flash容量
-			FLASH_SECTOR_COUNT = 2048*32;
+			FLASH_SECTOR_COUNT = 1024 * 2 * (sFlash.flash_size/1024);
 
 			return stat;
 #endif
@@ -129,7 +129,7 @@ DRESULT disk_read (
 		case DEV_FLASH :
 #ifdef HAS_W25Qxx
 			for(; count>0; count--) {
-				w25qxxBufferRead(&sFlash, buff, sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
+				w25qxxBufferRead(&sFlash, buff, sector*FLASH_SECTOR_SIZE, count*FLASH_SECTOR_SIZE);
 				sector++;
 				buff += FLASH_SECTOR_SIZE;
 			}
@@ -210,6 +210,7 @@ DRESULT disk_ioctl (
 			switch(cmd) {
 
 				case CTRL_SYNC: res = RES_OK; break;
+
 				case GET_SECTOR_SIZE:
 					*(DWORD*)buff = SD_BLOCKSIZE; 
 					res = RES_OK;
