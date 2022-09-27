@@ -1,16 +1,12 @@
-```eval_rst
-.. include:: /header.rst 
-:github_url: |github_link_base|/widgets/dropdown.md
-```
 # Drop-down list (lv_dropdown)
 
 
 ## Overview
 
-The drop-down list allows the user to select one value from a list. 
+The drop-down list allows the user to select one value from a list.
 
-The drop-down list is closed by default and displays a single value or a predefined text. 
-When activated (by click on the drop-down list), a list is created from which the user may select one option. 
+The drop-down list is closed by default and displays a single value or a predefined text.
+When activated (by click on the drop-down list), a list is created from which the user may select one option.
 When the user selects a new value, the list is deleted again.
 
 The Drop-down list is added to the default group (if it is set). Besides the Drop-down list is an editable object to allow selecting an option with encoder navigation too.
@@ -25,19 +21,19 @@ The Dropdown widget is built from the elements: "button" and "list" (both not re
 The button goes to `LV_STATE_CHECKED` when it's opened.
 
 ### List
-- `LV_PART_MAIN` The list itself. Uses the typical background properties. `max_height` can be used to limit the height of the list. 
+- `LV_PART_MAIN` The list itself. Uses the typical background properties. `max_height` can be used to limit the height of the list.
 - `LV_PART_SCROLLBAR` The scrollbar background, border, shadow properties and width (for its own width) and right padding for the spacing on the right.
-- `LV_PART_SELECTED` Refers to the currently pressed, checked or pressed+checked option. Also uses the typical background properties. 
+- `LV_PART_SELECTED` Refers to the currently pressed, checked or pressed+checked option. Also uses the typical background properties.
 
-As list does not exist when the drop-down list is closed it's not possible to simply add styles to it.
-Insteada add an event handler to the button for `LV_EVENT_READY` (triggered when the list is opened) and add styles to the list in it like this:
+The list is hidden/shown on open/close. To add styles to it use `lv_dropdown_get_list(dropdown)`  to get the list object. For example:
+
 ```c
 lv_obj_t * list = lv_dropdown_get_list(dropdown) /*Get the list*/
 lv_obj_add_style(list, &my_style, ...)           /*Add the styles to the list*/}`
 ```
 
-Alternatively the theme can be extended with the new styles. 
- 
+Alternatively the theme can be extended with the new styles.
+
 ## Usage
 
 ## Overview
@@ -47,7 +43,7 @@ Options are passed to the drop-down list as a string with `lv_dropdown_set_optio
 
 The `lv_dropdown_add_option(dropdown, "New option", pos)` function inserts a new option to `pos` index.
 
-To save memory the options can set from a static(constant) string too with `lv_dropdown_set_static_options(dropdown, options)`. 
+To save memory the options can set from a static(constant) string too with `lv_dropdown_set_static_options(dropdown, options)`.
 In this case the options string should be alive while the drop-down list exists and `lv_dropdown_add_option` can't be used
 
 You can select an option manually with `lv_dropdown_set_selected(dropdown, id)`, where `id` is the index of an option.
@@ -77,8 +73,8 @@ To manually open or close the drop-down list the `lv_dropdown_open/close(dropdow
 ## Events
 Apart from the [Generic events](../overview/event.html#generic-events), the following [Special events](../overview/event.html#special-events) are sent by the drop-down list:
 - `LV_EVENT_VALUE_CHANGED` Sent when the new option is selected or the list is opened/closed.
-- `LV_EVENT_APPLY` Sent when the list is opened
 - `LV_EVENT_CANCEL`  Sent when the list is closed
+- `LV_EVENT_READY` Sent when the list is opened
 
 See the events of the [Base object](/widgets/obj) too.
 

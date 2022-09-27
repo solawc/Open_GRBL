@@ -57,7 +57,8 @@
         "mid_nvs.h": "c",
         "bsp_gpio.h": "c",
         "bsp_ltdc.h": "c",
-        "lv_touch_port.h": "c"
+        "lv_touch_port.h": "c",
+        "bsp_sdram.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

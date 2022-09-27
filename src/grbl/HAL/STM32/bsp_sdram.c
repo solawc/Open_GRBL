@@ -9,8 +9,6 @@
  please indicate the source
 */
 
-
-
 #include "bsp_sdram.h"
 
 #ifdef HAS_SDRAM
@@ -367,7 +365,7 @@ uint8_t SDRAM_Test(void)
   /* 16位的数据 */
   uint16_t uhWritedata_16b = 0, uhReaddata_16b = 0; 
   
-  SDRAM_INFO("正在检测SDRAM，以8位、16位的方式读写sdram...");
+  SDRAM_INFO("SDRAM Test in 8Bit Write\n");
 
 
   /*按8位格式读写数据，并校验*/
@@ -391,7 +389,7 @@ uint8_t SDRAM_Test(void)
     
     if(ubReaddata_8b != (uint8_t)(ubWritedata_8b + counter))      //检测数据，若不相等，跳出函数,返回检测失败结果。
     {
-      SDRAM_ERROR("8位数据读写错误！");
+      SDRAM_ERROR("8bit data write error\n");
       return 0;
     }
   }
@@ -418,13 +416,13 @@ uint8_t SDRAM_Test(void)
     
     if(uhReaddata_16b != (uint16_t)(uhWritedata_16b + counter))      //检测数据，若不相等，跳出函数,返回检测失败结果。
     {
-      SDRAM_ERROR("16位数据读写错误！");
+      SDRAM_ERROR("16bit data write error\n");
 
       return 0;
     }
   }
 
-  SDRAM_INFO("SDRAM读写测试正常！"); 
+  SDRAM_INFO("SDRAM Succeed\n"); 
   /*检测正常，return 1 */
   return 1;
 

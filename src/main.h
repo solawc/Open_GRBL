@@ -62,6 +62,7 @@
 #include "grbl/HAL/STM32/hal_flash_eeprom.h"
 #include "grbl/HAL/STM32/hal_spi.h"
 #include "grbl/HAL/STM32/hal_wdg.h"
+#include "grbl/HAL/STM32/bsp_sdram.h"
 #include "grbl/HAL/STM32/bsp_ltdc.h"
 
 #include "grbl/HAL/Peripheral/hal_sdcard.h"
@@ -99,6 +100,10 @@
                             w25qxx_fs_init();
 #else 
 #define SYSTEM_FLASH()
+#endif
+
+#ifdef HAS_SDRAM
+#define SYSTEM_SDRAM()      sdramInit()
 #endif
 
 #if defined(LCD_MKS_TS35) || defined(LCD_MKS_TS24) 

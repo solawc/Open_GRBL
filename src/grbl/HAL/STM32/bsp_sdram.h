@@ -290,7 +290,7 @@
 #define FMC_LDQM_PINSOURCE        GPIO_PinSource0
 #define FMC_LDQM_AF               GPIO_AF_FMC
 
-void  SDRAM_Init(void);
+void  sdramInit(void);
 void  SDRAM_WriteBuffer(uint32_t* pBuffer, uint32_t uwWriteAddress, uint32_t uwBufferSize);
 void  SDRAM_ReadBuffer(uint32_t* pBuffer, uint32_t uwReadAddress, uint32_t uwBufferSize);
 uint8_t SDRAM_Test(void);

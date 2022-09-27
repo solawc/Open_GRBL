@@ -57,7 +57,9 @@ void systemInit() {
 
     SYSTEM_UART();      
 
-    SYSTEM_FLASH();     
+    SYSTEM_FLASH();  
+
+    SYSTEM_SDRAM();   
     
     SYSTEM_SDCARD();    
     
