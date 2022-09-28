@@ -1,5 +1,5 @@
 /*
- bsp_sdram.h
+ bsp_sdram.h - For FireBoard STM32F429IG V2
 
  Copyright (c) 2021-2022 sola
 

@@ -1,3 +1,14 @@
+/*
+ pins_nucleo_g070rb.h - For STM32 NUCLEO Board(STM32G070RB)
+
+ Copyright (c) 2021-2022 sola
+
+ This part of the code belongs to the corresponding platform that 
+ I adapt to, has nothing to do with GRBL, and is only related to 
+ the platform. Therefore, if you use this part of the code, 
+ please indicate the source
+*/
+
 #ifndef __pins_nucleo_g070rb_h
 #define __pins_nucleo_g070rb_h
 

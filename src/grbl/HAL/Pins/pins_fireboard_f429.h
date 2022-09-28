@@ -1,3 +1,14 @@
+/*
+ pins_direboard_f429.h - For Fire Board STM32F429IG V2
+
+ Copyright (c) 2021-2022 sola
+
+ This part of the code belongs to the corresponding platform that 
+ I adapt to, has nothing to do with GRBL, and is only related to 
+ the platform. Therefore, if you use this part of the code, 
+ please indicate the source
+*/
+
 #ifndef __pins_fireboard_f429_h
 #define __pins_fireboard_f429_h
 
