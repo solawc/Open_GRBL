@@ -1,5 +1,5 @@
 /*
-  grbl_hal.h - rs274/ngc parser.
+  grbl_hal.h 
   Part of Grbl
 
   Copyright (c) 2011-2016 Sungeun K. Jeon for Gnea Research LLC
