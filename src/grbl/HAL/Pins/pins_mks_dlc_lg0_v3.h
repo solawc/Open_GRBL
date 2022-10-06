@@ -102,8 +102,6 @@
 #define BOARD_UART_IRQ                  UART_IRQn(USART1)
 #define BOARD_UART_CLK_ENABLE()         __HAL_UART_CLK(USART1)
 #define BOARD_UART_IRQnHANDLER          USART1_IRQHandler
-#define BOARD_UART_TX_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE();
-#define BOARD_UART_RX_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE();
 #define BOARD_UART_TX_PORT              GPIOA
 #define BOARD_UART_TX_PIN               GPIO_PIN_9
 #define BOARD_UART_RX_PORT              GPIOA
@@ -112,25 +110,13 @@
 #define BOARD_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
 
 /* For timer use */
-#define BOARD_SETP_SET_TIM              TIM4
-#define BOARD_SETP_RESET_TIM            TIM5
-#define BOARD_STEP_SET_TIMER            STEP_SET_TIM
-#define BOARD_STEP_RESET_TIMER          STEP_RESET_TIM
-#define BOARD_SET_TIM_IRQn              TIM4_IRQn
-#define BOARD_RESET_TIM_IRQn            TIM5_IRQn
-#define BOARD_SET_TIM_CLK_ENABLED()     __HAL_RCC_TIM4_CLK_ENABLE()
-#define BOARD_RESET_TIM_CLK_ENABLED()   __HAL_RCC_TIM5_CLK_ENABLE()
-#define BOARD_STEP_SET_HANDLER          TIM4_IRQHandler
-#define BOARD_STEP_RESET_HANDLER        TIM5_IRQHandler
-#define BOARD_LASER_TIM_PORT            TIM3
+#define BOARD_SET_TIM                   4
+#define BOARD_RESET_TIM                 5
+#define BOARD_LASER_TIM_PORT            3
 #define BOARD_LASER_TIM_CH              TIM_CHANNEL_1
 #define BOARD_LASER_PIN_AF              GPIO_AF2_TIM3
-
 #define BOARD_LASER_OUT_PORT            GPIOB
 #define BOARD_LASER_OUT_PIN             GPIO_PIN_4
-#define BOARD_LASER_OUT_CLK()           __HAL_RCC_TIM3_CLK_ENABLE()
-#define BOARD_LASER_OUT_PIN_CLK()       __HAL_RCC_GPIOB_CLK_ENABLE()
-
 
 #define EEPROM_START_ADDR               ADDR_FLASH_SECTOR_5  // 80D FC00  ADDR_FLASH_SECTOR_11
 #define EEPROM_END_ADDR                 ((uint32_t)0x0803ffff)

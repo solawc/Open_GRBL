@@ -1,6 +1,15 @@
-#include "hal_tim.h"
-// #include "stepper.h"
+/*
+ hal_tim.c
 
+ Copyright (c) 2021-2022 sola
+
+ This part of the code belongs to the corresponding platform that 
+ I adapt to, has nothing to do with GRBL, and is only related to 
+ the platform. Therefore, if you use this part of the code, 
+ please indicate the source
+*/
+
+#include "bsp_tim.h"
 /*  
  * Note: I use general timer by tim3 and tim4 on stm32h429,
  * also you can choose other timer as step count, the timer,
@@ -9,9 +18,7 @@
 hal_tim_t hal_step_tim;
 
 void hal_set_timer_init(void) {
-
     SET_TIM_CLK_ENABLED();   
-
     STEP_SET_TIM.Instance = SETP_SET_TIM; 
     STEP_SET_TIM.Init.Period = 0;
     STEP_SET_TIM.Init.Prescaler = 4-1;
@@ -50,7 +57,6 @@ void hal_reset_timer_init(void) {
 }
 
 void hal_base_timer_init(void) {
-
     hal_set_timer_init();
     hal_reset_timer_init();
 }
@@ -115,7 +121,6 @@ static void laser_pin_config() {
 
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-    LASER_OUT_PIN_CLK();
     LASER_OUT_CLK();
 
     GPIO_InitStruct.Pin = LASER_OUT_PIN;

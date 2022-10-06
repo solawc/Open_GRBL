@@ -1,3 +1,14 @@
+/*
+ hal_uart.c
+
+ Copyright (c) 2021-2022 sola
+
+ This part of the code belongs to the corresponding platform that 
+ I adapt to, has nothing to do with GRBL, and is only related to 
+ the platform. Therefore, if you use this part of the code, 
+ please indicate the source
+*/
+
 #include "hal_uart.h"
 
 hal_uart_t rb_serial_rx;
@@ -14,8 +25,6 @@ void BspUartGpioInit(void) {
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
 	LASER_UART_CLK_ENABLE();
-	LASER_UART_TX_CLK_ENABLE();
-	LASER_UART_RX_CLK_ENABLE();
 
 	GPIO_InitStruct.Pin = LASER_UART_TX_PIN|LASER_UART_RX_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -99,7 +108,6 @@ int _write(int fd, char *ptr, int len)
 	return len;
 }
 #endif
-
 
 // Serial UART ISR Handler
 void LASER_UART_IRQHANDLER() {

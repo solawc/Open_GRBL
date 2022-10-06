@@ -1,5 +1,5 @@
 /*
- hal_flash_eeprom.h
+ bsp_flash_eeprom.h
 
  Copyright (c) 2021-2022 sola
 
@@ -24,8 +24,8 @@
 #endif
 #endif
 
-#define PAGE_SIZE                   0x400
-#define EEPROM_SIZE(str)            sizeof(str)/4+( ( sizeof(str) % 4 ) ? 1 : 0 )   
+#define PAGE_SIZE                       0x400
+#define EEPROM_SIZE(str)                sizeof(str)/4+( ( sizeof(str) % 4 ) ? 1 : 0 )   
 
 //FLASH起始地址
 #define STM32_FLASH_BASE 0x08000000 	//STM32 FLASH的起始地址

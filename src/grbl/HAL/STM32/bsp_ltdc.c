@@ -11,6 +11,8 @@
 
 #include "bsp_ltdc.h"
 
+#ifdef HAS_LCD_RGB_5_INC
+
 #define POLY_X(Z)              ((int32_t)((Points + Z)->X))
 #define POLY_Y(Z)              ((int32_t)((Points + Z)->Y)) 
 
@@ -39,7 +41,6 @@ static LCD_DrawPropTypeDef DrawProp[MAX_LAYER_NUMBER];
 #define HFP  22		//HSYNC前的无效像素
 #define VFP  22		//VSYNC前的无效行数
 
-static void FillTriangle(uint16_t x1, uint16_t x2, uint16_t x3, uint16_t y1, uint16_t y2, uint16_t y3);
 static void LL_FillBuffer(uint32_t LayerIndex, void *pDst, uint32_t xSize, uint32_t ySize, uint32_t OffLine, uint32_t ColorIndex);
 static void LL_ConvertLineToARGB8888(void * pSrc, void *pDst, uint32_t xSize, uint32_t ColorMode);
  /**
@@ -1033,3 +1034,5 @@ static void LL_ConvertLineToARGB8888(void *pSrc, void *pDst, uint32_t xSize, uin
     }
   } 
 }
+
+#endif

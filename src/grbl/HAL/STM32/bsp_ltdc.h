@@ -14,6 +14,8 @@
 
 #include "main.h"
 
+#ifdef HAS_LCD_RGB_5_INC
+
 #define  LCD_PIXEL_WIDTH    ((uint16_t)800)
 #define  LCD_PIXEL_HEIGHT   ((uint16_t)480)
 
@@ -308,5 +310,7 @@ void     LCD_MspDeInit(LTDC_HandleTypeDef *hltdc, void *Params);
 void     LCD_ClockConfig(LTDC_HandleTypeDef *hltdc, void *Params);
 
 void LCD_LayerInit(uint16_t LayerIndex, uint32_t FB_Address,uint32_t PixelFormat);
+
+#endif
 
 #endif

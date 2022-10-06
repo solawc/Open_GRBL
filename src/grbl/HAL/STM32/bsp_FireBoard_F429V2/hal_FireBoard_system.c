@@ -1,7 +1,7 @@
 
 #ifdef BOARD_FireBoard_F429_INI
 #include "hal_FireBoard_system.h"
-#include "../hal_tim.h"
+#include "../bsp_tim.h"
 
 /*
  * 1.set system clock 
@@ -58,15 +58,24 @@ void Bsp_FireBoard_SystemInit(void) {
 
 void Bsp_FireBoard_ClkInit(void) {
 
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOE_CLK_ENABLE();
-  __HAL_RCC_GPIOF_CLK_ENABLE();
+  // __HAL_RCC_GPIOA_CLK_ENABLE();
+  // __HAL_RCC_GPIOB_CLK_ENABLE();
+  // __HAL_RCC_GPIOC_CLK_ENABLE();
+  // __HAL_RCC_GPIOD_CLK_ENABLE();
+  // __HAL_RCC_GPIOE_CLK_ENABLE();
+  // __HAL_RCC_GPIOF_CLK_ENABLE();
 
-  __HAL_RCC_USART1_CLK_ENABLE();
-  __HAL_RCC_SPI1_CLK_ENABLE();
+  _HAL_RCC_GPIO_ENABLE(A);
+  _HAL_RCC_GPIO_ENABLE(B);
+  _HAL_RCC_GPIO_ENABLE(C);
+  _HAL_RCC_GPIO_ENABLE(D);
+  _HAL_RCC_GPIO_ENABLE(E);
+  _HAL_RCC_GPIO_ENABLE(F);
+  _HAL_RCC_GPIO_ENABLE(G);
+  _HAL_RCC_GPIO_ENABLE(H);
+  _HAL_RCC_GPIO_ENABLE(I);
+  _HAL_RCC_GPIO_ENABLE(J);
+  _HAL_RCC_GPIO_ENABLE(K);
 }
 
 uint8_t BspGetEepromAddress(uint32_t addr) {

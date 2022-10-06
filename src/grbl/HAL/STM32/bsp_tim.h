@@ -1,3 +1,14 @@
+/*
+ hal_tim.h
+
+ Copyright (c) 2021-2022 sola
+
+ This part of the code belongs to the corresponding platform that 
+ I adapt to, has nothing to do with GRBL, and is only related to 
+ the platform. Therefore, if you use this part of the code, 
+ please indicate the source
+*/
+
 #ifndef __hal_tim_h
 #define __hal_tim_h
 
@@ -5,27 +16,42 @@
 
 typedef TIM_HandleTypeDef timer_def;
 
+/* Define Timer Port */
+#define _TIM(X)                     TIM##X
+#define TIM(X)                      _TIM(X)
+
+/* Define Timer IRQn */
+#define _TIM_IRQn(X)                TIM##X##_IRQn
+#define TIM_IRQn(X)                 _TIM_IRQn(X)
+#define _TIM_IRQHander(X)             TIM##X##_IRQHandler
+#define TIM_IRQHander(X)              _TIM_IRQHander(X)
+
+/* Define Timer Rcc */
+#define _TIM_RCC(X)                 __HAL_RCC_TIM##X##_CLK_ENABLE()
+#define TIM_RCC(X)                   _TIM_RCC(X)
+
+/* Define TIMER Handler */
 #define STEP_SET_TIM                hal_step_tim.step_set
 #define STEP_RESET_TIM              hal_step_tim.step_reset
 #define LASER_TIM                   hal_step_tim.laser
 
-#define SETP_SET_TIM                BOARD_SETP_SET_TIM            
-#define SETP_RESET_TIM              BOARD_SETP_RESET_TIM          
-#define STEP_SET_TIMER              BOARD_STEP_SET_TIMER          
-#define STEP_RESET_TIMER            BOARD_STEP_RESET_TIMER        
-#define SET_TIM_IRQn                BOARD_SET_TIM_IRQn            
-#define RESET_TIM_IRQn              BOARD_RESET_TIM_IRQn          
-#define SET_TIM_CLK_ENABLED()       BOARD_SET_TIM_CLK_ENABLED()   
-#define RESET_TIM_CLK_ENABLED()     BOARD_RESET_TIM_CLK_ENABLED() 
-#define STEP_SET_HANDLER            BOARD_STEP_SET_HANDLER        
-#define STEP_RESET_HANDLER          BOARD_STEP_RESET_HANDLER      
-#define LASER_TIM_PORT              BOARD_LASER_TIM_PORT          
+#define SETP_SET_TIM                TIM(BOARD_SET_TIM)                     
+#define SETP_RESET_TIM              TIM(BOARD_RESET_TIM)                  
+#define SET_TIM_IRQn                TIM_IRQn(BOARD_SET_TIM)            
+#define RESET_TIM_IRQn              TIM_IRQn(BOARD_RESET_TIM)          
+#define SET_TIM_CLK_ENABLED()       TIM_RCC(BOARD_SET_TIM)            
+#define RESET_TIM_CLK_ENABLED()     TIM_RCC(BOARD_RESET_TIM)          
+#define STEP_SET_HANDLER            TIM_IRQHander(BOARD_SET_TIM)        
+#define STEP_RESET_HANDLER          TIM_IRQHander(BOARD_RESET_TIM)     
+#define STEP_SET_TIMER              STEP_SET_TIM          
+#define STEP_RESET_TIMER            STEP_RESET_TIM    
+
+#define LASER_TIM_PORT              TIM(BOARD_LASER_TIM_PORT)            
 #define LASER_TIM_CH                BOARD_LASER_TIM_CH            
 #define LASER_PIN_AF                BOARD_LASER_PIN_AF            
 #define LASER_OUT_PORT              BOARD_LASER_OUT_PORT          
 #define LASER_OUT_PIN               BOARD_LASER_OUT_PIN           
-#define LASER_OUT_CLK()             BOARD_LASER_OUT_CLK()         
-#define LASER_OUT_PIN_CLK()         BOARD_LASER_OUT_PIN_CLK()     
+#define LASER_OUT_CLK()             TIM_RCC(BOARD_LASER_TIM_PORT)     
 
 typedef struct  
 {

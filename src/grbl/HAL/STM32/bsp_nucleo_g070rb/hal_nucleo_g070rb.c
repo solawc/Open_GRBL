@@ -1,7 +1,7 @@
 #ifdef STM32G070xx
 
 #include "hal_nucleo_g070rb.h"
-#include "../hal_tim.h"
+#include "../bsp_tim.h"
 
 /*
  * 1.set system clock 

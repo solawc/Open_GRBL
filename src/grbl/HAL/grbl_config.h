@@ -27,7 +27,7 @@
      * Here is config st_grbl if want to enable fetura
      * ****************************************************/
 
-    #define LCD_TFT_SUPPORT
+    // #define LCD_TFT_SUPPORT
     #ifdef LCD_TFT_SUPPORT
         // #define LCD_MKS_TS35
         #ifdef LCD_MKS_TS35

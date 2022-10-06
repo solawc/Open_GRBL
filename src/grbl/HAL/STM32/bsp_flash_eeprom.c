@@ -9,9 +9,7 @@
  please indicate the source
 */
 
-
-
-#include "hal_flash_eeprom.h"
+#include "bsp_flash_eeprom.h"
 
 uint8_t eeprom_buf[PAGE_SIZE];
 

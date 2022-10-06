@@ -58,7 +58,8 @@
         "bsp_gpio.h": "c",
         "bsp_ltdc.h": "c",
         "lv_touch_port.h": "c",
-        "bsp_sdram.h": "c"
+        "bsp_sdram.h": "c",
+        "hal_it.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

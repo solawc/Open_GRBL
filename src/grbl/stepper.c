@@ -258,7 +258,6 @@ void st_wake_up()
   dev_timer.set_timer_irq_enable();
 }
 
-
 // Stepper shutdown
 void st_go_idle()
 {

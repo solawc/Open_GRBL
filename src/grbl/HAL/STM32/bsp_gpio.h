@@ -14,9 +14,9 @@
 
 #include "../../../main.h"
 
-#define LASER_PORT                  BOARD_LASER_PORT
-#define LASER_PIN                   BOARD_LASER_PIN
-#define LASER_PIN_CLK_ENABLE()      BOARD_LASER_PIN_CLK_ENABLE
+/* Redefine GPIO Clk */ 
+#define _HAL_RCC_GPIO_ENABLE(X)     __HAL_RCC_GPIO##X##_CLK_ENABLE()
+
 
 #define LIMIT_X_PORT                BOARD_LIMIT_X_PORT // GPIOB
 #define LIMIT_X_PIN                 BOARD_LIMIT_X_PIN  // GPIO_PIN_0

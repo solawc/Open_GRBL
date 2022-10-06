@@ -1,5 +1,5 @@
 /*
- mid_nvs.c
+ hal_dwt.h
 
  Copyright (c) 2021-2022 sola
 
@@ -9,12 +9,12 @@
  please indicate the source
 */
 
-#include "mid_nvs.h"
+#ifndef __hal_wdg_h_
+#define __hal_wdg_h_
 
-mid_nvs_t dev_nvs;
+#include "../../../main.h"
 
-void DevNvsInit(void) {
-    dev_nvs.nvsFlush    = BspEepromInit;
-    dev_nvs.nvsGetChar  = BspEeepromGetChar;
-    dev_nvs.nvsFlush    = BspEepromFlush;
-}
+void hal_wdg_init(void);
+void hal_feedWDG(void);
+
+#endif
