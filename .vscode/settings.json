@@ -59,7 +59,8 @@
         "bsp_ltdc.h": "c",
         "lv_touch_port.h": "c",
         "bsp_sdram.h": "c",
-        "hal_it.h": "c"
+        "hal_it.h": "c",
+        "mid_spi.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

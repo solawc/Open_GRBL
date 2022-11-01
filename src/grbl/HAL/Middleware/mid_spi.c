@@ -1,5 +1,5 @@
 /*
- mid_nvs.c
+ mid_spi.c
 
  Copyright (c) 2021-2022 sola
 
@@ -9,12 +9,20 @@
  please indicate the source
 */
 
-#include "mid_nvs.h"
+#include "mid_spi.h"
 
-mid_nvs_t dev_nvs;
+dev_spi_t dev_spi;
 
-void DevNvsInit(void) {
-    dev_nvs.nvsFlush    = BspEepromInit;
-    dev_nvs.nvsGetChar  = BspEeepromGetChar;
-    dev_nvs.nvsFlush    = BspEepromFlush;
-} 
+void DevSpiInit(void) {
+
+   
+
+
+}
+
+
+
+
+
+
+

@@ -11,6 +11,14 @@
 
 #include "bsp_gpio.h"
 
+void BspGpioSet(GPIO_TypeDef *GPIOx, uint16_t PIN, GPIO_InitTypeDef *settings) {
+	settings->Pin = PIN;
+	HAL_GPIO_Init(GPIOx, settings);
+}
+
+
+
+
 /*******************************************************************************
  * Choose limits pins need know, if use st mcu ,you must konw pins interrupt 
  * int whitch exit line? you'd best make the pins in the same exit line! than 
@@ -52,10 +60,12 @@ void BspLimitGpioIrqDisable(void) {
 
 void hal_probe_gpio_init(void) {
 
-	GPIO_InitTypeDef GPIO_Init = {0};
+	GPIO_InitTypeDef GPIO_Init = {
+		.Mode = MODE_INPUT,
+		.Pull = GPIO_NOPULL,
+		.Speed = GPIO_SPEED_FREQ_HIGH,
+	};
 
-	GPIO_Init.Mode = MODE_INPUT;
-	GPIO_Init.Pull = GPIO_NOPULL;
 	GPIO_Init.Pin = PROBE_PIN;
     HAL_GPIO_Init(PROBE_PORT, &GPIO_Init);
 }

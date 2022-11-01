@@ -104,4 +104,6 @@ void set_coolant_mist(bool status);
 uint8_t get_coolant_flood(void);
 uint8_t get_coolant_mist(void);
 
+void BspGpioSet(GPIO_TypeDef *GPIOx, uint16_t PIN, GPIO_InitTypeDef *settings);
+
 #endif

@@ -69,12 +69,19 @@ extern SPI_HandleTypeDef sd_hspi;
 #elif defined(SD_USE_SDIO)
 
 
+
 #endif
 
 
+typedef struct{
+    uint8_t (*dev_sdcard_init)(void);
+    uint8_t (*dev_sdcard_read_disk)(uint8_t*, uint32_t, uint8_t);
+    uint8_t (*dev_sdcard_write_disk)(uint8_t*, uint32_t, uint8_t);
+    uint8_t (*dev_sd_get_sector_count)(void);
+}dev_sdcard_t;
+
+
 void hal_sd_register(void);
-
-
 void hal_sd_init(void);
 void hal_sd_enable(void);
 void hal_sd_disable(void);

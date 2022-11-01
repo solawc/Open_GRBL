@@ -23,17 +23,17 @@
 
 #ifdef CPU_STM32
   #if defined(USE_FREERTOS_RTOS)
-  #define LIMIT_QUEUE_SIZE      10
-  xQueueHandle limit_sw_queue;  // used by limit switch debouncing
+  #define         LIMIT_QUEUE_SIZE      10
+  xQueueHandle    limit_sw_queue;  // used by limit switch debouncing
   #endif
 #endif
 
 // Homing axis search distance multiplier. Computed by this value times the cycle travel.
 #ifndef HOMING_AXIS_SEARCH_SCALAR
-  #define HOMING_AXIS_SEARCH_SCALAR  1.5 // Must be > 1 to ensure limit switch will be engaged.
+  #define HOMING_AXIS_SEARCH_SCALAR  1.5 /* Must be > 1 to ensure limit switch will be engaged. */
 #endif
 #ifndef HOMING_AXIS_LOCATE_SCALAR
-  #define HOMING_AXIS_LOCATE_SCALAR  5.0 // Must be > 1 to ensure limit switch is cleared.
+  #define HOMING_AXIS_LOCATE_SCALAR  5.0 /* Must be > 1 to ensure limit switch is cleared. */ 
 #endif
 
 #ifdef ENABLE_DUAL_AXIS
@@ -73,12 +73,8 @@ void limits_init()
 #endif
 }
 
-// Disables hard limits.
-void limits_disable()
-{
-  dev_gpio.limit_irq_disable();
-}
-
+/* Disables hard limits. */ 
+void limits_disable() { dev_gpio.limit_irq_disable(); }
 
 // Returns limit state as a bit-wise uint8 variable. Each bit indicates an axis limit, where
 // triggered is 1 and not triggered is 0. Invert mask is applied. Axes are defined by their

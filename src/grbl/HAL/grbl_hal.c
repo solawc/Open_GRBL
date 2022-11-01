@@ -71,7 +71,7 @@ void systemInit() {
 /** 
  * 将外设驱动单独描述，以注册的方式进行，这样即便切换不一样的MCU，提供相同的
  * 外设驱动接口，也可以正常运行OpenGRBL，大大提高了可移植性。 
- * 
+ * 这里使用了模板的方式作为接口，方便后续的移植。
  */
 void grblDeviceInit() {
 
@@ -84,7 +84,7 @@ void grblDeviceInit() {
 
 /** 
  * 启动MCU，配置MCU内核时钟、外设时钟等等，初始化外设接口
-*/
+ */
 void grblHwInit(void) {
 
     systemInit();

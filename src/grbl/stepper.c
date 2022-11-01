@@ -22,7 +22,7 @@
 #include "grbl.h"
 
 // Some useful constants.
-#define DT_SEGMENT (1.0/(ACCELERATION_TICKS_PER_SECOND*60.0)) // min/segment
+#define DT_SEGMENT (1.0f / (ACCELERATION_TICKS_PER_SECOND * 60.0f)) // min/segment
 #define REQ_MM_INCREMENT_SCALAR 1.25
 #define RAMP_ACCEL 0
 #define RAMP_CRUISE 1
@@ -856,11 +856,11 @@ void st_prep_buffer()
     do {
       switch (prep.ramp_type) {
         case RAMP_DECEL_OVERRIDE:
-          speed_var = pl_block->acceleration*time_var;
+          speed_var = pl_block->acceleration * time_var;
           if (prep.current_speed-prep.maximum_speed <= speed_var) {
             // Cruise or cruise-deceleration types only for deceleration override.
             mm_remaining = prep.accelerate_until;
-            time_var = 2.0*(pl_block->millimeters-mm_remaining)/(prep.current_speed+prep.maximum_speed);
+            time_var = 2.0*(pl_block->millimeters-mm_remaining) / (prep.current_speed+prep.maximum_speed);
             prep.ramp_type = RAMP_CRUISE;
             prep.current_speed = prep.maximum_speed;
           } else { // Mid-deceleration override ramp.

@@ -207,7 +207,6 @@ DRESULT disk_ioctl (
 			switch(cmd) {
 
 				case CTRL_SYNC: res = RES_OK; break;
-
 				case GET_SECTOR_SIZE:
 					*(DWORD*)buff = SD_BLOCKSIZE; 
 					res = RES_OK;
