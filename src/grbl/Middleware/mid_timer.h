@@ -12,7 +12,7 @@
 #ifndef __mid_timer_h
 #define __mid_timer_h
 
-#include "../../../main.h"
+#include "../../main.h"
 
 typedef struct {
 

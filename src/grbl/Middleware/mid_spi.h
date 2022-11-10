@@ -12,7 +12,7 @@
 #ifndef __mid_spi_h
 #define __mid_spi_h
 
-#include "../../../main.h"
+#include "../../main.h"
 
 #ifdef CPU_STM32
 typedef SPI_HandleTypeDef   BSP_SPI_HandleTypeDef;

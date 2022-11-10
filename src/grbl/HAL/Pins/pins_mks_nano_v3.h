@@ -15,6 +15,8 @@
 #include "pins_def.h"
 #include "../grbl_mb.h"
 
+#if MB_BOARD == BOARD_MKS_ROBIN_NANO_V3
+
 /* Board Info */
 #define MCU_INFI_NAME                   "STM32F407VE"
 #define MCU_INFO_FLASH                  "512K"
@@ -120,3 +122,7 @@
 #define EEPROM_START_ADDR               ADDR_FLASH_SECTOR_5     
 #define EEPROM_END_ADDR                 ((uint32_t)0x0803ffff)
 #define FLASH_WRITE_SECTORS_WORD
+
+#endif
+
+#endif

@@ -1,15 +1,10 @@
 
+#ifdef BOARD_MKS_ROBIN_NANO_V3_INI
 
-#ifdef BOARD_MKS_DLC_LG0_V3_INI
-
-#include "bsp_mks_dlc_lg0_v3_system.h"
+#include "hal_robin_nano_v3_system.h"
 #include "../bsp_tim.h"
 
-/*
- * 1.set system clock 
- * 2.init system and clock
-*/
-void BspMksDlcLg0SystemInit(void) {
+void Bsp_RobinNanoV3_SystemInit(void) {
 
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
@@ -17,7 +12,7 @@ void BspMksDlcLg0SystemInit(void) {
   /** Configure the main internal regulator output voltage
   */
   __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE2);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -28,7 +23,7 @@ void BspMksDlcLg0SystemInit(void) {
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 8;
-  RCC_OscInitStruct.PLL.PLLN = 84;
+  RCC_OscInitStruct.PLL.PLLN = 168;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 4;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -42,44 +37,41 @@ void BspMksDlcLg0SystemInit(void) {
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
   {
     Error_Handler();
   }
 
-  SysTick_Config(84000000 / 1000);
 
-  BspMksDlcLg0ClkInit();
 }
 
-void BspMksDlcLg0ClkInit(void) {
+void Bsp_RobinNanoV3_ClkInit(void) {
 
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
-
-  __HAL_RCC_USART1_CLK_ENABLE();
-
-  __HAL_RCC_SPI1_CLK_ENABLE();
-  __HAL_RCC_SPI2_CLK_ENABLE();
-  __HAL_RCC_SPI3_CLK_ENABLE();
+  _HAL_RCC_GPIO_ENABLE(A);
+  _HAL_RCC_GPIO_ENABLE(B);
+  _HAL_RCC_GPIO_ENABLE(C);
+  _HAL_RCC_GPIO_ENABLE(D);
+  _HAL_RCC_GPIO_ENABLE(E);
 }
-
 
 
 uint8_t BspGetEepromAddress(uint32_t addr) {
-
   if(addr<ADDR_FLASH_SECTOR_0)return FLASH_SECTOR_0;
   else if(addr<ADDR_FLASH_SECTOR_1)return FLASH_SECTOR_1;
   else if(addr<ADDR_FLASH_SECTOR_2)return FLASH_SECTOR_2;
   else if(addr<ADDR_FLASH_SECTOR_3)return FLASH_SECTOR_3;
   else if(addr<ADDR_FLASH_SECTOR_4)return FLASH_SECTOR_4;
-  else return FLASH_SECTOR_5;
-
+  else if(addr<ADDR_FLASH_SECTOR_5)return FLASH_SECTOR_5;
+  else if(addr<ADDR_FLASH_SECTOR_6)return FLASH_SECTOR_6;
+  else if(addr<ADDR_FLASH_SECTOR_7)return FLASH_SECTOR_7;
+  else if(addr<ADDR_FLASH_SECTOR_8)return FLASH_SECTOR_8;
+  else if(addr<ADDR_FLASH_SECTOR_9)return FLASH_SECTOR_9;
+  else if(addr<ADDR_FLASH_SECTOR_10)return FLASH_SECTOR_10;
+  else if(addr<ADDR_FLASH_SECTOR_11)return FLASH_SECTOR_11;
+  return FLASH_SECTOR_11;
 }
 
 void Error_Handler(void)
@@ -92,7 +84,5 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-
 
 #endif

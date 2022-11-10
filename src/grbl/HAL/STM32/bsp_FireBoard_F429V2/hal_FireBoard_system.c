@@ -57,14 +57,7 @@ void Bsp_FireBoard_SystemInit(void) {
 }
 
 void Bsp_FireBoard_ClkInit(void) {
-
-  // __HAL_RCC_GPIOA_CLK_ENABLE();
-  // __HAL_RCC_GPIOB_CLK_ENABLE();
-  // __HAL_RCC_GPIOC_CLK_ENABLE();
-  // __HAL_RCC_GPIOD_CLK_ENABLE();
-  // __HAL_RCC_GPIOE_CLK_ENABLE();
-  // __HAL_RCC_GPIOF_CLK_ENABLE();
-
+  
   _HAL_RCC_GPIO_ENABLE(A);
   _HAL_RCC_GPIO_ENABLE(B);
   _HAL_RCC_GPIO_ENABLE(C);

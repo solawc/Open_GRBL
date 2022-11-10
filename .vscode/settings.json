@@ -60,7 +60,11 @@
         "lv_touch_port.h": "c",
         "bsp_sdram.h": "c",
         "hal_it.h": "c",
-        "mid_spi.h": "c"
+        "mid_spi.h": "c",
+        "hal_robin_nano_v3_system.h": "c",
+        "pins_mks_nano_v3.h": "c",
+        "bsp_tim.h": "c",
+        "cmsis_os.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

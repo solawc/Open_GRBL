@@ -12,7 +12,7 @@
 #ifndef __mid_nvs_h
 #define __mid_nvs_h
 
-#include "../../../main.h"
+#include "../../main.h"
 
 typedef struct {
 
