@@ -25,8 +25,6 @@
 int main() {
 
   grblHwInit();
-  
-  clientInit(); // TODO
 
 #ifdef STM32G0B0xx
   // here must wait for some time, beacuse STM32G0B0CE have no XTAL
@@ -45,7 +43,6 @@ int main() {
 }
 
 void _delay_ms(uint32_t tick) {
-  
 #if defined(USE_FREERTOS_RTOS)
   vTaskDelay(tick);
 #else 

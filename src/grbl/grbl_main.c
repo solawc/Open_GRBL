@@ -24,7 +24,7 @@ void enter_grbl_task(void *parg) {
 void enter_grbl_task(void) {
 #endif
 
-	BspEepromInit();
+  dev_nvs.nvsInit();
 
   // Initialize system upon power-up.
 	serial_init();   // Setup serial baud rate and interrupts

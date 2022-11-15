@@ -64,7 +64,8 @@
         "hal_robin_nano_v3_system.h": "c",
         "pins_mks_nano_v3.h": "c",
         "bsp_tim.h": "c",
-        "cmsis_os.h": "c"
+        "cmsis_os.h": "c",
+        "bsp_flash_eeprom.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

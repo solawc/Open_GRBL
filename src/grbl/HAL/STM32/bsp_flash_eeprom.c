@@ -15,23 +15,6 @@ uint8_t eeprom_buf[PAGE_SIZE];
 
 FLASH_EraseInitTypeDef eeprom_flash;
 
-
-#ifdef USE_EEPROM_IC
-void hal_eeprom_i2c_init(void) {
-    hal_i2c1_init();
-}
-
-void hal_eeprom_read_id() {
-
-    
-}
-
-void hal_i2c_eeprom_write_page(uint8_t *buff) {
-    
-}
-#endif
-
-
 void BspEepromFlush(void) {
 
     BspFlashWriteBuff(EEPROM_START_ADDR, (uint32_t *)eeprom_buf, EEPROM_SIZE(eeprom_buf));

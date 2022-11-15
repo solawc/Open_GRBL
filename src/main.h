@@ -81,9 +81,6 @@
 
 #include "ui/lv_port/lv_disp_port.h"
 
-
-#include "client.h"
-
 #include "Grbl/grbl.h"
 
 // For Fatfs 
