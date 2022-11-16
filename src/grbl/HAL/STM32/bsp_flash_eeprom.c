@@ -15,9 +15,49 @@ uint8_t eeprom_buf[PAGE_SIZE];
 
 FLASH_EraseInitTypeDef eeprom_flash;
 
+#ifdef I2C_EEPEOM
+
+I2C_HandleTypeDef eepI2c;
+
+#define _EEPROM_CLK_ENABLE(X)	__HAL_RCC_I2C##X##_CLK_ENABLE()
+#define EEPROM_CLK_ENABLE(X)	_EEPROM_CLK_ENABLE(X)
+
+#define __EEPROM_I2C_PORT(X)		I2C##X
+#define _EEPROM_I2C_PORT(X) 		__EEPROM_I2C_PORT(X)
+#define	EEPROM_I2C_PORT				_EEPROM_I2C_PORT(EEPROM_I2C)
+
+void BspEepromI2cInit(void) {
+
+	EEPROM_CLK_ENABLE(EEPROM_I2C);
+
+	eepI2c.Instance = EEPROM_I2C_PORT;
+	eepI2c.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;	// 7位有效地址
+	eepI2c.Init.ClockSpeed = 100000;						// 100K
+	eepI2c.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+	eepI2c.Init.DutyCycle = I2C_DUTYCYCLE_2; 
+	eepI2c.Init.GeneralCallMode = I2C_GENERALCALL_ENABLE; 
+	eepI2c.Init.OwnAddress1 = EEPROM_ADDR;
+	HAL_I2C_Init(&eepI2c);
+}
+
+void BspEepromI2cWriteBuffer(uint32_t salverAddr, uint8_t *buff, uint32_t size) {
+
+}
+
+void BspEepromI2cReadBuff(uint32_t salverAddr, uint8_t *readbuff, uint32_t size);
+
+#endif
+
+
 void BspEepromFlush(void) {
 
+#ifndef I2C_EEPEOM
     BspFlashWriteBuff(EEPROM_START_ADDR, (uint32_t *)eeprom_buf, EEPROM_SIZE(eeprom_buf));
+#else 
+	// TODO..
+	BspEepromI2cWriteBuffer(EEPROM_ADDR, eeprom_buf, EEPROM_SIZE(eeprom_buf));
+#endif
+
 }
 
 void BspEepromInit(void) {
@@ -25,8 +65,12 @@ void BspEepromInit(void) {
     uint16_t    var = 0;
     uint8_t     *temp = eeprom_buf;
 
+#ifndef I2C_EEPEOM
     BspFlashReadBuff(EEPROM_START_ADDR, (uint32_t *)eeprom_buf, EEPROM_SIZE(eeprom_buf));
-    
+#else 
+
+#endif
+
     if(eeprom_buf[0] != SETTINGS_VERSION) {
 
         temp = eeprom_buf;
@@ -36,6 +80,7 @@ void BspEepromInit(void) {
 			*temp++ = 0xFF;
 		}
     }
+
 }
 
 uint8_t BspEeepromGetChar(unsigned int addr) {
@@ -52,8 +97,9 @@ uint32_t STMFLASH_ReadWord(uint32_t faddr)
 	return *(volatile uint32_t *)faddr; 
 }
 
-void BspFlashWriteBuff(uint32_t addr ,uint32_t *buff, uint32_t num) {
 
+void BspFlashWriteBuff(uint32_t addr ,uint32_t *buff, uint32_t num) {
+#ifndef I2C_EEPEOM
     FLASH_EraseInitTypeDef FlashEraseInit;
 	HAL_StatusTypeDef FlashStatus=HAL_OK;
     uint32_t SectorError=0;
@@ -127,18 +173,26 @@ void BspFlashWriteBuff(uint32_t addr ,uint32_t *buff, uint32_t num) {
 		}  
 	}
 	HAL_FLASH_Lock();           //上锁
+#else 
+
+
+#endif
 }
 
 
 
 void BspFlashReadBuff(uint32_t addr, uint32_t *buff, uint32_t num)   	
 {
+#ifndef I2C_EEPEOM
 	uint32_t i;
 	for(i=0;i<num;i++)
 	{
 		buff[i]=STMFLASH_ReadWord(addr);//读取4个字节.
 		addr+=4;//偏移4个字节.	
 	}
+#else
+
+#endif
 }
 
 

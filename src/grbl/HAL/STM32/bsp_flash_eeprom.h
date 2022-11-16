@@ -15,8 +15,8 @@
 #include "../grbl_hal.h"
 
 #define USE_FLASH_AS_EEPROM
-// #define USE_EEPROM_IC        
-#ifdef  USE_EEPROM_IC
+      
+#ifdef  I2C_EEPEOM
 #define USE_AT24C02
 
 #if defined(USE_AT24C02)

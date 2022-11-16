@@ -65,7 +65,8 @@
         "pins_mks_nano_v3.h": "c",
         "bsp_tim.h": "c",
         "cmsis_os.h": "c",
-        "bsp_flash_eeprom.h": "c"
+        "bsp_flash_eeprom.h": "c",
+        "stm32f4xx_hal_i2c.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

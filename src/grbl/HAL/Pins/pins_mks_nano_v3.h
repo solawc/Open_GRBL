@@ -122,8 +122,15 @@
 
 #define I2C_EEPEOM                      
 #ifdef I2C_EEPEOM
-    #define EEPROM_ADDR                 
-    #define EEPROM_SIZE
+    #define EEPROM_I2C                  1                               // I2C1
+    #define EEPROM_I2C_CLK              __HAL_RCC_I2C1_CLK_ENABLE()
+    #define EEPROM_I2C_SCL_PORT         GPIOB
+    #define EEPROM_I2C_SCL_PIN          GPIO_PIN_6
+    #define EEPROM_I2C_SDA_PORT         GPIOB
+    #define EEPROM_I2C_SDA_PIN          GPIO_PIN_7
+
+    // #define EEPROM_ADDR                 
+    // #define EEPROM_SIZE
 #endif
 
 #ifndef I2C_EEPEOM
