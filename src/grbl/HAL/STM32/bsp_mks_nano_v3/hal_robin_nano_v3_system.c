@@ -50,11 +50,11 @@ void Bsp_RobinNanoV3_SystemInit(void) {
 
 void Bsp_RobinNanoV3_ClkInit(void) {
 
-  _HAL_RCC_GPIO_ENABLE(A);
-  _HAL_RCC_GPIO_ENABLE(B);
-  _HAL_RCC_GPIO_ENABLE(C);
-  _HAL_RCC_GPIO_ENABLE(D);
-  _HAL_RCC_GPIO_ENABLE(E);
+  HAL_RCC_GPIO_ENABLE(A);
+  HAL_RCC_GPIO_ENABLE(B);
+  HAL_RCC_GPIO_ENABLE(C);
+  HAL_RCC_GPIO_ENABLE(D);
+  HAL_RCC_GPIO_ENABLE(E);
 }
 
 

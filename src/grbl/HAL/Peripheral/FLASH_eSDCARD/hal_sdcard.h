@@ -1,7 +1,7 @@
 #ifndef __hal_sdcard_h
 #define __hal_sdcard_h
 
-#include "../../../main.h"
+#include "../../../../main.h"
 
 extern SPI_HandleTypeDef sd_hspi;
 

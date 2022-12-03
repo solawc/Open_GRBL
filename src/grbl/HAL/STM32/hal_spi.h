@@ -14,9 +14,6 @@
 
 #include "../../../main.h"
 
-
-
-
 extern SPI_HandleTypeDef w25qxx_spi;
 
 void spi_for_w25qxx_init(void);

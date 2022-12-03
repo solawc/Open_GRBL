@@ -322,6 +322,7 @@ uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
   #ifdef VARIABLE_SPINDLE
     block->spindle_speed = pl_data->spindle_speed;
   #endif
+
   #ifdef USE_LINE_NUMBERS
     block->line_number = pl_data->line_number;
   #endif
@@ -338,9 +339,14 @@ uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
       position_steps[Y_AXIS] = system_convert_corexy_to_y_axis_steps(sys_position);
       position_steps[Z_AXIS] = sys_position[Z_AXIS];
     #else
-      memcpy(position_steps, sys_position, sizeof(sys_position)); 
+      // memcpy(position_steps, sys_position, sizeof(sys_position)); 
+      system_data_copy(sys_position, position_steps, sizeof(sys_position));
+
     #endif
-  } else { memcpy(position_steps, pl.position, sizeof(pl.position)); }
+  } else { 
+    // memcpy(position_steps, pl.position, sizeof(pl.position)); 
+    system_data_copy(pl.position, position_steps, sizeof(pl.position));
+  }
 
   #ifdef COREXY
     target_steps[A_MOTOR] = lroundf(target[A_MOTOR]*settings.steps_per_mm[A_MOTOR]);

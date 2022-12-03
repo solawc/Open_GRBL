@@ -17,34 +17,9 @@
 #ifdef HAS_W25Qxx
 SPI_HandleTypeDef w25qxx_spi;
 SPI_HandleTypeDef tft_spi;
-NFLASH_t sFlash;
 
 
-
-// void w25qxxSpiGpioInit(void)
-// {
-//     GPIO_InitTypeDef GPIO_Init = {
-//         .Alternate = W25QXX_PIN_AF,
-//         .Mode = GPIO_MODE_AF_PP,
-//         .Pull = GPIO_NOPULL,
-//         .Speed = GPIO_SPEED_FREQ_MEDIUM,
-//     };
-
-//     GPIO_Init.Pin = W25QXX_SPI_SCK_PIN;
-//     HAL_GPIO_Init(W25QXX_SPI_SCK_GPIO, &GPIO_Init);
-
-//     GPIO_Init.Pin = W25QXX_SPI_MISO_PIN;
-//     HAL_GPIO_Init(W25QXX_SPI_MISO_GPIO, &GPIO_Init);
-
-//     GPIO_Init.Pin = W25QXX_SPI_MOSI_PIN;
-//     HAL_GPIO_Init(W25QXX_SPI_MOSI_GPIO, &GPIO_Init);
-
-//     GPIO_Init.Mode = GPIO_MODE_OUTPUT_PP;
-//     GPIO_Init.Pull = GPIO_PULLUP;
-//     GPIO_Init.Speed = GPIO_SPEED_FREQ_MEDIUM;
-//     GPIO_Init.Pin = W25QXX_SPI_CS_PIN;
-//     HAL_GPIO_Init(W25QXX_SPI_CS_GPIO, &GPIO_Init);
-// } 
+eFLASH_t sFlash;
 
 void spi_for_w25qxx_init(void) {
     w25qxx_spi.Instance                 = W25QXX_SPI_PORT;
@@ -59,6 +34,7 @@ void spi_for_w25qxx_init(void) {
     w25qxx_spi.Init.Mode                = SPI_MODE_MASTER;
     w25qxx_spi.Init.NSS                 = SPI_NSS_SOFT;
     w25qxx_spi.Init.TIMode              = SPI_TIMODE_DISABLE;
+    
     BspSpiPortInit(&w25qxx_spi);
 }
 

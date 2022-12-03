@@ -109,10 +109,16 @@ void hal_reset_timer_irq_disable(void) {
 
 void STEP_RESET_HANDLER(void) {
     HAL_TIM_IRQHandler(&STEP_RESET_TIMER);
+#if defined __CORTEX_M && (__CORTEX_M == 4U || __CORTEX_M == 7U)
+    __DSB();
+#endif
 }
 
 void STEP_SET_HANDLER(void) {
     HAL_TIM_IRQHandler(&STEP_SET_TIMER);
+#if defined __CORTEX_M && (__CORTEX_M == 4U || __CORTEX_M == 7U)
+    __DSB();
+#endif
 }
 
 /*******************PWM SET***************************/

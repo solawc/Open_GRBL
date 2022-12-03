@@ -68,8 +68,8 @@
 #include "Grbl/HAL/STM32/bsp_sdram.h"
 #include "Grbl/HAL/STM32/bsp_ltdc.h"
 
-#include "Grbl/HAL/Peripheral/hal_sdcard.h"
-#include "Grbl/HAL/Peripheral/hal_w25qxx.h"
+#include "Grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
+#include "Grbl/HAL/Peripheral/FLASH_eW25QXX/w25qxx.h"
 
 #include "Grbl/Middleware/mid_gpio.h"
 #include "Grbl/Middleware/mid_timer.h"
@@ -96,8 +96,7 @@
 
 #ifdef HAS_W25Qxx 
 #define SYSTEM_FLASH()      w25qxxSpiRegiest(); \
-                            w25qxxInit(&sFlash); \
-                            w25qxx_fs_init();
+                            w25qxxInit(&sFlash); 
 #else 
 #define SYSTEM_FLASH()
 #endif

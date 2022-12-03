@@ -72,7 +72,7 @@ void hal_probe_gpio_init(void) {
 
 uint8_t hal_probe_gpio_read(void) {
 
-	return HAL_GPIO_ReadPin(PROBE_PORT, PROBE_PIN);
+	return HAL_GPIO_ReadPin(PROBE_PORT, PROBE_PIN); 
 }
 
 uint8_t BspLimitGetState(uint8_t axis) {
@@ -215,18 +215,6 @@ void BspSetGpioStepEnable(bool status) {
 		HAL_GPIO_WritePin(STEP_Z_EN_PORT, STEP_Z_EN_PIN, GPIO_PIN_RESET); 
 	#endif 
 	}
-}
-
-uint8_t hal_return_axix_gpio_status(uint8_t axis) {
-	uint8_t mask = 0;
-	switch(axis) {
-		case X_AXIS: mask = READ_BIT(MOTOR_X_AXIS_PORT->ODR, MOTOR_X_AXIS_PIN); break;
-		case Y_AXIS: mask = READ_BIT(MOTOR_Y_AXIS_PORT->ODR, MOTOR_Y_AXIS_PIN); break;
-	#ifdef MOTOR_Z_AXIS_PIN
-		case Z_AXIS: mask = READ_BIT(MOTOR_Z_AXIS_PORT->ODR, MOTOR_Z_AXIS_PIN); break;
-	#endif
-	}
-	return mask;
 }
 
 void BspSetGpioDirState(uint8_t mask) {

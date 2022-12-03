@@ -41,7 +41,7 @@ void BspEepromI2cInit(void) {
 }
 
 void BspEepromI2cWriteBuffer(uint32_t salverAddr, uint8_t *buff, uint32_t size) {
-
+	
 }
 
 void BspEepromI2cReadBuff(uint32_t salverAddr, uint8_t *readbuff, uint32_t size);

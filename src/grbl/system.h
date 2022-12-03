@@ -206,5 +206,6 @@ void system_set_exec_motion_override_flag(uint8_t mask);
 void system_set_exec_accessory_override_flag(uint8_t mask);
 void system_clear_exec_motion_overrides();
 void system_clear_exec_accessory_overrides();
+void system_data_copy(int32_t *src, int32_t *dec, uint32_t size);
 
 #endif

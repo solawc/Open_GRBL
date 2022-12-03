@@ -2,19 +2,21 @@
 #define __hal_w25qxx_h__
 
 
-#include "../grbl_config.h"
+#include "../../grbl_config.h"
+
 
 #ifdef HAS_W25Qxx
 
-    #include "../../../main.h"
-    #define USE_FATFS
+    // #include "../../../../main.h"
+    #include "w25qxx_port.h"
+
+    // #define USE_FATFS
     #ifdef USE_FATFS
         #define W25QXX_FS_PATH              "0:"
     #endif /* USE_FATFS */
 
-
     // Flash choose
-    // EF
+    // EF -- W25QXX
     #define  sFLASH_ID_X16  0x3015        /* W25X16  */ 
     #define  sFLASH_ID_16   0x4015        /* W25Q16  */
     #define  sFLASH_ID_64   0X4017        /* W25Q64  */
@@ -55,7 +57,6 @@
     #define WIP_Flag                        0x01  /* Write In Progress (WIP) flag */
     #define Dummy_Byte                      0xFF
 
-
     typedef struct{
 
         uint32_t flash_id;                  /* Flash ID */ 
@@ -74,23 +75,22 @@
         void (*w25qxxEnableTrans)(void);    
         void (*w25qxxDisableTrans)(void);
 
-    }NFLASH_t;
-    extern NFLASH_t sFlash;
+    }eFLASH_t;
+    extern eFLASH_t sFlash;
 
+    
+    void w25qxxSpiInit(eFLASH_t *nFlash);                           
 
-    void w25qxxSpiRegiest();
-    void w25qxxSpiInit(NFLASH_t *nFlash);                           
+    void w25qxxInit(eFLASH_t *nFlash);
+    uint32_t w25qxxRead_ID(eFLASH_t *nFlash);
+    uint16_t w25qxxReadWriteByte(eFLASH_t *nFlash, uint16_t wdata);
 
-    void w25qxxInit(NFLASH_t *nFlash);
-    uint32_t w25qxxRead_ID(NFLASH_t *nFlash);
-    uint16_t w25qxxReadWriteByte(NFLASH_t *nFlash, uint16_t wdata);
-
-    void w25qxxEnterFlashMode(NFLASH_t *nFlash);
-    void w25qxxSectorErase(NFLASH_t *nFlash, uint32_t SectorAddr);
-    void w25qxxBlockErase(NFLASH_t *nFlash, uint32_t BlockAddr);
-    void w25qxxChipErase(NFLASH_t *nFlash);
-    void w25qxxBufferWrite(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite);
-    void w25qxxBufferRead(NFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, uint32_t NumByteToRead);
+    void w25qxxEnterFlashMode(eFLASH_t *nFlash);
+    void w25qxxSectorErase(eFLASH_t *nFlash, uint32_t SectorAddr);
+    void w25qxxBlockErase(eFLASH_t *nFlash, uint32_t BlockAddr);
+    void w25qxxChipErase(eFLASH_t *nFlash);
+    void w25qxxBufferWrite(eFLASH_t *nFlash, uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite);
+    void w25qxxBufferRead(eFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, uint32_t NumByteToRead);
     void w25qxxTest();
     #ifdef USE_FATFS
         bool w25qxx_fs_init(void);

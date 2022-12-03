@@ -16,7 +16,7 @@
 
 /* Redefine GPIO Clk */ 
 #define _HAL_RCC_GPIO_ENABLE(X)     __HAL_RCC_GPIO##X##_CLK_ENABLE()
-
+#define HAL_RCC_GPIO_ENABLE(X)      _HAL_RCC_GPIO_ENABLE(X)
 
 #define LIMIT_X_PORT                BOARD_LIMIT_X_PORT // GPIOB
 #define LIMIT_X_PIN                 BOARD_LIMIT_X_PIN  // GPIO_PIN_0
@@ -80,7 +80,6 @@
 /*空气冷却*/    
 #define MIST_PORT                   GPIOB
 #define MIST_PIN                    GPIO_PIN_3   
-
 
 void BspLimitGpioInit(void);
 void BspLimitGpioIrqEnable(void);
