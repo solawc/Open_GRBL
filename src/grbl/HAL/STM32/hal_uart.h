@@ -14,7 +14,7 @@
 
 #include "../../../main.h"
 
-#define UART_RB_BUFF_MAX                255
+
 
 #define LaserUART		                BOARD_UART
 #define LaserUART_IRQn                  BOARD_UART_IRQ
@@ -27,26 +27,12 @@
 #define LASER_UART_IRQHANDLER           BOARD_UART_IRQnHANDLER
 #define LASER_UART_RX_FLAG              BOARD_UART_RX_FLAG
 
-typedef struct {
-    uint32_t head;
-    uint32_t tail;
-    uint8_t buffer[UART_RB_BUFF_MAX];
-}hal_uart_t;
-extern hal_uart_t rb_serial_rx;
-extern hal_uart_t rb_serial_tx;
+
 
 void BspUartGpioInit(void);
 void BspUartInit(void);
 void BspUartIrqSet(void);
 void BspUartSendByte(uint8_t data);
 bool BspUartTcFlag(void);
-
-// ringbuffer
-void serial_rb_init(hal_uart_t *rb);
-void serial_rb_write(hal_uart_t *rb, uint8_t data);
-uint8_t serial_rb_read(hal_uart_t *rb, uint8_t *data);
-uint16_t serial_rb_abailable(hal_uart_t *rb);
-uint16_t serial_rb_buff_count(hal_uart_t *rb);
-void serial_rb_reset(hal_uart_t *rb);
 
 #endif

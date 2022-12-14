@@ -4,10 +4,6 @@
 
 // bool flash_dma_mode = false;
 
-
-
-
-
 static void w25qxxCsBegin(eFLASH_t *nFlash)
 {
   nFlash->w25qxxEnableTrans();
@@ -33,8 +29,6 @@ uint16_t w25qxxReadWriteByte(eFLASH_t *nFlash, uint16_t wdata)
   return nFlash->w25qxxSpiReadWriteByte(wdata);
 }
 
-
-
 /*--------------------------------------------------------------------------------------------*/
 
 void w25qxxInit(eFLASH_t *nFlash)
@@ -48,6 +42,7 @@ void w25qxxInit(eFLASH_t *nFlash)
   sFlash.flash_id =  w25qxxRead_ID(nFlash);
 
   get_id_size = sFlash.flash_id & 0x00ffff;
+  sFlash.flash_man = sFlash.flash_id & 0xff0000;
 
   sFlash.addr_size = 16;
 

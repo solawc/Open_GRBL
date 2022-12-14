@@ -13,7 +13,7 @@
     // #define USE_FATFS
     #ifdef USE_FATFS
         #define W25QXX_FS_PATH              "0:"
-    #endif /* USE_FATFS */
+    #endif /* USE_FATFS */  
 
     // Flash choose
     // EF -- W25QXX
@@ -57,6 +57,13 @@
     #define WIP_Flag                        0x01  /* Write In Progress (WIP) flag */
     #define Dummy_Byte                      0xFF
 
+
+    /* Flash support list. */
+    enum {
+        W25QXX = 0xEF,
+        ZB25QXX = 0x5E,
+    }Flash_Man_t;
+
     typedef struct{
 
         uint32_t flash_id;                  /* Flash ID */ 
@@ -68,10 +75,10 @@
         uint8_t  addr_size;
 
         /* Base Func */
-        void (*w25qxxSpiGpioInit)(void);                     /* 初始化GPIO的函数，包含GPIO复用 */
-        void (*w25qxxSpiInit)(void);                          /* 初始化SPI外设 */
-        uint8_t (*w25qxxSpiReadWriteByte)(uint8_t );        /* SPI读写函数 */
-        bool (*w25qxxIsTransFinish)(void);                   /* 判断是否传输完成 */
+        void (*w25qxxSpiGpioInit)(void);                        /* 初始化GPIO的函数，包含GPIO复用 */
+        void (*w25qxxSpiInit)(void);                            /* 初始化SPI外设 */
+        uint8_t (*w25qxxSpiReadWriteByte)(uint8_t );            /* SPI读写函数 */
+        bool (*w25qxxIsTransFinish)(void);                      /* 判断是否传输完成 */
         void (*w25qxxEnableTrans)(void);    
         void (*w25qxxDisableTrans)(void);
 

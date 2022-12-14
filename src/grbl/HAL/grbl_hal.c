@@ -59,11 +59,11 @@ void systemInit() {
 
     SYSTEM_FLASH();  
 
-    // SYSTEM_SDRAM();   
+    SYSTEM_SDRAM();   
     
-    // SYSTEM_SDCARD();    
+    SYSTEM_SDCARD();    
     
-    // SYSTEM_LCD();       
+    SYSTEM_LCD();       
 
     SYSTEM_WDG();
 }
@@ -76,6 +76,8 @@ void systemInit() {
 void grblDeviceInit() {
 
     DevGpioInit();     
+
+    DevUartInit();
          
     DevTimerInit();
 

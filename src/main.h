@@ -74,6 +74,7 @@
 #include "Grbl/Middleware/mid_gpio.h"
 #include "Grbl/Middleware/mid_timer.h"
 #include "Grbl/Middleware/mid_nvs.h"
+#include "Grbl/Middleware/mid_uart.h"
 
 #include "ex_dev/lcd/tft_lcd_dev.h"
 #include "ex_dev/sd/sdcard.h"

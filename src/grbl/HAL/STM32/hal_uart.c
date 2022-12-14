@@ -11,8 +11,8 @@
 
 #include "hal_uart.h"
 
-hal_uart_t rb_serial_rx;
-hal_uart_t rb_serial_tx;
+ringbuff_t rb_serial_rx;
+ringbuff_t rb_serial_tx;
 
 UART_HandleTypeDef laser_uart;
 UART_HandleTypeDef tft_uart;
@@ -146,71 +146,6 @@ void tft_lcd_uart_init() {
 	tft_lcd_uart_pins_init();
 }
 
-/*************************************************************
- * A ringbuffer init
- * **********************************************************/
-void serial_rb_init(hal_uart_t *rb) {
-	rb->head = 0;
-	rb->tail = 0;
-}
-
-/*************************************************************
- * write a data to ringbuffer
- * **********************************************************/
-void serial_rb_write(hal_uart_t *rb, uint8_t data) {
-
-	uint8_t next = rb->head + 1;
-
-	if(next == UART_RB_BUFF_MAX) { next = 0; }
-
-	if(next != rb->tail) {
-		rb->buffer[rb->head] = data;
-		rb->head = next;
-	}
-}
-
-/*************************************************************
- * read a data from ringbuffer
- * **********************************************************/
-uint8_t serial_rb_read(hal_uart_t *rb, uint8_t *data) {
-
-	uint8_t tail = rb->tail;
-
-	if(rb->head == tail) {
-		return 0;
-	}else {
-		*data = rb->buffer[tail];
-		tail++;
-		if(tail == UART_RB_BUFF_MAX) {tail = 0;}
-		rb->tail = tail;
-		return 1;
-	}
-}
-
-/*************************************************************
- * if ringbuffer abailable
- * **********************************************************/
-uint16_t serial_rb_abailable(hal_uart_t *rb) {
-	uint8_t tmp_tail = rb->tail;						
-	if(rb->head > tmp_tail) return (rb->head - tmp_tail);
-	return (tmp_tail - rb->head); 
-}
-
-/*************************************************************
- * get ringbuffer count
- * **********************************************************/
-uint16_t serial_rb_buff_count(hal_uart_t *rb) {
-	uint8_t tmp_tail = rb->tail;
-	if(rb->head >= tmp_tail) {return (rb->head - tmp_tail);}
-	return (UART_RB_BUFF_MAX - (tmp_tail - rb->head));
-} 
-
-/************************************************************
- * Reset ringbuffer
- * *********************************************************/
-void serial_rb_reset(hal_uart_t *rb) {
-	rb->tail = rb->head;
-}
 
 
 
