@@ -66,8 +66,8 @@ void memcpy_to_eeprom_with_checksum(unsigned int destination, char *source, unsi
   unsigned char checksum = 0;
   for(; size > 0; size--) { 
     // checksum = (checksum << 1) || (checksum >> 7);
-	checksum =  checksum << 1;
-	checksum |= checksum >> 7;
+	  checksum =  checksum << 1;
+	  checksum |= checksum >> 7;
     checksum += *source;
     eeprom_put_char(destination++, *(source++)); 
   }

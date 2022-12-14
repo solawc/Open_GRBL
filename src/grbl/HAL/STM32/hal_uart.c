@@ -37,7 +37,8 @@ void BspUartGpioInit(void) {
 void BspUartInit(void) {
 
 	BspUartGpioInit();
-    laser_uart.Instance = LaserUART;
+    
+	laser_uart.Instance = LaserUART;
 	laser_uart.Init.BaudRate = BAUD_RATE;
 	laser_uart.Init.WordLength = UART_WORDLENGTH_8B;
 	laser_uart.Init.StopBits = UART_STOPBITS_1;
