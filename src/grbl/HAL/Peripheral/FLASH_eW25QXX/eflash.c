@@ -1,4 +1,15 @@
-#include "w25qxx.h"
+/*
+ eflash.c
+
+ Copyright (c) 2021-2022 sola
+
+ This part of the code belongs to the corresponding platform that 
+ I adapt to, has nothing to do with GRBL, and is only related to 
+ the platform. Therefore, if you use this part of the code, 
+ please indicate the source
+*/
+
+#include "eflash.h"
 
 #ifdef HAS_W25Qxx
 
@@ -6,19 +17,19 @@
 
 static void w25qxxCsBegin(eFLASH_t *nFlash)
 {
-  nFlash->w25qxxEnableTrans();
+  nFlash->flashEnableTrans();
 }
 
 static void w25qxxCsEnd(eFLASH_t *nFlash)
 {
-  nFlash->w25qxxDisableTrans();
+  nFlash->flashDisableTrans();
 }
 
-void w25qxxSpiInit(eFLASH_t *nFlash)
+void flashSpiInit(eFLASH_t *nFlash)
 {   
     if(sFlash.flash_mode == sFLAHS_SPI_MODE) {
-        nFlash->w25qxxSpiGpioInit();
-        nFlash->w25qxxSpiInit();
+        nFlash->flashSpiGpioInit();
+        nFlash->flashSpiInit();
     }else {
 
     }    
@@ -26,7 +37,7 @@ void w25qxxSpiInit(eFLASH_t *nFlash)
 
 uint16_t w25qxxReadWriteByte(eFLASH_t *nFlash, uint16_t wdata)
 { 
-  return nFlash->w25qxxSpiReadWriteByte(wdata);
+  return nFlash->flashSpiReadWriteByte(wdata);
 }
 
 /*--------------------------------------------------------------------------------------------*/
@@ -35,7 +46,7 @@ void w25qxxInit(eFLASH_t *nFlash)
 {   
   uint32_t get_id_size = 0x00;
   
-  w25qxxSpiInit(nFlash);
+  flashSpiInit(nFlash);
 
   w25qxxEnterFlashMode(nFlash);
 
@@ -330,20 +341,28 @@ void w25qxxBufferRead(eFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, __I
 
 /*************************************************************
  *                      w25qxx test
+ * For this test, I need to rewrite it to another way to test 
+ * the performance difference of different Flash.
+ * - Erase time test.
+ * - Erase time test of single sector.
+ * - Time test for reading 10K data.
+ * - Time test for writing 10K data.
  * **********************************************************/
 #define TxBufferSize1   (countof(TxBuffer1) - 1)
 #define RxBufferSize1   (countof(TxBuffer1) - 1)
 #define countof(a)      (sizeof(a) / sizeof(*(a)))
 #define  BufferSize     (countof(Tx_Buffer)-1)
 
-#define  FLASH_WriteAddress     0x00000
+#define  FLASH_WriteAddress     0x10000
 #define  FLASH_ReadAddress      FLASH_WriteAddress
 #define  FLASH_SectorToErase    FLASH_WriteAddress
 
-uint8_t Tx_Buffer[] = "123ABCabc";
+uint8_t Tx_Buffer[1024];;
 uint8_t Rx_Buffer[BufferSize];
 
 void w25qxxTest() {
+  
+  memset(Tx_Buffer, 0x31, sizeof(Tx_Buffer));
 
   // 擦除FLASH
   printf("Begin erase....\n");
@@ -351,12 +370,13 @@ void w25qxxTest() {
 
   // 往FLASH写入数据
   printf("Begin write data...\n");
+
   w25qxxBufferWrite(&sFlash, Tx_Buffer, FLASH_WriteAddress, BufferSize);
-
   printf("begin read data....\n");
-  w25qxxBufferRead(&sFlash, Rx_Buffer, FLASH_ReadAddress, BufferSize);
 
+  w25qxxBufferRead(&sFlash, Rx_Buffer, FLASH_ReadAddress, BufferSize);
   printf("data:%s\n", Rx_Buffer);
+
 }
 
 

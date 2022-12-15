@@ -68,7 +68,9 @@
         "bsp_flash_eeprom.h": "c",
         "stm32f4xx_hal_i2c.h": "c",
         "w25qxx_port.h": "c",
-        "w25qxx.h": "c"
+        "w25qxx.h": "c",
+        "eflash.h": "c",
+        "eflash_port.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

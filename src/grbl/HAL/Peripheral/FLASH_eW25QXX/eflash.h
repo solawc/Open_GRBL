@@ -1,14 +1,24 @@
+/*
+ eflash.h
+
+ Copyright (c) 2021-2022 sola
+
+ This part of the code belongs to the corresponding platform that 
+ I adapt to, has nothing to do with GRBL, and is only related to 
+ the platform. Therefore, if you use this part of the code, 
+ please indicate the source
+*/
+
 #ifndef __hal_w25qxx_h__
 #define __hal_w25qxx_h__
 
-
 #include "../../grbl_config.h"
-
 
 #ifdef HAS_W25Qxx
 
-    // #include "../../../../main.h"
-    #include "w25qxx_port.h"
+    #include "eflash_port.h"
+
+    #define eFLASH_VERSION                   20221215
 
     // #define USE_FATFS
     #ifdef USE_FATFS
@@ -75,18 +85,18 @@
         uint8_t  addr_size;
 
         /* Base Func */
-        void (*w25qxxSpiGpioInit)(void);                        /* 初始化GPIO的函数，包含GPIO复用 */
-        void (*w25qxxSpiInit)(void);                            /* 初始化SPI外设 */
-        uint8_t (*w25qxxSpiReadWriteByte)(uint8_t );            /* SPI读写函数 */
-        bool (*w25qxxIsTransFinish)(void);                      /* 判断是否传输完成 */
-        void (*w25qxxEnableTrans)(void);    
-        void (*w25qxxDisableTrans)(void);
+        void (*flashSpiGpioInit)(void);                        /* 初始化GPIO的函数，包含GPIO复用 */
+        void (*flashSpiInit)(void);                            /* 初始化SPI外设 */
+        uint8_t (*flashSpiReadWriteByte)(uint8_t );            /* SPI读写函数 */
+        bool (*flashIsTransFinish)(void);                      /* 判断是否传输完成 */
+        void (*flashEnableTrans)(void);    
+        void (*flashDisableTrans)(void);
 
     }eFLASH_t;
     extern eFLASH_t sFlash;
 
     
-    void w25qxxSpiInit(eFLASH_t *nFlash);                           
+    void flashSpiInit(eFLASH_t *nFlash);                           
 
     void w25qxxInit(eFLASH_t *nFlash);
     uint32_t w25qxxRead_ID(eFLASH_t *nFlash);

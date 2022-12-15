@@ -28,7 +28,7 @@ void grblReprotMcuInfo(void) {
 
     grblHwInfoGet();
 
-    printf("/*********************************************************/\r\n");
+    printf("\r\n/*********************************************************/\r\n");
     printf("*-\\    |    /\n");
     printf("* --OpenGRBL--\r\n");
     printf("*-/    |    \\\n");
@@ -38,7 +38,7 @@ void grblReprotMcuInfo(void) {
     printf("*-CPU Clock:%ldMHz\r\n", grbl_hw_get.mcu_clk/1000000);
     printf("*-CPU Step Clock:%ldMHz\r\n", grbl_hw_get.step_tim_clk/1000000);
 #ifdef HAS_W25Qxx
-    printf("*-Flash Info 0x%lx, flash_size = %ldMB\n", (uint32_t)sFlash.flash_id, (sFlash.flash_size / (uint32_t)1024));
+    printf("*-Flash Info:0x%lx, flash_size:%ldMB\n", (uint32_t)sFlash.flash_id, (sFlash.flash_size / (uint32_t)1024));
 #endif
     printf("*-BuildVersion:%s\n", GRBL_VERSION_BUILD);
     printf("/*********************************************************/\r\n");
@@ -69,9 +69,11 @@ void systemInit() {
 }
 
 /** 
- * 将外设驱动单独描述，以注册的方式进行，这样即便切换不一样的MCU，提供相同的
- * 外设驱动接口，也可以正常运行OpenGRBL，大大提高了可移植性。 
- * 这里使用了模板的方式作为接口，方便后续的移植。
+ * The peripheral drivers are described separately and registered, 
+ * so that OpenGRBL can run normally even if different MCUs are 
+ * switched and the same peripheral driver interface is provided, 
+ * which greatly improves the portability. The template is used as 
+ * the interface to facilitate subsequent migration.
  */
 void grblDeviceInit() {
 
@@ -85,7 +87,7 @@ void grblDeviceInit() {
 }
 
 /** 
- * 启动MCU，配置MCU内核时钟、外设时钟等等，初始化外设接口
+ * Setup MCU core and peripheral clock.
  */
 void grblHwInit(void) {
 

@@ -69,7 +69,7 @@
 #include "Grbl/HAL/STM32/bsp_ltdc.h"
 
 #include "Grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
-#include "Grbl/HAL/Peripheral/FLASH_eW25QXX/w25qxx.h"
+#include "Grbl/HAL/Peripheral/FLASH_eW25QXX/eflash.h"
 
 #include "Grbl/Middleware/mid_gpio.h"
 #include "Grbl/Middleware/mid_timer.h"

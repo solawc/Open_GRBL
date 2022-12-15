@@ -42,7 +42,7 @@ uint8_t w25qxx_spi_read_write(uint8_t data) {
     return BspSpiTransReceiveByte(&w25qxx_spi, data);
 }
 
-bool w25qxxIsTransFinish() {
+bool flashIsTransFinish() {
 
     return true;
 }
