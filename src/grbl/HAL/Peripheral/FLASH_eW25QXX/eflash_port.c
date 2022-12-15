@@ -32,7 +32,7 @@ void w25qxx_spi_cs_disable(void) {
 
 void w25qxxSpiRegiest(void) {
     sFlash.info.flash_mode               = sFLAHS_SPI_MODE;
-    sFlash.info.flash_delay_time         = 10;   
+    sFlash.info.flash_delay_time         = 100;   
     sFlash.info.flash_id                 = 0;
     sFlash.info.flash_size               = 0;
     sFlash.flashSpiInit            = spi_for_w25qxx_init;

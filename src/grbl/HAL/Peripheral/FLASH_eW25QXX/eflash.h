@@ -20,11 +20,6 @@
 
     #define eFLASH_VERSION                   20221215
 
-    // #define USE_FATFS
-    #ifdef USE_FATFS
-        #define W25QXX_FS_PATH              "0:"
-    #endif /* USE_FATFS */  
-
     // Flash choose
     // EF -- W25QXX
     #define  sFLASH_ID_X16  0x3015        /* W25X16  */ 
@@ -78,7 +73,7 @@
         uint32_t flash_id;                  /* Flash ID                 */ 
         uint32_t flash_man;                 /* Flash device name        */ 
         uint32_t flash_size;                /* Flash size(KB)           */             
-        uint32_t flash_delay_time;          
+        uint32_t flash_delay_time;          /* Flash delay              */
         uint32_t sector_size;               /* Flash sector size        */
         uint8_t  flash_mode;                /* Flash mode(SPI or QSPI)  */
         uint8_t  flash_state;               /* check if flash can't read, use for FATFS */ 
