@@ -12,6 +12,10 @@
 #ifndef __hal_gpio_h
 #define __hal_gpio_h
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../../../main.h"
 
 /* Redefine GPIO Clk */ 
@@ -104,5 +108,9 @@ uint8_t get_coolant_flood(void);
 uint8_t get_coolant_mist(void);
 
 void BspGpioSet(GPIO_TypeDef *GPIOx, uint16_t PIN, GPIO_InitTypeDef *settings);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

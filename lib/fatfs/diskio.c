@@ -18,9 +18,9 @@
 
 
 #define SD_BLOCKSIZE			512
-#define FLASH_SECTOR_SIZE 		512
+#define FLASH_SECTOR_SIZE 		4096// 512
 
-uint32_t FLASH_SECTOR_COUNT = 	1024*2*32;
+// uint32_t FLASH_SECTOR_COUNT = 	1024*2*32;
 #define FALSH_BLOCK_SIZE		8
 
 /*-----------------------------------------------------------------------*/
@@ -80,12 +80,11 @@ DSTATUS disk_initialize (
 #ifdef HAS_W25Qxx
 			w25qxxInit(&sFlash);
 
-			if(sFlash.flash_state == 1) {
+			if(sFlash.info.flash_state == 1) {
 				stat = RES_OK;
 			}else {
 				stat = RES_ERROR;
 			}
-			FLASH_SECTOR_COUNT = 1024 * 2 * (sFlash.flash_size/1024); /* Setting Flash size */
 
 			return stat;
 #endif
@@ -126,7 +125,7 @@ DRESULT disk_read (
 		case DEV_FLASH :
 #ifdef HAS_W25Qxx
 			for(; count>0; count--) {
-				w25qxxBufferRead(&sFlash, buff, sector*FLASH_SECTOR_SIZE, count*FLASH_SECTOR_SIZE);
+				w25qxxBufferRead(&sFlash, buff, sector * FLASH_SECTOR_SIZE, count*FLASH_SECTOR_SIZE);
 				sector++;
 				buff += FLASH_SECTOR_SIZE;
 			}
@@ -242,16 +241,18 @@ DRESULT disk_ioctl (
 				break;
 
 				case GET_BLOCK_SIZE:
-					*(WORD*)buff = 1; // FALSH_BLOCK_SIZE;
+					*(WORD*)buff = 1;	/* default eraser a sector. */
 					res = RES_OK;
 				break;
 
 				case GET_SECTOR_COUNT:
-					*(DWORD*)buff = FLASH_SECTOR_COUNT;
+					*(DWORD*)buff = (sFlash.info.flash_size * 1024) / FLASH_SECTOR_SIZE;
 					res = RES_OK;
 				break;
 			}
+			
 			return res;
+
 		break;
 
 	}

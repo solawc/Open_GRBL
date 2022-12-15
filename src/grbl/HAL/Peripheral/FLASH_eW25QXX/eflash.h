@@ -70,19 +70,24 @@
 
     /* Flash support list. */
     enum {
-        W25QXX = 0xEF,
-        ZB25QXX = 0x5E,
+        W25QXX      = 0xEF,
+        ZB25QXX     = 0x5E,
     }Flash_Man_t;
 
-    typedef struct{
-
-        uint32_t flash_id;                  /* Flash ID */ 
-        uint32_t flash_man;                 /* Flash Man */ 
-        uint32_t flash_size;                
-        uint32_t flash_delay_time;
-        uint8_t  flash_mode;
+    typedef struct {
+        uint32_t flash_id;                  /* Flash ID                 */ 
+        uint32_t flash_man;                 /* Flash device name        */ 
+        uint32_t flash_size;                /* Flash size(KB)           */             
+        uint32_t flash_delay_time;          
+        uint32_t sector_size;               /* Flash sector size        */
+        uint8_t  flash_mode;                /* Flash mode(SPI or QSPI)  */
         uint8_t  flash_state;               /* check if flash can't read, use for FATFS */ 
         uint8_t  addr_size;
+    }eFLASH_INFO_t;
+
+    typedef struct{
+        
+        eFLASH_INFO_t info;
 
         /* Base Func */
         void (*flashSpiGpioInit)(void);                        /* 初始化GPIO的函数，包含GPIO复用 */

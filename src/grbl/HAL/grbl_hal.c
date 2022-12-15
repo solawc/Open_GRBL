@@ -38,7 +38,7 @@ void grblReprotMcuInfo(void) {
     printf("*-CPU Clock:%ldMHz\r\n", grbl_hw_get.mcu_clk/1000000);
     printf("*-CPU Step Clock:%ldMHz\r\n", grbl_hw_get.step_tim_clk/1000000);
 #ifdef HAS_W25Qxx
-    printf("*-Flash Info:0x%lx, flash_size:%ldMB\n", (uint32_t)sFlash.flash_id, (sFlash.flash_size / (uint32_t)1024));
+    printf("*-Flash Info:0x%lx, flash_size:%ldMB\n", (uint32_t)sFlash.info.flash_id, (sFlash.info.flash_size / (uint32_t)1024));
 #endif
     printf("*-BuildVersion:%s\n", GRBL_VERSION_BUILD);
     printf("/*********************************************************/\r\n");

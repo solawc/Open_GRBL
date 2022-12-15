@@ -9,6 +9,16 @@
  please indicate the source
 */
 
+/****************************************************************
+ *                          Flash for fatfs
+ * - flashInit()
+ * - flashReadSector()
+ * - flashWriteSector()
+ * - FLASH_SECTOR_SIZE = 4096
+ * 
+ * 
+ **********/
+
 #include "eflash.h"
 
 #ifdef HAS_W25Qxx
@@ -27,7 +37,7 @@ static void w25qxxCsEnd(eFLASH_t *nFlash)
 
 void flashSpiInit(eFLASH_t *nFlash)
 {   
-    if(sFlash.flash_mode == sFLAHS_SPI_MODE) {
+    if(sFlash.info.flash_mode == sFLAHS_SPI_MODE) {
         nFlash->flashSpiGpioInit();
         nFlash->flashSpiInit();
     }else {
@@ -42,6 +52,11 @@ uint16_t w25qxxReadWriteByte(eFLASH_t *nFlash, uint16_t wdata)
 
 /*--------------------------------------------------------------------------------------------*/
 
+void w25qxxDelayUs(volatile uint32_t us) {
+
+  while(us --);
+}
+
 void w25qxxInit(eFLASH_t *nFlash)
 {   
   uint32_t get_id_size = 0x00;
@@ -50,28 +65,28 @@ void w25qxxInit(eFLASH_t *nFlash)
 
   w25qxxEnterFlashMode(nFlash);
 
-  sFlash.flash_id =  w25qxxRead_ID(nFlash);
+  sFlash.info.flash_id =  w25qxxRead_ID(nFlash);
 
-  get_id_size = sFlash.flash_id & 0x00ffff;
-  sFlash.flash_man = sFlash.flash_id & 0xff0000;
+  get_id_size = sFlash.info.flash_id & 0x00ffff;
+  sFlash.info.flash_man = sFlash.info.flash_id & 0xff0000;
 
-  sFlash.addr_size = 16;
+  sFlash.info.addr_size = 16;    /* Default address size is 16bit. */ 
 
   switch(get_id_size) {
-    case sFLASH_ID_X16: sFlash.flash_size = (16  / 8) *1024; break;
-    case sFLASH_ID_16:  sFlash.flash_size = (16  / 8) *1024; break;
-    case sFLASH_ID_64:  sFlash.flash_size = (64  / 8) *1024; break;
-    case sFLASH_ID_128: sFlash.flash_size = (128 / 8) *1024; 
-                        sFlash.addr_size  = 24;
+    case sFLASH_ID_X16: sFlash.info.flash_size = (16  / 8) *1024; break;
+    case sFLASH_ID_16:  sFlash.info.flash_size = (16  / 8) *1024; break;
+    case sFLASH_ID_64:  sFlash.info.flash_size = (64  / 8) *1024; break;
+    case sFLASH_ID_128: sFlash.info.flash_size = (128 / 8) *1024; 
+                        sFlash.info.addr_size  = 24;
                         break;
-    case sFLASH_ID_256: sFlash.flash_size   = (258 / 8) *1024; 
-                        sFlash.addr_size = 24;
+    case sFLASH_ID_256: sFlash.info.flash_size   = (258 / 8) *1024; 
+                        sFlash.info.addr_size = 24;
                         break;
-    default: sFlash.flash_size = 0; break;
+    default: sFlash.info.flash_size = 0; break;
   }
 
-  if(sFlash.flash_size != 0) { sFlash.flash_state = 1; }
-  else { sFlash.flash_state = 0; }
+  if(sFlash.info.flash_size != 0) { sFlash.info.flash_state = 1; }
+  else { sFlash.info.flash_state = 0; }
 }
 
 uint32_t w25qxxRead_ID(eFLASH_t *nFlash)
@@ -125,7 +140,6 @@ void w25qxx_write_disable(eFLASH_t *nFlash)
     w25qxxCsEnd(nFlash);
 }
 
-
 void w25qxxWaitBusy(eFLASH_t *nFlash)
 {
     uint8_t FLASH_Status = 0;
@@ -136,6 +150,7 @@ void w25qxxWaitBusy(eFLASH_t *nFlash)
     {
       FLASH_Status = w25qxxReadWriteByte(nFlash, Dummy_Byte);	 
       if((SPITimeout--) == 0) { return; }
+      w25qxxDelayUs(100);
     } while ((FLASH_Status & WIP_Flag) == 0x01); 
     w25qxxCsEnd(nFlash);
 }
@@ -177,7 +192,7 @@ void w25qxxSectorErase(eFLASH_t *nFlash, uint32_t SectorAddr) {
 
   w25qxxReadWriteByte(nFlash, W25X_SectorErase);
 
-  if(sFlash.addr_size == 24) {
+  if(sFlash.info.addr_size == 24) {
     w25qxxReadWriteByte(nFlash, (SectorAddr & 0xFF000000) >> 24);
   }
 
@@ -200,7 +215,7 @@ void w25qxxBlockErase(eFLASH_t *nFlash, uint32_t BlockAddr) {
 
   w25qxxReadWriteByte(nFlash, W25X_BlockErase);
 
-  if(sFlash.addr_size == 24) {
+  if(sFlash.info.addr_size == 24) {
     w25qxxReadWriteByte(nFlash, (BlockAddr & 0xFF000000) >> 24);
   }
 
@@ -234,7 +249,7 @@ void w25qxxPageWrite(eFLASH_t *nFlash, uint8_t* pBuffer, uint32_t WriteAddr, uin
   w25qxxCsBegin(nFlash);
   w25qxxReadWriteByte(nFlash, W25X_PageProgram);
 
-  if(sFlash.addr_size == 24) {
+  if(sFlash.info.addr_size == 24) {
     w25qxxReadWriteByte(nFlash, (WriteAddr & 0xFF000000) >> 24);
   }
   w25qxxReadWriteByte(nFlash, (WriteAddr & 0xFF0000) >> 16);
@@ -319,7 +334,7 @@ void w25qxxBufferRead(eFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, __I
   w25qxxCsBegin(nFlash);
   w25qxxReadWriteByte(nFlash, W25X_ReadData);
 
-  if(sFlash.addr_size == 24) {
+  if(sFlash.info.addr_size == 24) {
     w25qxxReadWriteByte(nFlash, (ReadAddr & 0xFF000000) >> 24);
   }
   w25qxxReadWriteByte(nFlash, (ReadAddr & 0xFF0000) >> 16);
@@ -362,21 +377,30 @@ uint8_t Rx_Buffer[BufferSize];
 
 void w25qxxTest() {
   
+  uint32_t writeAddr = 0;
   memset(Tx_Buffer, 0x31, sizeof(Tx_Buffer));
 
   // 擦除FLASH
   printf("Begin erase....\n");
-  w25qxxSectorErase(&sFlash, FLASH_SectorToErase);
+  // w25qxxSectorErase(&sFlash, FLASH_SectorToErase);
+  w25qxxChipErase(&sFlash);
 
   // 往FLASH写入数据
   printf("Begin write data...\n");
 
-  w25qxxBufferWrite(&sFlash, Tx_Buffer, FLASH_WriteAddress, BufferSize);
+  for(int i = 0; i < sFlash.info.flash_size; i++) {
+    w25qxxBufferWrite(&sFlash, Tx_Buffer, writeAddr + i*1024, BufferSize);
+  }
+  // w25qxxBufferWrite(&sFlash, Tx_Buffer, FLASH_WriteAddress, BufferSize);
+
+  
   printf("begin read data....\n");
 
-  w25qxxBufferRead(&sFlash, Rx_Buffer, FLASH_ReadAddress, BufferSize);
-  printf("data:%s\n", Rx_Buffer);
-
+  // w25qxxBufferRead(&sFlash, Rx_Buffer, FLASH_ReadAddress, BufferSize);
+  for(int i = 0; i < sFlash.info.flash_size; i++) {
+    w25qxxBufferRead(&sFlash, Rx_Buffer, writeAddr + i*1024, BufferSize);
+    printf("data:%s\n", Rx_Buffer);
+  }
 }
 
 

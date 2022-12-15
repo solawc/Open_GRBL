@@ -12,6 +12,10 @@
 #ifndef __bsp_ltdc_h_
 #define __bsp_ltdc_h_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "main.h"
 
 #ifdef HAS_LCD_RGB_5_INC
@@ -311,6 +315,10 @@ void     LCD_ClockConfig(LTDC_HandleTypeDef *hltdc, void *Params);
 
 void LCD_LayerInit(uint16_t LayerIndex, uint32_t FB_Address,uint32_t PixelFormat);
 
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

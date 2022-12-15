@@ -12,6 +12,10 @@
 #ifndef __hal_flash_eeprom_h__
 #define __hal_flash_eeprom_h__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../grbl_hal.h"
 
 #define USE_FLASH_AS_EEPROM
@@ -39,4 +43,9 @@ void BspFlashWriteBuff(uint32_t addr ,uint32_t *buff, uint32_t num);
 void BspFlashReadBuff(uint32_t addr, uint32_t *buff, uint32_t num);
 uint8_t BspEeepromGetChar(unsigned int addr);
 uint8_t hal_get_flash_sector(uint32_t addr);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif
