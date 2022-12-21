@@ -45,7 +45,7 @@ void Bsp_RobinNanoV3_SystemInit(void) {
     Error_Handler();
   }
 
-
+  Bsp_RobinNanoV3_ClkInit();
 }
 
 void Bsp_RobinNanoV3_ClkInit(void) {

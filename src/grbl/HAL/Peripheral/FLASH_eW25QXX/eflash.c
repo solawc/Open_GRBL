@@ -368,7 +368,7 @@ void w25qxxBufferRead(eFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, __I
 #define countof(a)      (sizeof(a) / sizeof(*(a)))
 #define  BufferSize     (countof(Tx_Buffer)-1)
 
-#define  FLASH_WriteAddress     0x10000
+#define  FLASH_WriteAddress     0x00000
 #define  FLASH_ReadAddress      FLASH_WriteAddress
 #define  FLASH_SectorToErase    FLASH_WriteAddress
 

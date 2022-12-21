@@ -22,16 +22,15 @@
 
     // Flash choose
     // EF -- W25QXX
-    #define  sFLASH_ID_X16  0x3015        /* W25X16  */ 
-    #define  sFLASH_ID_16   0x4015        /* W25Q16  */
-    #define  sFLASH_ID_64   0X4017        /* W25Q64  */
-    #define  sFLASH_ID_128  0X4018        /* W25Q128 */
-    #define  sFLASH_ID_256  0X4019        /* W25Q256 */  
+    #define  sFLASH_ID_X16  0x3015          /* W25X16  */ 
+    #define  sFLASH_ID_16   0x4015          /* W25Q16  */
+    #define  sFLASH_ID_64   0X4017          /* W25Q64  */
+    #define  sFLASH_ID_128  0X4018          /* W25Q128 */
+    #define  sFLASH_ID_256  0X4019          /* W25Q256 */  
 
     #define sFLAHS_SPI_MODE                 0
     #define sFLASH_QSPI_MODE                1
 
-    #define SPI_FLASH_SectorSize            512
     #define SPI_FLASH_PageSize              256
     #define SPI_FLASH_PerWritePageSize      256
 
@@ -70,12 +69,12 @@
     }Flash_Man_t;
 
     typedef struct {
-        uint32_t flash_id;                  /* Flash ID                 */ 
-        uint32_t flash_man;                 /* Flash device name        */ 
-        uint32_t flash_size;                /* Flash size(KB)           */             
-        uint32_t flash_delay_time;          /* Flash delay              */
-        uint32_t sector_size;               /* Flash sector size        */
-        uint8_t  flash_mode;                /* Flash mode(SPI or QSPI)  */
+        uint32_t flash_id;                  /* Flash ID                                 */ 
+        uint32_t flash_man;                 /* Flash device name                        */ 
+        uint32_t flash_size;                /* Flash size(KB)                           */             
+        uint32_t flash_delay_time;          /* Flash delay                              */
+        uint32_t sector_size;               /* Flash sector size                        */
+        uint8_t  flash_mode;                /* Flash mode(SPI or QSPI)                  */
         uint8_t  flash_state;               /* check if flash can't read, use for FATFS */ 
         uint8_t  addr_size;
     }eFLASH_INFO_t;
