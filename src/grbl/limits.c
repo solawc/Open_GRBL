@@ -23,17 +23,17 @@
 
 #ifdef CPU_STM32
   #if defined(USE_FREERTOS_RTOS)
-  #define LIMIT_QUEUE_SIZE      10
-  xQueueHandle limit_sw_queue;  // used by limit switch debouncing
+  #define         LIMIT_QUEUE_SIZE      10
+  xQueueHandle    limit_sw_queue;  // used by limit switch debouncing
   #endif
 #endif
 
 // Homing axis search distance multiplier. Computed by this value times the cycle travel.
 #ifndef HOMING_AXIS_SEARCH_SCALAR
-  #define HOMING_AXIS_SEARCH_SCALAR  1.5 // Must be > 1 to ensure limit switch will be engaged.
+  #define HOMING_AXIS_SEARCH_SCALAR  1.5 /* Must be > 1 to ensure limit switch will be engaged. */
 #endif
 #ifndef HOMING_AXIS_LOCATE_SCALAR
-  #define HOMING_AXIS_LOCATE_SCALAR  5.0 // Must be > 1 to ensure limit switch is cleared.
+  #define HOMING_AXIS_LOCATE_SCALAR  5.0 /* Must be > 1 to ensure limit switch is cleared. */ 
 #endif
 
 #ifdef ENABLE_DUAL_AXIS
@@ -73,12 +73,8 @@ void limits_init()
 #endif
 }
 
-// Disables hard limits.
-void limits_disable()
-{
-  dev_gpio.limit_irq_disable();
-}
-
+/* Disables hard limits. */ 
+void limits_disable() { dev_gpio.limit_irq_disable(); }
 
 // Returns limit state as a bit-wise uint8 variable. Each bit indicates an axis limit, where
 // triggered is 1 and not triggered is 0. Invert mask is applied. Axes are defined by their
@@ -291,7 +287,7 @@ void limits_go_home(uint8_t cycle_mask)
       }
     }
 
-    homing_rate *= sqrt(n_active_axis); // [sqrt(N_AXIS)] Adjust so individual axes all move at homing rate.
+    homing_rate *= sqrtf(n_active_axis); // [sqrtf(N_AXIS)] Adjust so individual axes all move at homing rate.
     sys.homing_axis_lock = axislock;
 
     // Perform homing cycle. Planner buffer should be empty, as required to initiate the homing cycle.
@@ -417,9 +413,9 @@ void limits_go_home(uint8_t cycle_mask)
         set_axis_position = 0;
       #else
         if ( bit_istrue(settings.homing_dir_mask,bit(idx)) ) {
-          set_axis_position = lround((settings.max_travel[idx]+settings.homing_pulloff)*settings.steps_per_mm[idx]);
+          set_axis_position = lroundf((settings.max_travel[idx]+settings.homing_pulloff)*settings.steps_per_mm[idx]);
         } else {
-          set_axis_position = lround(-settings.homing_pulloff*settings.steps_per_mm[idx]);
+          set_axis_position = lroundf(-settings.homing_pulloff*settings.steps_per_mm[idx]);
         }
       #endif
 

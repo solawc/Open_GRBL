@@ -72,17 +72,23 @@
 #define ALARM_HOMING_FAIL_APPROACH  EXEC_ALARM_HOMING_FAIL_APPROACH
 
 // Define Grbl feedback message codes. Valid values (0-255).
-#define MESSAGE_CRITICAL_EVENT 1
-#define MESSAGE_ALARM_LOCK 2
-#define MESSAGE_ALARM_UNLOCK 3
-#define MESSAGE_ENABLED 4
-#define MESSAGE_DISABLED 5
-#define MESSAGE_SAFETY_DOOR_AJAR 6
-#define MESSAGE_CHECK_LIMITS 7
-#define MESSAGE_PROGRAM_END 8
-#define MESSAGE_RESTORE_DEFAULTS 9
-#define MESSAGE_SPINDLE_RESTORE 10
-#define MESSAGE_SLEEP_MODE 11
+#define MESSAGE_CRITICAL_EVENT        1
+#define MESSAGE_ALARM_LOCK            2
+#define MESSAGE_ALARM_UNLOCK          3
+#define MESSAGE_ENABLED               4
+#define MESSAGE_DISABLED              5
+#define MESSAGE_SAFETY_DOOR_AJAR      6
+#define MESSAGE_CHECK_LIMITS          7
+#define MESSAGE_PROGRAM_END           8
+#define MESSAGE_RESTORE_DEFAULTS      9
+#define MESSAGE_SPINDLE_RESTORE       10
+#define MESSAGE_SLEEP_MODE            11
+
+#define CLIENT_SERIAL                 0
+#define CLIENT_SD                     1
+#define CLIENT_WIFI                   2
+#define CLIENT_ETH                    3
+#define CLIENT_MAX                    4
 
 // Prints system status messages.
 void report_status_message(uint8_t status_code);

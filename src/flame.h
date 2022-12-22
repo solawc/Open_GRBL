@@ -20,8 +20,4 @@
 #define FLAME_PIN                   BOARD_FLAME_PIN
 #endif
 
-
-
-
-
 #endif

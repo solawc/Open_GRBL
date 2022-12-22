@@ -38,6 +38,16 @@
         #ifdef LCD_MKS_TS24
             #define HAS_TS24_CFG
         #endif
+
+        #define LCD_RGB_5_INC
+        #ifdef LCD_RGB_5_INC
+            #define USE_SDRAM
+            #ifdef USE_SDRAM
+                #define HAS_SDRAM
+            #endif
+            #define HAS_LCD_RGB_5_INC
+        #endif
+
     #endif
 
     #define W25QXX_FLASH_SUPPORT
@@ -45,7 +55,7 @@
         #define HAS_W25Qxx
     #endif
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-    // #define SDSUPPORT
+    #define SDSUPPORT
     #ifdef SDSUPPORT
         #define HAS_SDCARD
     #endif

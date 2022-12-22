@@ -182,23 +182,21 @@ void protocol_main_loop()
         
         case EOL: 
         
-          protocol_execute_realtime();                            // Runtime command check point.
+          protocol_execute_realtime();                              /* Runtime command check point. */ 
 
-          if (sys.abort) { return; }                              // Bail to calling function upon system abort
+          if (sys.abort) { return; }                                /* Bail to calling function upon system abort */ 
           
           get_line = client_lines[CLIENT_SERIAL].buffer;
 
 #ifdef REPORT_ECHO_RAW_LINE_RECEIVED
                         report_echo_line_received(line, client);
 #endif  
-        report_status_message(execute_line(get_line));
-
-        empty_line(CLIENT_SERIAL);
-
+          report_status_message(execute_line(get_line));
+          empty_line(CLIENT_SERIAL);
         break;
 
         case Overflow: 
-            over_flow_run();                                      // report overflow, and reset buff 
+          over_flow_run();                                          /* report overflow, and reset buff  */ 
         break;                    
 
         default:
@@ -210,10 +208,8 @@ void protocol_main_loop()
     // this indicates that g-code streaming has either filled the planner buffer or has
     // completed. In either case, auto-cycle start, if enabled, any queued moves.
     protocol_auto_cycle_start();
-
-    protocol_execute_realtime();  // Runtime command check point.
-
-    if (sys.abort) { return; } // Bail to main() program loop to reset system.
+    protocol_execute_realtime();                                    /* Runtime command check point. */ 
+    if (sys.abort) { return; }                                      /* Bail to main() program loop to reset system. */ 
   }
   return; /* Never reached */
 }

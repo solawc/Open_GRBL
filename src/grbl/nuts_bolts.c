@@ -141,26 +141,27 @@ void delay_ms(uint16_t ms)
 // efficiently with larger delays, as the counter adds parasitic time in each iteration.
 void delay_us(uint32_t us)
 {
-  while (us) {
-    if (us < 10) {
-      _delay_us(1);
-      us--;
-    } else if (us < 100) {
-      _delay_us(10);
-      us -= 10;
-    } else if (us < 1000) {
-      _delay_us(100);
-      us -= 100;
-    } else {
-      _delay_ms(1);
-      us -= 1000;
-    }
-  }
+  // while (us) {
+  //   if (us < 10) {
+  //     _delay_us(1);
+  //     us--;
+  //   } else if (us < 100) {
+  //     _delay_us(10);
+  //     us -= 10;
+  //   } else if (us < 1000) {
+  //     _delay_us(100);
+  //     us -= 100;
+  //   } else {
+  //     _delay_ms(1);
+  //     us -= 1000;
+  //   }
+  // }
+  _delay_us(us);
 }
 
 
 // Simple hypotenuse computation function.
-float hypot_f(float x, float y) { return(sqrt(x*x + y*y)); }
+float hypot_f(float x, float y) { return(sqrtf(x*x + y*y)); }
 
 
 float convert_delta_vector_to_unit_vector(float *vector)
@@ -172,7 +173,7 @@ float convert_delta_vector_to_unit_vector(float *vector)
       magnitude += vector[idx]*vector[idx];
     }
   }
-  magnitude = sqrt(magnitude);
+  magnitude = sqrtf(magnitude);
   float inv_magnitude = 1.0/magnitude;
   for (idx=0; idx<N_AXIS; idx++) { vector[idx] *= inv_magnitude; }
   return(magnitude);
@@ -185,7 +186,7 @@ float limit_value_by_axis_maximum(float *max_value, float *unit_vec)
   float limit_value = SOME_LARGE_VALUE;
   for (idx=0; idx<N_AXIS; idx++) {
     if (unit_vec[idx] != 0) {  // Avoid divide by zero.
-      limit_value = min(limit_value,fabs(max_value[idx]/unit_vec[idx]));
+      limit_value = min(limit_value,fabsf(max_value[idx]/unit_vec[idx]));
     }
   }
   return(limit_value);

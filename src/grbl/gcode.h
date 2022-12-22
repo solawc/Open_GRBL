@@ -1,5 +1,5 @@
 /*
-  gcode.h - rs274/ngc parser.
+  gcode.h 
   Part of Grbl
 
   Copyright (c) 2011-2016 Sungeun K. Jeon for Gnea Research LLC

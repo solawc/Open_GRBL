@@ -1,13 +1,13 @@
 
-#ifdef STM32F429xx
+#ifdef BOARD_FireBoard_F429_INI
 #include "hal_FireBoard_system.h"
-#include "../hal_tim.h"
+#include "../bsp_tim.h"
 
 /*
  * 1.set system clock 
  * 2.init system and clock
 */
-void hal_f429_system_init(void) {
+void Bsp_FireBoard_SystemInit(void) {
 
     RCC_OscInitTypeDef RCC_OscInitStruct = {0};
     RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
@@ -53,27 +53,51 @@ void hal_f429_system_init(void) {
         Error_Handler();
     }
 
-    hal_f429_clk_init();
+    Bsp_FireBoard_ClkInit();
 }
 
-void hal_f429_clk_init(void) {
-
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOE_CLK_ENABLE();
-  __HAL_RCC_GPIOF_CLK_ENABLE();
-
-  __HAL_RCC_USART1_CLK_ENABLE();
-  __HAL_RCC_SPI1_CLK_ENABLE();
+void Bsp_FireBoard_ClkInit(void) {
+  
+  HAL_RCC_GPIO_ENABLE(A);
+  HAL_RCC_GPIO_ENABLE(B);
+  HAL_RCC_GPIO_ENABLE(C);
+  HAL_RCC_GPIO_ENABLE(D);
+  HAL_RCC_GPIO_ENABLE(E);
+  HAL_RCC_GPIO_ENABLE(F);
+  HAL_RCC_GPIO_ENABLE(G);
+  HAL_RCC_GPIO_ENABLE(H);
+  HAL_RCC_GPIO_ENABLE(I);
+  HAL_RCC_GPIO_ENABLE(J);
+  HAL_RCC_GPIO_ENABLE(K);
 }
 
-void systick_setting_init() {
-
-
+uint8_t BspGetEepromAddress(uint32_t addr) {
+  if(addr<ADDR_FLASH_SECTOR_0)return FLASH_SECTOR_0;
+  else if(addr<ADDR_FLASH_SECTOR_1)return FLASH_SECTOR_1;
+  else if(addr<ADDR_FLASH_SECTOR_2)return FLASH_SECTOR_2;
+  else if(addr<ADDR_FLASH_SECTOR_3)return FLASH_SECTOR_3;
+  else if(addr<ADDR_FLASH_SECTOR_4)return FLASH_SECTOR_4;
+  else if(addr<ADDR_FLASH_SECTOR_5)return FLASH_SECTOR_5;
+  else if(addr<ADDR_FLASH_SECTOR_6)return FLASH_SECTOR_6;
+  else if(addr<ADDR_FLASH_SECTOR_7)return FLASH_SECTOR_7;
+  else if(addr<ADDR_FLASH_SECTOR_8)return FLASH_SECTOR_8;
+  else if(addr<ADDR_FLASH_SECTOR_9)return FLASH_SECTOR_9;
+  else if(addr<ADDR_FLASH_SECTOR_10)return FLASH_SECTOR_10;
+  else if(addr<ADDR_FLASH_SECTOR_11)return FLASH_SECTOR_11;
+  else if(addr<ADDR_FLASH_SECTOR_12)return FLASH_SECTOR_12;
+  else if(addr<ADDR_FLASH_SECTOR_13)return FLASH_SECTOR_13;
+  else if(addr<ADDR_FLASH_SECTOR_14)return FLASH_SECTOR_14;
+  else if(addr<ADDR_FLASH_SECTOR_15)return FLASH_SECTOR_15;
+  else if(addr<ADDR_FLASH_SECTOR_16)return FLASH_SECTOR_16;
+  else if(addr<ADDR_FLASH_SECTOR_17)return FLASH_SECTOR_17;
+  else if(addr<ADDR_FLASH_SECTOR_18)return FLASH_SECTOR_18;
+  else if(addr<ADDR_FLASH_SECTOR_19)return FLASH_SECTOR_19;
+  else if(addr<ADDR_FLASH_SECTOR_20)return FLASH_SECTOR_20;
+  else if(addr<ADDR_FLASH_SECTOR_21)return FLASH_SECTOR_21;
+  else if(addr<ADDR_FLASH_SECTOR_22)return FLASH_SECTOR_22;
+  else if(addr<ADDR_FLASH_SECTOR_23)return FLASH_SECTOR_23; 
+  return FLASH_SECTOR_23;
 }
-
 
 void Error_Handler(void)
 {
@@ -85,6 +109,5 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
 
 #endif

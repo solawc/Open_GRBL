@@ -1,3 +1,14 @@
+/*
+ hal_spi.c
+
+ Copyright (c) 2021-2022 sola
+
+ This part of the code belongs to the corresponding platform that 
+ I adapt to, has nothing to do with GRBL, and is only related to 
+ the platform. Therefore, if you use this part of the code, 
+ please indicate the source
+*/
+
 #include "hal_spi.h"
 
 /*******************************************************************************
@@ -6,95 +17,37 @@
 #ifdef HAS_W25Qxx
 SPI_HandleTypeDef w25qxx_spi;
 SPI_HandleTypeDef tft_spi;
-NFLASH_t sFlash;
 
-void w25qxx_spi_cs_enabel(void) {
-    HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_RESET);
-}
 
-void w25qxx_spi_cs_disable(void) {
-    HAL_GPIO_WritePin(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, GPIO_PIN_SET);
-}
-
-void w25qxx_spi_gpio_init(void)
-{
-    GPIO_InitTypeDef GPIO_Init = {0};
-
-    GPIO_Init.Alternate = W25QXX_PIN_AF;
-    GPIO_Init.Mode = GPIO_MODE_AF_PP;
-    GPIO_Init.Pull = GPIO_NOPULL;
-    GPIO_Init.Speed = GPIO_SPEED_FREQ_MEDIUM;
-
-    GPIO_Init.Pin = W25QXX_SPI_SCK_PIN;
-    HAL_GPIO_Init(W25QXX_SPI_SCK_GPIO, &GPIO_Init);
-
-    GPIO_Init.Pin = W25QXX_SPI_MISO_PIN;
-    HAL_GPIO_Init(W25QXX_SPI_MISO_GPIO, &GPIO_Init);
-
-    GPIO_Init.Pin = W25QXX_SPI_MOSI_PIN;
-    HAL_GPIO_Init(W25QXX_SPI_MOSI_GPIO, &GPIO_Init);
-
-    GPIO_Init.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_Init.Pull = GPIO_PULLUP;
-    GPIO_Init.Speed = GPIO_SPEED_FREQ_MEDIUM;
-    GPIO_Init.Pin = W25QXX_SPI_CS_PIN;
-    HAL_GPIO_Init(W25QXX_SPI_CS_GPIO, &GPIO_Init);
-} 
+eFLASH_t sFlash;
 
 void spi_for_w25qxx_init(void) {
-
-    W25QXX_SPI_CLK_ENABLE();
-
-    w25qxx_spi.Instance = W25QXX_SPI_PORT;
-    w25qxx_spi.Init.BaudRatePrescaler = W25QXX_SPEED;
-    w25qxx_spi.Init.CLKPhase = SPI_PHASE_2EDGE;
-    w25qxx_spi.Init.CLKPolarity = SPI_POLARITY_HIGH;
-    w25qxx_spi.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-    w25qxx_spi.Init.CRCPolynomial = 7;
-    w25qxx_spi.Init.DataSize = SPI_DATASIZE_8BIT;
-    w25qxx_spi.Init.Direction = SPI_DIRECTION_2LINES;
-    w25qxx_spi.Init.FirstBit = SPI_FIRSTBIT_MSB;
-    w25qxx_spi.Init.Mode = SPI_MODE_MASTER;
-    w25qxx_spi.Init.NSS = SPI_NSS_SOFT;
-    w25qxx_spi.Init.TIMode = SPI_TIMODE_DISABLE;
-    if (HAL_SPI_Init(&w25qxx_spi) != HAL_OK)
-    {
-        Error_Handler();
-    }
-    __HAL_SPI_ENABLE(&w25qxx_spi);
+    w25qxx_spi.Instance                 = W25QXX_SPI_PORT;
+    w25qxx_spi.Init.BaudRatePrescaler   = W25QXX_SPEED;
+    w25qxx_spi.Init.CLKPhase            = SPI_PHASE_2EDGE;
+    w25qxx_spi.Init.CLKPolarity         = SPI_POLARITY_HIGH;
+    w25qxx_spi.Init.CRCCalculation      = SPI_CRCCALCULATION_DISABLE;
+    w25qxx_spi.Init.CRCPolynomial       = 7;
+    w25qxx_spi.Init.DataSize            = SPI_DATASIZE_8BIT;
+    w25qxx_spi.Init.Direction           = SPI_DIRECTION_2LINES;
+    w25qxx_spi.Init.FirstBit            = SPI_FIRSTBIT_MSB;
+    w25qxx_spi.Init.Mode                = SPI_MODE_MASTER;
+    w25qxx_spi.Init.NSS                 = SPI_NSS_SOFT;
+    w25qxx_spi.Init.TIMode              = SPI_TIMODE_DISABLE;
+    
+    BspSpiPortInit(&w25qxx_spi);
 }
 
 uint8_t w25qxx_spi_read_write(uint8_t data) {
-    HAL_StatusTypeDef status = HAL_ERROR;
-
-    uint8_t rdata = 0;    
-
-    status = HAL_SPI_TransmitReceive(&w25qxx_spi, &data, &rdata, 1, 10);
-
-    if(status != HAL_OK) {
-        while(1);
-    }
-    
-    return rdata;
+    return BspSpiTransReceiveByte(&w25qxx_spi, data);
 }
 
-bool w25qxx_is_trans_finish() {
+bool flashIsTransFinish() {
 
     return true;
 }
 
-void w25qxx_spi_regiest() {
-    sFlash.flash_mode = sFLAHS_SPI_MODE;
-    sFlash.flash_delay_time = 10;   
-    sFlash.flash_id = 0;
-    sFlash.flash_size = 0;
-    sFlash.w25qxx_spi_init = spi_for_w25qxx_init;
-    sFlash.w25qxx_spi_gpio_init = w25qxx_spi_gpio_init;
-    sFlash.w25qxx_spi_read_write_byte = w25qxx_spi_read_write;
-    sFlash.w25qxx_is_trans_finish = w25qxx_is_trans_finish;
-    sFlash.w25qxx_disable_trans = w25qxx_spi_cs_disable;
-    sFlash.w25qxx_enable_trans = w25qxx_spi_cs_enabel;
-}
+
 #endif
 
 /*******************************************************************************
@@ -105,17 +58,115 @@ void spi_for_tft_init(void) {
     __HAL_RCC_SPI3_CLK_ENABLE();
 }
 
-/*******************************************************************************
- *                              SDCard SPI Init
- * ****************************************************************************/
+
+/********************************************************************************/
+
+void BspSpiPortInit(SPI_HandleTypeDef *spi) {
+
+    BspSpiClkEnable(spi);
+
+    if (HAL_SPI_Init(spi) != HAL_OK)
+    {
+        Error_Handler();
+    }
+    __HAL_SPI_ENABLE(spi);
+}
+
+
+#define _SPI_CLK(X)     __HAL_RCC_SPI##X##_CLK_ENABLE()
+#define SPI_CLK(X)      _SPI_CLK(X) 
+
+void BspSpiClkEnable(SPI_HandleTypeDef *spi) {
+
+    if      (spi->Instance == SPI1)   SPI_CLK(1);
+    else if (spi->Instance == SPI2)   SPI_CLK(2);
+    else if (spi->Instance == SPI2)   SPI_CLK(3);
+
+//     switch(spi->Instance) {
+//         case SPI1: __HAL_RCC_SPI1_CLK_ENABLE(); break;
+//         case SPI2: __HAL_RCC_SPI2_CLK_ENABLE(); break; 
+//         case SPI3: __HAL_RCC_SPI3_CLK_ENABLE(); break;
+// #ifdef SPI4
+//         case SPI4: __HAL_RCC_SPI4_CLK_ENABLE(); break;
+// #endif
+
+// #ifdef SPI5
+//         case SPI5: __HAL_RCC_SPI5_CLK_ENABLE(); break;
+// #endif
+
+// #ifdef SPI6
+//         case SPI6: __HAL_RCC_SPI6_CLK_ENABLE(); break;
+// #endif
+
+// #ifdef SPI7
+//         case SPI7: __HAL_RCC_SPI7_CLK_ENABLE(); break;
+// #endif
+
+// #ifdef SPI8
+//         case SPI8: __HAL_RCC_SPI8_CLK_ENABLE(); break;
+// #endif
+
+//     }
+}
+
+void BspSpiClkDisable(SPI_HandleTypeDef *spi) {
+
+   
+}
+
+void BspSpiGpioInit(void) {
+
+    GPIO_InitTypeDef settings = {
+        .Mode = GPIO_MODE_OUTPUT_PP,
+        .Pull = GPIO_NOPULL,
+        .Speed = GPIO_SPEED_FREQ_MEDIUM,
+    };
+
+    GPIO_InitTypeDef spi_settings = {
+        .Alternate = W25QXX_PIN_AF,
+        .Mode = GPIO_MODE_AF_PP,
+        .Pull = GPIO_NOPULL,
+        .Speed = GPIO_SPEED_FREQ_MEDIUM,
+    };
+
+    BspGpioSet(W25QXX_SPI_SCK_GPIO, W25QXX_SPI_SCK_PIN, &spi_settings);
+    BspGpioSet(W25QXX_SPI_MISO_GPIO, W25QXX_SPI_MISO_PIN, &spi_settings);
+    BspGpioSet(W25QXX_SPI_MOSI_GPIO, W25QXX_SPI_MOSI_PIN, &spi_settings);
+    BspGpioSet(W25QXX_SPI_CS_GPIO, W25QXX_SPI_CS_PIN, &settings);
+}
+
+
+/* 用于复用SPI时，两者配置不一样的切换  */
+void BspSpiTranBeginSettings(SPI_HandleTypeDef *spi_settings) {
+    HAL_SPI_Init(spi_settings);
+}
+
+/* 使能CS, 开始SPI传输                  */
+void BspSpiTranBegin(GPIO_TypeDef *GPIOx, uint16_t PIN) {
+    HAL_GPIO_WritePin(GPIOx, PIN, GPIO_PIN_RESET); 
+}
+
+/* 失能CS, 结束SPI传输                  */
+void BspSpiTranEnd(GPIO_TypeDef *GPIOx, uint16_t PIN) {
+    HAL_GPIO_WritePin(GPIOx, PIN, GPIO_PIN_SET); 
+}
+
+/* 单次接收或发送一个字节 */
+uint8_t BspSpiTransReceiveByte(SPI_HandleTypeDef *spi, uint8_t wdata) {
+    uint8_t rdata;
+    HAL_SPI_TransmitReceive(spi, &wdata, &rdata, 1, 100);
+    return rdata;
+}
+
+/* 单次接收或发送一个buff */
+void BspSpiTransReceiveBuff(SPI_HandleTypeDef *spi, uint8_t *tdata, uint8_t *rdata, uint32_t num) {
+    HAL_SPI_TransmitReceive(spi, tdata, rdata, num, 1000);
+}
 
 
 
 
 
-/*******************************************************************************
- *                              SPI Common
- * ****************************************************************************/
 
 
 

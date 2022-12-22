@@ -18,9 +18,9 @@
 
 
 #define SD_BLOCKSIZE			512
-#define FLASH_SECTOR_SIZE 		4096
+#define FLASH_SECTOR_SIZE 		4096// 512
 
-uint32_t FLASH_SECTOR_COUNT = 	9832;
+// uint32_t FLASH_SECTOR_COUNT = 	1024*2*32;
 #define FALSH_BLOCK_SIZE		8
 
 /*-----------------------------------------------------------------------*/
@@ -78,17 +78,13 @@ DSTATUS disk_initialize (
 
 		case DEV_FLASH :
 #ifdef HAS_W25Qxx
-			// result = 
-			w25qxx_init(&sFlash);
+			w25qxxInit(&sFlash);
 
-			if(sFlash.flash_state == 1) {
+			if(sFlash.info.flash_state == 1) {
 				stat = RES_OK;
 			}else {
 				stat = RES_ERROR;
 			}
-
-			// 设置Flash容量
-			FLASH_SECTOR_COUNT = 2048*32;
 
 			return stat;
 #endif
@@ -129,7 +125,7 @@ DRESULT disk_read (
 		case DEV_FLASH :
 #ifdef HAS_W25Qxx
 			for(; count>0; count--) {
-				w25qxx_buffer_read(&sFlash, buff, sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
+				w25qxxBufferRead(&sFlash, buff, sector * FLASH_SECTOR_SIZE, count*FLASH_SECTOR_SIZE);
 				sector++;
 				buff += FLASH_SECTOR_SIZE;
 			}
@@ -171,11 +167,11 @@ DRESULT disk_write (
 		break;
 
 		case DEV_FLASH :
-			// w25qxx_buffer_write(&sFlash, (uint8_t*)buff, sector, count);
+			// w25qxxBufferWrite(&sFlash, (uint8_t*)buff, sector, count);
 #ifdef HAS_W25Qxx
 			for (; count>0; count--) {
-				w25qxx_sector_erase(&sFlash, sector*FLASH_SECTOR_SIZE);
-				w25qxx_buffer_write(&sFlash, (uint8_t*)buff, sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
+				w25qxxSectorErase(&sFlash, sector*FLASH_SECTOR_SIZE);
+				w25qxxBufferWrite(&sFlash, (uint8_t*)buff, sector*FLASH_SECTOR_SIZE, FLASH_SECTOR_SIZE);
 				sector++;
 				buff += FLASH_SECTOR_SIZE;
 			}
@@ -245,16 +241,18 @@ DRESULT disk_ioctl (
 				break;
 
 				case GET_BLOCK_SIZE:
-					*(WORD*)buff = FALSH_BLOCK_SIZE;
+					*(WORD*)buff = 1;	/* default eraser a sector. */
 					res = RES_OK;
 				break;
 
 				case GET_SECTOR_COUNT:
-					*(DWORD*)buff = FLASH_SECTOR_COUNT;
+					*(DWORD*)buff = (sFlash.info.flash_size * 1024) / FLASH_SECTOR_SIZE;
 					res = RES_OK;
 				break;
 			}
+			
 			return res;
+
 		break;
 
 	}

@@ -1,5 +1,5 @@
 /*
-  grbl_hal.c - rs274/ngc parser.
+  grbl_hal.c 
   Part of Grbl
 
   Copyright (c) 2011-2016 Sungeun K. Jeon for Gnea Research LLC
@@ -28,19 +28,21 @@ void grblReprotMcuInfo(void) {
 
     grblHwInfoGet();
 
-    printf("/*********************************************************/\r\n");
-    printf("*-\\    |    /\n");
+    printf("\r\n/*********************************************************/\r\n");
+    printf("*-\\    |    /\r\n");
     printf("* --OpenGRBL--\r\n");
-    printf("*-/    |    \\\n");
+    printf("*-/    |    \\\r\n");
     printf("*-CPU Name:%s\r\n", MCU_INFI_NAME);
     printf("*-CPU Flash:%s\r\n", MCU_INFO_FLASH);
     printf("*-CPU RAM:%s\r\n", MCU_INFO_RAM);
     printf("*-CPU Clock:%ldMHz\r\n", grbl_hw_get.mcu_clk/1000000);
     printf("*-CPU Step Clock:%ldMHz\r\n", grbl_hw_get.step_tim_clk/1000000);
 #ifdef HAS_W25Qxx
-    printf("*-Flash Info 0x%lx, flash_size = %ldMB\n", (uint32_t)sFlash.flash_id, (sFlash.flash_size / (uint32_t)1024));
+    printf("*-Flash Info:0x%lx, flash_size:%ldMB\r\n", (uint32_t)sFlash.info.flash_id, (sFlash.info.flash_size / (uint32_t)1024));
+#else 
+    printf("*-Flash Info:None\r\n");
 #endif
-    printf("*-BuildVersion:%s\n", GRBL_VERSION_BUILD);
+    printf("*-BuildVersion:%s\r\n", GRBL_VERSION_BUILD);
     printf("/*********************************************************/\r\n");
 }
 
@@ -53,13 +55,13 @@ void systemInit() {
 
     HAL_Init();
 
-    SYSTEM_INTI();
+    SYSTEM_INIT();
 
     SYSTEM_UART();      
 
-    SYSTEM_LASER();     
+    SYSTEM_FLASH();  
 
-    SYSTEM_FLASH();     
+    SYSTEM_SDRAM();   
     
     SYSTEM_SDCARD();    
     
@@ -69,25 +71,29 @@ void systemInit() {
 }
 
 /** 
- * 将外设驱动单独描述，以注册的方式进行，这样即便切换不一样的MCU，提供相同的
- * 外设驱动接口，也可以正常运行OpenGRBL，大大提高了可移植性。 
- * 
+ * The peripheral drivers are described separately and registered, 
+ * so that OpenGRBL can run normally even if different MCUs are 
+ * switched and the same peripheral driver interface is provided, 
+ * which greatly improves the portability. The template is used as 
+ * the interface to facilitate subsequent migration.
  */
 void grblDeviceInit() {
 
     DevGpioInit();     
+
+    DevUartInit();
          
     DevTimerInit();
+
+    DevNvsInit();
 }
 
 /** 
- * 启动MCU，配置MCU内核时钟、外设时钟等等，初始化外设接口
-*/
+ * Setup MCU core and peripheral clock.
+ */
 void grblHwInit(void) {
 
     systemInit();
 
     grblDeviceInit();
-
-    
 }

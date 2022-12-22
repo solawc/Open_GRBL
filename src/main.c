@@ -1,10 +1,10 @@
 /*
-  main.c - rs274/ngc parser.
+  main.c
   Part of Grbl
 
   Copyright (c) 2011-2016 Sungeun K. Jeon for Gnea Research LLC
   Copyright (c) 2009-2011 Simen Svale Skogsrud
-  Copyright (c) 2021-2022 sola
+  Copyright (c) 2021-2022 @sola
 
   Grbl is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -26,17 +26,15 @@ int main() {
 
   grblHwInit();
 
-  clientInit(); // TODO
-
 #ifdef STM32G0B0xx
   // here must wait for some time, beacuse STM32G0B0CE have no XTAL
   HAL_Delay(100);  
 #endif
 
-  // report MCU info and you can check
+  /* Report MCU info and you can check */ 
   grblReprotMcuInfo();
 
-  // Begin GRBL Task
+  /* Begin GRBL Task */ 
   grblTaskInit();
 
 #if defined(USE_FREERTOS_RTOS)
@@ -45,7 +43,6 @@ int main() {
 }
 
 void _delay_ms(uint32_t tick) {
-  
 #if defined(USE_FREERTOS_RTOS)
   vTaskDelay(tick);
 #else 
@@ -57,7 +54,5 @@ void _delay_ms(uint32_t tick) {
 }
 
 void _delay_us(uint32_t tick) {
-  while(tick--) {
-	  __NOP();
-}
+  while(tick--) { __NOP(); }
 }

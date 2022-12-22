@@ -61,4 +61,6 @@ uint8_t serial_get_tx_buffer_count();
 // 串口中断执行的函数
 void laser_uart_rx_handler(__IO uint8_t data);
 
+void serial_sendf(const char* format, ...);
+
 #endif

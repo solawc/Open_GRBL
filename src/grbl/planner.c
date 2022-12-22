@@ -34,7 +34,7 @@ typedef struct {
                                      // from g-code position for movements requiring multiple line motions,
                                      // i.e. arcs, canned cycles, and backlash compensation.
   float previous_unit_vec[N_AXIS];   // Unit vector of previous path line segment
-  float previous_nominal_speed;  // Nominal speed of previous path line segment
+  float previous_nominal_speed;      // Nominal speed of previous path line segment
 } planner_t;
 static planner_t pl;
 
@@ -201,15 +201,13 @@ void plan_reset()
   plan_reset_buffer();
 }
 
-
 void plan_reset_buffer()
 {
   block_buffer_tail = 0;
-  block_buffer_head = 0; // Empty = tail
-  next_buffer_head = 1; // plan_next_block_index(block_buffer_head)
-  block_buffer_planned = 0; // = block_buffer_tail;
+  block_buffer_head = 0;      // Empty = tail
+  next_buffer_head = 1;       // plan_next_block_index(block_buffer_head)
+  block_buffer_planned = 0;   // = block_buffer_tail;
 }
-
 
 void plan_discard_current_block()
 {
@@ -240,7 +238,7 @@ plan_block_t *plan_get_current_block()
 float plan_get_exec_block_exit_speed_sqr()
 {
   uint8_t block_index = plan_next_block_index(block_buffer_tail);
-  if (block_index == block_buffer_head) { return( 0.0 ); }
+  if (block_index == block_buffer_head) { return( 0.0f ); }
   return( block_buffer[block_index].entry_speed_sqr );
 }
 
@@ -258,9 +256,9 @@ uint8_t plan_check_full_buffer()
 float plan_compute_profile_nominal_speed(plan_block_t *block)
 {
   float nominal_speed = block->programmed_rate;
-  if (block->condition & PL_COND_FLAG_RAPID_MOTION) { nominal_speed *= (0.01*sys.r_override); }
+  if (block->condition & PL_COND_FLAG_RAPID_MOTION) { nominal_speed *= (0.01f * sys.r_override); }
   else {
-    if (!(block->condition & PL_COND_FLAG_NO_FEED_OVERRIDE)) { nominal_speed *= (0.01*sys.f_override); }
+    if (!(block->condition & PL_COND_FLAG_NO_FEED_OVERRIDE)) { nominal_speed *= (0.01f * sys.f_override); }
     if (nominal_speed > block->rapid_rate) { nominal_speed = block->rapid_rate; }
   }
   if (nominal_speed > MINIMUM_FEED_RATE) { return(nominal_speed); }
@@ -316,10 +314,13 @@ uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
   // Prepare and initialize new block. Copy relevant pl_data for block execution.
   plan_block_t *block = &block_buffer[block_buffer_head];
   memset(block,0,sizeof(plan_block_t)); // Zero all block values.
+
   block->condition = pl_data->condition;
+
   #ifdef VARIABLE_SPINDLE
     block->spindle_speed = pl_data->spindle_speed;
   #endif
+
   #ifdef USE_LINE_NUMBERS
     block->line_number = pl_data->line_number;
   #endif
@@ -336,13 +337,18 @@ uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
       position_steps[Y_AXIS] = system_convert_corexy_to_y_axis_steps(sys_position);
       position_steps[Z_AXIS] = sys_position[Z_AXIS];
     #else
-      memcpy(position_steps, sys_position, sizeof(sys_position)); 
+      // memcpy(position_steps, sys_position, sizeof(sys_position)); 
+      system_data_copy(sys_position, position_steps, sizeof(sys_position));
+
     #endif
-  } else { memcpy(position_steps, pl.position, sizeof(pl.position)); }
+  } else { 
+    // memcpy(position_steps, pl.position, sizeof(pl.position)); 
+    system_data_copy(pl.position, position_steps, sizeof(pl.position));
+  }
 
   #ifdef COREXY
-    target_steps[A_MOTOR] = lround(target[A_MOTOR]*settings.steps_per_mm[A_MOTOR]);
-    target_steps[B_MOTOR] = lround(target[B_MOTOR]*settings.steps_per_mm[B_MOTOR]);
+    target_steps[A_MOTOR] = lroundf(target[A_MOTOR]*settings.steps_per_mm[A_MOTOR]);
+    target_steps[B_MOTOR] = lroundf(target[B_MOTOR]*settings.steps_per_mm[B_MOTOR]);
     block->steps[A_MOTOR] = labs((target_steps[X_AXIS]-position_steps[X_AXIS]) + (target_steps[Y_AXIS]-position_steps[Y_AXIS]));
     block->steps[B_MOTOR] = labs((target_steps[X_AXIS]-position_steps[X_AXIS]) - (target_steps[Y_AXIS]-position_steps[Y_AXIS]));
   #endif
@@ -353,7 +359,7 @@ uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
     // NOTE: Computes true distance from converted step values.
     #ifdef COREXY
       if ( !(idx == A_MOTOR) && !(idx == B_MOTOR) ) {
-        target_steps[idx] = lround(target[idx]*settings.steps_per_mm[idx]);
+        target_steps[idx] = lroundf(target[idx]*settings.steps_per_mm[idx]);
         block->steps[idx] = labs(target_steps[idx]-position_steps[idx]);
       }
       block->step_event_count = max(block->step_event_count, block->steps[idx]);
@@ -365,7 +371,7 @@ uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
         delta_mm = (target_steps[idx] - position_steps[idx])/settings.steps_per_mm[idx];
       }
     #else
-      target_steps[idx] = lround(target[idx]*settings.steps_per_mm[idx]);
+      target_steps[idx] = lroundf(target[idx]*settings.steps_per_mm[idx]);
       block->steps[idx] = labs(target_steps[idx]-position_steps[idx]);
       block->step_event_count = max(block->step_event_count, block->steps[idx]);
       delta_mm = (target_steps[idx] - position_steps[idx])/settings.steps_per_mm[idx];
@@ -443,7 +449,7 @@ uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
       } else {
         convert_delta_vector_to_unit_vector(junction_unit_vec);
         float junction_acceleration = limit_value_by_axis_maximum(settings.acceleration, junction_unit_vec);
-        float sin_theta_d2 = sqrt(0.5*(1.0-junction_cos_theta)); // Trig half angle identity. Always positive.
+        float sin_theta_d2 = sqrtf(0.5 * (1.0 - junction_cos_theta)); // Trig half angle identity. Always positive.
         block->max_junction_speed_sqr = max( MINIMUM_JUNCTION_SPEED*MINIMUM_JUNCTION_SPEED,
                        (junction_acceleration * settings.junction_deviation * sin_theta_d2)/(1.0-sin_theta_d2) );
       }

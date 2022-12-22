@@ -1,7 +1,18 @@
+/*
+ hal_uart.c
+
+ Copyright (c) 2021-2022 sola
+
+ This part of the code belongs to the corresponding platform that 
+ I adapt to, has nothing to do with GRBL, and is only related to 
+ the platform. Therefore, if you use this part of the code, 
+ please indicate the source
+*/
+
 #include "hal_uart.h"
 
-hal_uart_t rb_serial_rx;
-hal_uart_t rb_serial_tx;
+ringbuff_t rb_serial_rx;
+ringbuff_t rb_serial_tx;
 
 UART_HandleTypeDef laser_uart;
 UART_HandleTypeDef tft_uart;
@@ -14,8 +25,6 @@ void BspUartGpioInit(void) {
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
 	LASER_UART_CLK_ENABLE();
-	LASER_UART_TX_CLK_ENABLE();
-	LASER_UART_RX_CLK_ENABLE();
 
 	GPIO_InitStruct.Pin = LASER_UART_TX_PIN|LASER_UART_RX_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -28,7 +37,8 @@ void BspUartGpioInit(void) {
 void BspUartInit(void) {
 
 	BspUartGpioInit();
-    laser_uart.Instance = LaserUART;
+    
+	laser_uart.Instance = LaserUART;
 	laser_uart.Init.BaudRate = BAUD_RATE;
 	laser_uart.Init.WordLength = UART_WORDLENGTH_8B;
 	laser_uart.Init.StopBits = UART_STOPBITS_1;
@@ -100,7 +110,6 @@ int _write(int fd, char *ptr, int len)
 }
 #endif
 
-
 // Serial UART ISR Handler
 void LASER_UART_IRQHANDLER() {
 
@@ -137,71 +146,6 @@ void tft_lcd_uart_init() {
 	tft_lcd_uart_pins_init();
 }
 
-/*************************************************************
- * A ringbuffer init
- * **********************************************************/
-void serial_rb_init(hal_uart_t *rb) {
-	rb->head = 0;
-	rb->tail = 0;
-}
-
-/*************************************************************
- * write a data to ringbuffer
- * **********************************************************/
-void serial_rb_write(hal_uart_t *rb, uint8_t data) {
-
-	uint8_t next = rb->head + 1;
-
-	if(next == UART_RB_BUFF_MAX) { next = 0; }
-
-	if(next != rb->tail) {
-		rb->buffer[rb->head] = data;
-		rb->head = next;
-	}
-}
-
-/*************************************************************
- * read a data from ringbuffer
- * **********************************************************/
-uint8_t serial_rb_read(hal_uart_t *rb, uint8_t *data) {
-
-	uint8_t tail = rb->tail;
-
-	if(rb->head == tail) {
-		return 0;
-	}else {
-		*data = rb->buffer[tail];
-		tail++;
-		if(tail == UART_RB_BUFF_MAX) {tail = 0;}
-		rb->tail = tail;
-		return 1;
-	}
-}
-
-/*************************************************************
- * if ringbuffer abailable
- * **********************************************************/
-uint16_t serial_rb_abailable(hal_uart_t *rb) {
-	uint8_t tmp_tail = rb->tail;						
-	if(rb->head > tmp_tail) return (rb->head - tmp_tail);
-	return (tmp_tail - rb->head); 
-}
-
-/*************************************************************
- * get ringbuffer count
- * **********************************************************/
-uint16_t serial_rb_buff_count(hal_uart_t *rb) {
-	uint8_t tmp_tail = rb->tail;
-	if(rb->head >= tmp_tail) {return (rb->head - tmp_tail);}
-	return (UART_RB_BUFF_MAX - (tmp_tail - rb->head));
-} 
-
-/************************************************************
- * Reset ringbuffer
- * *********************************************************/
-void serial_rb_reset(hal_uart_t *rb) {
-	rb->tail = rb->head;
-}
 
 
 

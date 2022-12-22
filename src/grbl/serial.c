@@ -20,6 +20,7 @@
 */
 
 #include "grbl.h"
+#include "stdarg.h"
 
 #if defined(USE_FREERTOS_RTOS)
   TaskHandle_t serial_task_handler;
@@ -71,22 +72,44 @@ void serial_init()
 
 // Writes one byte to the TX serial buffer. Called by main program.
 void serial_write(uint8_t data) {
-
   BspUartSendByte(data);
+}
 
-  // // Calculate next head
-  // uint8_t next_head = serial_tx_buffer_head + 1;
-  // if (next_head == TX_RING_BUFFER) { next_head = 0; }
+void serialSendString(const char *s)
+{
+  while (*s)
+    serial_write(*s++);
+}
 
-  // // Wait until there is space in the buffer
-  // while (next_head == serial_tx_buffer_tail) {
-  //   // TODO: Restructure st_prep_buffer() calls to be executed here during a long print.
-  //   if (sys_rt_exec_state & EXEC_RESET) { return; } // Only check for abort to avoid an endless loop.
-  // }
+void serial_sendf(const char* format, ...) {
 
-  // // Store data and advance head
-  // serial_tx_buffer[serial_tx_buffer_head] = data;
-  // serial_tx_buffer_head = next_head;
+  char loc_buf[64];
+    char * temp = loc_buf;
+    va_list arg;
+    va_list copy;
+    va_start(arg, format);
+    va_copy(copy, arg);
+    int len = vsnprintf(temp, sizeof(loc_buf), format, copy);
+    va_end(copy);
+    if(len < 0) {
+        va_end(arg);
+        return;
+    };
+    if(len >= sizeof(loc_buf)){
+        temp = (char*) malloc(len+1);
+        if(temp == NULL) {
+            va_end(arg);
+            return;
+        }
+        len = vsnprintf(temp, len+1, format, arg);
+    }
+    va_end(arg);
+
+    serialSendString(temp);
+
+    if(temp != loc_buf){
+        free(temp);
+    }
 }
 
 // Data Register Empty Interrupt handler
@@ -98,6 +121,7 @@ void laser_uart_tx_handler() {
 // Fetches the first byte in the serial read buffer. Called by main program.
 uint8_t serial_read()
 {
+
 #ifdef USE_FREERTOS_RTOS
   taskENTER_CRITICAL();
 #endif
@@ -105,17 +129,13 @@ uint8_t serial_read()
   uint8_t data;
   uint8_t flag;
   flag = serial_rb_read(&rb_serial_rx, &data);
-
+  
 #ifdef USE_FREERTOS_RTOS
   taskEXIT_CRITICAL();
 #endif
 
-  if(flag == 0) {
-    return SERIAL_NO_DATA;
-  } 
-  else {
-    return data;
-  }
+  if(flag == 0) { return SERIAL_NO_DATA; }
+  else { return data; }
 }
 
 void laser_uart_rx_handler(__IO uint8_t data) { 

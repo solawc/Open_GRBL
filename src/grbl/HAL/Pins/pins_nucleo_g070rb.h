@@ -1,3 +1,14 @@
+/*
+ pins_nucleo_g070rb.h - For STM32 NUCLEO Board(STM32G070RB)
+
+ Copyright (c) 2021-2022 sola
+
+ This part of the code belongs to the corresponding platform that 
+ I adapt to, has nothing to do with GRBL, and is only related to 
+ the platform. Therefore, if you use this part of the code, 
+ please indicate the source
+*/
+
 #ifndef __pins_nucleo_g070rb_h
 #define __pins_nucleo_g070rb_h
 
@@ -36,7 +47,6 @@
 /* Laser */
 #define BOARD_LASER_PORT                GPIOB
 #define BOARD_LASER_PIN                 GPIO_PIN_7
-#define BOARD_LASER_PIN_CLK_ENABLE      __HAL_RCC_GPIOB_CLK_ENABLE()
 
 /* Probe */
 #define BOARD_PROBE_PORT                GPIOB
@@ -73,8 +83,6 @@
 #define BOARD_UART_IRQ                  UART_IRQn(USART2)
 #define BOARD_UART_CLK_ENABLE()         __HAL_UART_CLK(USART2)
 #define BOARD_UART_IRQnHANDLER          USART2_IRQHandler
-#define BOARD_UART_TX_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE();
-#define BOARD_UART_RX_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE();
 #define BOARD_UART_TX_PORT              GPIOA
 #define BOARD_UART_TX_PIN               GPIO_PIN_2
 #define BOARD_UART_RX_PORT              GPIOA
@@ -83,22 +91,12 @@
 #define BOARD_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
 
 /* For timer use */
-#define BOARD_SETP_SET_TIM              TIM6
-#define BOARD_SETP_RESET_TIM            TIM7
-#define BOARD_STEP_SET_TIMER            STEP_SET_TIM
-#define BOARD_STEP_RESET_TIMER          STEP_RESET_TIM
-#define BOARD_SET_TIM_IRQn              TIM6_IRQn
-#define BOARD_RESET_TIM_IRQn            TIM7_IRQn
-#define BOARD_SET_TIM_CLK_ENABLED()     __HAL_RCC_TIM6_CLK_ENABLE();
-#define BOARD_RESET_TIM_CLK_ENABLED()   __HAL_RCC_TIM7_CLK_ENABLE();
-#define BOARD_STEP_SET_HANDLER          TIM6_IRQHandler
-#define BOARD_STEP_RESET_HANDLER        TIM7_IRQHandler
-#define BOARD_LASER_TIM_PORT            TIM1
+#define BOARD_SET_TIM                   6
+#define BOARD_RESET_TIM                 7
+#define BOARD_LASER_TIM_PORT            1
 #define BOARD_LASER_TIM_CH              TIM_CHANNEL_2
 #define BOARD_LASER_PIN_AF              GPIO_AF1_TIM1
 #define BOARD_LASER_OUT_PORT            GPIOB
 #define BOARD_LASER_OUT_PIN             GPIO_PIN_6
-#define BOARD_LASER_OUT_CLK()           __HAL_RCC_TIM1_CLK_ENABLE()
-#define BOARD_LASER_OUT_PIN_CLK()       __HAL_RCC_GPIOB_CLK_ENABLE()
 
 #endif

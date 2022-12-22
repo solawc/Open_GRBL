@@ -1,5 +1,5 @@
 /*
-  main.h - rs274/ngc parser.
+  main.h 
   Part of Grbl
 
   Copyright (c) 2011-2016 Sungeun K. Jeon for Gnea Research LLC
@@ -33,24 +33,18 @@
 
 #include "grbl/HAL/grbl_mb.h"
 
-#if MB_BOARD==BOARD_DLC_LG0
-    #include "grbl/HAL/STM32/bsp_g0b0ce/hal_g0b0_system.h"
-    #include "grbl/HAL/Pins/pins_mks_dlc_lg0.h"
-#elif MB_BOARD==BOARD_DLC_LG0_V2
-    #include "grbl/HAL/STM32/bsp_g0b0ce/hal_g0b0_system.h"
-    #include "grbl/HAL/Pins/pins_mks_dlc_lg0.h"
-#elif MB_BOARD==BOARD_LASER_V1_0_BOX
-    #include "grbl/HAL/STM32/bsp_g0b0ce/hal_g0b0_system.h"
-    #include "grbl/HAL/Pins/pins_mks_dlc_lg0.h"
-#elif MB_BOARD==BOARD_LASER_BOX_4AXIS
-    #include "grbl/HAL/STM32/bsp_nucleo_g070rb/hal_nucleo_g070rb.h"
-    #include "grbl/HAL/Pins/pins_nucleo_g070rb.h"
+#if MB_BOARD==BOARD_FIRE_BOARD_F429
+    #include "grbl/HAL/STM32/bsp_FireBoard_F429V2/hal_FireBoard_system.h"
+    #include "grbl/HAL/Pins/pins_fireboard_f429.h"
 #elif MB_BOARD==BOARD_NUCLEO_G070RB
     #include "grbl/HAL/STM32/bsp_nucleo_g070rb/hal_nucleo_g070rb.h"
     #include "grbl/HAL/Pins/pins_nucleo_g070rb.h"
-#elif MB_BOARD==BOARD_FIRE_BOARD_F429
-    #include "grbl/HAL/STM32/bsp_FireBoard_F429V2/hal_FireBoard_system.h"
-    #include "grbl/HAL/Pins/pins_fireboard_f429.h"
+#elif MB_BOARD==BOARD_MKS_DLC_LG0_V3
+    #include "grbl/HAL/STM32/bsp_mks_dlc_lg0_v3/bsp_mks_dlc_lg0_v3_system.h"
+    #include "grbl/HAL/Pins/pins_mks_dlc_lg0_v3.h"
+#elif MB_BOARD==BOARD_MKS_ROBIN_NANO_V3
+    #include "grbl/HAL/STM32/bsp_mks_nano_v3/hal_robin_nano_v3_system.h"
+    #include "grbl/HAL/Pins/pins_mks_nano_v3.h"
 #endif
 
 
@@ -60,37 +54,40 @@
 #include "cmsis_os.h"
 #endif
 
-#include "grbl/grbl_main.h"
+#include "Grbl/grbl_main.h"
 
-#include "grbl/HAL/grbl_hal.h"
-#include "grbl/HAL/grbl_config.h"
+#include "Grbl/HAL/grbl_hal.h"
+#include "Grbl/HAL/grbl_config.h"
 
-#include "grbl/HAL/STM32/hal_gpio.h"
-#include "grbl/HAL/STM32/hal_uart.h"
-#include "grbl/HAL/STM32/hal_tim.h"
-#include "grbl/HAL/STM32/hal_flash_eeprom.h"
-#include "grbl/HAL/STM32/hal_spi.h"
-#include "grbl/HAL/STM32/hal_wdg.h"
+#include "Grbl/HAL/STM32/bsp_gpio.h"
+#include "Grbl/HAL/STM32/hal_uart.h"
+#include "Grbl/HAL/STM32/bsp_tim.h"
+#include "Grbl/HAL/STM32/bsp_flash_eeprom.h"
+#include "Grbl/HAL/STM32/hal_spi.h"
+#include "Grbl/HAL/STM32/bsp_wdg.h"
+#include "Grbl/HAL/STM32/bsp_sdram.h"
+#include "Grbl/HAL/STM32/bsp_ltdc.h"
 
-#include "grbl/HAL/Peripheral/hal_sdcard.h"
-#include "grbl/HAL/Peripheral/hal_w25qxx.h"
+#include "Grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
+#include "Grbl/HAL/Peripheral/FLASH_eW25QXX/eflash.h"
 
-#include "grbl/HAL/Middleware/mid_gpio.h"
-#include "grbl/HAL/Middleware/mid_timer.h"
+#include "Grbl/Middleware/mid_gpio.h"
+#include "Grbl/Middleware/mid_timer.h"
+#include "Grbl/Middleware/mid_nvs.h"
+#include "Grbl/Middleware/mid_uart.h"
 
 #include "ex_dev/lcd/tft_lcd_dev.h"
 #include "ex_dev/sd/sdcard.h"
 #include "ex_dev/sd/sd_file.h"
 
-#include "client.h"
+#include "ui/lv_port/lv_disp_port.h"
 
-#include "grbl/grbl.h"
+#include "Grbl/grbl.h"
 
 // For Fatfs 
 #include "ff.h"
 
 #define SYSTEM_UART()       BspUartInit()
-#define SYSTEM_LASER()      hal_pwm_init()
 
 #ifdef HAS_WDG
 #define SYSTEM_WDG()        hal_wdg_init()
@@ -99,11 +96,16 @@
 #endif
 
 #ifdef HAS_W25Qxx 
-#define SYSTEM_FLASH()      w25qxx_spi_regiest(); \
-                            w25qxx_init(&sFlash); \
-                            w25qxx_fs_init();
+#define SYSTEM_FLASH()      w25qxxSpiRegiest(); \
+                            w25qxxInit(&sFlash); 
 #else 
 #define SYSTEM_FLASH()
+#endif
+
+#ifdef HAS_SDRAM
+#define SYSTEM_SDRAM()      sdramInit()
+#else 
+#define SYSTEM_SDRAM()
 #endif
 
 #if defined(LCD_MKS_TS35) || defined(LCD_MKS_TS24) 

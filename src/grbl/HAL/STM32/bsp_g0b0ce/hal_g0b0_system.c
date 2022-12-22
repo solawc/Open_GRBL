@@ -1,7 +1,7 @@
 #ifdef STM32G0B0xx
 
 #include "hal_g0b0_system.h"
-#include "../hal_tim.h"
+#include "../bsp_tim.h"
 
 /*
  * 1.set system clock 
@@ -67,14 +67,6 @@ void hal_g0b0_clk_init(void) {
   __HAL_RCC_USART1_CLK_ENABLE();
 
   __HAL_RCC_SPI1_CLK_ENABLE();
-}
-
-
-
-
-void systick_setting_init() {
-
-
 }
 
 void Error_Handler(void)

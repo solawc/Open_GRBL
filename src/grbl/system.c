@@ -330,6 +330,11 @@ uint8_t system_check_travel_limits(float *target)
   return(false);
 }
 
+void system_data_copy(int32_t *src, int32_t *dec, uint32_t size) {
+  for (int i = 0; i < size; i++) {
+    dec[i] = src[i];
+  }
+}
 
 // Special handlers for setting and clearing Grbl's real-time execution flags.
 void system_set_exec_state_flag(uint8_t mask) {

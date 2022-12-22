@@ -22,7 +22,7 @@
 #include "grbl.h"
 
 // Some useful constants.
-#define DT_SEGMENT (1.0/(ACCELERATION_TICKS_PER_SECOND*60.0)) // min/segment
+#define DT_SEGMENT (1.0f / (ACCELERATION_TICKS_PER_SECOND * 60.0f)) // min/segment
 #define REQ_MM_INCREMENT_SCALAR 1.25
 #define RAMP_ACCEL 0
 #define RAMP_CRUISE 1
@@ -255,15 +255,14 @@ void st_wake_up()
   
   hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
   hal_tim_generateEvent_update(&STEP_SET_TIMER);
-  hal_set_timer_irq_enable();
+  dev_timer.set_timer_irq_enable();
 }
-
 
 // Stepper shutdown
 void st_go_idle()
 {
   // Disable Stepper Driver Interrupt. Allow Stepper Port Reset Interrupt to finish, if active.
-  hal_set_timer_irq_disable();
+  dev_timer.set_timer_irq_disable();
 
   busy = false;
   // Set stepper driver idle state, disabled or enabled, depending on settings and circumstances.
@@ -355,7 +354,7 @@ void set_timer_irq_handler(void)
   hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
   hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time-1);
   hal_tim_clear_flag_update(&STEP_RESET_TIMER);
-  hal_reset_timer_irq_enable();
+  dev_timer.reset_timer_irq_enable();
 
   busy = true;
 
@@ -712,7 +711,7 @@ void st_prep_buffer()
           pl_block->entry_speed_sqr = prep.exit_speed*prep.exit_speed;
           prep.recalculate_flag &= ~(PREP_FLAG_DECEL_OVERRIDE);
         } else {
-          prep.current_speed = sqrt(pl_block->entry_speed_sqr);
+          prep.current_speed = sqrtf(pl_block->entry_speed_sqr);
         }
         
         #ifdef VARIABLE_SPINDLE
@@ -745,7 +744,7 @@ void st_prep_buffer()
 				float decel_dist = pl_block->millimeters - inv_2_accel*pl_block->entry_speed_sqr;
 				if (decel_dist < 0.0) {
 					// Deceleration through entire planner block. End of feed hold is not in this block.
-					prep.exit_speed = sqrt(pl_block->entry_speed_sqr-2*pl_block->acceleration*pl_block->millimeters);
+					prep.exit_speed = sqrtf(pl_block->entry_speed_sqr-2*pl_block->acceleration*pl_block->millimeters);
 				} else {
 					prep.mm_complete = decel_dist; // End of feed hold.
 					prep.exit_speed = 0.0;
@@ -761,7 +760,7 @@ void st_prep_buffer()
           prep.exit_speed = exit_speed_sqr = 0.0; // Enforce stop at end of system motion.
         } else {
           exit_speed_sqr = plan_get_exec_block_exit_speed_sqr();
-          prep.exit_speed = sqrt(exit_speed_sqr);
+          prep.exit_speed = sqrtf(exit_speed_sqr);
         }
 
         nominal_speed = plan_compute_profile_nominal_speed(pl_block);
@@ -777,7 +776,7 @@ void st_prep_buffer()
             // prep.maximum_speed = prep.current_speed;
 
             // Compute override block exit speed since it doesn't match the planner exit speed.
-            prep.exit_speed = sqrt(pl_block->entry_speed_sqr - 2*pl_block->acceleration*pl_block->millimeters);
+            prep.exit_speed = sqrtf(pl_block->entry_speed_sqr - 2*pl_block->acceleration*pl_block->millimeters);
             prep.recalculate_flag |= PREP_FLAG_DECEL_OVERRIDE; // Flag to load next block as deceleration override.
 
             // TODO: Determine correct handling of parameters in deceleration-only.
@@ -806,7 +805,7 @@ void st_prep_buffer()
 						} else { // Triangle type
 							prep.accelerate_until = intersect_distance;
 							prep.decelerate_after = intersect_distance;
-							prep.maximum_speed = sqrt(2.0*pl_block->acceleration*intersect_distance+exit_speed_sqr);
+							prep.maximum_speed = sqrtf(2.0*pl_block->acceleration*intersect_distance+exit_speed_sqr);
 						}
 					} else { // Deceleration-only type
             prep.ramp_type = RAMP_DECEL;
@@ -857,11 +856,11 @@ void st_prep_buffer()
     do {
       switch (prep.ramp_type) {
         case RAMP_DECEL_OVERRIDE:
-          speed_var = pl_block->acceleration*time_var;
+          speed_var = pl_block->acceleration * time_var;
           if (prep.current_speed-prep.maximum_speed <= speed_var) {
             // Cruise or cruise-deceleration types only for deceleration override.
             mm_remaining = prep.accelerate_until;
-            time_var = 2.0*(pl_block->millimeters-mm_remaining)/(prep.current_speed+prep.maximum_speed);
+            time_var = 2.0*(pl_block->millimeters-mm_remaining) / (prep.current_speed+prep.maximum_speed);
             prep.ramp_type = RAMP_CRUISE;
             prep.current_speed = prep.maximum_speed;
           } else { // Mid-deceleration override ramp.

@@ -1,7 +1,7 @@
 #ifdef STM32G070xx
 
 #include "hal_nucleo_g070rb.h"
-#include "../hal_tim.h"
+#include "../bsp_tim.h"
 
 /*
  * 1.set system clock 
@@ -67,14 +67,6 @@ void hal_nucleo_g070rb_clk_init(void) {
   __HAL_RCC_USART1_CLK_ENABLE();
 
   __HAL_RCC_SPI1_CLK_ENABLE();
-}
-
-
-
-
-void systick_setting_init() {
-
-
 }
 
 void Error_Handler(void)
