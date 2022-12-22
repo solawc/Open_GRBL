@@ -25,7 +25,7 @@ void hal_set_timer_init(void) {
     STEP_SET_TIM.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     STEP_SET_TIM.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&STEP_SET_TIM);
-
+    
     HAL_NVIC_SetPriority(SET_TIM_IRQn, 0, 0);       // 使定时器中断的优先级保持最高
     HAL_NVIC_DisableIRQ(SET_TIM_IRQn);
     HAL_TIM_Base_Start_IT(&STEP_SET_TIM);

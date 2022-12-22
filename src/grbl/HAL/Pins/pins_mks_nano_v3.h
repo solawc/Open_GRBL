@@ -120,7 +120,7 @@
 #define BOARD_LASER_OUT_PIN             GPIO_PIN_0
 
 
-// #define I2C_EEPEOM                      
+#define I2C_EEPEOM                      
 #ifdef I2C_EEPEOM
     #define EEPROM_I2C                  1                               // I2C1
     #define EEPROM_I2C_CLK              __HAL_RCC_I2C1_CLK_ENABLE()
@@ -134,7 +134,7 @@
 #endif
 
 #ifndef I2C_EEPEOM
-#define EEPROM_START_ADDR               ADDR_FLASH_SECTOR_5     
+#define EEPROM_START_ADDR               ADDR_FLASH_SECTOR_6     
 #define EEPROM_END_ADDR                 ((uint32_t)0x0803ffff)
 #define FLASH_WRITE_SECTORS_WORD
 #endif
