@@ -44,7 +44,7 @@
 // NOTE: Current settings are set to overdrive the ISR to no more than 16kHz, balancing CPU overhead
 // and timer accuracy.  Do not alter these settings unless you know what you are doing.
 #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
-  #define STP_TIMER     F_CPU / 4
+  #define STP_TIMER     STEP_SET_TIM_FREQ / 4
 	#define MAX_AMASS_LEVEL 3
 	// AMASS_LEVEL0: Normal operation. No AMASS. No upper cutoff frequency. Starts at LEVEL1 cutoff frequency.
 	// #define AMASS_LEVEL1 (F_CPU/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)

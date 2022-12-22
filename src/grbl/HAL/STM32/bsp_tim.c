@@ -46,7 +46,7 @@ void hal_reset_timer_init(void) {
     RESET_TIM_CLK_ENABLED();
     STEP_RESET_TIM.Instance = SETP_RESET_TIM;
     STEP_RESET_TIM.Init.Period = 0;     
-    STEP_RESET_TIM.Init.Prescaler = (F_CPU/1000000) -1; 
+    STEP_RESET_TIM.Init.Prescaler = (STEP_RESET_TIM_FREQ/1000000) -1; 
     STEP_RESET_TIM.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     STEP_RESET_TIM.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&STEP_RESET_TIM);

@@ -93,6 +93,8 @@
 /* For timer use */
 #define BOARD_SET_TIM                   6
 #define BOARD_RESET_TIM                 7
+#define BOARD_SET_TIM_FREQ              F_CPU / 1
+#define BOARD_RESET_TIM_FREQ            F_CPU / 1
 #define BOARD_LASER_TIM_PORT            1
 #define BOARD_LASER_TIM_CH              TIM_CHANNEL_2
 #define BOARD_LASER_PIN_AF              GPIO_AF1_TIM1

@@ -35,6 +35,11 @@ typedef TIM_HandleTypeDef timer_def;
 #define STEP_RESET_TIM              hal_step_tim.step_reset
 #define LASER_TIM                   hal_step_tim.laser
 
+/* Define TIMER Freq */
+#define STEP_SET_TIM_FREQ           BOARD_SET_TIM_FREQ
+#define STEP_RESET_TIM_FREQ         BOARD_RESET_TIM_FREQ
+
+
 #define SETP_SET_TIM                TIM(BOARD_SET_TIM)                     
 #define SETP_RESET_TIM              TIM(BOARD_RESET_TIM)                  
 #define SET_TIM_IRQn                TIM_IRQn(BOARD_SET_TIM)            

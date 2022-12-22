@@ -113,12 +113,13 @@
 /* For timer use */
 #define BOARD_SET_TIM                   4
 #define BOARD_RESET_TIM                 5
+#define BOARD_SET_TIM_FREQ              F_CPU / 2
+#define BOARD_RESET_TIM_FREQ            F_CPU / 2
 #define BOARD_LASER_TIM_PORT            3
 #define BOARD_LASER_TIM_CH              TIM_CHANNEL_1
 #define BOARD_LASER_PIN_AF              GPIO_AF2_TIM3
 #define BOARD_LASER_OUT_PORT            GPIOB
 #define BOARD_LASER_OUT_PIN             GPIO_PIN_0
-
 
 #define I2C_EEPEOM                      
 #ifdef I2C_EEPEOM
