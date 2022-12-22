@@ -31,10 +31,10 @@ int main() {
   HAL_Delay(100);  
 #endif
 
-  // report MCU info and you can check
+  /* Report MCU info and you can check */ 
   grblReprotMcuInfo();
 
-  // Begin GRBL Task
+  /* Begin GRBL Task */ 
   grblTaskInit();
 
 #if defined(USE_FREERTOS_RTOS)

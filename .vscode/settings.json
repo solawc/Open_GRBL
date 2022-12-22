@@ -72,7 +72,10 @@
         "eflash.h": "c",
         "eflash_port.h": "c",
         "eeprom_at24xx.h": "c",
-        "eeprom_port.h": "c"
+        "eeprom_port.h": "c",
+        "eeprom.h": "c",
+        "system.h": "c",
+        "settings.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
