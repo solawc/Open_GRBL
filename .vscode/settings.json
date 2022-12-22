@@ -75,7 +75,8 @@
         "eeprom_port.h": "c",
         "eeprom.h": "c",
         "system.h": "c",
-        "settings.h": "c"
+        "settings.h": "c",
+        "mid_uart.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

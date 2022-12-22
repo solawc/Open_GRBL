@@ -14,8 +14,6 @@
 
 #include "../../../main.h"
 
-
-
 #define LaserUART		                BOARD_UART
 #define LaserUART_IRQn                  BOARD_UART_IRQ
 #define LASER_UART_CLK_ENABLE()         BOARD_UART_CLK_ENABLE()   
@@ -26,8 +24,6 @@
 #define LASER_UART_AF_MODE              BOARD_UART_AF_MODE
 #define LASER_UART_IRQHANDLER           BOARD_UART_IRQnHANDLER
 #define LASER_UART_RX_FLAG              BOARD_UART_RX_FLAG
-
-
 
 void BspUartGpioInit(void);
 void BspUartInit(void);

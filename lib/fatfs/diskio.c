@@ -228,7 +228,7 @@ DRESULT disk_ioctl (
 			return res;
 		break;
 
-
+#ifdef HAS_W25Qxx
 		case DEV_FLASH :
 
 			switch(cmd) {
@@ -254,7 +254,7 @@ DRESULT disk_ioctl (
 			return res;
 
 		break;
-
+#endif
 	}
 
 	return RES_PARERR;

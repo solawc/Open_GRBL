@@ -92,8 +92,8 @@ void grblDeviceInit() {
  * Setup MCU core and peripheral clock.
  */
 void grblHwInit(void) {
+    
+    grblDeviceInit();
 
     systemInit();
-
-    grblDeviceInit();
 }

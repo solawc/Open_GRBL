@@ -30,7 +30,7 @@ void BspUartGpioInit(void) {
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = LASER_UART_AF_MODE;
+    GPIO_InitStruct.Alternate = LASER_UART_AF_MODE; 
     HAL_GPIO_Init(LASER_UART_TX_PORT, &GPIO_InitStruct);
 }
 

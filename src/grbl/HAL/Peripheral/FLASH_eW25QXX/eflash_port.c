@@ -31,6 +31,7 @@ void w25qxx_spi_cs_disable(void) {
 }
 
 void w25qxxSpiRegiest(void) {
+#ifdef HAS_W25Qxx
     sFlash.info.flash_mode               = sFLAHS_SPI_MODE;
     sFlash.info.flash_delay_time         = 100;   
     sFlash.info.flash_id                 = 0;
@@ -41,6 +42,7 @@ void w25qxxSpiRegiest(void) {
     // sFlash.flashIsTransFinish      = flashIsTransFinish;
     sFlash.flashDisableTrans       = w25qxx_spi_cs_disable;
     sFlash.flashEnableTrans        = w25qxx_spi_cs_enabel;
+#endif
 }
 
 

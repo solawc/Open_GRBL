@@ -77,7 +77,7 @@
 #define W25QXX_SPI_CS_GPIO              GPIOB
 #define W25QXX_SPI_CS_PIN               GPIO_PIN_12
 #define W25QXX_PIN_AF                   GPIO_AF5_SPI2
-#define W25QXX_SPEED                    SPI_BAUDRATEPRESCALER_4
+#define W25QXX_SPEED                    SPI_BAUDRATEPRESCALER_2
 #define W25QXX_SPI_CLK_ENABLE()         __HAL_RCC_SPI2_CLK_ENABLE()
 
 /* For SDCard */
@@ -99,15 +99,15 @@
 #define  __HAL_UART_CLK(uart)	        __HAL_RCC_##uart##_CLK_ENABLE()
 #define  UART_IRQn(uart)                uart##_IRQn
 
-#define BOARD_UART                      USART3
-#define BOARD_UART_IRQ                  UART_IRQn(USART3)
-#define BOARD_UART_CLK_ENABLE()         __HAL_UART_CLK(USART3)
-#define BOARD_UART_IRQnHANDLER          USART3_IRQHandler
-#define BOARD_UART_TX_PORT              GPIOB
-#define BOARD_UART_TX_PIN               GPIO_PIN_10
-#define BOARD_UART_RX_PORT              GPIOB
-#define BOARD_UART_RX_PIN               GPIO_PIN_11
-#define BOARD_UART_AF_MODE              GPIO_AF7_USART3
+#define BOARD_UART                      USART1
+#define BOARD_UART_IRQ                  UART_IRQn(USART1)
+#define BOARD_UART_CLK_ENABLE()         __HAL_UART_CLK(USART1)
+#define BOARD_UART_IRQnHANDLER          USART1_IRQHandler
+#define BOARD_UART_TX_PORT              GPIOA
+#define BOARD_UART_TX_PIN               GPIO_PIN_9
+#define BOARD_UART_RX_PORT              GPIOA
+#define BOARD_UART_RX_PIN               GPIO_PIN_10   
+#define BOARD_UART_AF_MODE              GPIO_AF7_USART1
 #define BOARD_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
 
 /* For timer use */
