@@ -29,18 +29,20 @@ void grblReprotMcuInfo(void) {
     grblHwInfoGet();
 
     printf("\r\n/*********************************************************/\r\n");
-    printf("*-\\    |    /\n");
+    printf("*-\\    |    /\r\n");
     printf("* --OpenGRBL--\r\n");
-    printf("*-/    |    \\\n");
+    printf("*-/    |    \\\r\n");
     printf("*-CPU Name:%s\r\n", MCU_INFI_NAME);
     printf("*-CPU Flash:%s\r\n", MCU_INFO_FLASH);
     printf("*-CPU RAM:%s\r\n", MCU_INFO_RAM);
     printf("*-CPU Clock:%ldMHz\r\n", grbl_hw_get.mcu_clk/1000000);
     printf("*-CPU Step Clock:%ldMHz\r\n", grbl_hw_get.step_tim_clk/1000000);
 #ifdef HAS_W25Qxx
-    printf("*-Flash Info:0x%lx, flash_size:%ldMB\n", (uint32_t)sFlash.info.flash_id, (sFlash.info.flash_size / (uint32_t)1024));
+    printf("*-Flash Info:0x%lx, flash_size:%ldMB\r\n", (uint32_t)sFlash.info.flash_id, (sFlash.info.flash_size / (uint32_t)1024));
+#else 
+    printf("*-Flash Info:None\r\n");
 #endif
-    printf("*-BuildVersion:%s\n", GRBL_VERSION_BUILD);
+    printf("*-BuildVersion:%s\r\n", GRBL_VERSION_BUILD);
     printf("/*********************************************************/\r\n");
 }
 

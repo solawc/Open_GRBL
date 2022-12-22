@@ -34,7 +34,7 @@ typedef struct {
                                      // from g-code position for movements requiring multiple line motions,
                                      // i.e. arcs, canned cycles, and backlash compensation.
   float previous_unit_vec[N_AXIS];   // Unit vector of previous path line segment
-  float previous_nominal_speed;  // Nominal speed of previous path line segment
+  float previous_nominal_speed;      // Nominal speed of previous path line segment
 } planner_t;
 static planner_t pl;
 
@@ -201,15 +201,13 @@ void plan_reset()
   plan_reset_buffer();
 }
 
-
 void plan_reset_buffer()
 {
   block_buffer_tail = 0;
-  block_buffer_head = 0; // Empty = tail
-  next_buffer_head = 1; // plan_next_block_index(block_buffer_head)
-  block_buffer_planned = 0; // = block_buffer_tail;
+  block_buffer_head = 0;      // Empty = tail
+  next_buffer_head = 1;       // plan_next_block_index(block_buffer_head)
+  block_buffer_planned = 0;   // = block_buffer_tail;
 }
-
 
 void plan_discard_current_block()
 {
