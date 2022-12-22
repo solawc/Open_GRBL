@@ -1,5 +1,5 @@
 /*
- eflash_port.h
+ EEPROM_port.h
 
  Copyright (c) 2021-2022 sola
 
@@ -9,11 +9,11 @@
  please indicate the source
 */
 
-#ifndef __w25qxx_port_h
-#define __w25qxx_port_h
+#ifndef __EEPROM_port_h
+#define __EEPROM_port_h
 
 #include "main.h"
 
-void w25qxxSpiRegiest();
+
 
 #endif

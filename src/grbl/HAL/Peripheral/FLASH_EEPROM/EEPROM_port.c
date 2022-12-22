@@ -1,5 +1,5 @@
 /*
- eflash_port.h
+ EEPROM_port.c
 
  Copyright (c) 2021-2022 sola
 
@@ -9,11 +9,18 @@
  please indicate the source
 */
 
-#ifndef __w25qxx_port_h
-#define __w25qxx_port_h
+#include "EEPROM_port.h"
 
-#include "main.h"
+void eepromInit() {
 
-void w25qxxSpiRegiest();
+}
 
-#endif
+uint8_t eepromWriteByte(uint8_t salveAddr, uint8_t data) {
+
+    return 0;
+}
+
+uint8_t eepromReadByte(uint8_t salveAddr, uint8_t data) {
+
+    return 0;
+}

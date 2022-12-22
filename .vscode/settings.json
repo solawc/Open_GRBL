@@ -70,7 +70,9 @@
         "w25qxx_port.h": "c",
         "w25qxx.h": "c",
         "eflash.h": "c",
-        "eflash_port.h": "c"
+        "eflash_port.h": "c",
+        "eeprom_at24xx.h": "c",
+        "eeprom_port.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

@@ -11,7 +11,7 @@ static void sd_spi_pin_init(void) {
 
     _SD_GPIO_CLK_ENABLE();                          // Enable SPI and GPIO Clock
 
-    SPI_GPIO_Init.Alternate = BOARD_SD_GPIO_AF;     // GPIO_AF5_SPI2; 
+    SPI_GPIO_Init.Alternate = BOARD_SD_GPIO_AF;     
     SPI_GPIO_Init.Mode = GPIO_MODE_AF_PP;
     SPI_GPIO_Init.Pin = SD_SPI_MISO_PIN|
                         SD_SPI_MOSI_PIN|

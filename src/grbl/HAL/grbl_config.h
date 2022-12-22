@@ -55,7 +55,7 @@
         #define HAS_W25Qxx
     #endif
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-    // #define SDSUPPORT
+    #define SDSUPPORT
     #ifdef SDSUPPORT
         #define HAS_SDCARD
     #endif

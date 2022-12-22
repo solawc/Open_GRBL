@@ -93,7 +93,7 @@
 #define BOARD_SD_CS_PIN                 GPIO_PIN_9
 #define BOARD_SD_DET_PORT               GPIOD
 #define BOARD_SD_DET_PIN                GPIO_PIN_12
-#define BOARD_SD_GPIO_AF                GPIO_AF5_SPI3
+#define BOARD_SD_GPIO_AF                GPIO_AF6_SPI3
 
 /* For Serial UART */
 #define  __HAL_UART_CLK(uart)	        __HAL_RCC_##uart##_CLK_ENABLE()
@@ -120,7 +120,7 @@
 #define BOARD_LASER_OUT_PIN             GPIO_PIN_0
 
 
-#define I2C_EEPEOM                      
+// #define I2C_EEPEOM                      
 #ifdef I2C_EEPEOM
     #define EEPROM_I2C                  1                               // I2C1
     #define EEPROM_I2C_CLK              __HAL_RCC_I2C1_CLK_ENABLE()
