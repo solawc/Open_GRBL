@@ -21,6 +21,14 @@
 #ifndef eeprom_h
 #define eeprom_h
 
+typedef enum {
+
+  NVS_FLASH   = 0,    /* For mcu intel flash or W25QXX          */
+  NVS_EEPROM  = 1,    /* For extern EEPROM, example AT24C02     */
+  NVS_FRAM    = 2,    /* For extern FRAM                        */
+
+} nvs_type_t;
+
 unsigned char eeprom_get_char(unsigned int addr);
 void eeprom_put_char(unsigned int addr, unsigned char new_value);
 void memcpy_to_eeprom_with_checksum(unsigned int destination, char *source, unsigned int size);
