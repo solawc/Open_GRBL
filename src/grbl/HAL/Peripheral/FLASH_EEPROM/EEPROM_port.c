@@ -11,16 +11,12 @@
 
 #include "EEPROM_port.h"
 
-void eepromInit() {
+EEPROM_DEV_t sEEPROM;
 
+void eepromI2cRegiest(void) {
+    sEEPROM.eepromInit = NULL;
+    sEEPROM.eepromReadByte = NULL;
+    sEEPROM.eepromWriteByte = NULL;
 }
 
-uint8_t eepromWriteByte(uint8_t salveAddr, uint8_t data) {
 
-    return 0;
-}
-
-uint8_t eepromReadByte(uint8_t salveAddr, uint8_t data) {
-
-    return 0;
-}

@@ -18,9 +18,6 @@
 SPI_HandleTypeDef w25qxx_spi;
 SPI_HandleTypeDef tft_spi;
 
-
-eFLASH_t sFlash;
-
 void spi_for_w25qxx_init(void) {
     w25qxx_spi.Instance                 = W25QXX_SPI_PORT;
     w25qxx_spi.Init.BaudRatePrescaler   = W25QXX_SPEED;
@@ -81,32 +78,6 @@ void BspSpiClkEnable(SPI_HandleTypeDef *spi) {
     if      (spi->Instance == SPI1)   SPI_CLK(1);
     else if (spi->Instance == SPI2)   SPI_CLK(2);
     else if (spi->Instance == SPI2)   SPI_CLK(3);
-
-//     switch(spi->Instance) {
-//         case SPI1: __HAL_RCC_SPI1_CLK_ENABLE(); break;
-//         case SPI2: __HAL_RCC_SPI2_CLK_ENABLE(); break; 
-//         case SPI3: __HAL_RCC_SPI3_CLK_ENABLE(); break;
-// #ifdef SPI4
-//         case SPI4: __HAL_RCC_SPI4_CLK_ENABLE(); break;
-// #endif
-
-// #ifdef SPI5
-//         case SPI5: __HAL_RCC_SPI5_CLK_ENABLE(); break;
-// #endif
-
-// #ifdef SPI6
-//         case SPI6: __HAL_RCC_SPI6_CLK_ENABLE(); break;
-// #endif
-
-// #ifdef SPI7
-//         case SPI7: __HAL_RCC_SPI7_CLK_ENABLE(); break;
-// #endif
-
-// #ifdef SPI8
-//         case SPI8: __HAL_RCC_SPI8_CLK_ENABLE(); break;
-// #endif
-
-//     }
 }
 
 void BspSpiClkDisable(SPI_HandleTypeDef *spi) {

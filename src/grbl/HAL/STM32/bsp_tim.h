@@ -23,8 +23,8 @@ typedef TIM_HandleTypeDef timer_def;
 /* Define Timer IRQn */
 #define _TIM_IRQn(X)                TIM##X##_IRQn
 #define TIM_IRQn(X)                 _TIM_IRQn(X)
-#define _TIM_IRQHander(X)             TIM##X##_IRQHandler
-#define TIM_IRQHander(X)              _TIM_IRQHander(X)
+#define _TIM_IRQHander(X)           TIM##X##_IRQHandler
+#define TIM_IRQHander(X)            _TIM_IRQHander(X)
 
 /* Define Timer Rcc */
 #define _TIM_RCC(X)                 __HAL_RCC_TIM##X##_CLK_ENABLE()

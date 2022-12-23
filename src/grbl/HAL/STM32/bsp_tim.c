@@ -37,7 +37,6 @@ void hal_set_timer_init(void) {
     hal_step_tim.reset_timer_arr = 0;
 }
 
-
 /*
  * 设置用于拉低的定时器的tick为1us
 */

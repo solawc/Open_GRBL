@@ -15,13 +15,13 @@
  * - flashReadSector()
  * - flashWriteSector()
  * - FLASH_SECTOR_SIZE = 4096
- * 
- * 
- **********/
+ ****************************************************************/
 
 #include "eflash.h"
 
 #ifdef HAS_W25Qxx
+
+eFLASH_t sFlash;
 
 // bool flash_dma_mode = false;
 
