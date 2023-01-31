@@ -19,14 +19,15 @@ extern bool                     sd_ready_next;
 extern uint32_t                 sd_current_line_number; 
 
 typedef enum {
-    SD_STATE_IDLE,                  // SD卡空闲状态
-    SD_STATE_NOT_PRESENT,           // SD卡没有插入
-    SD_STATE_BUSY,                  // SD卡忙状态
-    SD_STATE_PRINTING,              // SD卡打印中
-    SD_STATE_WRITETING,             // SD卡写入数据的过程
-    SD_STATE_PARSING,               // SD卡等待解析的过程  
+    SD_STATE_IDLE,                  /* SD卡空闲状态        */    
+    SD_STATE_NOT_PRESENT,           /* SD卡没有插入        */    
+    SD_STATE_BUSY,                  /* SD卡忙状态          */
+    SD_STATE_PRINTING,              /* SD卡打印中          */
+    SD_STATE_WRITETING,             /* SD卡写入数据的过程  */        
+    SD_STATE_PARSING,               /* SD卡等待解析的过程  */            
 }sd_state_t;
 extern sd_state_t   sd_state;
+
 
 void sd_init(void);
 void sd_state_check(void);

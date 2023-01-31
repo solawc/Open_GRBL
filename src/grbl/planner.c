@@ -225,7 +225,7 @@ void plan_discard_current_block()
   //   block_buffer_tail = block_index;
   // }
 
-  if (block_buffer_tail != block_buffer_head) { // Discard non-empty buffer.
+    if (block_buffer_tail != block_buffer_head) { // Discard non-empty buffer.
         // plan_cleanup(block_buffer_tail);
         // Push block_buffer_planned pointer, if encountered.
         if (block_buffer_tail == block_buffer_planned)
@@ -296,13 +296,13 @@ inline static float plan_compute_profile_parameters (plan_block_t *block, float 
 void plan_update_velocity_profile_parameters()
 {
   plan_block_t *block = block_buffer_tail;
-    float prev_nominal_speed = SOME_LARGE_VALUE; // Set high for first block nominal speed calculation.
+  float prev_nominal_speed = SOME_LARGE_VALUE; // Set high for first block nominal speed calculation.
 
-    while (block != block_buffer_head) {
-        prev_nominal_speed = plan_compute_profile_parameters(block, plan_compute_profile_nominal_speed(block), prev_nominal_speed);
-        block = block->next;
-    }
-    pl.previous_nominal_speed = prev_nominal_speed; // Update prev nominal speed for next incoming block.
+  while (block != block_buffer_head) {
+      prev_nominal_speed = plan_compute_profile_parameters(block, plan_compute_profile_nominal_speed(block), prev_nominal_speed);
+      block = block->next;
+  }
+  pl.previous_nominal_speed = prev_nominal_speed; // Update prev nominal speed for next incoming block.
 }
 
 
@@ -461,7 +461,7 @@ uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
       } else {
         convert_delta_vector_to_unit_vector(junction_unit_vec);
         float junction_acceleration = limit_value_by_axis_maximum(settings.acceleration, junction_unit_vec);
-        float sin_theta_d2 = sqrtf(0.5 * (1.0 - junction_cos_theta)); // Trig half angle identity. Always positive.
+        float sin_theta_d2 = sqrtf(0.5f * (1.0f - junction_cos_theta)); // Trig half angle identity. Always positive.
         block->max_junction_speed_sqr = max( MINIMUM_JUNCTION_SPEED*MINIMUM_JUNCTION_SPEED,
                        (junction_acceleration * settings.junction_deviation * sin_theta_d2)/(1.0-sin_theta_d2) );
       }

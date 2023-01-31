@@ -336,51 +336,67 @@ void system_data_copy(int32_t *src, int32_t *dec, uint32_t size) {
   }
 }
 
+void enterCli(void) {
+#ifdef USE_FREERTOS_RTOS
+  taskENTER_CRITICAL();
+#else
+  __disable_irq(); 
+#endif
+}
+
+void exitCli(void) {
+#ifdef USE_FREERTOS_RTOS
+  taskEXIT_CRITICAL();
+#else
+  __enable_irq(); 
+#endif
+}
+
 // Special handlers for setting and clearing Grbl's real-time execution flags.
 void system_set_exec_state_flag(uint8_t mask) {
-  __disable_irq();
+  enterCli();
   sys_rt_exec_state |= (mask);
-  __enable_irq();
+  exitCli();
 }
 
 void system_clear_exec_state_flag(uint8_t mask) {
-  __disable_irq();
+  enterCli();
   sys_rt_exec_state &= ~(mask);
-  __enable_irq();
+  exitCli();
 }
 
 void system_set_exec_alarm(uint8_t code) {
-  __disable_irq();
+  enterCli();
   sys_rt_exec_alarm |= (code);
-  __enable_irq();
+  exitCli();
 }
 
 void system_clear_exec_alarm() {
-   __disable_irq();
+   enterCli();
   sys_rt_exec_alarm = 0;
-  __enable_irq();
+  exitCli();
 }
 
 void system_set_exec_motion_override_flag(uint8_t mask) {
-  __disable_irq();
+  enterCli();
   sys_rt_exec_motion_override |= (mask);
-  __enable_irq();
+  exitCli();
 }
 
 void system_set_exec_accessory_override_flag(uint8_t mask) {
-  __disable_irq();
+  enterCli();
   sys_rt_exec_accessory_override |= (mask);
-  __enable_irq();
+  exitCli();
 }
 
 void system_clear_exec_motion_overrides() {
-  __disable_irq();
+  enterCli();
   sys_rt_exec_motion_override = 0;
-  __enable_irq();
+  exitCli();
 }
 
 void system_clear_exec_accessory_overrides() {
-  __disable_irq();
+  enterCli();
   sys_rt_exec_accessory_override = 0;
-  __enable_irq();
+  exitCli();
 }

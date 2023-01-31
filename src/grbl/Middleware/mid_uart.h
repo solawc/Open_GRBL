@@ -32,8 +32,6 @@ extern ringbuff_t rb_serial_rx;
 extern ringbuff_t rb_serial_tx;
 
 
-
-
 void DevUartInit(void);
 
 // ringbuffer

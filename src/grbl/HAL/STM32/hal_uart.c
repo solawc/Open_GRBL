@@ -76,6 +76,7 @@ void BspUartIrqSet(void) {
 
 void BspUartSendByte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 1000); }
 
+/* For stm32 reg. */
 #ifdef RDR
 #define USAR_READ_REG			RDR
 #else 

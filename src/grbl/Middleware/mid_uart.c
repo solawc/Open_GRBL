@@ -18,7 +18,6 @@ void DevUartInit(void) {
     dev_uart.uartInit = BspUartInit;
     dev_uart.uartSendByte = BspUartSendByte;
     dev_uart.uartTransComplateFlag = BspUartTcFlag;
-
 }
 
 /*************************************************************

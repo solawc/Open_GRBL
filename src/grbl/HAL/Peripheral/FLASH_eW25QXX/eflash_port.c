@@ -19,7 +19,7 @@
 /* GPIO 引脚初始化 */
 void flashSpiGpioInit(void)
 {
-  BspSpiGpioInit();
+    BspSpiGpioInit();
 } 
 
 void w25qxx_spi_cs_enabel(void) {

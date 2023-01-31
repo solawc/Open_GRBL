@@ -40,6 +40,7 @@ int main() {
 #if defined(USE_FREERTOS_RTOS)
   osKernelStart();
 #endif
+
 }
 
 void _delay_ms(uint32_t tick) {
