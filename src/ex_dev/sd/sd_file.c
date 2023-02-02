@@ -1,4 +1,5 @@
 #include "sd_file.h"
+#include "../../Grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
 
 FIL             fil;                        
 FATFS           fs;

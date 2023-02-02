@@ -70,8 +70,13 @@
 #include "Grbl/HAL/STM32/bsp_sdram.h"
 #include "Grbl/HAL/STM32/bsp_ltdc.h"
 
+#ifdef HAS_SDCARD
 #include "Grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
+#endif
+
+#ifdef HAS_W25Qxx 
 #include "Grbl/HAL/Peripheral/FLASH_eW25QXX/eflash.h"
+#endif
 
 #include "Grbl/Middleware/mid_gpio.h"
 #include "Grbl/Middleware/mid_timer.h"
