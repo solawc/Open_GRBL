@@ -23,7 +23,7 @@
 
 // Grbl versioning system
 #define GRBL_VERSION "1.4h"
-#define GRBL_VERSION_BUILD "20221222"
+#define GRBL_VERSION_BUILD "20230202"
 
 // Define standard libraries used by Grbl.
 #include <math.h>
