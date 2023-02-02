@@ -336,21 +336,7 @@ void system_data_copy(int32_t *src, int32_t *dec, uint32_t size) {
   }
 }
 
-void enterCli(void) {
-#ifdef USE_FREERTOS_RTOS
-  taskENTER_CRITICAL();
-#else
-  __disable_irq(); 
-#endif
-}
 
-void exitCli(void) {
-#ifdef USE_FREERTOS_RTOS
-  taskEXIT_CRITICAL();
-#else
-  __enable_irq(); 
-#endif
-}
 
 // Special handlers for setting and clearing Grbl's real-time execution flags.
 void system_set_exec_state_flag(uint8_t mask) {

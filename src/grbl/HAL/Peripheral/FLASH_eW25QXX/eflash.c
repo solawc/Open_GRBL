@@ -372,17 +372,30 @@ void w25qxxBufferRead(eFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, __I
 #define  FLASH_ReadAddress      FLASH_WriteAddress
 #define  FLASH_SectorToErase    FLASH_WriteAddress
 
-uint8_t Tx_Buffer[1024];;
+uint8_t Tx_Buffer[1024 * 10];;
 uint8_t Rx_Buffer[BufferSize];
+volatile uint32_t w25qxxTestCount = 0;   // 1ms count
+volatile uint32_t w25qxxGetTick = 0;
+uint32_t getW25QxxCount() {
+  return w25qxxTestCount;
+}
+
+void w25qxxTestBegin() {
+  w25qxxTestCount = 0;
+}
+
+void w25qxxTestHandler(void) {
+  w25qxxTestCount++;
+}
 
 void w25qxxTest() {
   
   uint32_t writeAddr = 0;
-  memset(Tx_Buffer, 0x31, sizeof(Tx_Buffer));
+  memset(Tx_Buffer, 0x31, sizeof(Tx_Buffer)); 
 
   // 擦除FLASH
   printf("Begin erase....\n");
-  // w25qxxSectorErase(&sFlash, FLASH_SectorToErase);
+  w25qxxTestBegin();
   w25qxxChipErase(&sFlash);
 
   // 往FLASH写入数据

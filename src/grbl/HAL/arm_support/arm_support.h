@@ -6,7 +6,8 @@
 
 
 
-
+void enterCli(void);
+void exitCli(void);
 
 #endif
 

@@ -57,13 +57,13 @@
 #include "jog.h"
 #include "error.h"
 
-#include "../main.h"
-#include "HAL/grbl_config.h"
+#include "../../main.h"
+#include "../HAL/grbl_config.h"
 
 #ifdef STM32F4
-  #include "HAL/STM32/bsp_FireBoard_F429V2/cpu_stm32f4_map.h"
+  #include "../HAL/STM32/bsp_FireBoard_F429V2/cpu_stm32f4_map.h"
 #elif defined(STM32G0xx)
-  #include "HAL/STM32/bsp_g0b0ce/cpu_stm32g0_map.h"
+  #include "../HAL/STM32/bsp_g0b0ce/cpu_stm32g0_map.h"
 #endif
 
 #ifndef M_PI

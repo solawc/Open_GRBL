@@ -1,7 +1,7 @@
 #ifndef __cpu_stm32f4_map_h
 #define __cpu_stm32f4_map_h
 
-#include "../../grbl/grbl.h"
+#include "../../Grbl/grbl_src/grbl.h"
 
   // Define step pulse output pins. NOTE: All step bit pins must be on the same port.
 #define X_STEP_BIT      0  
