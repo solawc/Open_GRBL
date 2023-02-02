@@ -9,8 +9,8 @@
  please indicate the source
 */
 
-#ifndef __hal_w25qxx_h__
-#define __hal_w25qxx_h__
+#ifndef __eflash_h__
+#define __eflash_h__
 
 #include "../../grbl_config.h"
 
@@ -90,7 +90,6 @@
         bool (*flashIsTransFinish)(void);                      /* 判断是否传输完成 */
         void (*flashEnableTrans)(void);    
         void (*flashDisableTrans)(void);
-
     }eFLASH_t;
     extern eFLASH_t sFlash;
 
@@ -107,7 +106,10 @@
     void w25qxxChipErase(eFLASH_t *nFlash);
     void w25qxxBufferWrite(eFLASH_t *nFlash, uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite);
     void w25qxxBufferRead(eFLASH_t *nFlash, uint8_t* pBuffer, uint32_t ReadAddr, uint32_t NumByteToRead);
+
     void w25qxxTest();
+    void w25qxxTestHandler(void);
+
     #ifdef USE_FATFS
         bool w25qxx_fs_init(void);
         void get_w25qxx_fafts_info(void);

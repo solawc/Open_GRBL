@@ -14,6 +14,14 @@
 
 #include "main.h"
 
+typedef struct {
 
+    void (*eepromInit)(uint32_t);
+    void (*eepromWriteByte)(uint32_t, uint8_t );
+    void (*eepromReadByte)(uint32_t, uint8_t );
+
+}EEPROM_DEV_t;
+
+void eepromI2cRegiest(void);
 
 #endif

@@ -39,6 +39,8 @@ void SysTick_Handler(void)
 {
   HAL_IncTick();
 
+  w25qxxTestHandler();
+
 #if defined(USE_FREERTOS_RTOS)
 
 #if (INCLUDE_xTaskGetSchedulerState == 1 )

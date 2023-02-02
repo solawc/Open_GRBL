@@ -77,7 +77,7 @@
 #define W25QXX_SPI_CS_GPIO              GPIOB
 #define W25QXX_SPI_CS_PIN               GPIO_PIN_12
 #define W25QXX_PIN_AF                   GPIO_AF5_SPI2
-#define W25QXX_SPEED                    SPI_BAUDRATEPRESCALER_4
+#define W25QXX_SPEED                    SPI_BAUDRATEPRESCALER_2
 #define W25QXX_SPI_CLK_ENABLE()         __HAL_RCC_SPI2_CLK_ENABLE()
 
 /* For SDCard */
@@ -99,28 +99,29 @@
 #define  __HAL_UART_CLK(uart)	        __HAL_RCC_##uart##_CLK_ENABLE()
 #define  UART_IRQn(uart)                uart##_IRQn
 
-#define BOARD_UART                      USART3
-#define BOARD_UART_IRQ                  UART_IRQn(USART3)
-#define BOARD_UART_CLK_ENABLE()         __HAL_UART_CLK(USART3)
-#define BOARD_UART_IRQnHANDLER          USART3_IRQHandler
-#define BOARD_UART_TX_PORT              GPIOB
-#define BOARD_UART_TX_PIN               GPIO_PIN_10
-#define BOARD_UART_RX_PORT              GPIOB
-#define BOARD_UART_RX_PIN               GPIO_PIN_11
-#define BOARD_UART_AF_MODE              GPIO_AF7_USART3
+#define BOARD_UART                      USART1
+#define BOARD_UART_IRQ                  UART_IRQn(USART1)
+#define BOARD_UART_CLK_ENABLE()         __HAL_UART_CLK(USART1)
+#define BOARD_UART_IRQnHANDLER          USART1_IRQHandler
+#define BOARD_UART_TX_PORT              GPIOA
+#define BOARD_UART_TX_PIN               GPIO_PIN_9
+#define BOARD_UART_RX_PORT              GPIOA
+#define BOARD_UART_RX_PIN               GPIO_PIN_10   
+#define BOARD_UART_AF_MODE              GPIO_AF7_USART1
 #define BOARD_UART_RX_FLAG              __HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_RXNE) == SET
 
 /* For timer use */
 #define BOARD_SET_TIM                   4
 #define BOARD_RESET_TIM                 5
+#define BOARD_SET_TIM_FREQ              F_CPU / 2
+#define BOARD_RESET_TIM_FREQ            F_CPU / 2
 #define BOARD_LASER_TIM_PORT            3
 #define BOARD_LASER_TIM_CH              TIM_CHANNEL_1
 #define BOARD_LASER_PIN_AF              GPIO_AF2_TIM3
 #define BOARD_LASER_OUT_PORT            GPIOB
 #define BOARD_LASER_OUT_PIN             GPIO_PIN_0
 
-
-// #define I2C_EEPEOM                      
+#define I2C_EEPEOM                      
 #ifdef I2C_EEPEOM
     #define EEPROM_I2C                  1                               // I2C1
     #define EEPROM_I2C_CLK              __HAL_RCC_I2C1_CLK_ENABLE()
@@ -134,7 +135,7 @@
 #endif
 
 #ifndef I2C_EEPEOM
-#define EEPROM_START_ADDR               ADDR_FLASH_SECTOR_5     
+#define EEPROM_START_ADDR               ADDR_FLASH_SECTOR_6     
 #define EEPROM_END_ADDR                 ((uint32_t)0x0803ffff)
 #define FLASH_WRITE_SECTORS_WORD
 #endif

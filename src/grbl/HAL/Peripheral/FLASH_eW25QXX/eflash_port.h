@@ -14,6 +14,11 @@
 
 #include "main.h"
 
-void w25qxxSpiRegiest();
+
+void flashSpiGpioInit(void);
+void w25qxx_spi_cs_enabel(void);
+void w25qxx_spi_cs_disable(void);
+
+void w25qxxSpiRegiest(void);
 
 #endif

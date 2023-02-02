@@ -23,8 +23,8 @@ typedef TIM_HandleTypeDef timer_def;
 /* Define Timer IRQn */
 #define _TIM_IRQn(X)                TIM##X##_IRQn
 #define TIM_IRQn(X)                 _TIM_IRQn(X)
-#define _TIM_IRQHander(X)             TIM##X##_IRQHandler
-#define TIM_IRQHander(X)              _TIM_IRQHander(X)
+#define _TIM_IRQHander(X)           TIM##X##_IRQHandler
+#define TIM_IRQHander(X)            _TIM_IRQHander(X)
 
 /* Define Timer Rcc */
 #define _TIM_RCC(X)                 __HAL_RCC_TIM##X##_CLK_ENABLE()
@@ -34,6 +34,11 @@ typedef TIM_HandleTypeDef timer_def;
 #define STEP_SET_TIM                hal_step_tim.step_set
 #define STEP_RESET_TIM              hal_step_tim.step_reset
 #define LASER_TIM                   hal_step_tim.laser
+
+/* Define TIMER Freq */
+#define STEP_SET_TIM_FREQ           BOARD_SET_TIM_FREQ
+#define STEP_RESET_TIM_FREQ         BOARD_RESET_TIM_FREQ
+
 
 #define SETP_SET_TIM                TIM(BOARD_SET_TIM)                     
 #define SETP_RESET_TIM              TIM(BOARD_RESET_TIM)                  

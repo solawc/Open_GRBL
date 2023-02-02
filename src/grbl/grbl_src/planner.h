@@ -51,7 +51,7 @@
 
 // This struct stores a linear movement of a g-code block motion with its critical "nominal" values
 // are as specified in the source g-code.
-typedef struct {
+typedef struct plan_block{
   // Fields used by the bresenham algorithm for tracing the line
   // NOTE: Used by stepper algorithm to execute the block correctly. Do not alter these values.
   uint32_t steps[N_AXIS];    // Step count along each axis
@@ -82,6 +82,9 @@ typedef struct {
     // Stored spindle speed data used by spindle overrides and resuming methods.
     float spindle_speed;    // Block spindle speed. Copied from pl_line_data.
   #endif
+
+  struct plan_block *prev, *next;   // Linked list pointers, DO NOT MOVE - these MUST be the last elements in the struct!
+   
 } plan_block_t;
 
 
@@ -94,6 +97,15 @@ typedef struct {
     int32_t line_number;    // Desired line number to report when executing.
   #endif
 } plan_line_data_t;
+
+// Define planner variables
+typedef struct {
+  int32_t position[N_AXIS];          // The planner position of the tool in absolute steps. Kept separate
+                                     // from g-code position for movements requiring multiple line motions,
+                                     // i.e. arcs, canned cycles, and backlash compensation.
+  float previous_unit_vec[N_AXIS];   // Unit vector of previous path line segment
+  float previous_nominal_speed;      // Nominal speed of previous path line segment
+} planner_t;
 
 
 // Initialize and reset the motion plan subsystem
@@ -134,7 +146,7 @@ void plan_sync_position();
 void plan_cycle_reinitialize();
 
 // Returns the number of available blocks are in the planner buffer.
-uint8_t plan_get_block_buffer_available();
+uint_fast16_t plan_get_block_buffer_available();
 
 // Returns the number of active blocks are in the planner buffer.
 // NOTE: Deprecated. Not used unless classic status reports are enabled in config.h

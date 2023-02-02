@@ -1,23 +1,23 @@
 /*
   main.h 
-  Part of Grbl
+  Part of grbl
 
   Copyright (c) 2011-2016 Sungeun K. Jeon for Gnea Research LLC
   Copyright (c) 2009-2011 Simen Svale Skogsrud
   Copyright (c) 2021-2022 sola
 
-  Grbl is free software: you can redistribute it and/or modify
+  grbl is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
-  Grbl is distributed in the hope that it will be useful,
+  grbl is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with Grbl.  If not, see <http://www.gnu.org/licenses/>.
+  along with grbl.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #ifndef __MAIN_H
@@ -54,10 +54,12 @@
 #include "cmsis_os.h"
 #endif
 
-#include "Grbl/grbl_main.h"
+#include "Grbl/grbl_src/grbl_main.h"
 
 #include "Grbl/HAL/grbl_hal.h"
 #include "Grbl/HAL/grbl_config.h"
+
+#include "Grbl/HAL/arm_support/arm_support.h"
 
 #include "Grbl/HAL/STM32/bsp_gpio.h"
 #include "Grbl/HAL/STM32/hal_uart.h"
@@ -82,7 +84,7 @@
 
 #include "ui/lv_port/lv_disp_port.h"
 
-#include "Grbl/grbl.h"
+#include "Grbl/grbl_src/grbl.h"
 
 // For Fatfs 
 #include "ff.h"

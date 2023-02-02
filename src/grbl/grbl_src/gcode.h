@@ -54,32 +54,42 @@
 // to see how they are used, if you need to alter them.
 
 // Modal Group G0: Non-modal actions
-#define NON_MODAL_NO_ACTION 0 // (Default: Must be zero)
-#define NON_MODAL_DWELL 4 // G4 (Do not alter value)
-#define NON_MODAL_SET_COORDINATE_DATA 10 // G10 (Do not alter value)
-#define NON_MODAL_GO_HOME_0 28 // G28 (Do not alter value)
-#define NON_MODAL_SET_HOME_0 38 // G28.1 (Do not alter value)
-#define NON_MODAL_GO_HOME_1 30 // G30 (Do not alter value)
-#define NON_MODAL_SET_HOME_1 40 // G30.1 (Do not alter value)
-#define NON_MODAL_ABSOLUTE_OVERRIDE 53 // G53 (Do not alter value)
-#define NON_MODAL_SET_COORDINATE_OFFSET 92 // G92 (Do not alter value)
-#define NON_MODAL_RESET_COORDINATE_OFFSET 102 //G92.1 (Do not alter value)
+typedef enum {
+  NON_MODAL_NO_ACTION               = 0,          // (Default: Must be zero)
+  NON_MODAL_DWELL                   = 4,          // G4 (Do not alter value)               
+  NON_MODAL_SET_COORDINATE_DATA     = 10,         // G10 (Do not alter value)
+  NON_MODAL_GO_HOME_0               = 28,         // G28 (Do not alter value)           
+  NON_MODAL_SET_HOME_0              = 38,         // G28.1 (Do not alter value)         
+  NON_MODAL_GO_HOME_1               = 30,         // G30 (Do not alter value)          
+  NON_MODAL_SET_HOME_1              = 40,         // G30.1 (Do not alter value)         
+  NON_MODAL_ABSOLUTE_OVERRIDE       = 53,         // G53 (Do not alter value) 
+  NON_MODAL_SET_COORDINATE_OFFSET   = 92,         // G92 (Do not alter value)
+  NON_MODAL_RESET_COORDINATE_OFFSET = 102,        // G92.1 (Do not alter value)
+  NON_MODAL_CLEAR_COORDINATE_OFFSET = 112,        // G92.2 (Do not alter value)
+  NON_MODAL_RESTORE_COORDINATE_OFFSET = 122,      // G92.3 (Do not alter value)
+} non_modal_t;
+
 
 // Modal Group G1: Motion modes
-#define MOTION_MODE_SEEK 0 // G0 (Default: Must be zero)
-#define MOTION_MODE_LINEAR 1 // G1 (Do not alter value)
-#define MOTION_MODE_CW_ARC 2  // G2 (Do not alter value)
-#define MOTION_MODE_CCW_ARC 3  // G3 (Do not alter value)
-#define MOTION_MODE_PROBE_TOWARD 140 // G38.2 (Do not alter value)
-#define MOTION_MODE_PROBE_TOWARD_NO_ERROR 141 // G38.3 (Do not alter value)
-#define MOTION_MODE_PROBE_AWAY 142 // G38.4 (Do not alter value)
-#define MOTION_MODE_PROBE_AWAY_NO_ERROR 143 // G38.5 (Do not alter value)
-#define MOTION_MODE_NONE 80 // G80 (Do not alter value)
+typedef enum {
+  MOTION_MODE_SEEK                  = 0,            // G0 (Default: Must be zero)
+  MOTION_MODE_LINEAR                = 1,            // G1 (Do not alter value)
+  MOTION_MODE_CW_ARC                = 2,            // G2 (Do not alter value)
+  MOTION_MODE_CCW_ARC               = 3,            // G3 (Do not alter value)
+  MOTION_MODE_PROBE_TOWARD          = 140,          // G38.2 (Do not alter value)
+  MOTION_MODE_PROBE_TOWARD_NO_ERROR = 141,          // G38.3 (Do not alter value)
+  MOTION_MODE_PROBE_AWAY            = 142,          // G38.4 (Do not alter value)
+  MOTION_MODE_PROBE_AWAY_NO_ERROR   = 143,          // G38.5 (Do not alter value)
+  MOTION_MODE_NONE                  = 80,           // G80 (Do not alter value)
+} motion_mode_t;
 
 // Modal Group G2: Plane select
-#define PLANE_SELECT_XY 0 // G17 (Default: Must be zero)
-#define PLANE_SELECT_ZX 1 // G18 (Do not alter value)
-#define PLANE_SELECT_YZ 2 // G19 (Do not alter value)
+typedef enum {
+  PLANE_SELECT_XY = 0,                              // G17 (Default: Must be zero)
+  PLANE_SELECT_ZX = 1,                              // G18 (Do not alter value)
+  PLANE_SELECT_YZ = 2,                              // G19 (Do not alter value)
+} plane_select_t;
+
 
 // Modal Group G3: Distance mode
 #define DISTANCE_MODE_ABSOLUTE 0 // G90 (Default: Must be zero)
