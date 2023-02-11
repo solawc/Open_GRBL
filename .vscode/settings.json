@@ -77,7 +77,8 @@
         "system.h": "c",
         "settings.h": "c",
         "mid_uart.h": "c",
-        "arm_support.h": "c"
+        "arm_support.h": "c",
+        "debug.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

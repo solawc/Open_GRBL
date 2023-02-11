@@ -9,7 +9,7 @@
  please indicate the source
 */
 
-#include "mid_timer.h"
+#include "../inc/mid_timer.h"
 
 mid_timer_t dev_timer;
 

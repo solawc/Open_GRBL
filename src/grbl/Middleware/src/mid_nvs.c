@@ -9,7 +9,7 @@
  please indicate the source
 */
 
-#include "mid_nvs.h"
+#include "../inc/mid_nvs.h"
 
 mid_nvs_t dev_nvs;
 

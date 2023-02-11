@@ -9,7 +9,7 @@
  please indicate the source
 */
 
-#include "mid_uart.h"
+#include "../inc/mid_uart.h"
 
 mid_uart_t dev_uart;
 

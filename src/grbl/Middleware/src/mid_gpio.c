@@ -9,7 +9,7 @@
  please indicate the source
 */
 
-#include "mid_gpio.h"
+#include "../inc/mid_gpio.h"
 
 mid_gpio_t dev_gpio;
 
