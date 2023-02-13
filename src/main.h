@@ -31,34 +31,32 @@
 #include "stdlib.h"
 #include "stdbool.h"
 
+
+
 /*******************************************
  * define PATH
  *******************************************/
 #define XSTR(V...) #V
+#define HAL_PATH(NAME)          XSTR(grbl/HAL/NAME)
+#define HAL_PINS_PATH(NAME)     XSTR(grbl/HAL/Pins/NAME)
+#define HAL_BSP_PATH(NAME)      XSTR(grbl/HAL/STM32/NAME)
+#define MID_PATH(NAME)          XSTR(grbl/Middleware/inc/NAME)
 
 
-
-#define HAL_PATH(NAME) XSTR(grbl/HAL/NAME)
-#define HAL_BOARD_PATH(NAME) XSTR(grbl/HAL/STM32/NAME)
-#define HAL_PINS_PATH(NAME) XSTR(grbl/HAL/Pins/NAME)
-
-#define HAL_BSP_PATH(NAME)  XSTR(grbl/HAL/STM32)
-
-// #include "grbl/HAL/grbl_mb.h"
-// #include HAL_PATH(grbl/HAL, grbl_mb.h)
+#include "Grbl/HAL/grbl_hal.h"
 #include HAL_PATH(grbl_mb.h)
 
 #if MB_BOARD==BOARD_FIRE_BOARD_F429
-    #include HAL_BOARD_PATH(bsp_FireBoard_F429V2/hal_FireBoard_system.h)
+    #include HAL_BSP_PATH(bsp_FireBoard_F429V2/hal_FireBoard_system.h)
     #include HAL_PINS_PATH(pins_fireboard_f429.h)
 #elif MB_BOARD==BOARD_NUCLEO_G070RB
-    #include HAL_BOARD_PATH(bsp_nucleo_g070rb/hal_nucleo_g070rb.h)
+    #include HAL_BSP_PATH(bsp_nucleo_g070rb/hal_nucleo_g070rb.h)
     #include HAL_PINS_PATH(pins_nucleo_g070rb.h)
 #elif MB_BOARD==BOARD_MKS_DLC_LG0_V3
-    #include HAL_BOARD_PATH(bsp_mks_dlc_lg0_v3/bsp_mks_dlc_lg0_v3_system.h)
+    #include HAL_BSP_PATH(bsp_mks_dlc_lg0_v3/bsp_mks_dlc_lg0_v3_system.h)
     #include HAL_PINS_PATH(pins_mks_dlc_lg0_v3.h)
 #elif MB_BOARD==BOARD_MKS_ROBIN_NANO_V3
-    #include HAL_BOARD_PATH(bsp_mks_nano_v3/hal_robin_nano_v3_system.h)
+    #include HAL_BSP_PATH(bsp_mks_nano_v3/hal_robin_nano_v3_system.h)
     #include HAL_PINS_PATH(pins_mks_nano_v3.h)
 #endif
 
@@ -71,43 +69,34 @@
 
 #include "Grbl/grbl_src/grbl_main.h"
 
-#include "Grbl/HAL/grbl_hal.h"
-#include "Grbl/HAL/grbl_config.h"
 
-#include "Grbl/HAL/arm_support/arm_support.h"
+#include HAL_PATH(grbl_config.h)
+#include HAL_PATH(arm_support/arm_support.h)
 
-// #include "Grbl/HAL/STM32/bsp_gpio.h"
-// #include "Grbl/HAL/STM32/hal_uart.h"
-// #include "Grbl/HAL/STM32/bsp_tim.h"
-// #include "Grbl/HAL/STM32/bsp_flash_eeprom.h"
-// #include "Grbl/HAL/STM32/hal_spi.h"
-// #include "Grbl/HAL/STM32/bsp_wdg.h"
-// #include "Grbl/HAL/STM32/bsp_sdram.h"
-// #include "Grbl/HAL/STM32/bsp_ltdc.h"
-
-#define HAL_BSP_PATH(bsp_gpio.h)
-#define HAL_BSP_PATH(hal_uart.h)
-#define HAL_BSP_PATH(bsp_tim.h)
-#define HAL_BSP_PATH(bsp_flash_eeprom.h)
-#define HAL_BSP_PATH(hal_spi.h)
-#define HAL_BSP_PATH(bsp_wdg.h)
-#define HAL_BSP_PATH(bsp_sdram.h)
-#define HAL_BSP_PATH(bsp_ltdc.h)
+#include HAL_BSP_PATH(bsp_gpio.h)
+#include HAL_BSP_PATH(bsp_uart.h)
+#include HAL_BSP_PATH(bsp_tim.h)
+#include HAL_BSP_PATH(bsp_flash_eeprom.h)
+#include HAL_BSP_PATH(hal_spi.h)
+#include HAL_BSP_PATH(bsp_wdg.h)
+#include HAL_BSP_PATH(bsp_sdram.h)
+#include HAL_BSP_PATH(bsp_ltdc.h)
 
 
 #ifdef HAS_SDCARD
 #include "Grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
+#include "ff.h"     // For Fatfs 
 #endif
 
 #ifdef HAS_W25Qxx 
 #include "Grbl/HAL/Peripheral/FLASH_eW25QXX/eflash.h"
 #endif
 
-#include "Grbl/Middleware/inc/debug.h"
-#include "Grbl/Middleware/inc/mid_gpio.h"
-#include "Grbl/Middleware/inc/mid_timer.h"
-#include "Grbl/Middleware/inc/mid_nvs.h"
-#include "Grbl/Middleware/inc/mid_uart.h"
+#include MID_PATH(debug.h)
+#include MID_PATH(mid_gpio.h)
+#include MID_PATH(mid_timer.h)
+#include MID_PATH(mid_nvs.h)
+#include MID_PATH(mid_uart.h)
 
 #include "ex_dev/lcd/tft_lcd_dev.h"
 #include "ex_dev/sd/sdcard.h"
@@ -115,10 +104,6 @@
 
 #include "ui/lv_port/lv_disp_port.h"
 
-#include "Grbl/grbl_src/grbl.h"
-
-// For Fatfs 
-#include "ff.h"
 
 #define SYSTEM_UART()       BspUartInit()
 

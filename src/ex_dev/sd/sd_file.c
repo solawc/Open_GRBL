@@ -1,6 +1,8 @@
 #include "sd_file.h"
 #include "../../Grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
 
+#ifdef FF_DEFINED
+
 FIL             fil;                        
 FATFS           fs;
 bool            sd_ready_next = false;      // Grbl has processed a line and is waiting for another 
@@ -209,4 +211,4 @@ void sd_report_mem(void) {
     printReturnInfo(cmd_str);
 }
 
-
+#endif /* FF_DEFINED */

@@ -1,5 +1,5 @@
 /*
- hal_uart.h
+ bsp_uart.h
 
  Copyright (c) 2021-2022 sola
 
@@ -9,8 +9,8 @@
  please indicate the source
 */
 
-#ifndef __hal_uart_h
-#define __hal_uart_h
+#ifndef __bsp_uart_h
+#define __bsp_uart_h
 
 #include "../../../main.h"
 
@@ -24,6 +24,21 @@
 #define LASER_UART_AF_MODE              BOARD_UART_AF_MODE
 #define LASER_UART_IRQHANDLER           BOARD_UART_IRQnHANDLER
 #define LASER_UART_RX_FLAG              BOARD_UART_RX_FLAG
+
+typedef struct {
+
+    UART_HandleTypeDef obj;     /* any cpu lib obj */
+    uint8_t         _uart_num;
+    GPIO_TypeDef    *_tx_pin_port;
+    GPIO_TypeDef    *_rx_pin_port;
+    uint16_t        _tx_pin;
+    uint16_t        _rx_pin;
+    uint32_t        _af;
+    uint32_t        _baud;
+
+
+}hal_uart_t;
+
 
 void BspUartGpioInit(void);
 void BspUartInit(void);
