@@ -1,5 +1,5 @@
 #include "sd_file.h"
-#include "../../Grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
+#include "../../grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
 
 #ifdef FF_DEFINED
 

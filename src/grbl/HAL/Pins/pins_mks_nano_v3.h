@@ -21,6 +21,7 @@
 #define MCU_INFI_NAME                   "STM32F407VE"
 #define MCU_INFO_FLASH                  "512K"
 #define MCU_INFO_RAM                    "196K"
+#define BOARD_NAME
 
 /* For Limit */
 #define BOARD_LIMIT_X_PORT              GPIOA

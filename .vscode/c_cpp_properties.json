@@ -184,12 +184,12 @@
             },
             "defines": [
                 "PLATFORMIO=60106",
+                "STM32F407xx",
                 "STM32F4",
-                "STM32F429xx",
-                "MB_BOARD=4000",
-                "BOARD_FireBoard_F429_INI",
+                "MB_BOARD=4002",
+                "BOARD_MKS_ROBIN_NANO_V3_INI",
                 "USE_HAL_DRIVER",
-                "F_CPU=180000000L",
+                "F_CPU=168000000L",
                 ""
             ],
             "compilerPath": "C:/Users/12250/.platformio/packages/toolchain-gccarmnoneeabi@1.90201.191206/bin/arm-none-eabi-gcc.exe",

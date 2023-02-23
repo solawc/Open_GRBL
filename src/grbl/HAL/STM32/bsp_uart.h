@@ -26,7 +26,6 @@
 #define LASER_UART_RX_FLAG              BOARD_UART_RX_FLAG
 
 typedef struct {
-
     UART_HandleTypeDef obj;     /* any cpu lib obj */
     uint8_t         _uart_num;
     GPIO_TypeDef    *_tx_pin_port;
@@ -35,8 +34,6 @@ typedef struct {
     uint16_t        _rx_pin;
     uint32_t        _af;
     uint32_t        _baud;
-
-
 }hal_uart_t;
 
 

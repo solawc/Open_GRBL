@@ -2,8 +2,7 @@
 
 // Declare system global variable structure
 system_t sys;
-int32_t sys_position[N_AXIS];      // Real-time machine (aka home) position vector in steps.
-int32_t sys_probe_position[N_AXIS]; // Last probe position in machine coordinates and steps.
+
 volatile uint8_t sys_probe_state;   // Probing state value.  Used to coordinate the probing cycle with stepper ISR.
 volatile uint8_t sys_rt_exec_state;   // Global realtime executor bitflag variable for state management. See EXEC bitmasks.
 volatile uint8_t sys_rt_exec_alarm;   // Global realtime executor bitflag variable for setting various alarms.
@@ -32,7 +31,7 @@ void enter_grbl_task(void) {
 	stepper_init();  // Configure stepper pins and interrupt timers
 	system_init();   // Configure pinout pins and pin-change interrupt
 
-	memset(sys_position,0,sizeof(sys_position)); // Clear machine position.
+	memset(sys.sys_position, 0, sizeof(sys.sys_position)); // Clear machine position.
 
 	// Initialize system state.
 #ifdef FORCE_INITIALIZATION_ALARM
@@ -62,7 +61,7 @@ void enter_grbl_task(void) {
         sys.f_override = DEFAULT_FEED_OVERRIDE;  // Set to 100%
         sys.r_override = DEFAULT_RAPID_OVERRIDE; // Set to 100%
         sys.spindle_speed_ovr = DEFAULT_SPINDLE_SPEED_OVERRIDE; // Set to 100%
-        memset(sys_probe_position,0,sizeof(sys_probe_position)); // Clear probe position.
+        memset(sys.sys_probe_position,0,sizeof(sys.sys_probe_position)); // Clear probe position.
         sys_probe_state = 0;
         sys_rt_exec_state = 0;
         sys_rt_exec_alarm = 0;
@@ -82,6 +81,7 @@ void enter_grbl_task(void) {
         // Sync cleared gcode and planner positions to current system position.
         plan_sync_position();
         gc_sync_position();
+
         // Print welcome message. Indicates an initialization has occured at power-up or with a reset.
         report_init_message();
         // Start Grbl main loop. Processes program inputs and executes them.

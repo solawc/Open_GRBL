@@ -619,7 +619,7 @@ static void protocol_exec_rt_suspend()
           #else
 					
             // Get current position and store restore location and spindle retract waypoint.
-            system_convert_array_steps_to_mpos(parking_target,sys_position);
+            system_convert_array_steps_to_mpos(parking_target,sys.sys_position);
             if (bit_isfalse(sys.suspend,SUSPEND_RESTART_RETRACT)) {
               memcpy(restore_target,parking_target,sizeof(parking_target));
               retract_waypoint += restore_target[PARKING_AXIS];

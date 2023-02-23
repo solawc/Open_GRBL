@@ -43,7 +43,7 @@
 #define MID_PATH(NAME)          XSTR(grbl/Middleware/inc/NAME)
 
 
-#include "Grbl/HAL/grbl_hal.h"
+#include "grbl/HAL/grbl_hal.h"
 #include HAL_PATH(grbl_mb.h)
 
 #if MB_BOARD==BOARD_FIRE_BOARD_F429
@@ -67,7 +67,7 @@
 #include "cmsis_os.h"
 #endif
 
-#include "Grbl/grbl_src/grbl_main.h"
+#include "grbl/grbl_src/grbl_main.h"
 
 
 #include HAL_PATH(grbl_config.h)
@@ -84,12 +84,12 @@
 
 
 #ifdef HAS_SDCARD
-#include "Grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
+#include "grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
 #include "ff.h"     // For Fatfs 
 #endif
 
 #ifdef HAS_W25Qxx 
-#include "Grbl/HAL/Peripheral/FLASH_eW25QXX/eflash.h"
+#include "grbl/HAL/Peripheral/FLASH_eW25QXX/eflash.h"
 #endif
 
 #include MID_PATH(debug.h)

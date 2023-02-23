@@ -295,7 +295,7 @@ uint8_t mc_probe_cycle(float *target, plan_line_data_t *pl_data, uint8_t parser_
 
   // Set state variables and error out, if the probe failed and cycle with error is enabled.
   if (sys_probe_state == PROBE_ACTIVE) {
-    if (is_no_error) { memcpy(sys_probe_position, sys_position, sizeof(sys_position)); }
+    if (is_no_error) { memcpy(sys.sys_probe_position, sys.sys_position, sizeof(sys.sys_position)); }
     else { system_set_exec_alarm(EXEC_ALARM_PROBE_FAIL_CONTACT); }
   } else {
     sys.probe_succeeded = true; // Indicate to system the probing cycle completed successfully.

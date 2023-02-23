@@ -170,8 +170,6 @@ void uartSetPin(hal_uart_t *uart, GPIO_TypeDef *tx_port, uint16_t tx_pin, GPIO_T
 	uart->_rx_pin = rx_pin;
 	uart->_af = af;
 
-	// LASER_UART_CLK_ENABLE();
-
 	/**********************BSP GPIO Init*********************
 	* 这里可以修改程任意的板卡的GPIO的初始化部分，如果必须的话
 	********************************************************/
@@ -195,22 +193,19 @@ void uartSetBaud(hal_uart_t *uart, uint32_t baud) {
 	uart->_baud = baud;
 }
 
-
-
 void uartInit(hal_uart_t *uart, uint8_t uart_num) {
+	
 	uart->_uart_num = uart_num;
 
-
-	// uart->obj.Instance = USART(uart->_uart_num);// LaserUART;
-	uart->obj.Init.BaudRate = BAUD_RATE;
+	uart->obj.Instance = LaserUART;// USART(uart->_uart_num);// LaserUART;
+	uart->obj.Init.BaudRate = uart->_baud;// BAUD_RATE;
 	uart->obj.Init.WordLength = UART_WORDLENGTH_8B;
 	uart->obj.Init.StopBits = UART_STOPBITS_1;
 	uart->obj.Init.Parity = UART_PARITY_NONE;
 	uart->obj.Init.Mode = UART_MODE_TX_RX;
 	uart->obj.Init.HwFlowCtl = UART_HWCONTROL_NONE;
 	uart->obj.Init.OverSampling = UART_OVERSAMPLING_16;
-	if (HAL_UART_Init(&uart->obj) != HAL_OK)
-  	{
+	if (HAL_UART_Init(&uart->obj) != HAL_OK) {
     	Error_Handler();
   	}
 }

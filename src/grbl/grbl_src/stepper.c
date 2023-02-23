@@ -436,8 +436,8 @@ void set_timer_irq_handler(void)
       st.step_outbits_dual = (1<<DUAL_STEP_BIT);
     #endif
     st.counter_x -= st.exec_block->step_event_count;
-    if (st.exec_block->direction_bits & (1<<X_DIRECTION_BIT)) { sys_position[X_AXIS]--; }
-    else { sys_position[X_AXIS]++; }
+    if (st.exec_block->direction_bits & (1<<X_DIRECTION_BIT)) { sys.sys_position[X_AXIS]--; }
+    else { sys.sys_position[X_AXIS]++; }
 
   }
   #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
@@ -451,8 +451,8 @@ void set_timer_irq_handler(void)
       st.step_outbits_dual = (1<<DUAL_STEP_BIT);
     #endif
     st.counter_y -= st.exec_block->step_event_count;
-    if (st.exec_block->direction_bits & (1<<Y_DIRECTION_BIT)) { sys_position[Y_AXIS]--; }
-    else { sys_position[Y_AXIS]++; }
+    if (st.exec_block->direction_bits & (1<<Y_DIRECTION_BIT)) { sys.sys_position[Y_AXIS]--; }
+    else { sys.sys_position[Y_AXIS]++; }
   }
   #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
     st.counter_z += st.steps[Z_AXIS];
@@ -462,8 +462,8 @@ void set_timer_irq_handler(void)
   if (st.counter_z > st.exec_block->step_event_count) {
     st.step_outbits |= (1<<Z_STEP_BIT);
     st.counter_z -= st.exec_block->step_event_count;
-    if (st.exec_block->direction_bits & (1<<Z_DIRECTION_BIT)) { sys_position[Z_AXIS]--; }
-    else { sys_position[Z_AXIS]++; }
+    if (st.exec_block->direction_bits & (1<<Z_DIRECTION_BIT)) { sys.sys_position[Z_AXIS]--; }
+    else { sys.sys_position[Z_AXIS]++; }
   }
 
   // During a homing cycle, lock out and prevent desired axes from moving.
