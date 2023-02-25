@@ -449,11 +449,11 @@ uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
     }
 
     // NOTE: Computed without any expensive trig, sin() or acos(), by trig half angle identity of cos(theta).
-    if (junction_cos_theta > 0.999999) {
+    if (junction_cos_theta > 0.999999f) {
       //  For a 0 degree acute junction, just set minimum junction speed.
       block->max_junction_speed_sqr = MINIMUM_JUNCTION_SPEED*MINIMUM_JUNCTION_SPEED;
     } else {
-      if (junction_cos_theta < -0.999999) {
+      if (junction_cos_theta < -0.999999f) {
         // Junction is a straight line or 180 degrees. Junction speed is infinite.
         block->max_junction_speed_sqr = SOME_LARGE_VALUE;
       } else {
