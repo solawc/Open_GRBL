@@ -403,19 +403,19 @@
           <GroupName>src/FreeRTOS/protable</GroupName>
         </Group>
         <Group>
-          <GroupName>src/Grbl/HAL</GroupName>
+          <GroupName>src/grbl/HAL</GroupName>
         </Group>
         <Group>
-          <GroupName>src/Grbl/HAL/STM32</GroupName>
+          <GroupName>src/grbl/HAL/STM32</GroupName>
         </Group>
         <Group>
-          <GroupName>src/Grbl/HAL/arm_support</GroupName>
+          <GroupName>src/grbl/HAL/arm_support</GroupName>
         </Group>
         <Group>
-          <GroupName>src/Grbl/HAL/Peripheral</GroupName>
+          <GroupName>src/grbl/HAL/Peripheral</GroupName>
         </Group>
         <Group>
-          <GroupName>src/Grbl/Middleware</GroupName>
+          <GroupName>src/grbl/Middleware</GroupName>
         </Group>
         <Group>
           <GroupName>src/Grbl</GroupName>

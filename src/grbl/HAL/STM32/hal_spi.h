@@ -1,7 +1,7 @@
 /*
  hal_spi.h
 
- Copyright (c) 2021-2022 sola
+ Copyright (c) 2021-2023 sola
 
  This part of the code belongs to the corresponding platform that 
  I adapt to, has nothing to do with GRBL, and is only related to 
@@ -16,10 +16,19 @@
 
 extern SPI_HandleTypeDef w25qxx_spi;
 
-void spi_for_w25qxx_init(void);
+typedef struct {
+
+    SPI_HandleTypeDef   obj;
+    GPIO_TypeDef        *_port;
+    uint32_t            _pin;
+
+}hal_spi_t;
+
+
+
 
 uint8_t w25qxx_spi_read_write(uint8_t data);
-
+void spi_for_w25qxx_init(void);
 void spi_for_tft_init(void);
 
 

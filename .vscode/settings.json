@@ -77,7 +77,11 @@
         "system.h": "c",
         "settings.h": "c",
         "mid_uart.h": "c",
-        "arm_support.h": "c"
+        "arm_support.h": "c",
+        "debug.h": "c",
+        "lv_disp_port.h": "c",
+        "bsp_uart.h": "c",
+        "stdbool.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

@@ -246,6 +246,11 @@ typedef struct {
 } parser_block_t;
 
 
+#define gcSyncPosition() system_convert_array_steps_to_mpos (gc_state.position, sys.position)
+#define syncPosition()  plan_sync_position(); \
+                        system_convert_array_steps_to_mpos (gc_state.position, sys.position)
+
+
 // Initialize the parser
 void gc_init();
 

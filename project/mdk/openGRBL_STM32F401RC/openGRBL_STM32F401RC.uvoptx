@@ -233,7 +233,7 @@
   </Group>
 
   <Group>
-    <GroupName>src/Grbl/HAL</GroupName>
+    <GroupName>src/grbl/HAL</GroupName>
     <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -241,7 +241,7 @@
   </Group>
 
   <Group>
-    <GroupName>src/Grbl/HAL/STM32</GroupName>
+    <GroupName>src/grbl/HAL/STM32</GroupName>
     <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -249,7 +249,7 @@
   </Group>
 
   <Group>
-    <GroupName>src/Grbl/HAL/arm_support</GroupName>
+    <GroupName>src/grbl/HAL/arm_support</GroupName>
     <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -257,7 +257,7 @@
   </Group>
 
   <Group>
-    <GroupName>src/Grbl/HAL/Peripheral</GroupName>
+    <GroupName>src/grbl/HAL/Peripheral</GroupName>
     <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -265,7 +265,7 @@
   </Group>
 
   <Group>
-    <GroupName>src/Grbl/Middleware</GroupName>
+    <GroupName>src/grbl/Middleware</GroupName>
     <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>

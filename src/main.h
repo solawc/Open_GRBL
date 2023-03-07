@@ -4,7 +4,7 @@
 
   Copyright (c) 2011-2016 Sungeun K. Jeon for Gnea Research LLC
   Copyright (c) 2009-2011 Simen Svale Skogsrud
-  Copyright (c) 2021-2022 sola
+  Copyright (c) 2021-2023 sola
 
   grbl is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -27,26 +27,23 @@
 
 // #define DEBUG_TEST
 
+/* STD Libraries */
 #include "stdio.h"
 #include "stdlib.h"
 #include "stdbool.h"
 
-#include "grbl/HAL/grbl_mb.h"
+/*******************************************
+ * define PATH
+ *******************************************/
+#define XSTR(V...) #V
+#define HAL_PATH(NAME)          XSTR(grbl/HAL/NAME)
+#define HAL_PINS_PATH(NAME)     XSTR(grbl/HAL/Pins/NAME)
+#define HAL_BSP_PATH(NAME)      XSTR(grbl/HAL/STM32/NAME)
+#define MID_PATH(NAME)          XSTR(grbl/Middleware/inc/NAME)
+#define GRBL_SRC_PATH(NAME)     XSTR(grbl/grbl_src/NAME)
 
-#if MB_BOARD==BOARD_FIRE_BOARD_F429
-    #include "grbl/HAL/STM32/bsp_FireBoard_F429V2/hal_FireBoard_system.h"
-    #include "grbl/HAL/Pins/pins_fireboard_f429.h"
-#elif MB_BOARD==BOARD_NUCLEO_G070RB
-    #include "grbl/HAL/STM32/bsp_nucleo_g070rb/hal_nucleo_g070rb.h"
-    #include "grbl/HAL/Pins/pins_nucleo_g070rb.h"
-#elif MB_BOARD==BOARD_MKS_DLC_LG0_V3
-    #include "grbl/HAL/STM32/bsp_mks_dlc_lg0_v3/bsp_mks_dlc_lg0_v3_system.h"
-    #include "grbl/HAL/Pins/pins_mks_dlc_lg0_v3.h"
-#elif MB_BOARD==BOARD_MKS_ROBIN_NANO_V3
-    #include "grbl/HAL/STM32/bsp_mks_nano_v3/hal_robin_nano_v3_system.h"
-    #include "grbl/HAL/Pins/pins_mks_nano_v3.h"
-#endif
 
+#include "board_support.h"
 
 #if defined(USE_FREERTOS_RTOS)
 #include "FreeRTOS.h"
@@ -54,29 +51,35 @@
 #include "cmsis_os.h"
 #endif
 
-#include "Grbl/grbl_src/grbl_main.h"
+#include GRBL_SRC_PATH(grbl_main.h)
 
-#include "Grbl/HAL/grbl_hal.h"
-#include "Grbl/HAL/grbl_config.h"
+#include HAL_PATH(grbl_config.h)
+#include HAL_PATH(arm_support/arm_support.h)
 
-#include "Grbl/HAL/arm_support/arm_support.h"
+#include HAL_BSP_PATH(bsp_gpio.h)
+#include HAL_BSP_PATH(bsp_uart.h)
+#include HAL_BSP_PATH(bsp_tim.h)
+#include HAL_BSP_PATH(bsp_flash_eeprom.h)
+#include HAL_BSP_PATH(hal_spi.h)
+#include HAL_BSP_PATH(bsp_wdg.h)
+#include HAL_BSP_PATH(bsp_sdram.h)
+#include HAL_BSP_PATH(bsp_ltdc.h)
 
-#include "Grbl/HAL/STM32/bsp_gpio.h"
-#include "Grbl/HAL/STM32/hal_uart.h"
-#include "Grbl/HAL/STM32/bsp_tim.h"
-#include "Grbl/HAL/STM32/bsp_flash_eeprom.h"
-#include "Grbl/HAL/STM32/hal_spi.h"
-#include "Grbl/HAL/STM32/bsp_wdg.h"
-#include "Grbl/HAL/STM32/bsp_sdram.h"
-#include "Grbl/HAL/STM32/bsp_ltdc.h"
 
-#include "Grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
-#include "Grbl/HAL/Peripheral/FLASH_eW25QXX/eflash.h"
+#ifdef HAS_SDCARD
+#include "grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
+#include "ff.h"     // For Fatfs 
+#endif
 
-#include "Grbl/Middleware/mid_gpio.h"
-#include "Grbl/Middleware/mid_timer.h"
-#include "Grbl/Middleware/mid_nvs.h"
-#include "Grbl/Middleware/mid_uart.h"
+#ifdef HAS_W25Qxx 
+#include "grbl/HAL/Peripheral/FLASH_eW25QXX/eflash.h"
+#endif
+
+#include MID_PATH(debug.h)
+#include MID_PATH(mid_gpio.h)
+#include MID_PATH(mid_timer.h)
+#include MID_PATH(mid_nvs.h)
+#include MID_PATH(mid_uart.h)
 
 #include "ex_dev/lcd/tft_lcd_dev.h"
 #include "ex_dev/sd/sdcard.h"
@@ -84,10 +87,6 @@
 
 #include "ui/lv_port/lv_disp_port.h"
 
-#include "Grbl/grbl_src/grbl.h"
-
-// For Fatfs 
-#include "ff.h"
 
 #define SYSTEM_UART()       BspUartInit()
 

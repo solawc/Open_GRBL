@@ -4,7 +4,7 @@
 
   Copyright (c) 2011-2016 Sungeun K. Jeon for Gnea Research LLC
   Copyright (c) 2009-2011 Simen Svale Skogsrud
-  Copyright (c) 2021-2022 sola
+  Copyright (c) 2021-2023 sola
 
   Grbl is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by

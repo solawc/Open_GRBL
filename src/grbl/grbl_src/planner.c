@@ -173,8 +173,6 @@ static void planner_recalculate()
 
 void plan_reset()
 {
-  // memset(&pl, 0, sizeof(planner_t)); // Clear planner struct
-  // plan_reset_buffer();
   static plan_block_t block_buffer_s[BLOCK_BUFFER_SIZE + 1];
 
   block_buffer = block_buffer_s;
@@ -346,11 +344,11 @@ uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
   // Copy position data based on type of motion being planned.
   if (block->condition & PL_COND_FLAG_SYSTEM_MOTION) { 
     #ifdef COREXY
-      position_steps[X_AXIS] = system_convert_corexy_to_x_axis_steps(sys_position);
-      position_steps[Y_AXIS] = system_convert_corexy_to_y_axis_steps(sys_position);
-      position_steps[Z_AXIS] = sys_position[Z_AXIS];
+      position_steps[X_AXIS] = system_convert_corexy_to_x_axis_steps(sys.sys_position);
+      position_steps[Y_AXIS] = system_convert_corexy_to_y_axis_steps(sys.sys_position);
+      position_steps[Z_AXIS] = sys.sys_position[Z_AXIS];
     #else
-      system_data_copy(sys_position, position_steps, sizeof(sys_position));
+      system_data_copy(sys.sys_position, position_steps, sizeof(sys.sys_position));
 
     #endif
   } else { 
@@ -451,11 +449,11 @@ uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
     }
 
     // NOTE: Computed without any expensive trig, sin() or acos(), by trig half angle identity of cos(theta).
-    if (junction_cos_theta > 0.999999) {
+    if (junction_cos_theta > 0.999999f) {
       //  For a 0 degree acute junction, just set minimum junction speed.
       block->max_junction_speed_sqr = MINIMUM_JUNCTION_SPEED*MINIMUM_JUNCTION_SPEED;
     } else {
-      if (junction_cos_theta < -0.999999) {
+      if (junction_cos_theta < -0.999999f) {
         // Junction is a straight line or 180 degrees. Junction speed is infinite.
         block->max_junction_speed_sqr = SOME_LARGE_VALUE;
       } else {
@@ -498,14 +496,15 @@ void plan_sync_position()
   for (idx=0; idx<N_AXIS; idx++) {
     #ifdef COREXY
       if (idx==X_AXIS) {
-        pl.position[X_AXIS] = system_convert_corexy_to_x_axis_steps(sys_position);
+        pl.position[X_AXIS] = system_convert_corexy_to_x_axis_steps(sys.sys_position);
       } else if (idx==Y_AXIS) {
-        pl.position[Y_AXIS] = system_convert_corexy_to_y_axis_steps(sys_position);
+        pl.position[Y_AXIS] = system_convert_corexy_to_y_axis_steps(sys.sys_position);
       } else {
-        pl.position[idx] = sys_position[idx];
+        pl.position[idx] = sys.sys_position[idx];
       }
     #else
-      pl.position[idx] = sys_position[idx];
+      // pl.position[idx] = sys.sys_position[idx];
+      memcpy(pl.position, sys.sys_position, sizeof(pl.position));
     #endif
   }
 }

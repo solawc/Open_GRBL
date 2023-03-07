@@ -60,8 +60,13 @@ void mc_line(float *target, plan_line_data_t *pl_data)
   do {
     protocol_execute_realtime(); // Check for any run-time commands
     if (sys.abort) { return; } // Bail, if system abort.
-    if ( plan_check_full_buffer() ) { protocol_auto_cycle_start(); } // Auto-cycle start when buffer is full.
-    else { break; }
+    
+    if ( plan_check_full_buffer() ) { 
+      protocol_auto_cycle_start(); // Auto-cycle start when buffer is full.
+    } 
+    else { 
+      break; 
+    }
   } while (1);
 
   // Plan and queue motion into planner buffer
@@ -295,7 +300,7 @@ uint8_t mc_probe_cycle(float *target, plan_line_data_t *pl_data, uint8_t parser_
 
   // Set state variables and error out, if the probe failed and cycle with error is enabled.
   if (sys_probe_state == PROBE_ACTIVE) {
-    if (is_no_error) { memcpy(sys_probe_position, sys_position, sizeof(sys_position)); }
+    if (is_no_error) { memcpy(sys.sys_probe_position, sys.sys_position, sizeof(sys.sys_position)); }
     else { system_set_exec_alarm(EXEC_ALARM_PROBE_FAIL_CONTACT); }
   } else {
     sys.probe_succeeded = true; // Indicate to system the probing cycle completed successfully.

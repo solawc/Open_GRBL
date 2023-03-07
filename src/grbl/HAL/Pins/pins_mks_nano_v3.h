@@ -1,7 +1,7 @@
 /*
  pins_mks_nano_v3.h - For MKS Robin Nano V3 Board(STM32F407VE)
 
- Copyright (c) 2021-2022 sola
+ Copyright (c) 2021-2023 sola
 
  This part of the code belongs to the corresponding platform that 
  I adapt to, has nothing to do with GRBL, and is only related to 
@@ -21,6 +21,7 @@
 #define MCU_INFI_NAME                   "STM32F407VE"
 #define MCU_INFO_FLASH                  "512K"
 #define MCU_INFO_RAM                    "196K"
+#define BOARD_NAME
 
 /* For Limit */
 #define BOARD_LIMIT_X_PORT              GPIOA

@@ -252,7 +252,7 @@ void report_probe_parameters()
   // Report in terms of machine position.
   printPgmString(PSTR("[PRB:"));
   float print_position[N_AXIS];
-  system_convert_array_steps_to_mpos(print_position,sys_probe_position);
+  system_convert_array_steps_to_mpos(print_position, sys.sys_probe_position);
   report_util_axis_values(print_position);
   serial_write(':');
   print_uint8_base10(sys.probe_succeeded);
@@ -487,7 +487,7 @@ void report_realtime_status()
 {
   uint8_t idx;
   int32_t current_position[N_AXIS]; // Copy current state of the system position variable
-  memcpy(current_position,sys_position,sizeof(sys_position));
+  memcpy(current_position,sys.sys_position,sizeof(sys.sys_position));
   float print_position[N_AXIS];
   system_convert_array_steps_to_mpos(print_position,current_position);
 

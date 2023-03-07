@@ -242,7 +242,7 @@ void limits_go_home(uint8_t cycle_mask)
           n_active_axis;    // 需要活动的轴
   do {
 
-    system_convert_array_steps_to_mpos(target,sys_position);
+    system_convert_array_steps_to_mpos(target, sys.sys_position);
 
     // Initialize and declare variables needed for homing routine.
     axislock = 0;
@@ -258,17 +258,17 @@ void limits_go_home(uint8_t cycle_mask)
         n_active_axis++;
         #ifdef COREXY
           if (idx == X_AXIS) {
-            int32_t axis_position = system_convert_corexy_to_y_axis_steps(sys_position);
-            sys_position[A_MOTOR] = axis_position;
-            sys_position[B_MOTOR] = -axis_position;
+            int32_t axis_position = system_convert_corexy_to_y_axis_steps(sys.sys_position);
+            sys.sys_position[A_MOTOR] = axis_position;
+            sys.sys_position[B_MOTOR] = -axis_position;
           } else if (idx == Y_AXIS) {
-            int32_t axis_position = system_convert_corexy_to_x_axis_steps(sys_position);
-            sys_position[A_MOTOR] = sys_position[B_MOTOR] = axis_position;
+            int32_t axis_position = system_convert_corexy_to_x_axis_steps(sys.sys_position);
+            sys.sys_position[A_MOTOR] = sys.sys_position[B_MOTOR] = axis_position;
           } else {
-            sys_position[Z_AXIS] = 0;
+            sys.sys_position[Z_AXIS] = 0;
           }
         #else
-          sys_position[idx] = 0;
+          sys.sys_position[idx] = 0;
         #endif
         // Set target direction based on cycle mask and homing cycle approach state.
         // NOTE: This happens to compile smaller than any other implementation tried.
@@ -334,7 +334,7 @@ void limits_go_home(uint8_t cycle_mask)
               if (( dual_axis_async_check &  (DUAL_AXIS_CHECK_TRIGGER_1 | DUAL_AXIS_CHECK_TRIGGER_2)) == (DUAL_AXIS_CHECK_TRIGGER_1 | DUAL_AXIS_CHECK_TRIGGER_2)) {
                 dual_axis_async_check = DUAL_AXIS_CHECK_DISABLE;
               } else {
-                if (abs(dual_trigger_position - sys_position[DUAL_AXIS_SELECT]) > dual_fail_distance) {
+                if (abs(dual_trigger_position - sys.sys_position[DUAL_AXIS_SELECT]) > dual_fail_distance) {
                   system_set_exec_alarm(EXEC_ALARM_HOMING_FAIL_DUAL_APPROACH);
                   mc_reset();
                   protocol_execute_realtime();
@@ -343,7 +343,7 @@ void limits_go_home(uint8_t cycle_mask)
               }
             } else {
               dual_axis_async_check |= DUAL_AXIS_CHECK_ENABLE;
-              dual_trigger_position = sys_position[DUAL_AXIS_SELECT];
+              dual_trigger_position = sys.sys_position[DUAL_AXIS_SELECT];
             }
           }
         #endif
@@ -421,18 +421,18 @@ void limits_go_home(uint8_t cycle_mask)
 
       #ifdef COREXY
         if (idx==X_AXIS) {
-          int32_t off_axis_position = system_convert_corexy_to_y_axis_steps(sys_position);
-          sys_position[A_MOTOR] = set_axis_position + off_axis_position;
-          sys_position[B_MOTOR] = set_axis_position - off_axis_position;
+          int32_t off_axis_position = system_convert_corexy_to_y_axis_steps(sys.sys_position);
+          sys.sys_position[A_MOTOR] = set_axis_position + off_axis_position;
+          sys.sys_position[B_MOTOR] = set_axis_position - off_axis_position;
         } else if (idx==Y_AXIS) {
-          int32_t off_axis_position = system_convert_corexy_to_x_axis_steps(sys_position);
-          sys_position[A_MOTOR] = off_axis_position + set_axis_position;
-          sys_position[B_MOTOR] = off_axis_position - set_axis_position;
+          int32_t off_axis_position = system_convert_corexy_to_x_axis_steps(sys.sys_position);
+          sys.sys_position[A_MOTOR] = off_axis_position + set_axis_position;
+          sys.sys_position[B_MOTOR] = off_axis_position - set_axis_position;
         } else {
-          sys_position[idx] = set_axis_position;
+          sys.sys_position[idx] = set_axis_position;
         }
       #else
-        sys_position[idx] = set_axis_position;
+        sys.sys_position[idx] = set_axis_position;
       #endif
 
     }

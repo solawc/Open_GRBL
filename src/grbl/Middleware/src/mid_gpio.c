@@ -1,7 +1,7 @@
 /*
  mid_gpio.c
 
- Copyright (c) 2021-2022 sola
+ Copyright (c) 2021-2023 sola
 
  This part of the code belongs to the corresponding platform that 
  I adapt to, has nothing to do with GRBL, and is only related to 
@@ -9,7 +9,7 @@
  please indicate the source
 */
 
-#include "mid_gpio.h"
+#include "../inc/mid_gpio.h"
 
 mid_gpio_t dev_gpio;
 

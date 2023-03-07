@@ -55,7 +55,7 @@ void gc_init()
 // limit pull-off routines.
 void gc_sync_position()
 {
-  system_convert_array_steps_to_mpos(gc_state.position,sys_position);
+  system_convert_array_steps_to_mpos(gc_state.position,sys.sys_position);
 }
 
 void collapseGCode(char* line) {
@@ -1083,7 +1083,9 @@ uint8_t gc_execute_line(char *line)
       // and absolute and incremental modes.
       pl_data->condition |= PL_COND_FLAG_RAPID_MOTION; // Set rapid motion condition flag.
       if (axis_command) { mc_line(gc_block.values.xyz, pl_data); }
-      mc_line(gc_block.values.ijk, pl_data);
+      // 将Gcode解析后的数据，送给planner, 这里可以使用消息队列，将数据通过消息队列送给
+      // 单独执行的planner
+      mc_line(gc_block.values.ijk, pl_data);                    
       memcpy(gc_state.position, gc_block.values.ijk, N_AXIS*sizeof(float));
       break;
     case NON_MODAL_SET_HOME_0:

@@ -1,7 +1,7 @@
 /*
  mid_uart.c
 
- Copyright (c) 2021-2022 sola
+ Copyright (c) 2021-2023 sola
 
  This part of the code belongs to the corresponding platform that 
  I adapt to, has nothing to do with GRBL, and is only related to 
@@ -9,7 +9,7 @@
  please indicate the source
 */
 
-#include "mid_uart.h"
+#include "../inc/mid_uart.h"
 
 mid_uart_t dev_uart;
 

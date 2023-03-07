@@ -1,7 +1,7 @@
 /*
- hal_uart.c
+ bsp_uart.c
 
- Copyright (c) 2021-2022 sola
+ Copyright (c) 2021-2023 sola
 
  This part of the code belongs to the corresponding platform that 
  I adapt to, has nothing to do with GRBL, and is only related to 
@@ -9,7 +9,11 @@
  please indicate the source
 */
 
-#include "hal_uart.h"
+#include "bsp_uart.h"
+
+#define __USART(X)	USART##X
+#define _USART(X)	__USART(X)
+#define USART(X)	_USART(X)
 
 ringbuff_t rb_serial_rx;
 ringbuff_t rb_serial_tx;
@@ -149,6 +153,62 @@ void tft_lcd_uart_init() {
 
 
 
+/********************------------------------------------********************/
+
+void uartSetPin(hal_uart_t *uart, GPIO_TypeDef *tx_port, uint16_t tx_pin, GPIO_TypeDef *rx_port, uint16_t rx_pin, uint32_t af) {
+	
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	
+	/*
+	 * About GPIO clock, they will be init at system start, we will enabel all 
+	 * GPIO clock.
+ 	*/
+
+	uart->_tx_pin_port = tx_port;
+	uart->_rx_pin_port = rx_port;
+	uart->_tx_pin = tx_pin;
+	uart->_rx_pin = rx_pin;
+	uart->_af = af;
+
+	/**********************BSP GPIO Init*********************
+	* 这里可以修改程任意的板卡的GPIO的初始化部分，如果必须的话
+	********************************************************/
+	GPIO_InitStruct.Pin = uart->_tx_pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = af; 
+    HAL_GPIO_Init(uart->_tx_pin_port, &GPIO_InitStruct);
+
+	GPIO_InitStruct.Pin = uart->_rx_pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = af; 
+    HAL_GPIO_Init(uart->_rx_pin_port, &GPIO_InitStruct);
+}
+
+
+void uartSetBaud(hal_uart_t *uart, uint32_t baud) {
+	uart->_baud = baud;
+}
+
+void uartInit(hal_uart_t *uart, uint8_t uart_num) {
+	
+	uart->_uart_num = uart_num;
+
+	uart->obj.Instance = LaserUART;// USART(uart->_uart_num);// LaserUART;
+	uart->obj.Init.BaudRate = uart->_baud;// BAUD_RATE;
+	uart->obj.Init.WordLength = UART_WORDLENGTH_8B;
+	uart->obj.Init.StopBits = UART_STOPBITS_1;
+	uart->obj.Init.Parity = UART_PARITY_NONE;
+	uart->obj.Init.Mode = UART_MODE_TX_RX;
+	uart->obj.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+	uart->obj.Init.OverSampling = UART_OVERSAMPLING_16;
+	if (HAL_UART_Init(&uart->obj) != HAL_OK) {
+    	Error_Handler();
+  	}
+}
 
 
 

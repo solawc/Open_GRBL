@@ -1,4 +1,7 @@
 #include "sd_file.h"
+#include "../../grbl/HAL/Peripheral/FLASH_eSDCARD/hal_sdcard.h"
+
+#ifdef FF_DEFINED
 
 FIL             fil;                        
 FATFS           fs;
@@ -208,4 +211,4 @@ void sd_report_mem(void) {
     printReturnInfo(cmd_str);
 }
 
-
+#endif /* FF_DEFINED */
