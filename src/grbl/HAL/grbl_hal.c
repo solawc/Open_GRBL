@@ -32,6 +32,7 @@ void grblReprotMcuInfo(void) {
     printf("*-\\    |    /\r\n");
     printf("* --OpenGRBL--\r\n");
     printf("*-/    |    \\\r\n");
+    printf("*-Version:%s\r\n", OPEN_GRBL_VERSION);
     printf("*-CPU Name:%s\r\n", MCU_INFI_NAME);
     printf("*-CPU Flash:%s\r\n", MCU_INFO_FLASH);
     printf("*-CPU RAM:%s\r\n", MCU_INFO_RAM);

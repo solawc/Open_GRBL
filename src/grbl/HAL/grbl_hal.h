@@ -30,9 +30,6 @@
 #include "grbl_config.h"
 #include "grbl_mb.h"
 
-
-
-
 typedef struct {
     uint32_t mcu_clk;
     uint32_t step_tim_clk;   
