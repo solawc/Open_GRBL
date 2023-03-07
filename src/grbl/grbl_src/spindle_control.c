@@ -220,7 +220,9 @@ void spindle_stop()
 #ifdef VARIABLE_SPINDLE
   void spindle_sync(uint8_t state, float rpm)
   {
-    if (sys.state == STATE_CHECK_MODE) { return; }
+    if (sys.state == STATE_CHECK_MODE) { 
+      return; 
+    }
     protocol_buffer_synchronize(); // Empty planner buffer to ensure spindle is set when programmed.
     spindle_set_state(state, (uint16_t)rpm);
   }

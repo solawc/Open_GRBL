@@ -1,7 +1,7 @@
 /*
  pins_mks_dlc_lg0.h - For MKS LG0 V3
 
- Copyright (c) 2021-2022 sola
+ Copyright (c) 2021-2023 sola
 
  This part of the code belongs to the corresponding platform that 
  I adapt to, has nothing to do with GRBL, and is only related to 

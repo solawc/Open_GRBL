@@ -1,7 +1,7 @@
 /*
  lv_disp_port.c
 
- Copyright (c) 2021-2022 @sola
+ Copyright (c) 2021-2023 sola
  
 */
 
@@ -18,7 +18,6 @@ void lvDispPortInit(void) {
 
     myFlush();
     // TODO..   
-
 }
 
 

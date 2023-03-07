@@ -80,7 +80,8 @@
         "arm_support.h": "c",
         "debug.h": "c",
         "lv_disp_port.h": "c",
-        "bsp_uart.h": "c"
+        "bsp_uart.h": "c",
+        "stdbool.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
