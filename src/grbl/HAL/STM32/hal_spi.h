@@ -16,12 +16,43 @@
 
 extern SPI_HandleTypeDef w25qxx_spi;
 
+typedef enum {
+
+    SPI_MODE_0 = 0,
+    SPI_MODE_1,
+    SPI_MODE_2,
+    SPI_MODE_3
+
+}spi_mode_t;
+
+typedef enum {
+    SPI_LINE_TX = 0,
+    SPI_LINE_RX,
+    SPI_LINE_TX_RX,
+}spi_line_mode_t;
+
+
 typedef struct {
 
     SPI_HandleTypeDef   obj;
-    GPIO_TypeDef        *_port;
-    uint32_t            _pin;
+    SPI_TypeDef         *spi_port;
 
+    GPIO_TypeDef        *sck_port;
+    GPIO_TypeDef        *miso_port;
+    GPIO_TypeDef        *mosi_port;
+    GPIO_TypeDef        *cs_port;
+
+    uint16_t            sck_pin;
+    uint16_t            miso_pin;
+    uint16_t            mosi_pin;
+    uint16_t            cs_pin;
+    uint32_t            _af;
+
+    uint32_t            _spi_baud;
+    uint32_t            _clk_phase;
+    uint32_t            _clk_polarity;
+    uint32_t            _data_size;
+    
 }hal_spi_t;
 
 
