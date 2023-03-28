@@ -20,7 +20,6 @@ SPI_HandleTypeDef tft_spi;
 
 hal_spi_t hal_w25qxx_spi;
 
-
 void spi_for_w25qxx_init(void) {
     w25qxx_spi.Instance                 = W25QXX_SPI_PORT;
     w25qxx_spi.Init.BaudRatePrescaler   = W25QXX_SPEED;
@@ -137,7 +136,7 @@ void BspSpiTransReceiveBuff(SPI_HandleTypeDef *spi, uint8_t *tdata, uint8_t *rda
     HAL_SPI_TransmitReceive(spi, tdata, rdata, num, 1000);
 }
 
-
+/*----------------------------------------------New drivers-----------------------------------------------*/
 
 void spi_set_pin(hal_spi_t *spi, 
                 GPIO_TypeDef *sck_port, uint16_t sck_pin,

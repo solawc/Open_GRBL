@@ -83,7 +83,8 @@
         "bsp_uart.h": "c",
         "stdbool.h": "c",
         "sd_sdio.h": "c",
-        "bsp_sdio.h": "c"
+        "bsp_sdio.h": "c",
+        "esdcard_port.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

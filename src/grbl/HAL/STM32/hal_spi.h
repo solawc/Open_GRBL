@@ -76,5 +76,18 @@ uint8_t BspSpiTransReceiveByte(SPI_HandleTypeDef *spi, uint8_t wdata);
 void BspSpiTransReceiveBuff(SPI_HandleTypeDef *spi, uint8_t *tdata, uint8_t *rdata, uint32_t num);
 
 
+
+
+void spi_set_pin(hal_spi_t *spi, GPIO_TypeDef *sck_port, uint16_t sck_pin,GPIO_TypeDef *miso_port, 
+                uint16_t miso_pin,GPIO_TypeDef *mosi_port, uint16_t mosi_pin,GPIO_TypeDef *cs_port, 
+                uint16_t cs_pin,uint32_t af);
+void spi_set_baud(hal_spi_t *spi, uint32_t baud);
+void spi_set_mode(hal_spi_t *spi, spi_mode_t mode);
+void spi_set_bit(hal_spi_t *spi, uint32_t bit);
+void spi_init(hal_spi_t *spi, SPI_TypeDef *spi_port);
+uint8_t spi_read_write_byte(hal_spi_t *spi ,uint8_t data);
+void spi_read_write_buff(hal_spi_t *spi, uint8_t *tdata, uint8_t *rtada, uint16_t size);
+
+
 #endif
 
