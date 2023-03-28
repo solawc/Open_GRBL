@@ -81,7 +81,9 @@
         "debug.h": "c",
         "lv_disp_port.h": "c",
         "bsp_uart.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "sd_sdio.h": "c",
+        "bsp_sdio.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
