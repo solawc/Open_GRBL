@@ -41,6 +41,7 @@ void BspUartGpioInit(void);
 void BspUartInit(void);
 void BspUartIrqSet(void);
 void BspUartSendByte(uint8_t data);
+void BspUartSendString(uint8_t *string, uint16_t size);
 bool BspUartTcFlag(void);
 
 #endif

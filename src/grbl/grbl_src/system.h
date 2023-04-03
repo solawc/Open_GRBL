@@ -51,14 +51,14 @@
 
 // Override bit maps. Realtime bitflags to control feed, rapid, spindle, and coolant overrides.
 // Spindle/coolant and feed/rapids are separated into two controlling flag variables.
-#define EXEC_FEED_OVR_RESET         bit(0)
-#define EXEC_FEED_OVR_COARSE_PLUS   bit(1)
-#define EXEC_FEED_OVR_COARSE_MINUS  bit(2)
-#define EXEC_FEED_OVR_FINE_PLUS     bit(3)
-#define EXEC_FEED_OVR_FINE_MINUS    bit(4)
-#define EXEC_RAPID_OVR_RESET        bit(5)
-#define EXEC_RAPID_OVR_MEDIUM       bit(6)
-#define EXEC_RAPID_OVR_LOW          bit(7)
+#define EXEC_FEED_OVR_RESET            bit(0)
+#define EXEC_FEED_OVR_COARSE_PLUS      bit(1)
+#define EXEC_FEED_OVR_COARSE_MINUS     bit(2)
+#define EXEC_FEED_OVR_FINE_PLUS        bit(3)
+#define EXEC_FEED_OVR_FINE_MINUS       bit(4)
+#define EXEC_RAPID_OVR_RESET           bit(5)
+#define EXEC_RAPID_OVR_MEDIUM          bit(6)
+#define EXEC_RAPID_OVR_LOW             bit(7)
 // #define EXEC_RAPID_OVR_EXTRA_LOW   bit(*) // *NOT SUPPORTED*
 
 #define EXEC_SPINDLE_OVR_RESET         bit(0)

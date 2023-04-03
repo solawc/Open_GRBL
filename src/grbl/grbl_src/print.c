@@ -23,8 +23,17 @@
 
 void printString(const char *s)
 {
-  while (*s)
-    serial_write(*s++);
+  // while (*s)
+  //   serial_write(*s++);
+  uint16_t numSize = 0;
+  uint8_t data[255];
+  
+  while(*s) {
+    data[numSize] = *s++;
+    numSize++;
+  }
+
+  BspUartSendString(data, numSize);
 }
 
 void printReturnInfo(const char *s) {

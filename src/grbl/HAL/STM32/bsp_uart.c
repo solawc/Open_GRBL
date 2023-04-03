@@ -78,7 +78,13 @@ void BspUartIrqSet(void) {
 	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE);
 }
 
-void BspUartSendByte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 1000); }
+void BspUartSendByte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 10); }
+
+void BspUartSendString(uint8_t *string, uint16_t size) { 
+	/* 这里需要改成串口DMA发送，以提高发送速度 */
+	HAL_UART_Transmit(&laser_uart, string, size, 50); 
+	// HAL_UART_Transmit_DMA(&laser_uart, string, size);
+}
 
 /* For stm32 reg. */
 #ifdef RDR

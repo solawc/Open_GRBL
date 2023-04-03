@@ -77,8 +77,17 @@ void serial_write(uint8_t data) {
 
 void serialSendString(const char *s)
 {
-  while (*s)
-    serial_write(*s++);
+  // while (*s)
+  //   serial_write(*s++);
+  uint16_t numSize = 0;
+  uint8_t data[255];
+  
+  while(*s) {
+    data[numSize] = *s++;
+    numSize++;
+  }
+
+  BspUartSendString(data, numSize);
 }
 
 void serial_sendf(const char* format, ...) {
