@@ -50,9 +50,9 @@
 	// #define AMASS_LEVEL1 (F_CPU/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
 	// #define AMASS_LEVEL2 (F_CPU/4000) // Over-drives ISR (x4)
 	// #define AMASS_LEVEL3 (F_CPU/2000) // Over-drives ISR (x8)
-  #define AMASS_LEVEL1 (STP_TIMER/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
-	#define AMASS_LEVEL2 (STP_TIMER/4000) // Over-drives ISR (x4)
-	#define AMASS_LEVEL3 (STP_TIMER/2000) // Over-drives ISR (x8)
+  #define AMASS_LEVEL1 (STP_TIMER / 8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
+	#define AMASS_LEVEL2 (STP_TIMER / 4000) // Over-drives ISR (x4)
+	#define AMASS_LEVEL3 (STP_TIMER / 2000) // Over-drives ISR (x8)
 
   #if MAX_AMASS_LEVEL <= 0
     error "AMASS must have 1 or more levels to operate correctly."
@@ -352,7 +352,7 @@ void set_timer_irq_handler(void)
   // Enable step pulse reset timer so that The Stepper Port Reset Interrupt can reset the signal after
   // exactly settings.pulse_microseconds microseconds, independent of the main Timer1 prescaler.
   hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
-  hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time-1);
+  hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time - 1);
   hal_tim_clear_flag_update(&STEP_RESET_TIMER);
   dev_timer.reset_timer_irq_enable();
 
@@ -641,8 +641,8 @@ static uint8_t st_next_block_index(uint8_t block_index)
    Currently, the segment buffer conservatively holds roughly up to 40-50 msec of steps.
    NOTE: Computation units are in steps, millimeters, and minutes.
 */
-void st_prep_buffer()
-{
+void st_prep_buffer() {
+
   // Block step prep buffer, while in a suspend state and there is no suspend motion to execute.
   if (bit_istrue(sys.step_control,STEP_CONTROL_END_MOTION)) { return; }
 
@@ -869,11 +869,11 @@ void st_prep_buffer()
         case RAMP_ACCEL:
           // NOTE: Acceleration ramp only computes during first do-while loop.
           speed_var = pl_block->acceleration*time_var;
-          mm_remaining -= time_var*(prep.current_speed + 0.5*speed_var);
+          mm_remaining -= time_var*(prep.current_speed + 0.5f * speed_var);
           if (mm_remaining < prep.accelerate_until) { // End of acceleration ramp.
             // Acceleration-cruise, acceleration-deceleration ramp junction, or end of block.
             mm_remaining = prep.accelerate_until; // NOTE: 0.0 at EOB
-            time_var = 2.0f * (pl_block->millimeters-mm_remaining)/(prep.current_speed+prep.maximum_speed);
+            time_var = 2.0f * (pl_block->millimeters-mm_remaining)/(prep.current_speed + prep.maximum_speed);
             if (mm_remaining == prep.decelerate_after) { prep.ramp_type = RAMP_DECEL; }
             else { prep.ramp_type = RAMP_CRUISE; }
             prep.current_speed = prep.maximum_speed;
@@ -885,10 +885,10 @@ void st_prep_buffer()
           // NOTE: mm_var used to retain the last mm_remaining for incomplete segment time_var calculations.
           // NOTE: If maximum_speed*time_var value is too low, round-off can cause mm_var to not change. To
           //   prevent this, simply enforce a minimum speed threshold in the planner.
-          mm_var = mm_remaining - prep.maximum_speed*time_var;
+          mm_var = mm_remaining - prep.maximum_speed * time_var;
           if (mm_var < prep.decelerate_after) { // End of cruise.
             // Cruise-deceleration junction or end of block.
-            time_var = (mm_remaining - prep.decelerate_after)/prep.maximum_speed;
+            time_var = (mm_remaining - prep.decelerate_after) / prep.maximum_speed;
             mm_remaining = prep.decelerate_after; // NOTE: 0.0 at EOB
             prep.ramp_type = RAMP_DECEL;
           } else { // Cruising only.
@@ -993,8 +993,8 @@ void st_prep_buffer()
     float inv_rate = dt / (last_n_steps_remaining - step_dist_remaining); // Compute adjusted step rate inverse
 
   // Compute CPU cycles per step for the prepped segment.
-    // uint32_t cycles = (uint32_t)ceilf( (STP_TIMER * 60.0f) * inv_rate); // (cycles/step)
-    uint32_t cycles = (uint32_t)ceil( (STP_TIMER * 60.0f) * inv_rate); // (cycles/step)
+
+    uint32_t cycles = (uint32_t)ceilf((STP_TIMER * 60.0f) * inv_rate); // (cycles/step)
     
     #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
       // Compute step timing and multi-axis smoothing level.
