@@ -1,5 +1,5 @@
 /*
- hal_it.h
+ bsp_it.h
 
  Copyright (c) 2021-2023 sola
 
@@ -9,8 +9,8 @@
  please indicate the source
 */
 
-#ifndef __hal_it_h
-#define __hal_it_h
+#ifndef __bsp_it_h
+#define __bsp_it_h
 
 #include "../../../main.h"
 

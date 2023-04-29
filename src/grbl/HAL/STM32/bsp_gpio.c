@@ -16,9 +16,6 @@ void BspGpioSet(GPIO_TypeDef *GPIOx, uint16_t PIN, GPIO_InitTypeDef *settings) {
 	HAL_GPIO_Init(GPIOx, settings);
 }
 
-
-
-
 /*******************************************************************************
  * Choose limits pins need know, if use st mcu ,you must konw pins interrupt 
  * int whitch exit line? you'd best make the pins in the same exit line! than 
@@ -31,18 +28,21 @@ void BspLimitGpioInit(void) {
 	GPIO_Init.Pull = GPIO_NOPULL;
 
 #ifdef LIMIT_X_PIN
-	GPIO_Init.Pin = LIMIT_X_PIN;
-    HAL_GPIO_Init(LIMIT_X_PORT, &GPIO_Init);
+	// GPIO_Init.Pin = LIMIT_X_PIN;
+    // HAL_GPIO_Init(LIMIT_X_PORT, &GPIO_Init);
+	BspGpioSet(LIMIT_X_PORT, LIMIT_X_PIN, &GPIO_Init);
 #endif
 
 #ifdef LIMIT_Y_PIN
-	GPIO_Init.Pin = LIMIT_Y_PIN;
-    HAL_GPIO_Init(LIMIT_Y_PORT, &GPIO_Init);
+	// GPIO_Init.Pin = LIMIT_Y_PIN;
+    // HAL_GPIO_Init(LIMIT_Y_PORT, &GPIO_Init);
+	BspGpioSet(LIMIT_Y_PORT, LIMIT_Y_PIN, &GPIO_Init);
 #endif
 
 #ifdef LIMIT_Z_PIN 
-	GPIO_Init.Pin = LIMIT_Z_PIN;
-    HAL_GPIO_Init(LIMIT_Z_PORT, &GPIO_Init);
+	// GPIO_Init.Pin = LIMIT_Z_PIN;
+    // HAL_GPIO_Init(LIMIT_Z_PORT, &GPIO_Init);
+	BspGpioSet(LIMIT_Z_PORT, LIMIT_Z_PIN, &GPIO_Init);
 #endif
 }
 

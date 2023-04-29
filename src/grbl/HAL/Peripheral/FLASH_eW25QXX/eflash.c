@@ -167,7 +167,6 @@ void w25qxx_wakeup(eFLASH_t *nFlash) {
     w25qxxCsEnd(nFlash);
 }
 
-
 void w25qxxEnterFlashMode(eFLASH_t *nFlash)
 {
 	uint8_t Temp;

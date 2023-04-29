@@ -1,5 +1,5 @@
 /*
- hal_it.c
+ bsp_it.c
 
  Copyright (c) 2021-2023 sola
 
@@ -10,7 +10,7 @@
 */
 
 
-#include "hal_it.h"
+#include "bsp_it.h"
 
 /****************************************************************************
  * This is the timer interrupt callback function

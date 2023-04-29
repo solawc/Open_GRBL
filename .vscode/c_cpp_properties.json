@@ -184,12 +184,12 @@
             },
             "defines": [
                 "PLATFORMIO=60106",
-                "STM32F4",
-                "STM32F429xx",
-                "MB_BOARD=4000",
-                "BOARD_FireBoard_F429_INI",
+                "STM32F401xC",
+                "STM32F4xx",
+                "MB_BOARD=4001",
+                "BOARD_MKS_DLC_LG0_V3_INI",
                 "USE_HAL_DRIVER",
-                "F_CPU=180000000L",
+                "F_CPU=84000000L",
                 ""
             ],
             "compilerPath": "/home/sola/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-gcc",
