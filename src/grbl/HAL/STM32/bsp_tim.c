@@ -20,7 +20,7 @@ hal_tim_t hal_step_tim;
 void hal_set_timer_init(void) {
     SET_TIM_CLK_ENABLED();   
     STEP_SET_TIM.Instance = SETP_SET_TIM; 
-    STEP_SET_TIM.Init.Period = 0;
+    STEP_SET_TIM.Init.Period = 1-1;
     STEP_SET_TIM.Init.Prescaler = 4-1;
     STEP_SET_TIM.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     STEP_SET_TIM.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -44,8 +44,8 @@ void hal_reset_timer_init(void) {
 
     RESET_TIM_CLK_ENABLED();
     STEP_RESET_TIM.Instance = SETP_RESET_TIM;
-    STEP_RESET_TIM.Init.Period = 0;     
-    STEP_RESET_TIM.Init.Prescaler = (STEP_RESET_TIM_FREQ/1000000) -1; 
+    STEP_RESET_TIM.Init.Period = 1-1;     
+    STEP_RESET_TIM.Init.Prescaler = (STEP_RESET_TIM_FREQ / 1000000) -1; 
     STEP_RESET_TIM.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     STEP_RESET_TIM.Init.CounterMode = TIM_COUNTERMODE_UP;
     HAL_TIM_Base_Init(&STEP_RESET_TIM);
@@ -62,13 +62,12 @@ void hal_base_timer_init(void) {
 
 void hal_reset_timer_begin(void) {
     hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
-    // hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time - 1);
     hal_tim_generateEvent_update(&STEP_RESET_TIMER);
     hal_tim_clear_flag_update(&STEP_RESET_TIMER);
 }
 
 void hal_set_timer_begin(void) {
-    // hal_tim_set_reload(&STEP_SET_TIMER, st.exec_segment->cycles_per_tick - 1);
+    hal_set_tim_cnt(&STEP_SET_TIMER, 0);
     hal_tim_generateEvent_update(&STEP_SET_TIMER);
     hal_set_timer_irq_enable();
 }

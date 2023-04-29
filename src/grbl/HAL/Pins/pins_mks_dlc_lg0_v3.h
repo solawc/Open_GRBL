@@ -120,7 +120,7 @@
 #define BOARD_LASER_OUT_PORT            GPIOB
 #define BOARD_LASER_OUT_PIN             GPIO_PIN_4
 
-#define EEPROM_START_ADDR               ADDR_FLASH_SECTOR_5  // 80D FC00  ADDR_FLASH_SECTOR_11
+#define EEPROM_START_ADDR               ADDR_FLASH_SECTOR_5  
 #define EEPROM_END_ADDR                 ((uint32_t)0x0803ffff)
 #define FLASH_WRITE_SECTORS_WORD
 
