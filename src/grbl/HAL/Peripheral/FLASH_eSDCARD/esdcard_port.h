@@ -52,15 +52,15 @@
 //     #endif
 
 //     #ifndef _SD_GPIO_CLK_ENABLE
-//             #define _SD_GPIO_CLK_ENABLE()   __HAL_RCC_GPIOB_CLK_ENABLE();\
-//                                             __HAL_RCC_GPIOA_CLK_ENABLE();\
-//                                             __HAL_RCC_GPIOC_CLK_ENABLE();\
+//             #define _SD_GPIO_CLK_ENABLE()   __HAL_RCC_GPIOB_CLK_ENABLE();
+//                                             __HAL_RCC_GPIOA_CLK_ENABLE();
+//                                             __HAL_RCC_GPIOC_CLK_ENABLE();
 //                                             __HAL_RCC_SPI1_CLK_ENABLE()
 //     #endif
 
 //     #ifndef _SD_GPIO_CLK_DISABLE
-//             #define _SD_GPIO_CLK_DISABLE()  __HAL_RCC_GPIOB_CLK_DISABLE();\
-//                                             __HAL_RCC_GPIOC_CLK_DISABLE();\
+//             #define _SD_GPIO_CLK_DISABLE()  __HAL_RCC_GPIOB_CLK_DISABLE();
+//                                             __HAL_RCC_GPIOC_CLK_DISABLE();
 //                                             __HAL_RCC_SPI1_CLK_DISABLE()
 //     #endif
 
