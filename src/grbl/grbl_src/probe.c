@@ -31,7 +31,6 @@ void probe_init()
   probe_configure_invert_mask(false);
 }
 
-
 // Called by probe_init() and the mc_probe() routines. Sets up the probe pin invert mask to
 // appropriately set the pin logic according to setting for normal-high/normal-low operation
 // and the probing cycle modes for toward-workpiece/away-from-workpiece.

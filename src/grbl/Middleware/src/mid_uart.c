@@ -13,6 +13,9 @@
 
 mid_uart_t dev_uart;
 
+ringbuff_t rb_serial_rx;
+ringbuff_t rb_serial_tx;
+
 void DevUartInit(void) {
 
     dev_uart.uartInit = BspUartInit;

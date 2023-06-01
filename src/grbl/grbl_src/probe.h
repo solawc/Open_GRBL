@@ -22,8 +22,13 @@
 #define probe_h
 
 // Values that define the probing state machine.
-#define PROBE_OFF     0 // Probing disabled or not in use. (Must be zero.)
-#define PROBE_ACTIVE  1 // Actively watching the input pin.
+// #define PROBE_OFF     0 // Probing disabled or not in use. (Must be zero.)
+// #define PROBE_ACTIVE  1 // Actively watching the input pin.
+
+enum {
+  PROBE_OFF = 0,
+  PROBE_ACTIVE = 1,
+};
 
 // Probe pin initialization routine.
 void probe_init();

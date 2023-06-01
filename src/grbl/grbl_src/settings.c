@@ -181,17 +181,13 @@ uint8_t settings_read_coord_data(uint8_t coord_select, float *coord_data)
 uint8_t read_settings_version(void) {
   uint8_t version = eeprom_get_char(SETTINGS_VERSION_ADD);
 
-  if(version == SETTINGS_VERSION) 
-    return 1;
-  else 
-    return 0;
+  if(version == SETTINGS_VERSION) return 1;
+  else return 0;
 }
 
 // Reads Grbl global settings struct from EEPROM.
 uint8_t read_global_settings() {
   // Check version-byte of eeprom
-  // uint8_t version = eeprom_get_char(SETTINGS_VERSION_ADD);
-  // if (version == SETTINGS_VERSION) {
   if(read_settings_version()) {
     // Read settings-record and check checksum
     if (!(memcpy_from_eeprom_with_checksum((char*)&settings, EEPROM_ADDR_GLOBAL, sizeof(settings_t)))) {

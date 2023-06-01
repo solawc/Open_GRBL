@@ -125,6 +125,11 @@ void limit_isr_handler_cb(void) {
         }
   }
 }
+  
+  /*
+   * 这里需要重新测试STM32的回调，是否可以正常使用，尽可能使用STM32 HAL的回调函数
+   * 执行相关事件处理。
+  */
 
   void LIMIT_IRQnHANDLE(void) {
  
@@ -148,8 +153,8 @@ void limit_isr_handler_cb(void) {
   void limit_check_task(void *parg) {
     while(1) {
       int evt;
-      uint8_t pinStatus;
       xQueueReceive(limit_sw_queue, &evt, portMAX_DELAY);
+      uint8_t pinStatus;
       vTaskDelay(DEBOUNCE_PERIOD / portTICK_PERIOD_MS);
   #ifdef ENABLE_SOFTWARE_DEBOUNCE
       vTaskDelay(DEBOUNCE_PERIOD / portTICK_PERIOD_MS);    // delay a while

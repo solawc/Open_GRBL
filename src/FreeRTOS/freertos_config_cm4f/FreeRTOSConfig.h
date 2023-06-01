@@ -54,7 +54,7 @@
   void xPortSysTickHandler(void);
 #endif
 #define configENABLE_FPU                         1
-#define configENABLE_MPU                         0
+#define configENABLE_MPU                         1
 
 #define configUSE_PREEMPTION                     1
 #define configSUPPORT_STATIC_ALLOCATION          0

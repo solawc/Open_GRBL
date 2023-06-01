@@ -189,7 +189,7 @@ void protocol_main_loop()
           get_line = client_lines[CLIENT_SERIAL].buffer;
 
 #ifdef REPORT_ECHO_RAW_LINE_RECEIVED
-                        report_echo_line_received(line, client);
+          report_echo_line_received(line, client);
 #endif  
           report_status_message(execute_line(get_line));
           empty_line(CLIENT_SERIAL);

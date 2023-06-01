@@ -25,15 +25,18 @@ void printString(const char *s)
 {
   // while (*s)
   //   serial_write(*s++);
-  uint16_t numSize = 0;
-  uint8_t data[255];
+
+  // uint16_t numSize = 0;
+  // uint8_t data[255];
   
   while(*s) {
-    data[numSize] = *s++;
-    numSize++;
+    // data[numSize] = *s++;
+    // numSize++;
+    serial_rb_write(&rb_serial_tx, *s++);
   }
 
-  BspUartSendString(data, numSize);
+  // BspUartSendString(data, numSize);
+  BspUartSendString(rb_serial_tx.buffer, serial_rb_buff_count(&rb_serial_tx));
 }
 
 void printReturnInfo(const char *s) {

@@ -24,10 +24,12 @@
 // Some useful constants.
 #define DT_SEGMENT (1.0f / (ACCELERATION_TICKS_PER_SECOND * 60.0f)) // min/segment
 #define REQ_MM_INCREMENT_SCALAR 1.25f
-#define RAMP_ACCEL 0
-#define RAMP_CRUISE 1
-#define RAMP_DECEL 2
-#define RAMP_DECEL_OVERRIDE 3
+// #define RAMP_ACCEL 0
+// #define RAMP_CRUISE 1
+// #define RAMP_DECEL 2
+// #define RAMP_DECEL_OVERRIDE 3
+
+
 
 #define PREP_FLAG_RECALCULATE bit(0)
 #define PREP_FLAG_HOLD_PARTIAL_BLOCK bit(1)
@@ -59,43 +61,8 @@
   #endif
 #endif
 
-
-// Stores the planner block Bresenham algorithm execution data for the segments in the segment
-// buffer. Normally, this buffer is partially in-use, but, for the worst case scenario, it will
-// never exceed the number of accessible stepper buffer segments (SEGMENT_BUFFER_SIZE-1).
-// NOTE: This data is copied from the prepped planner blocks so that the planner blocks may be
-// discarded when entirely consumed and completed by the segment buffer. Also, AMASS alters this
-// data for its own use.
-typedef struct {
-  uint32_t steps[N_AXIS];
-  uint32_t step_event_count;
-  uint8_t direction_bits;
-  #ifdef ENABLE_DUAL_AXIS
-    uint8_t direction_bits_dual;
-  #endif
-  #ifdef VARIABLE_SPINDLE
-    uint8_t is_pwm_rate_adjusted; // Tracks motions that require constant laser power/rate
-  #endif
-} st_block_t;
 static st_block_t st_block_buffer[SEGMENT_BUFFER_SIZE-1];
 
-// Primary stepper segment ring buffer. Contains small, short line segments for the stepper
-// algorithm to execute, which are "checked-out" incrementally from the first block in the
-// planner buffer. Once "checked-out", the steps in the segments buffer cannot be modified by
-// the planner, where the remaining planner block steps still can.
-typedef struct {
-  uint16_t n_step;           // Number of step events to be executed for this segment
-  uint16_t cycles_per_tick;  // Step distance traveled per ISR tick, aka step rate.
-  uint8_t  st_block_index;   // Stepper block data index. Uses this information to execute this segment.
-  #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
-    uint8_t amass_level;    // Indicates AMASS level for the ISR to execute this segment
-  #else
-    uint8_t prescaler;      // Without AMASS, a prescaler is required to adjust for slow timing.
-  #endif
-  #ifdef VARIABLE_SPINDLE
-    uint16_t spindle_pwm;  // uint8_t
-  #endif
-} segment_t;
 static segment_t segment_buffer[SEGMENT_BUFFER_SIZE];
 
 // Stepper ISR data struct. Contains the running data for the main stepper ISR.
@@ -644,7 +611,7 @@ static uint8_t st_next_block_index(uint8_t block_index)
 void st_prep_buffer() {
 
   // Block step prep buffer, while in a suspend state and there is no suspend motion to execute.
-  if (bit_istrue(sys.step_control,STEP_CONTROL_END_MOTION)) { return; }
+  if (bit_istrue(sys.step_control, STEP_CONTROL_END_MOTION)) { return; }
 
   while (segment_buffer_tail != segment_next_head) { // Check if we need to fill the buffer.
 

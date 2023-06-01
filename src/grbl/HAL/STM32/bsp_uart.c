@@ -15,8 +15,8 @@
 #define _USART(X)	__USART(X)
 #define USART(X)	_USART(X)
 
-ringbuff_t rb_serial_rx;
-ringbuff_t rb_serial_tx;
+// ringbuff_t rb_serial_rx;
+// ringbuff_t rb_serial_tx;
 
 UART_HandleTypeDef laser_uart;
 UART_HandleTypeDef tft_uart;
