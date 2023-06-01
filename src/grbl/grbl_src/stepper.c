@@ -943,7 +943,7 @@ void st_prep_buffer() {
           sys.spindle_speed = 0.0f;
           prep.current_spindle_pwm = 0; // SPINDLE_PWM_OFF_VALUE
         }
-        bit_false(sys.step_control,STEP_CONTROL_UPDATE_SPINDLE_PWM);
+        bit_false(sys.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
       }
       prep_segment->spindle_pwm = prep.current_spindle_pwm; // Reload segment PWM value
 

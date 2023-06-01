@@ -82,8 +82,13 @@ void BspUartSendByte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 10
 
 void BspUartSendString(uint8_t *string, uint16_t size) { 
 	/* 这里需要改成串口DMA发送，以提高发送速度 */
-	HAL_UART_Transmit(&laser_uart, string, size, 50); 
+	HAL_UART_Transmit(&laser_uart, string, size, 1000); 
 	// HAL_UART_Transmit_DMA(&laser_uart, string, size);
+
+	// do{
+	// 	laser_uart.Instance->DR = string;
+	// 	size --;
+	// }while(string != '\0' && size != 0);
 }
 
 /* For stm32 reg. */

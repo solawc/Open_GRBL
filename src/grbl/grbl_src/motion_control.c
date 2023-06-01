@@ -71,7 +71,7 @@ void mc_line(float *target, plan_line_data_t *pl_data)
 
   // Plan and queue motion into planner buffer
   if (plan_buffer_line(target, pl_data) == PLAN_EMPTY_BLOCK) {
-    if (bit_istrue(settings.flags,BITFLAG_LASER_MODE)) {
+    if (bit_istrue(settings.flags, BITFLAG_LASER_MODE)) {
       // Correctly set spindle state, if there is a coincident position passed. Forces a buffer
       // sync while in M3 laser mode only.
       if (pl_data->condition & PL_COND_FLAG_SPINDLE_CW) {

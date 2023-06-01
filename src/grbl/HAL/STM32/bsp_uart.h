@@ -14,6 +14,8 @@
 
 #include "../../../main.h"
 
+#define USE_UART_DMA                    1
+
 #define LaserUART		                BOARD_UART
 #define LaserUART_IRQn                  BOARD_UART_IRQ
 #define LASER_UART_CLK_ENABLE()         BOARD_UART_CLK_ENABLE()   
@@ -34,7 +36,13 @@ typedef struct {
     uint16_t        _rx_pin;
     uint32_t        _af;
     uint32_t        _baud;
+#if USE_UART_DMA
+    DMA_HandleTypeDef hdma_rx;
+#endif
+
 }hal_uart_t;
+
+
 
 
 void BspUartGpioInit(void);

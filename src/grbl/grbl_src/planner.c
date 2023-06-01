@@ -321,8 +321,6 @@ void plan_update_velocity_profile_parameters()
 uint8_t plan_buffer_line(float *target, plan_line_data_t *pl_data)
 {
   // Prepare and initialize new block. Copy relevant pl_data for block execution.
-  // plan_block_t *block = &block_buffer[block_buffer_head];
-  // memset(block,0,sizeof(plan_block_t)); // Zero all block values.
   plan_block_t *block = block_buffer_head;
   memset(block, 0, sizeof(plan_block_t) - 2 * sizeof(plan_block_t *));      // Zero all block values (except linked list pointers).
 
