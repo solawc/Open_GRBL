@@ -29,8 +29,6 @@
 // #define RAMP_DECEL 2
 // #define RAMP_DECEL_OVERRIDE 3
 
-
-
 #define PREP_FLAG_RECALCULATE bit(0)
 #define PREP_FLAG_HOLD_PARTIAL_BLOCK bit(1)
 #define PREP_FLAG_PARKING bit(2)
@@ -686,7 +684,7 @@ void st_prep_buffer() {
           if (settings.flags & BITFLAG_LASER_MODE) {
             if (pl_block->condition & PL_COND_FLAG_SPINDLE_CCW) { 
               // Pre-compute inverse programmed rate to speed up PWM updating per step segment.
-              prep.inv_rate = 1.0/pl_block->programmed_rate;
+              prep.inv_rate = 1.0f/pl_block->programmed_rate;
               st_prep_block->is_pwm_rate_adjusted = true; 
             }
           }
