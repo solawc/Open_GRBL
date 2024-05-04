@@ -41,7 +41,7 @@ void hal_set_timer_init(void) {
  * 设置用于拉低的定时器的tick为1us
 */
 void hal_reset_timer_init(void) {
-
+    
     RESET_TIM_CLK_ENABLED();
     STEP_RESET_TIM.Instance = SETP_RESET_TIM;
     STEP_RESET_TIM.Init.Period = 0;     
@@ -108,6 +108,7 @@ void hal_reset_timer_irq_disable(void) {
 
 void STEP_RESET_HANDLER(void) {
     HAL_TIM_IRQHandler(&STEP_RESET_TIMER);
+    
 #if defined __CORTEX_M && (__CORTEX_M == 4U || __CORTEX_M == 7U)
     __DSB();
 #endif
@@ -115,6 +116,7 @@ void STEP_RESET_HANDLER(void) {
 
 void STEP_SET_HANDLER(void) {
     HAL_TIM_IRQHandler(&STEP_SET_TIMER);
+
 #if defined __CORTEX_M && (__CORTEX_M == 4U || __CORTEX_M == 7U)
     __DSB();
 #endif

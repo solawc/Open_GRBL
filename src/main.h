@@ -121,6 +121,11 @@
 #define SYSTEM_SDCARD()
 #endif
 
+
+// 编译相关
+#define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
+
+
 void _delay_ms(uint32_t tick);
 void _delay_us(uint32_t tick);
 

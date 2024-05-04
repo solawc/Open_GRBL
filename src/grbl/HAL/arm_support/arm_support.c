@@ -1,5 +1,14 @@
 #include "arm_support.h"
 
+void dwt_init() {
+
+}
+
+void dwt_delay() {
+
+}
+
+
 void enterCli(void) {
 #ifdef USE_FREERTOS_RTOS
   taskENTER_CRITICAL();

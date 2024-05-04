@@ -69,6 +69,7 @@ void BspUartInit(void) {
 		Error_Handler();
 	}
 #endif
+
 	BspUartIrqSet();
 }
 
