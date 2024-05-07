@@ -109,6 +109,25 @@ uint8_t get_coolant_mist(void);
 
 void BspGpioSet(GPIO_TypeDef *GPIOx, uint16_t PIN, GPIO_InitTypeDef *settings);
 
+
+#define GPIO(PORT, NUM) (((PORT)-'A') * 16 + (NUM))       
+#define GPIO2PORT(PIN) ((PIN) / 16)                     // 通过PIN来计算当前属于GPIOX X端口的端口号
+#define GPIO2BIT(PIN) (1<<((PIN) % 16))                 // 通过PIN推算当前GPIOX_PIN_Y Y的编号
+
+struct gpio_out {
+    void *gpio_port;
+    uint16_t bit;
+};
+
+struct gpio_in {
+    void *gpio_port;
+    uint16_t bit;
+};
+
+int regs_to_pin(GPIO_TypeDef  *regs, uint32_t bit);
+struct gpio_out gpio_out_setup(uint32_t pin, uint32_t val);
+
+
 #ifdef __cplusplus
 }
 #endif

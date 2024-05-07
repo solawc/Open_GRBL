@@ -43,98 +43,26 @@ void DevGpioInit(void) {
     dev_gpio.coolant_get_mist       = get_coolant_mist;
 }
 
-//----------------------------------New driver------------------------------//
+struct motor_gpio {
 
-GPIO_TypeDef  * const digital_regs[]={
-    GPIOA,
-    GPIOB,
-    GPIOC,
-#ifdef GPIOD
-    GPIOD,
-#endif
+    struct gpio_out motor_step_x;
+    struct gpio_out motor_step_y;
+    struct gpio_out motor_step_z;
 
-#ifdef GPIOE
-    GPIOE,
-#endif
+    struct gpio_out motor_en_x;
+    struct gpio_out motor_en_y;
+    struct gpio_out motor_en_z;
 
-#ifdef GPIOF
-    GPIOF,
-#endif
-
-#ifdef GPIOG
-    GPIOG,
-#endif
-
-#ifdef GPIOH
-    GPIOH,
-#endif
+    struct gpio_out motor_dir_x;
+    struct gpio_out motor_dir_y;
+    struct gpio_out motor_dir_z;
 };
 
-// 校验GPIO端口和pin引脚是否和芯片复合
-static int
-gpio_valid(uint32_t pin)
-{
-    uint32_t port = GPIO2PORT(pin);
-    return port < ARRAY_SIZE(digital_regs) && digital_regs[port];
+struct motor_gpio stepper;
+
+void motor_init(void) { 
+
+    stepper.motor_step_x = gpio_out_setup(regs_to_pin(MOTOR_X_AXIS_PORT, 4), 0);
+    stepper.motor_step_y = gpio_out_setup(regs_to_pin(MOTOR_Y_AXIS_PORT, 6), 0);
+    stepper.motor_step_z = gpio_out_setup(regs_to_pin(MOTOR_Z_AXIS_PORT, 8), 0);
 }
-
-static void gpio_out_init(GPIO_TypeDef  *GPIOx ,uint32_t gpio_pin, uint32_t val) {
-
-    GPIO_InitTypeDef GPIO_Init;
-
-    HAL_GPIO_WritePin(GPIOx, gpio_pin, (GPIO_PinState)val);
-
-    GPIO_Init.Mode = GPIO_MODE_AF_PP;
-    GPIO_Init.Pin = gpio_pin;
-    GPIO_Init.Pull = GPIO_NOPULL;
-    GPIO_Init.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    HAL_GPIO_Init(GPIOx, &GPIO_Init);
-}
- 
-struct gpio_out 
-gpio_out_setup(uint32_t pin, uint32_t val) {
-
-    // HAL CLK Init
-    // 在stm32的底层接口上，基本使用HAL库，方便迁移。
-
-    if(gpio_valid(pin)) {
-        // error!;
-        while(1);
-    }
-
-    GPIO_TypeDef  *gpio_port = digital_regs[GPIO2PORT(pin)];
-
-    uint32_t bit = GPIO2BIT(pin);
-
-    gpio_out_init(gpio_port, bit, val);  // 真正初始化的地方
-
-    struct gpio_out g = {.gpio_port=gpio_port,.bit=bit}; //记录并返回对应的GPIO信息
-
-    return g;
-}
-
-void gpio_out_write(struct gpio_out g, uint32_t val) {
-
-    HAL_GPIO_WritePin(g.gpio_port, g.bit, (GPIO_PinState)val);
-}
-
-struct gpio_in
-gpio_in_setup(uint32_t pin, uint32_t val) {
-
-    if(gpio_valid(pin)) {
-        // error!;
-        while(1);
-    }
-
-    GPIO_TypeDef  *gpio_port = digital_regs[GPIO2PORT(pin)];
-
-    uint32_t bit = GPIO2BIT(pin);
-
-    gpio_out_init(gpio_port, bit, val);  // 真正初始化的地方
-
-    struct gpio_in g = {.gpio_port=gpio_port,.bit=bit}; //记录并返回对应的GPIO信息
-
-    return g;
-
-}
-

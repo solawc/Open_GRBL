@@ -46,19 +46,6 @@ typedef struct {
 extern mid_gpio_t dev_gpio;
 
 
-#define GPIO(PORT, NUM) (((PORT)-'A') * 16 + (NUM))       
-#define GPIO2PORT(PIN) ((PIN) / 16)                     // 通过PIN来计算当前属于GPIOX X端口的端口号
-#define GPIO2BIT(PIN) (1<<((PIN) % 16))                 // 通过PIN推算当前GPIOX_PIN_Y Y的编号
-
-struct gpio_out {
-    void *gpio_port;
-    uint16_t bit;
-};
-
-struct gpio_in {
-    void *gpio_port;
-    uint16_t bit;
-};
 
 
 

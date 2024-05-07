@@ -88,7 +88,7 @@
 #include "ui/lv_port/lv_disp_port.h"
 
 
-#define SYSTEM_UART()       BspUartInit()
+#define SYSTEM_UART()       uart_init()
 
 #ifdef HAS_WDG
 #define SYSTEM_WDG()        hal_wdg_init()

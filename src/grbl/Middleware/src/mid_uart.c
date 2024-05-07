@@ -15,7 +15,7 @@ mid_uart_t dev_uart;
 
 void DevUartInit(void) {
 
-    dev_uart.uartInit = BspUartInit;
+    dev_uart.uartInit = uart_init;
     dev_uart.uartSendByte = BspUartSendByte;
     dev_uart.uartTransComplateFlag = BspUartTcFlag;
 }
@@ -85,3 +85,4 @@ uint16_t serial_rb_buff_count(ringbuff_t *rb) {
 void serial_rb_reset(ringbuff_t *rb) {
 	rb->tail = rb->head;
 }
+

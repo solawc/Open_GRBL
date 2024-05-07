@@ -11,20 +11,47 @@
 
 #include "bsp_uart.h"
 
-#define __USART(X)	USART##X
-#define _USART(X)	__USART(X)
-#define USART(X)	_USART(X)
-
 ringbuff_t rb_serial_rx;
 ringbuff_t rb_serial_tx;
 
 UART_HandleTypeDef laser_uart;
-UART_HandleTypeDef tft_uart;
 
 /************************************************************
  * 			For Serial UART
  * *********************************************************/
-void BspUartGpioInit(void) {
+
+uint32_t _uart_irq_rx_flag(void) {
+
+	return laser_uart.Instance->SR & (USART_SR_RXNE | USART_SR_ORE);
+}
+
+uint32_t _uart_irq_tx_flag(void) {
+
+	return laser_uart.Instance->SR & USART_SR_TXE && laser_uart.Instance->CR1 & USART_CR1_TXEIE;
+}
+
+void uart_enable_irq(void) {
+
+	HAL_NVIC_SetPriority(LaserUART_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(LaserUART_IRQn);
+}
+
+void uart_enable_rx_irq(void) {
+
+	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE);
+}
+
+void uart_enable_tx_irq(void) {
+
+	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_TXE);
+}
+
+void uart_disable_tx_irq(void) {
+
+	__HAL_UART_DISABLE_IT(&laser_uart, UART_IT_TXE);
+}
+
+void uart_init(void) {
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -36,11 +63,6 @@ void BspUartGpioInit(void) {
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = LASER_UART_AF_MODE; 
     HAL_GPIO_Init(LASER_UART_TX_PORT, &GPIO_InitStruct);
-}
-
-void BspUartInit(void) {
-
-	BspUartGpioInit();
     
 	laser_uart.Instance = LaserUART;
 	laser_uart.Init.BaudRate = BAUD_RATE;
@@ -69,27 +91,27 @@ void BspUartInit(void) {
 		Error_Handler();
 	}
 #endif
-
-	BspUartIrqSet();
-}
-
-void BspUartIrqSet(void) {
-	HAL_NVIC_SetPriority(LaserUART_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(LaserUART_IRQn);
-	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE);
+	uart_enable_irq();
+	uart_enable_rx_irq();
 }
 
 void BspUartSendByte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 1000); }
 
-/* For stm32 reg. */
+/* STM32 UART 数据寄存器分两种命名，DR / RDR */
 #ifdef RDR
 #define USAR_READ_REG			RDR
 #else 
 #define USAR_READ_REG			DR
 #endif
 
-uint8_t BspUartReadData(void) { 
+uint8_t uart_rx_data(void) { 
+
 	return laser_uart.Instance->USAR_READ_REG;
+}
+
+void uart_tx_data(uint8_t data) {
+
+	laser_uart.Instance->USAR_READ_REG = data;
 }
 
 bool BspUartTcFlag(void) { 
@@ -122,94 +144,33 @@ void LASER_UART_IRQHANDLER() {
 #if defined(USE_FREERTOS_RTOS)
 	uint32_t ulReturn;
 #endif
-	__IO uint16_t data;
 
 #if defined(USE_FREERTOS_RTOS)
 	ulReturn = taskENTER_CRITICAL_FROM_ISR();
 #endif
 
-	if(LASER_UART_RX_FLAG) {
-		data = BspUartReadData();
-		laser_uart_rx_handler(data);
+	if(_uart_irq_rx_flag()) {  // LASER_UART_RX_FLAG
+		laser_uart_rx_handler(uart_rx_data());		// 讲道理这里不应该在这处理，需要做一下变更才行
 	}
 
-	HAL_UART_IRQHandler(&laser_uart);
+	if(_uart_irq_tx_flag()) {
+		__IO uint8_t data = 0; // 从缓冲区中获取数据
+		__IO int ret = -1;
+		if(ret) {
+			uart_disable_tx_irq();
+		}else {
+			uart_tx_data(data);
+		}
+	}
+
+	// HAL_UART_IRQHandler(&laser_uart);
 
 #if defined(USE_FREERTOS_RTOS)
 	taskEXIT_CRITICAL_FROM_ISR( ulReturn );
 #endif
 }
 
-/************************************************************
- * 			For LCD TFT UART
- * *********************************************************/
-static void tft_lcd_uart_pins_init() {
 
-
-}
-
-void tft_lcd_uart_init() {
-	tft_lcd_uart_pins_init();
-}
-
-
-
-/********************------------------------------------********************/
-
-void uartSetPin(hal_uart_t *uart, GPIO_TypeDef *tx_port, uint16_t tx_pin, GPIO_TypeDef *rx_port, uint16_t rx_pin, uint32_t af) {
-	
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	
-	/*
-	 * About GPIO clock, they will be init at system start, we will enabel all 
-	 * GPIO clock.
- 	*/
-
-	uart->_tx_pin_port = tx_port;
-	uart->_rx_pin_port = rx_port;
-	uart->_tx_pin = tx_pin;
-	uart->_rx_pin = rx_pin;
-	uart->_af = af;
-
-	/**********************BSP GPIO Init*********************
-	* 这里可以修改程任意的板卡的GPIO的初始化部分，如果必须的话
-	********************************************************/
-	GPIO_InitStruct.Pin = uart->_tx_pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = af; 
-    HAL_GPIO_Init(uart->_tx_pin_port, &GPIO_InitStruct);
-
-	GPIO_InitStruct.Pin = uart->_rx_pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = af; 
-    HAL_GPIO_Init(uart->_rx_pin_port, &GPIO_InitStruct);
-}
-
-
-void uartSetBaud(hal_uart_t *uart, uint32_t baud) {
-	uart->_baud = baud;
-}
-
-void uartInit(hal_uart_t *uart, uint8_t uart_num) {
-	
-	uart->_uart_num = uart_num;
-
-	uart->obj.Instance = LaserUART;// USART(uart->_uart_num);// LaserUART;
-	uart->obj.Init.BaudRate = uart->_baud;// BAUD_RATE;
-	uart->obj.Init.WordLength = UART_WORDLENGTH_8B;
-	uart->obj.Init.StopBits = UART_STOPBITS_1;
-	uart->obj.Init.Parity = UART_PARITY_NONE;
-	uart->obj.Init.Mode = UART_MODE_TX_RX;
-	uart->obj.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-	uart->obj.Init.OverSampling = UART_OVERSAMPLING_16;
-	if (HAL_UART_Init(&uart->obj) != HAL_OK) {
-    	Error_Handler();
-  	}
-}
 
 
 
