@@ -159,10 +159,8 @@ void delay_us(uint32_t us)
   _delay_us(us);
 }
 
-
 // Simple hypotenuse computation function.
 float hypot_f(float x, float y) { return(sqrtf(x*x + y*y)); }
-
 
 float convert_delta_vector_to_unit_vector(float *vector)
 {

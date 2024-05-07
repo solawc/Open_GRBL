@@ -331,6 +331,7 @@ void st_go_idle()
 void set_timer_irq_handler(void)   
 {
   if (busy) { return; } // The busy-flag is used to avoid reentering this interrupt
+  busy = true;
 
   // Set the direction pins a couple of nanoseconds before we step the steppers 
   uint8_t temp_dir = (st.dir_outbits);
@@ -343,7 +344,9 @@ void set_timer_irq_handler(void)
       st.step_bits_dual = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | st.step_outbits_dual;
     #endif
   #else  // Normal operation
-    dev_gpio.motor_set_step(st.step_outbits);
+
+    dev_gpio.motor_set_step(st.step_outbits); // 考虑是否直接在这里直接生成一个脉冲，而不是使用主从定时器的方法来实现
+
     #ifdef ENABLE_DUAL_AXIS
       // STEP_PORT_DUAL = (STEP_PORT_DUAL & ~STEP_MASK_DUAL) | st.step_outbits_dual;
     #endif
@@ -351,12 +354,12 @@ void set_timer_irq_handler(void)
 
   // Enable step pulse reset timer so that The Stepper Port Reset Interrupt can reset the signal after
   // exactly settings.pulse_microseconds microseconds, independent of the main Timer1 prescaler.
+
+  /* 配置下一次定时器产生的时间，时间为st.step_pulse_time，这个时间通过配置文件确定 */
   hal_set_tim_cnt(&STEP_RESET_TIMER, 0);
   hal_tim_set_reload(&STEP_RESET_TIMER, st.step_pulse_time-1);
   hal_tim_clear_flag_update(&STEP_RESET_TIMER);
   dev_timer.reset_timer_irq_enable();
-
-  busy = true;
 
   // If there is no step segment, attempt to pop one from the stepper buffer
   if (st.exec_segment == NULL) {
@@ -438,7 +441,6 @@ void set_timer_irq_handler(void)
     st.counter_x -= st.exec_block->step_event_count;
     if (st.exec_block->direction_bits & (1<<X_DIRECTION_BIT)) { sys.sys_position[X_AXIS]--; }
     else { sys.sys_position[X_AXIS]++; }
-
   }
   #ifdef ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING
     st.counter_y += st.steps[Y_AXIS];

@@ -20,37 +20,45 @@ UART_HandleTypeDef laser_uart;
  * 			For Serial UART
  * *********************************************************/
 
+/* 串口接收中断标志位 */
 uint32_t _uart_irq_rx_flag(void) {
 
 	return laser_uart.Instance->SR & (USART_SR_RXNE | USART_SR_ORE);
 }
 
+/* 串口发送中断标志位 */
 uint32_t _uart_irq_tx_flag(void) {
 
 	return laser_uart.Instance->SR & USART_SR_TXE && laser_uart.Instance->CR1 & USART_CR1_TXEIE;
 }
 
+/* 使能UART中断 */
 void uart_enable_irq(void) {
 
 	HAL_NVIC_SetPriority(LaserUART_IRQn, 0, 0);
 	HAL_NVIC_EnableIRQ(LaserUART_IRQn);
 }
 
+/* 使能UART 接收中断 */
 void uart_enable_rx_irq(void) {
 
 	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_RXNE);
 }
 
+/* 使能UART 发送中断 */
 void uart_enable_tx_irq(void) {
 
 	__HAL_UART_ENABLE_IT(&laser_uart, UART_IT_TXE);
 }
 
+/* 禁用UART 接收中断 */
 void uart_disable_tx_irq(void) {
 
 	__HAL_UART_DISABLE_IT(&laser_uart, UART_IT_TXE);
 }
 
+
+/* 初始化串口/串口GPIO */
 void uart_init(void) {
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -95,14 +103,16 @@ void uart_init(void) {
 	uart_enable_rx_irq();
 }
 
-void BspUartSendByte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 1000); }
-
 /* STM32 UART 数据寄存器分两种命名，DR / RDR */
 #ifdef RDR
 #define USAR_READ_REG			RDR
 #else 
 #define USAR_READ_REG			DR
 #endif
+
+/* UART 发送一个字节 */
+// void uart_send_byte(uint8_t data) { HAL_UART_Transmit(&laser_uart, &data, 1, 1000); }
+void uart_send_byte(uint8_t data) { laser_uart.Instance->DR = data; }
 
 uint8_t uart_rx_data(void) { 
 
@@ -112,10 +122,6 @@ uint8_t uart_rx_data(void) {
 void uart_tx_data(uint8_t data) {
 
 	laser_uart.Instance->USAR_READ_REG = data;
-}
-
-bool BspUartTcFlag(void) { 
-	return (__HAL_UART_GET_FLAG(&laser_uart, UART_FLAG_TC));
 }
 
 /*

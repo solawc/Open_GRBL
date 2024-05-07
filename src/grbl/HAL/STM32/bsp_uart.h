@@ -38,7 +38,6 @@ typedef struct {
 
 void uart_init(void);
 void uart_enable_rx_irq(void);
-void BspUartSendByte(uint8_t data);
-bool BspUartTcFlag(void);
+void uart_send_byte(uint8_t data);
 
 #endif

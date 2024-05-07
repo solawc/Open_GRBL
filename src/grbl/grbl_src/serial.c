@@ -72,7 +72,7 @@ void serial_init()
 
 // Writes one byte to the TX serial buffer. Called by main program.
 void serial_write(uint8_t data) {
-  BspUartSendByte(data);
+  uart_send_byte(data);
 }
 
 void serialSendString(const char *s)
