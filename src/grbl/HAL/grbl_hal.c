@@ -88,12 +88,23 @@ void grblDeviceInit() {
     DevNvsInit();
 }
 
+void grbl_hw_io_test() {
+
+    goio_test_init();
+
+    gpio_test_run();
+}
+
 /** 
  * Setup MCU core and peripheral clock.
  */
 void grblHwInit(void) {
 
     systemInit();
+
+    #if RUN_IO_TEST
+        grbl_hw_io_test();
+    #endif
 
     grblDeviceInit();
 }

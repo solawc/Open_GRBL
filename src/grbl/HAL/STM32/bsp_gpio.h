@@ -128,6 +128,10 @@ int regs_to_pin(GPIO_TypeDef  *regs, uint32_t bit);
 struct gpio_out gpio_out_setup(uint32_t pin, uint32_t val);
 
 
+void goio_test_init(void);
+void gpio_test_run(void);
+
+
 #ifdef __cplusplus
 }
 #endif

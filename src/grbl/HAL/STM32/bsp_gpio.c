@@ -339,7 +339,6 @@ GPIO_TypeDef  * const digital_regs[]={
 #endif
 };
 
-
 int regs_to_pin(GPIO_TypeDef  *regs, uint32_t bit) {
 	int i;
     for (i=0; i<ARRAY_SIZE(digital_regs); i++)
@@ -347,7 +346,6 @@ int regs_to_pin(GPIO_TypeDef  *regs, uint32_t bit) {
             return GPIO('A' + i, ffs(bit)-1);
     return 0;
 }
-
 
 // 校验GPIO端口和pin引脚是否和芯片复合
 static int
@@ -415,6 +413,33 @@ gpio_in_setup(uint32_t pin, uint32_t val) {
 
     return g;
 
+}
+
+
+
+struct test_io {
+
+	struct gpio_out test_io0;
+
+};
+
+struct test_io test_io_obj;
+
+#define LED_GPIO_PIN		regs_to_pin(GPIOA, 4)
+
+void goio_test_init(void) {
+
+	test_io_obj.test_io0 = gpio_out_setup(LED_GPIO_PIN, 0);
+}
+
+void gpio_test_run(void) {
+
+	while(1) {
+		gpio_out_write(test_io_obj.test_io0, 0);
+		delay_ms(1000);
+		gpio_out_write(test_io_obj.test_io0, 1);
+		delay_ms(1000);
+	}
 }
 
 

@@ -27,6 +27,8 @@
 
 // #define DEBUG_TEST
 
+#define RUN_IO_TEST     0
+
 /* STD Libraries */
 #include "stdio.h"
 #include "stdlib.h"
